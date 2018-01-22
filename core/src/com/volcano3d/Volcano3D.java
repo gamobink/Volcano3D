@@ -3,31 +3,33 @@ package com.volcano3d;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Volcano3D extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+
+	protected SceneManager sceneManager;
 	
 	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+	public void create () {	
+		sceneManager = new SceneManager();
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+
+        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
+        Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1.0f);
+        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);		
+		
+		sceneManager.processFrame();
 	}
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+
+		sceneManager.dispose();
 	}
 }

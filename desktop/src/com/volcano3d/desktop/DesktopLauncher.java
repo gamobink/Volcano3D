@@ -7,6 +7,13 @@ import com.volcano3d.Volcano3D;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		
+		config.width = 562;
+		config.height = 1000;
+		config.title = "Volcano3D";
+		config.samples = 4;
+		config.vSyncEnabled = false; // Setting to false disables vertical sync
+		
 		new LwjglApplication(new Volcano3D(), config);
 	}
 }
