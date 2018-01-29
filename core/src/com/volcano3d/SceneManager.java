@@ -5,14 +5,19 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.utils.Array;
+import com.volcano3d.Utility.TextAsset;
+import com.volcano3d.Utility.TextAssetLoader;
 
 /**
  * Created by T510 on 8/2/2017.
@@ -25,16 +30,29 @@ public class SceneManager {
     public boolean  objectsLoaded = false;    
     
     public Environment environment = null;
-    public PerspectiveCamera cam = null;   
+    public VCamera camera = new VCamera();   
     public CameraInputController camController = null;
 
-    public Renderable modelSkybox = null; 
-    public Renderable modelWater = null; 
+    public VRenderable modelSkybox = null; 
+    public VRenderable modelWater = null; 
+    public VRenderable modelGroundM0 = null; 
+    public VRenderable modelGroundM1 = null; 
+    public VRenderable modelGroundM2 = null; 
+    public VRenderable modelGroundM3 = null; 
+    public VRenderable modelGroundM4 = null; 
+    public VRenderable modelPivot = null;   
+    
+    public VShader shaderSky = null;
+    
+    private Vector2 prevDragPos = new Vector2();
+    private Vector2 dragTransl = new Vector2();
     
     public SceneManager(){
 
         assetsManager = new AssetManager();
 
+        assetsManager.setLoader(TextAsset.class,new TextAssetLoader(new InternalFileHandleResolver()));
+        
         assetsManager.setErrorListener(new AssetErrorListener() {
             @Override
             public void error(AssetDescriptor assetDescriptor, Throwable throwable) {
@@ -43,28 +61,31 @@ public class SceneManager {
         });
 
         environment = new Environment();
-        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 1, 1, 0.7f, 1f));
-        environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));        
+        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 1, 1, 1, 1f));
+        environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f,  0f, -0.8f, 1));        
         
-        cam = new PerspectiveCamera(40, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.position.set(200.7f, 1.4f, 6f);
-        cam.lookAt(0,1.1f,0);
-        cam.near = 1f;
-        cam.far = 50000f;
-        cam.update();        
+        shaderSky = new VShader(this, "shaders/sky.vertex.glsl", "shaders/sky.fragment.glsl");
+//        shaderSky = new VShader(this, "shaders/default.vertex.glsl", "shaders/default.fragment.glsl");
         
-        camController = new CameraInputController(cam);
-        Gdx.input.setInputProcessor(new InputMultiplexer(camController));  //, camController, , sceneManager.guiMainStage.getStage()        
-        
-        //modelSkybox = new Renderable(this, "scene.g3dj");
-        modelSkybox = new Renderable(this, "sky.g3dj");
-        modelWater = new Renderable(this, "water.g3dj");
+        modelSkybox = new VRenderable(this, "sky.g3dj", shaderSky);
+        modelWater = new VRenderable(this, "water.g3dj");        
+        modelGroundM0 = new VRenderable(this, "ground_m0.g3dj");        
+        modelGroundM1 = new VRenderable(this, "ground_m1.g3dj");
+        modelGroundM2 = new VRenderable(this, "ground_m2.g3dj");
+        modelGroundM3 = new VRenderable(this, "ground_m3.g3dj");
+        modelGroundM4 = new VRenderable(this, "ground_m4.g3dj");
+//        modelPivot = new VRenderable(this, "pivot.g3dj");
     }
 
     void init(){
     	modelSkybox.init();
     	modelWater.init();
-    	
+    	modelGroundM0.init();    	
+    	modelGroundM1.init();    	
+    	modelGroundM2.init();
+    	modelGroundM3.init();
+    	modelGroundM4.init();
+//    	modelPivot.init();    	
     }	
     
     void processFrame() {
@@ -81,15 +102,42 @@ public class SceneManager {
         	objectsLoaded = true;
         }
         
-        modelSkybox.render(cam, environment);
-        modelWater.render(cam, environment);
+        camera.update();
+        
+        modelSkybox.render(camera.get(), environment);
+        modelWater.render(camera.get(), environment);
+        modelGroundM0.render(camera.get(), environment);
+        modelGroundM1.render(camera.get(), environment);        
+        modelGroundM2.render(camera.get(), environment);
+        modelGroundM3.render(camera.get(), environment);
+        modelGroundM4.render(camera.get(), environment);
+        //modelPivot.render(camera.get(), environment);
 
         //Load all assets before creating new objects
         if (assetsManager.getQueuedAssets() > 0) {// && createGameObjectArray.size > 0
             assetsManager.finishLoading();
         }
-}
-
+    }
+    
+    public void onTouchDrag(int sx, int sy){
+    	
+    	Vector2 p = new Vector2(sx,sy);
+    	dragTransl = p.sub(prevDragPos);
+    	
+//    	System.out.println(dragTransl);
+    	camera.pan(dragTransl);
+    	
+    	prevDragPos.set(sx, sy);    	    	
+    }
+    
+    public void onTouchDown(int sx, int sy){
+    	prevDragPos.set(sx, sy);    	
+    }    
+    
+    public void onKeyDown(int keycode){
+    	camera.onKeyDown(keycode);
+    }
+    
     public void dispose(){
 //        for (final GameObject go : this.gameObjectArray) {
 //            go.dispose();

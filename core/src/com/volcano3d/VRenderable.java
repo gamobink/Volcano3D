@@ -8,8 +8,12 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.Renderable;
+import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
+import com.badlogic.gdx.graphics.g3d.shaders.BaseShader;
+import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector3;
@@ -19,7 +23,7 @@ import com.badlogic.gdx.utils.JsonReader;
  * Created by T510 on 8/6/2017.
  */
 
-public class Renderable {
+public class VRenderable {
 
 	private SceneManager sceneManager;
 
@@ -28,31 +32,53 @@ public class Renderable {
     public ModelBatch modelBatch = null;
     public ModelInstance modelInstance = null;    
     
-    public Renderable(SceneManager o){
+    public VShader vShader = null;
+    
+    
+    public DefaultShader shader = null;
+    
+    public VRenderable(SceneManager o){
     	sceneManager = o;
     }
-    public Renderable(SceneManager o, String filename){
+    public VRenderable(SceneManager o, String filename){
     	sceneManager = o;
         modelName = filename;
     	sceneManager.assetsManager.load(modelName, Model.class);
+    	vShader = null;
+    }
+    public VRenderable(SceneManager o, String filename, VShader shader){
+    	sceneManager = o;
+        modelName = filename;
+    	sceneManager.assetsManager.load(modelName, Model.class);
+    	vShader = shader;
     }
 
-//    public void create(String m){
-//        modelName = m;
-//        sceneManager.assetsManager.load(modelName, Model.class);
-//    }
-//
-//    public void create(){
-//    	sceneManager.assetsManager.load(modelName, Model.class);
-//    }
-
     public void init(){
-
+        
+        //String vert = Gdx.files.internal("shaders/sky.vertex.glsl").readString();
+        //String frag = Gdx.files.internal("shaders/sky.fragment.glsl").readString();        
+//        modelBatch = new ModelBatch(vert, frag);
         modelBatch = new ModelBatch();
-
+        
         if(sceneManager.assetsManager.isLoaded(modelName)) {
             Model model = sceneManager.assetsManager.get(modelName, Model.class);
             modelInstance = new ModelInstance(model);
+            
+            //if(vShader != null){
+		        Renderable renderable = new Renderable();
+		        renderable = modelInstance.getRenderable(renderable);
+		        //vShader.init(renderable);
+
+		        //System.out.println(vShader);
+		        
+		        //DefaultShader.Config shaderConfig = new DefaultShader.Config(vert, frag);
+				
+				//System.out.println(shaderConfig.fragmentShader);
+				
+				//shader = new DefaultShader(renderable, shaderConfig, "", vert, frag);
+				//shader.init();		
+				//System.out.println(shader);
+           // }
         }else{
             System.out.println("Renderable:init asset not loaded "+modelName);
         }
@@ -71,7 +97,12 @@ public class Renderable {
 
     public void render(PerspectiveCamera cam, Environment env){
         modelBatch.begin(cam);
-        if(modelInstance != null)modelBatch.render(modelInstance, env);
+        if(modelInstance != null){
+        	//modelBatch.render(modelInstance, env, shader);
+        	//if(vShader != null)modelBatch.render(modelInstance, env, vShader.shader);
+        	//else 
+        	modelBatch.render(modelInstance, env);
+        }
         else System.out.println("Renderable:render instance not created "+modelName);
         modelBatch.end();       
     }
