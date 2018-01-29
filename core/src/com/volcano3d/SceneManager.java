@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
@@ -44,6 +45,8 @@ public class SceneManager {
     
     public VShader shaderSky = null;
     
+    public VDecal decalMapTag1 = null;
+    
     private Vector2 prevDragPos = new Vector2();
     private Vector2 dragTransl = new Vector2();
     
@@ -61,8 +64,11 @@ public class SceneManager {
         });
 
         environment = new Environment();
-        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 1, 1, 1, 1f));
-        environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f,  0f, -0.8f, 1));        
+        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.5f, 1f));
+        environment.add(new DirectionalLight().set(2f, 2f, 0.9f,  0f, -0.8f, -1));  
+        environment.add(new DirectionalLight().set(0.4f, 0.4f, 0.6f,  0f, -0.8f, 1));  
+        
+ //       environment.add(new PointLight().set(0.8f, 0.8f, 0.8f,   0, 300, 0,   1000.0f));  
         
         shaderSky = new VShader(this, "shaders/sky.vertex.glsl", "shaders/sky.fragment.glsl");
 //        shaderSky = new VShader(this, "shaders/default.vertex.glsl", "shaders/default.fragment.glsl");
@@ -74,6 +80,9 @@ public class SceneManager {
         modelGroundM2 = new VRenderable(this, "ground_m2.g3dj");
         modelGroundM3 = new VRenderable(this, "ground_m3.g3dj");
         modelGroundM4 = new VRenderable(this, "ground_m4.g3dj");
+        
+        decalMapTag1 = new VDecal(this, "water.png", new Vector3(-220, 150, -10), new Vector2(50,50));
+        
 //        modelPivot = new VRenderable(this, "pivot.g3dj");
     }
 
@@ -85,7 +94,8 @@ public class SceneManager {
     	modelGroundM2.init();
     	modelGroundM3.init();
     	modelGroundM4.init();
-//    	modelPivot.init();    	
+//    	modelPivot.init();   
+    	decalMapTag1.init();
     }	
     
     void processFrame() {
@@ -113,6 +123,8 @@ public class SceneManager {
         modelGroundM4.render(camera.get(), environment);
         //modelPivot.render(camera.get(), environment);
 
+        decalMapTag1.render();
+        
         //Load all assets before creating new objects
         if (assetsManager.getQueuedAssets() > 0) {// && createGameObjectArray.size > 0
             assetsManager.finishLoading();

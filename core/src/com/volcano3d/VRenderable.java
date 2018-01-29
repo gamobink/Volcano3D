@@ -55,18 +55,19 @@ public class VRenderable {
 
     public void init(){
         
-        //String vert = Gdx.files.internal("shaders/sky.vertex.glsl").readString();
-        //String frag = Gdx.files.internal("shaders/sky.fragment.glsl").readString();        
+        String vert = Gdx.files.internal("shaders/sky.vertex.glsl").readString();
+        String frag = Gdx.files.internal("shaders/sky.fragment.glsl").readString();        
 //        modelBatch = new ModelBatch(vert, frag);
-        modelBatch = new ModelBatch();
+        //modelBatch = new ModelBatch();
         
         if(sceneManager.assetsManager.isLoaded(modelName)) {
             Model model = sceneManager.assetsManager.get(modelName, Model.class);
             modelInstance = new ModelInstance(model);
             
-            //if(vShader != null){
-		        Renderable renderable = new Renderable();
-		        renderable = modelInstance.getRenderable(renderable);
+            if(vShader != null){
+            	modelBatch = new ModelBatch(vert, frag);
+		        //Renderable renderable = new Renderable();
+		        //renderable = modelInstance.getRenderable(renderable);
 		        //vShader.init(renderable);
 
 		        //System.out.println(vShader);
@@ -78,7 +79,7 @@ public class VRenderable {
 				//shader = new DefaultShader(renderable, shaderConfig, "", vert, frag);
 				//shader.init();		
 				//System.out.println(shader);
-           // }
+            }else modelBatch = new ModelBatch();
         }else{
             System.out.println("Renderable:init asset not loaded "+modelName);
         }

@@ -15,17 +15,16 @@ public class VCamera {
 	private Vector3 pivotPosition = new Vector3(-50,11,-150);	
 	private float distance = 650.0f;
 	
-	private Vector2 anglePos = new Vector2(83, 7);
+	private Vector2 anglePos = new Vector2(-26, 7);
 	private Vector2 friction = new Vector2(0.3f, 0.3f);
 	private Vector2 velocity = new Vector2(0,0);
 	private Vector2 velocityMax = new Vector2(100,100);
 	private Vector2 momentum = new Vector2(0,0);
-
 	public float targetX = 0;	//[0 : 360]
 	public boolean moveToTargetX = false;
-
 	public float targetY = 0;	//[-85 : 85]
 	public boolean moveToTargetY = false;
+	public boolean applyGravity = true;
 	
 	public class WayPoint{
 		public WayPoint(float a, float my){
@@ -103,7 +102,7 @@ public class VCamera {
 	        velocity.x = diffX;
 	        if(Math.abs(diffX) < 4.0f)moveToTargetX = false;
 		}
-		if(moveToTargetY){			
+		if(moveToTargetY){
 			float diffY = targetY - anglePos.y;
 	        while (diffY < -180) diffY += 360;
 	        while (diffY > 180) diffY -= 360;
@@ -111,11 +110,17 @@ public class VCamera {
 	        if(Math.abs(diffY) < 4.0f)moveToTargetY = false;
 		}		
 		WayPoint wp = getInterpolatedWayPoint();
-		//System.out.println(wp.minY+" , "+anglePos.y+" = "+(anglePos.y - wp.minY));
+		//Limit camera movement Y axis
 		if(wp.minY > anglePos.y)velocity.y = -(anglePos.y - wp.minY) * 10.0f;
 		
-		//add small gravity to camera
-		
+		//Add small gravity to camera
+		if(applyGravity){
+			float offsetY = 3.0f;
+			if(anglePos.y > (wp.minY + offsetY)){
+				velocity.y += ((wp.minY + offsetY) - anglePos.y) * 0.3f * dt;
+			}
+		}
+		//Clamp to maximum velocity
 		velocity.x = Math.min(Math.max(velocity.x, -velocityMax.x), velocityMax.x);
 		velocity.y = Math.min(Math.max(velocity.y, -velocityMax.y), velocityMax.y);		
 		
@@ -123,8 +128,7 @@ public class VCamera {
 		if(anglePos.y > 360 || anglePos.y < -360)anglePos.y = 0;		
 		
 		if(anglePos.y > 85)anglePos.y = 85;
-		//if(anglePos.y < 0)anglePos.y = 0;
-		
+
 		//System.out.println(anglePos);
 	}	
 	public void addMomentum(Vector2 v){
@@ -161,6 +165,8 @@ public class VCamera {
 				found = true;
 			}else if(a.anglePos > b.anglePos && absAngleX >= a.anglePos){
 				
+//				special case where, for example a=355, b=5
+				
 //				float fm = 0;
 //				float fp = 0;
 //				if(a.anglePos < 360)fm = 360 - a.anglePos;
@@ -172,13 +178,9 @@ public class VCamera {
 				f = absAngleX / a.anglePos;
 				found = true;
 			}
-			if(found){
-				
+			if(found){				
 				//System.out.println(f+" ["+a.anglePos+" - "+b.anglePos+"] "+absAngleX);
-				
-				//float val = VCommon.lerp(a.minY, b.minY, f);
-				//System.out.println(f+" ["+a.minY+" - "+b.minY+"] "+val);
-				
+				//System.out.println(f+" ["+a.minY+" - "+b.minY+"]");				
 				return new WayPoint(absAngleX, VCommon.lerp(a.minY, b.minY, f));
 			}
 		}
