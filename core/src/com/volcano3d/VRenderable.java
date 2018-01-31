@@ -3,7 +3,11 @@ package com.volcano3d;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
@@ -11,6 +15,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.shaders.BaseShader;
 import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
@@ -43,20 +48,32 @@ public class VRenderable {
     public VRenderable(SceneManager o, String filename){
     	sceneManager = o;
         modelName = filename;
-    	sceneManager.assetsManager.load(modelName, Model.class);
+
+        ModelLoader.ModelParameters modelParameters = new ModelLoader.ModelParameters();
+        modelParameters.textureParameter.genMipMaps = true;
+        modelParameters.textureParameter.minFilter = TextureFilter.MipMap;
+        modelParameters.textureParameter.magFilter = TextureFilter.Linear;
+
+        sceneManager.assetsManager.load(modelName, Model.class, modelParameters);
     	vShader = null;
     }
     public VRenderable(SceneManager o, String filename, VShader shader){
     	sceneManager = o;
         modelName = filename;
-    	sceneManager.assetsManager.load(modelName, Model.class);
+        
+        ModelLoader.ModelParameters modelParameters = new ModelLoader.ModelParameters();
+        modelParameters.textureParameter.genMipMaps = true;
+        modelParameters.textureParameter.minFilter = TextureFilter.MipMap;
+        modelParameters.textureParameter.magFilter = TextureFilter.Linear;
+        
+    	sceneManager.assetsManager.load(modelName, Model.class, modelParameters);
     	vShader = shader;
     }
 
     public void init(){
         
         String vert = Gdx.files.internal("shaders/sky.vertex.glsl").readString();
-        String frag = Gdx.files.internal("shaders/sky.fragment.glsl").readString();        
+        String frag = Gdx.files.internal("shaders/sky.fragment.glsl").readString();
 //        modelBatch = new ModelBatch(vert, frag);
         //modelBatch = new ModelBatch();
         

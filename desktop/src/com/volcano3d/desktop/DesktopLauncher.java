@@ -12,7 +12,8 @@ public class DesktopLauncher {
 		config.width = 562;config.height = 1000;		
 		
 		config.title = "Volcano3D";
-		config.samples = 4;
+		config.samples = 6;
+		config.depth = 24;
 		config.vSyncEnabled = false; // Setting to false disables vertical sync
 		
 		new LwjglApplication(new Volcano3D(), config);

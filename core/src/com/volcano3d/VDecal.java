@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,8 +20,8 @@ public class VDecal {
 	
 	private DecalBatch decalBatch = null;
 	private Decal decal = null;
-	private Vector3	position = new Vector3(0,0,0);
-	private Vector2	size = new Vector2(0,0);
+	public Vector3	position = new Vector3(0,0,0);
+	public Vector2	size = new Vector2(0,0);
 	private String imageName = "";
 	
     public VDecal(SceneManager o, String image, Vector3 pos, Vector2 sizei){
@@ -31,14 +32,14 @@ public class VDecal {
     }
 	
     public void init(){
-    	
+//    	Gdx.gl.glEnable(GL30.GL_GENERATE_MIPMAP);, Pixmap.Format.RGB565, true
     	TextureRegion texture = new TextureRegion(new Texture(Gdx.files.internal(imageName)));
     	
     	texture.getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
     	
     	decalBatch = new DecalBatch(new CameraGroupStrategy(sceneManager.camera.get()));
     	
-    	decal = Decal.newDecal(size.x, size.y, texture);
+    	decal = Decal.newDecal(size.x, size.y, texture, true);
 
     	decal.setPosition(position);
     }

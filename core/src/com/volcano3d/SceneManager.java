@@ -5,13 +5,17 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -36,19 +40,31 @@ public class SceneManager {
 
     public VRenderable modelSkybox = null; 
     public VRenderable modelWater = null; 
-    public VRenderable modelGroundM0 = null; 
-    public VRenderable modelGroundM1 = null; 
-    public VRenderable modelGroundM2 = null; 
-    public VRenderable modelGroundM3 = null; 
-    public VRenderable modelGroundM4 = null; 
+    
+    public VRenderable modelGround1 = null; 
+    public VRenderable modelGround2 = null; 
+    public VRenderable modelGroundCenter = null;     
+    public VRenderable modelGroundFar = null;    
+    public VRenderable modelGroundAround1 = null; 
+    public VRenderable modelGroundAround2 = null;     
+    public VRenderable modelGroundAround3 = null; 
+    public VRenderable modelUnderground1 = null; 
+    
+    public boolean renderUndergroundPart1 = false;
+    
     public VRenderable modelPivot = null;   
     
     public VShader shaderSky = null;
     
     public VDecal decalMapTag1 = null;
+    public VDecal decalMapTag2 = null;
+    public VDecal decalMapTag3 = null;
+    public VDecal decalMapTag4 = null;
     
-    private Vector2 prevDragPos = new Vector2();
-    private Vector2 dragTransl = new Vector2();
+    //private Vector2 prevDragPos = new Vector2();
+    //private Vector2 dragTransl = new Vector2();
+    
+    private VStage2D stage2D = null;
     
     public SceneManager(){
 
@@ -65,7 +81,7 @@ public class SceneManager {
 
         environment = new Environment();
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.5f, 1f));
-        environment.add(new DirectionalLight().set(2f, 2f, 0.9f,  0f, -0.8f, -1));  
+        environment.add(new DirectionalLight().set(0.9f, 0.9f, 0.5f,  -1, -0.8f, 1));  
         environment.add(new DirectionalLight().set(0.4f, 0.4f, 0.6f,  0f, -0.8f, 1));  
         
  //       environment.add(new PointLight().set(0.8f, 0.8f, 0.8f,   0, 300, 0,   1000.0f));  
@@ -74,35 +90,54 @@ public class SceneManager {
 //        shaderSky = new VShader(this, "shaders/default.vertex.glsl", "shaders/default.fragment.glsl");
         
         modelSkybox = new VRenderable(this, "sky.g3dj", shaderSky);
-        modelWater = new VRenderable(this, "water.g3dj");        
-        modelGroundM0 = new VRenderable(this, "ground_m0.g3dj");        
-        modelGroundM1 = new VRenderable(this, "ground_m1.g3dj");
-        modelGroundM2 = new VRenderable(this, "ground_m2.g3dj");
-        modelGroundM3 = new VRenderable(this, "ground_m3.g3dj");
-        modelGroundM4 = new VRenderable(this, "ground_m4.g3dj");
+        modelWater = new VRenderable(this, "water.g3dj", shaderSky);     
         
-        decalMapTag1 = new VDecal(this, "water.png", new Vector3(-220, 150, -10), new Vector2(50,50));
+        modelGround1 = new VRenderable(this, "ground1.g3dj");        
+        modelGround2 = new VRenderable(this, "ground2.g3dj");
+        modelGroundCenter = new VRenderable(this, "groundCenter.g3dj");
+        modelGroundFar = new VRenderable(this, "groundFar.g3dj");
+        modelGroundAround1 = new VRenderable(this, "groundAround1.g3dj");
+        modelGroundAround2 = new VRenderable(this, "groundAround2.g3dj");
+        modelGroundAround3 = new VRenderable(this, "groundAround3.g3dj");
+        modelUnderground1 = new VRenderable(this, "underground.g3dj", shaderSky);
+        
+        
+        decalMapTag1 = new VDecal(this, "sign.png", new Vector3(-220, 150, -10), new Vector2(50,50));
+        decalMapTag2 = new VDecal(this, "sign2.png", new Vector3(-32, 92, 8), new Vector2(50,50));
+        decalMapTag3 = new VDecal(this, "sign3.png", new Vector3(146, 42, -216), new Vector2(50,50));
+        decalMapTag4 = new VDecal(this, "sign4.png", new Vector3(-7, 45, -550), new Vector2(50,50));        
         
 //        modelPivot = new VRenderable(this, "pivot.g3dj");
+        
+        stage2D = new VStage2D(this);
     }
 
     void init(){
     	modelSkybox.init();
     	modelWater.init();
-    	modelGroundM0.init();    	
-    	modelGroundM1.init();    	
-    	modelGroundM2.init();
-    	modelGroundM3.init();
-    	modelGroundM4.init();
-//    	modelPivot.init();   
+    	
+    	modelGround1.init();    	
+    	modelGround2.init();    	
+    	modelGroundCenter.init();
+    	modelGroundFar.init();
+    	modelGroundAround1.init();
+    	modelGroundAround2.init();
+    	modelGroundAround3.init();
+    	modelUnderground1.init();
+    	
+    	//modelPivot.init();   
+    	
     	decalMapTag1.init();
+    	decalMapTag2.init();
+    	decalMapTag3.init();
+    	decalMapTag4.init();    	
     }	
     
     void processFrame() {
 
         if (!assetsManager.update()) {
             assetsLoaded = false;
-        //    guiMainStage.renderLoader();
+            stage2D.renderLoader();
             return;
         }
         assetsLoaded = true;
@@ -116,14 +151,22 @@ public class SceneManager {
         
         modelSkybox.render(camera.get(), environment);
         modelWater.render(camera.get(), environment);
-        modelGroundM0.render(camera.get(), environment);
-        modelGroundM1.render(camera.get(), environment);        
-        modelGroundM2.render(camera.get(), environment);
-        modelGroundM3.render(camera.get(), environment);
-        modelGroundM4.render(camera.get(), environment);
+        
+        modelGround1.render(camera.get(), environment);        
+        if(!renderUndergroundPart1)modelGround2.render(camera.get(), environment);
+        modelGroundCenter.render(camera.get(), environment);
+        modelGroundFar.render(camera.get(), environment);
+        modelGroundAround1.render(camera.get(), environment);        
+        if(!renderUndergroundPart1)modelGroundAround2.render(camera.get(), environment);        
+        modelGroundAround3.render(camera.get(), environment); 
+        if(renderUndergroundPart1)modelUnderground1.render(camera.get(), environment);
+        
         //modelPivot.render(camera.get(), environment);
 
         decalMapTag1.render();
+        decalMapTag2.render();
+        decalMapTag3.render();
+        decalMapTag4.render();
         
         //Load all assets before creating new objects
         if (assetsManager.getQueuedAssets() > 0) {// && createGameObjectArray.size > 0
@@ -131,23 +174,43 @@ public class SceneManager {
         }
     }
     
-    public void onTouchDrag(int sx, int sy){
-    	
-    	Vector2 p = new Vector2(sx,sy);
-    	dragTransl = p.sub(prevDragPos);
-    	
-//    	System.out.println(dragTransl);
-    	camera.pan(dragTransl);
-    	
-    	prevDragPos.set(sx, sy);    	    	
+    public void onPan(float x, float y, float deltaX, float deltaY){
+
+    	camera.pan(new Vector2(deltaX, deltaY));
     }
-    
-    public void onTouchDown(int sx, int sy){
-    	prevDragPos.set(sx, sy);    	
-    }    
+
+    public void onTap(float x, float y, int count, int button){
+    	
+    	System.out.println("Tap");
+    	
+    	Ray r = camera.get().getPickRay(x, y);
+    	Vector3 decalCenter = decalMapTag1.position;
+    	Vector3 decalSize = new Vector3(decalMapTag1.size.x, decalMapTag1.size.y, decalMapTag1.size.x);    	
+    	if(r!= null && Intersector.intersectRayBoundsFast(r, decalCenter, decalSize)){
+    		
+    	}
+    	
+    }
     
     public void onKeyDown(int keycode){
     	camera.onKeyDown(keycode);
+
+    	if(keycode == 8){	//'1'    		
+    		renderUndergroundPart1 = false;
+    		camera.setCameraMode(0);
+    	}
+    	if(keycode == 9){	//'2'    		
+    		renderUndergroundPart1 = true;
+    		camera.setCameraMode(1);
+    	}    	
+    	if(keycode == 10){	//'3'    		
+    		renderUndergroundPart1 = false;
+    		camera.setCameraMode(2);
+    	} 
+    	if(keycode == 11){	//'4'    		
+    		renderUndergroundPart1 = false;
+    		camera.setCameraMode(3);
+    	}     	
     }
     
     public void dispose(){

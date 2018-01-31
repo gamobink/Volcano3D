@@ -160,7 +160,7 @@
 			"textures": [
 				{
 					"id": "Map #6", 
-					"filename": "skydome.jpg", 
+					"filename": "skydome.tga", 
 					"type": "DIFFUSE"
 				}
 			]

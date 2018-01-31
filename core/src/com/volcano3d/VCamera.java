@@ -37,12 +37,13 @@ public class VCamera {
 		//targetFOV
 	};
 	public Array<WayPoint> wayPoints = new Array<WayPoint>();
+	private boolean applyWayPoints = true;
 	
 	public VCamera(){
 		
 		cam = new PerspectiveCamera(35, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cam.near = 1f;
-        cam.far = 50000f;
+        cam.far = 3000;
         cam.update();
         
         wayPoints.add(new WayPoint(0, 2));
@@ -62,6 +63,36 @@ public class VCamera {
         wayPoints.add(new WayPoint(205, 2)); 
         wayPoints.add(new WayPoint(340, 2)); 
         wayPoints.add(new WayPoint(360, 2));         
+	}
+	public void setCameraMode(int mode){
+		if(mode == 0){
+			cam.fieldOfView = 35.0f;
+			applyGravity = true;
+			applyWayPoints = true;
+			distance = 650.0f;
+			pivotPosition.set(-50,11,-150);	
+		}
+		if(mode == 1){
+			cam.fieldOfView = 40.0f;
+			applyGravity = false;
+			distance = 1000.0f;
+			pivotPosition.set(-220, 0, -10);
+			moveToTargetX(148);
+		}		
+		if(mode == 2){
+			cam.fieldOfView = 40.0f;
+			applyGravity = false;
+			distance = 300.0f;
+			pivotPosition.set(-7, 45, -550);
+			moveToTargetX(0);
+		}
+		if(mode == 3){
+			cam.fieldOfView = 40.0f;
+			applyGravity = false;
+			distance = 300.0f;
+			pivotPosition.set(146, 42, -216);
+			moveToTargetX(270);
+		}		
 	}
 	public void update(){
         
@@ -111,7 +142,7 @@ public class VCamera {
 		}		
 		WayPoint wp = getInterpolatedWayPoint();
 		//Limit camera movement Y axis
-		if(wp.minY > anglePos.y)velocity.y = -(anglePos.y - wp.minY) * 10.0f;
+		if(wp.minY > anglePos.y && applyWayPoints)velocity.y = -(anglePos.y - wp.minY) * 10.0f;
 		
 		//Add small gravity to camera
 		if(applyGravity){
@@ -128,6 +159,7 @@ public class VCamera {
 		if(anglePos.y > 360 || anglePos.y < -360)anglePos.y = 0;		
 		
 		if(anglePos.y > 85)anglePos.y = 85;
+		if(anglePos.y < -85)anglePos.y = -85;
 
 		//System.out.println(anglePos);
 	}	
