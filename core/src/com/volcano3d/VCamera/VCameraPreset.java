@@ -1,4 +1,4 @@
-package com.volcano3d;
+package com.volcano3d.VCamera;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -8,24 +8,26 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.volcano3d.Utility.VCommon;
 
-public class VCamera {
+public class VCameraPreset {
 
-	public PerspectiveCamera cam;
+	public Vector3 	pivotPosition = new Vector3(-50,11,-150);
+	public float 	distance = 650.0f;
 	
-	private Vector3 pivotPosition = new Vector3(-50,11,-150);	
-	private float distance = 650.0f;
+	public Vector2 anglePos = new Vector2(-26, 7);
+	public Vector2 friction = new Vector2(0.3f, 0.3f);
+	public Vector2 velocity = new Vector2(0,0);
+	public Vector2 velocityMax = new Vector2(100,100);
+	public Vector2 momentum = new Vector2(0,0);
 	
-	private Vector2 anglePos = new Vector2(-26, 7);
-	private Vector2 friction = new Vector2(0.3f, 0.3f);
-	private Vector2 velocity = new Vector2(0,0);
-	private Vector2 velocityMax = new Vector2(100,100);
-	private Vector2 momentum = new Vector2(0,0);
-	
-	public float targetX = 0;	//[0 : 360]
-	public boolean moveToTargetX = false;
-	public float targetY = 0;	//[-85 : 85]
-	public boolean moveToTargetY = false;	
-	public boolean applyGravity = true;	//rename to: gravityEnabled
+	public float 	targetX = 0;	//[0 : 360]
+	public boolean 	moveToTargetX = false;
+	public float 	targetY = 0;	//[-85 : 85]
+	public boolean 	moveToTargetY = false;	
+
+	public boolean 	gravityEnabled = true;
+	private boolean wayPointsEnabled = true;
+	//public boolean wayPointsEnabled = true;
+	//public boolean paningEnabled = true;
 	
 	public class WayPoint{
 		public WayPoint(float a, float my){
@@ -37,19 +39,10 @@ public class VCamera {
 		//targetDistance
 		//targetFOV
 	};
-	public Array<WayPoint> wayPoints = new Array<WayPoint>();
-	private boolean applyWayPoints = true;
-	//public boolean wayPointsEnabled = true;
-	//public boolean paningEnabled = true;
-		
+	public Array<WayPoint> wayPoints = new Array<WayPoint>();	
 	
-	public VCamera(){
+	public VCameraPreset(){
 		
-		cam = new PerspectiveCamera(35, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        cam.near = 1f;
-        cam.far = 3000;
-        cam.update();
-        
         wayPoints.add(new WayPoint(0, 2));
         wayPoints.add(new WayPoint(10, 3));
         wayPoints.add(new WayPoint(25, 5));
@@ -57,7 +50,7 @@ public class VCamera {
         wayPoints.add(new WayPoint(60, 7));
         wayPoints.add(new WayPoint(80, 5));
         wayPoints.add(new WayPoint(100, 8));        
-        wayPoints.add(new WayPoint(110, 10));    
+        wayPoints.add(new WayPoint(110, 10));
         wayPoints.add(new WayPoint(120, 9)); 
         wayPoints.add(new WayPoint(140, 10)); 
         wayPoints.add(new WayPoint(160, 9));
@@ -66,66 +59,31 @@ public class VCamera {
         wayPoints.add(new WayPoint(200, 6)); 
         wayPoints.add(new WayPoint(205, 2)); 
         wayPoints.add(new WayPoint(340, 2)); 
-        wayPoints.add(new WayPoint(360, 2));         
+        wayPoints.add(new WayPoint(360, 2)); 
+               
 	}
-	//TODO: ENUM
-	//Camera settings presets. Switch by fading between them
-	// 	class VCameraPreset
-	//
-	//	onPresetTransitionComplete() callback
-	//
-	public void setCameraMode(int mode){
-		if(mode == 0){
-			cam.fieldOfView = 35.0f;
-			applyGravity = true;
-			applyWayPoints = true;
-			distance = 650.0f;
-			pivotPosition.set(-50,11,-150);	
-		}
-		if(mode == 1){
-			cam.fieldOfView = 40.0f;
-			applyGravity = false;
-			distance = 1000.0f;
-			pivotPosition.set(-220, 0, -10);
-			moveToTargetX(148);
-		}		
-		if(mode == 2){
-			cam.fieldOfView = 40.0f;
-			applyGravity = false;
-			distance = 300.0f;
-			pivotPosition.set(-7, 45, -550);
-			moveToTargetX(0);
-		}
-		if(mode == 3){
-			cam.fieldOfView = 40.0f;
-			applyGravity = false;
-			distance = 300.0f;
-			pivotPosition.set(146, 42, -216);
-			moveToTargetX(270);
-		}		
+	
+	public void addWayPoint(WayPoint wp){
+		wayPoints.add(wp);		
 	}
-	public void update(){
-        
+
+	public void update(PerspectiveCamera cam){
+
+		updateMotion();
+
 		Quaternion q = new Quaternion();
 		q.setEulerAngles(anglePos.x, anglePos.y, 0.0f);
 		
 		Vector3 nm = new Vector3(0,0,1);
-
-		nm = q.transform(nm).nor();
-		
-		cam.direction.set(nm);
-		
+		nm = q.transform(nm).nor();	
+		cam.direction.set(nm);		
 		nm.scl(distance);
 		
 		cam.position.set((pivotPosition.cpy().sub(nm)));
-        cam.up.set(0,1,0);
-        
-        cam.update();
-        
-        updateVelocity();
-        
+        cam.up.set(0,1,0);        
+        cam.update();               
 	}	
-	private void updateVelocity(){
+	private void updateMotion(){
 		float dt = Gdx.graphics.getDeltaTime();
 		
 		velocity.add(momentum);
@@ -152,10 +110,10 @@ public class VCamera {
 		}		
 		WayPoint wp = getInterpolatedWayPoint();
 		//Limit camera movement Y axis
-		if(wp.minY > anglePos.y && applyWayPoints)velocity.y = -(anglePos.y - wp.minY) * 10.0f;
+		if(wp.minY > anglePos.y && wayPointsEnabled)velocity.y = -(anglePos.y - wp.minY) * 10.0f;
 		
 		//Add small gravity to camera
-		if(applyGravity){
+		if(gravityEnabled){
 			float offsetY = 3.0f;
 			if(anglePos.y > (wp.minY + offsetY)){
 				velocity.y += ((wp.minY + offsetY) - anglePos.y) * 0.3f * dt;
@@ -188,7 +146,6 @@ public class VCamera {
 		moveToTargetY = true;
 		targetY = angleY;
 	}
-	
 	private WayPoint getInterpolatedWayPoint(){
 		
 		float absAngleX = anglePos.x;
@@ -228,27 +185,5 @@ public class VCamera {
 		}
 		
 		return new WayPoint(0,0);
-	}
-	
-	public PerspectiveCamera get(){
-		return cam;
-	}
-	public void pan(Vector2 mouseDrag){
-		mouseDrag.x = -mouseDrag.x;
-		addMomentum(mouseDrag);
-	}
-	//tmp: for testing
-	public void onKeyDown(int key){
-		//System.out.println(key);
-		//spacebar : 62
-		//'a' : 29
-		if(key == 62){
-			System.out.println(anglePos);			
-		}
-		if(key == 29){
-			float pos = (float)Math.random() * 360.0f;
-			moveToTargetX(pos);
-			//System.out.println(pos);
-		}
 	}
 }
