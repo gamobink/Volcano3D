@@ -20,11 +20,12 @@ public class VCamera {
 	private Vector2 velocity = new Vector2(0,0);
 	private Vector2 velocityMax = new Vector2(100,100);
 	private Vector2 momentum = new Vector2(0,0);
+	
 	public float targetX = 0;	//[0 : 360]
 	public boolean moveToTargetX = false;
 	public float targetY = 0;	//[-85 : 85]
-	public boolean moveToTargetY = false;
-	public boolean applyGravity = true;
+	public boolean moveToTargetY = false;	
+	public boolean applyGravity = true;	//rename to: gravityEnabled
 	
 	public class WayPoint{
 		public WayPoint(float a, float my){
@@ -38,6 +39,9 @@ public class VCamera {
 	};
 	public Array<WayPoint> wayPoints = new Array<WayPoint>();
 	private boolean applyWayPoints = true;
+	//public boolean wayPointsEnabled = true;
+	//public boolean paningEnabled = true;
+		
 	
 	public VCamera(){
 		
@@ -64,6 +68,12 @@ public class VCamera {
         wayPoints.add(new WayPoint(340, 2)); 
         wayPoints.add(new WayPoint(360, 2));         
 	}
+	//TODO: ENUM
+	//Camera settings presets. Switch by fading between them
+	// 	class VCameraPreset
+	//
+	//	onPresetTransitionComplete() callback
+	//
 	public void setCameraMode(int mode){
 		if(mode == 0){
 			cam.fieldOfView = 35.0f;
@@ -227,6 +237,7 @@ public class VCamera {
 		mouseDrag.x = -mouseDrag.x;
 		addMomentum(mouseDrag);
 	}
+	//tmp: for testing
 	public void onKeyDown(int key){
 		//System.out.println(key);
 		//spacebar : 62

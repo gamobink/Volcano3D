@@ -50,9 +50,8 @@ public class SceneManager {
     public VRenderable modelGroundAround3 = null; 
     public VRenderable modelUnderground1 = null; 
     
+    //TODO: state machine
     public boolean renderUndergroundPart1 = false;
-    
-    public VRenderable modelPivot = null;   
     
     public VShader shaderSky = null;
     
@@ -60,9 +59,6 @@ public class SceneManager {
     public VDecal decalMapTag2 = null;
     public VDecal decalMapTag3 = null;
     public VDecal decalMapTag4 = null;
-    
-    //private Vector2 prevDragPos = new Vector2();
-    //private Vector2 dragTransl = new Vector2();
     
     private VStage2D stage2D = null;
     
@@ -84,8 +80,6 @@ public class SceneManager {
         environment.add(new DirectionalLight().set(0.9f, 0.9f, 0.5f,  -1, -0.8f, 1));  
         environment.add(new DirectionalLight().set(0.4f, 0.4f, 0.6f,  0f, -0.8f, 1));  
         
- //       environment.add(new PointLight().set(0.8f, 0.8f, 0.8f,   0, 300, 0,   1000.0f));  
-        
         shaderSky = new VShader(this, "shaders/sky.vertex.glsl", "shaders/sky.fragment.glsl");
 //        shaderSky = new VShader(this, "shaders/default.vertex.glsl", "shaders/default.fragment.glsl");
         
@@ -101,17 +95,14 @@ public class SceneManager {
         modelGroundAround3 = new VRenderable(this, "groundAround3.g3dj");
         modelUnderground1 = new VRenderable(this, "underground.g3dj", shaderSky);
         
-        
         decalMapTag1 = new VDecal(this, "sign.png", new Vector3(-220, 150, -10), new Vector2(50,50));
         decalMapTag2 = new VDecal(this, "sign2.png", new Vector3(-32, 92, 8), new Vector2(50,50));
         decalMapTag3 = new VDecal(this, "sign3.png", new Vector3(146, 42, -216), new Vector2(50,50));
         decalMapTag4 = new VDecal(this, "sign4.png", new Vector3(-7, 45, -550), new Vector2(50,50));        
         
-//        modelPivot = new VRenderable(this, "pivot.g3dj");
-        
         stage2D = new VStage2D(this);
     }
-
+    //Call init() on loading complete
     void init(){
     	modelSkybox.init();
     	modelWater.init();
@@ -124,9 +115,7 @@ public class SceneManager {
     	modelGroundAround2.init();
     	modelGroundAround3.init();
     	modelUnderground1.init();
-    	
-    	//modelPivot.init();   
-    	
+
     	decalMapTag1.init();
     	decalMapTag2.init();
     	decalMapTag3.init();
@@ -149,6 +138,7 @@ public class SceneManager {
         
         camera.update();
         
+        //Frustum culling
         modelSkybox.render(camera.get(), environment);
         modelWater.render(camera.get(), environment);
         
@@ -160,8 +150,6 @@ public class SceneManager {
         if(!renderUndergroundPart1)modelGroundAround2.render(camera.get(), environment);        
         modelGroundAround3.render(camera.get(), environment); 
         if(renderUndergroundPart1)modelUnderground1.render(camera.get(), environment);
-        
-        //modelPivot.render(camera.get(), environment);
 
         decalMapTag1.render();
         decalMapTag2.render();
@@ -169,27 +157,32 @@ public class SceneManager {
         decalMapTag4.render();
         
         //Load all assets before creating new objects
-        if (assetsManager.getQueuedAssets() > 0) {// && createGameObjectArray.size > 0
+        if (assetsManager.getQueuedAssets() > 0) {
             assetsManager.finishLoading();
         }
     }
     
     public void onPan(float x, float y, float deltaX, float deltaY){
-
     	camera.pan(new Vector2(deltaX, deltaY));
     }
 
     public void onTap(float x, float y, int count, int button){
     	
-    	System.out.println("Tap");
-    	
     	Ray r = camera.get().getPickRay(x, y);
-    	Vector3 decalCenter = decalMapTag1.position;
-    	Vector3 decalSize = new Vector3(decalMapTag1.size.x, decalMapTag1.size.y, decalMapTag1.size.x);    	
-    	if(r!= null && Intersector.intersectRayBoundsFast(r, decalCenter, decalSize)){
+    	if(decalMapTag1.Intersect(r)){
+    		//TODO: set state for state machine
+    		renderUndergroundPart1 = true;
+    		camera.setCameraMode(1);
+    	}
+    	if(decalMapTag2.Intersect(r)){
     		
     	}
-    	
+    	if(decalMapTag3.Intersect(r)){
+    		
+    	}
+    	if(decalMapTag4.Intersect(r)){
+    		
+    	}    	
     }
     
     public void onKeyDown(int keycode){
@@ -214,52 +207,7 @@ public class SceneManager {
     }
     
     public void dispose(){
-//        for (final GameObject go : this.gameObjectArray) {
-//            go.dispose();
-//        }
-//        this.gameObjectArray.clear();
+
     }
 
-//    private void CollisionTest(){
-//        for (int a = 0; a < gameObjectArray.size; a++) {
-//            for (int b = a; b < gameObjectArray.size; b++) {
-//                if(a != b){
-//                    GameObject ao = gameObjectArray.get(a);
-//                    GameObject bo = gameObjectArray.get(b);
-//                    if(ao.collide && bo.collide) {
-//                        Vector3 pt = new Vector3();
-//                        if (collisionManager.Collide(ao, bo, pt)) {
-//                            ao.onCollision(bo, pt);
-//                            bo.onCollision(ao, pt);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-    //TODO: bounding box check
-//    public GameObject traceRay(Ray ray, Vector3 out){
-//
-//        GameObject obj = null;
-//        float prevT = 100000;
-//        Vector3 inter = new Vector3();
-//        //boolean hasInt = false;
-//        GameObject o = null;
-//        for (int i = 0; i < gameObjectArray.size; i++) {
-//            o = gameObjectArray.get(i);
-//            if (o.collide) {
-//                if (o.intersectRay(ray, inter)) {
-//                    float l = out.cpy().sub(ray.origin).len2();
-//                    if(l < prevT){
-//                        prevT = l;
-//                        out.set(inter);
-//                        //hasInt = true;
-//                        obj = o;
-//                    }
-//                }
-//            }
-//        }
-//        return obj;
-//    }
 }

@@ -11,8 +11,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
 
 public class VDecal {
 
@@ -50,5 +52,11 @@ public class VDecal {
     	decalBatch.add(decal);
     	decalBatch.flush();
     }
-    
+    public boolean Intersect(Ray ray){
+    	Vector3 decalSize = new Vector3(size.x, size.y, size.x); 
+    	if(ray!= null && Intersector.intersectRayBoundsFast(ray, position, decalSize)){
+    		return true;
+    	}
+    	return false;
+    }
 }
