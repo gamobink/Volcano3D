@@ -10,6 +10,19 @@ import com.volcano3d.Utility.VCommon;
 
 public class VCameraPreset {
 
+	//Interface for camera callbacks
+	public class VCameraCallback{
+		
+		public void onPresetTransitionComplete(){
+			
+		}
+		//onTransitionAngleXComplete
+		//onTransitionAngleYComplete
+		//onTransitionFOVComplete
+		//onTransitionDistanceComplete
+		//onTransitionPivotComplete		
+	}
+	
 	public Vector3 	pivotPosition = new Vector3(-50,11,-150);
 	public float 	distance = 650.0f;
 	
@@ -22,7 +35,7 @@ public class VCameraPreset {
 	public float 	targetX = 0;	//[0 : 360]
 	public boolean 	moveToTargetX = false;
 	public float 	targetY = 0;	//[-85 : 85]
-	public boolean 	moveToTargetY = false;	
+	public boolean 	moveToTargetY = false;
 
 	public boolean 	gravityEnabled = true;
 	private boolean wayPointsEnabled = true;
@@ -185,5 +198,10 @@ public class VCameraPreset {
 		}
 		
 		return new WayPoint(0,0);
+	}
+	
+	public void setTransitionFromPreset(VCameraPreset target){
+		
+		
 	}
 }

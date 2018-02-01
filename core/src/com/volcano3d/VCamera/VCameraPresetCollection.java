@@ -17,13 +17,11 @@ public class VCameraPresetCollection {
 		STATIC_VIEW_2,				//Hill	
 	}
 	
-	public VCameraPreset 		targetPreset = null;
+	public VCameraPreset 		finalPreset = null;
 	public EnumMap<PresetsIdentifiers, VCameraPreset> cameraPresets = new EnumMap<PresetsIdentifiers, VCameraPreset>(PresetsIdentifiers.class);
 	
-    //	e.get(PresetsIdentifiers.MAIN);
-	
 	public VCameraPresetCollection(VCameraPreset cam){
-		targetPreset = cam;
+		finalPreset = cam;
 		
 		addPreset(PresetsIdentifiers.MAIN, new VCameraPresetMain(PresetsIdentifiers.MAIN));
 		addPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1, new VCameraPresetMain(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1));
@@ -34,13 +32,16 @@ public class VCameraPresetCollection {
 	public void addPreset(PresetsIdentifiers identifier, VCameraPreset preset){
 		cameraPresets.put(identifier, preset);
 	}
+	public VCameraPreset getPreset(PresetsIdentifiers identifier){
+		return cameraPresets.get(identifier);
+	}	
 	
-	//TODO: 
-	public void transitionToPreset(VCameraPreset preset){
+	public void transitionToPreset(PresetsIdentifiers targetPresetIdentifier){
 		
-		
-		
+		VCameraPreset target = getPreset(targetPresetIdentifier);
+		if(target != null){			
+			finalPreset.setTransitionFromPreset(target);			
+		}
 	}
-	
 	
 }
