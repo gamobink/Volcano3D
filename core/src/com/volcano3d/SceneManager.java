@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.Array;
 import com.volcano3d.Utility.TextAsset;
 import com.volcano3d.Utility.TextAssetLoader;
 import com.volcano3d.VCamera.VCamera;
+import com.volcano3d.VCamera.VCameraPresetCollection;
 
 /**
  * Created by T510 on 8/2/2017.
@@ -52,14 +53,11 @@ public class SceneManager {
     public VRenderable modelUnderground1 = null; 
     
     //TODO: state machine
-    public boolean renderUndergroundPart1 = false;
+    //public boolean renderUndergroundPart1 = false;
     
     public VShader shaderSky = null;
     
-    public VDecal decalMapTag1 = null;
-    public VDecal decalMapTag2 = null;
-    public VDecal decalMapTag3 = null;
-    public VDecal decalMapTag4 = null;
+    public VDecalGroup decalsTags = new VDecalGroup(this);
     
     public VStage2D stage2D = null;
     
@@ -96,10 +94,10 @@ public class SceneManager {
         modelGroundAround3 = new VRenderable(this, "groundAround3.g3dj");
         modelUnderground1 = new VRenderable(this, "underground.g3dj", shaderSky);
         
-        decalMapTag1 = new VDecal(this, "sign.png", new Vector3(-220, 150, -10), new Vector2(50,50));
-        decalMapTag2 = new VDecal(this, "sign2.png", new Vector3(-32, 92, 8), new Vector2(50,50));
-        decalMapTag3 = new VDecal(this, "sign3.png", new Vector3(146, 42, -216), new Vector2(50,50));
-        decalMapTag4 = new VDecal(this, "sign4.png", new Vector3(-7, 45, -550), new Vector2(50,50));        
+        decalsTags.addDecal(new VDecal("sign.png", new Vector3(-220, 150, -10), new Vector2(50,50)));
+        decalsTags.addDecal(new VDecal("sign2.png", new Vector3(-32, 92, 8), new Vector2(50,50)));
+        decalsTags.addDecal(new VDecal("sign3.png", new Vector3(146, 42, -216), new Vector2(50,50)));
+        decalsTags.addDecal(new VDecal("sign4.png", new Vector3(-7, 45, -550), new Vector2(50,50)));        
         
         stage2D = new VStage2D(this);
     }
@@ -117,10 +115,7 @@ public class SceneManager {
     	modelGroundAround3.init();
     	modelUnderground1.init();
 
-    	decalMapTag1.init();
-    	decalMapTag2.init();
-    	decalMapTag3.init();
-    	decalMapTag4.init();    	
+    	decalsTags.init(); 	
     }	
     
     void processFrame() {
@@ -141,21 +136,22 @@ public class SceneManager {
         
         //Frustum culling
         modelSkybox.render(camera.get(), environment);
-        modelWater.render(camera.get(), environment);
-        
-        modelGround1.render(camera.get(), environment);        
-        if(!renderUndergroundPart1)modelGround2.render(camera.get(), environment);
+        modelWater.render(camera.get(), environment);        
+        modelGround1.render(camera.get(), environment);                
         modelGroundCenter.render(camera.get(), environment);
         modelGroundFar.render(camera.get(), environment);
         modelGroundAround1.render(camera.get(), environment);        
-        if(!renderUndergroundPart1)modelGroundAround2.render(camera.get(), environment);        
         modelGroundAround3.render(camera.get(), environment); 
-        if(renderUndergroundPart1)modelUnderground1.render(camera.get(), environment);
-
-        decalMapTag1.render();
-        decalMapTag2.render();
-        decalMapTag3.render();
-        decalMapTag4.render();
+        
+        if(camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_1){
+        	modelUnderground1.render(camera.get(), environment);	        	
+        }else{
+        	modelGround2.render(camera.get(), environment);
+        	modelGroundAround2.render(camera.get(), environment);
+        }
+        if(camera.getState() == VCamera.States.MAIN){
+        	decalsTags.render();
+        }
         
         stage2D.renderMainStage();
         
@@ -172,33 +168,29 @@ public class SceneManager {
     public void onTap(float x, float y, int count, int button){
     	
     	Ray r = camera.get().getPickRay(x, y);
-    	if(decalMapTag1.Intersect(r)){
-    	//	renderUndergroundPart1 = true;
-    		camera.setCameraMode(1);
-    	}
-    	if(decalMapTag2.Intersect(r)){
-    		renderUndergroundPart1 = false;
-    		
-    	}
-    	if(decalMapTag3.Intersect(r)){
-    		renderUndergroundPart1 = false;
-    		camera.setCameraMode(3);
-    		
-    	}
-    	if(decalMapTag4.Intersect(r)){
-    		renderUndergroundPart1 = false;
-    		camera.setCameraMode(4);
-    	}    	
+    	int iint = decalsTags.Intersect(r);
+		switch(iint){
+		case 0:
+			camera.setCameraState(VCamera.States.STATIC_1);
+			break;
+		case 2:
+			camera.setCameraState(VCamera.States.STATIC_3);
+			break;
+		case 3:
+			camera.setCameraState(VCamera.States.STATIC_4);
+			break;			
+		};
+
     }
     
     public void onKeyDown(int keycode){
     	camera.onKeyDown(keycode);
     	
+    	/*
     	if(keycode == 8){	//'1'    		
     		renderUndergroundPart1 = false;
     		camera.setCameraMode(0);
     	}
-    	/*
     	if(keycode == 9){	//'2'    		
     		renderUndergroundPart1 = false;
     		camera.setCameraMode(1);

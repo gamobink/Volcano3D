@@ -45,7 +45,6 @@ public class VCameraPresetCollection {
 	}	
 	
 	public void transitionToPreset(PresetsIdentifiers targetPresetIdentifier){
-		System.out.println("trans to "+targetPresetIdentifier);
 		VCameraPreset target = getPreset(targetPresetIdentifier);
 		if(target != null){			
 			finalPreset.setTransitionFromPreset(target, targetPresetIdentifier);			

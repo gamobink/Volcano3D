@@ -77,7 +77,16 @@ public class VCameraPreset {
 	public void addWayPoint(WayPoint wp){
 		wayPoints.add(wp);		
 	}
-
+	public VCameraPresetCollection.PresetsIdentifiers getPreset(){
+		return identifier;
+	}	
+	public VCameraPresetCollection.PresetsIdentifiers getCurrentPreset(){
+		if(targetIdentifierTransition != null)return targetIdentifierTransition;
+		return identifier;
+	}	
+	public VCameraPresetCollection.PresetsIdentifiers getTargetPreset(){
+		return targetIdentifierTransition;
+	}		
 	public void update(PerspectiveCamera cam){
 
 		updateMotion();
@@ -176,10 +185,14 @@ public class VCameraPreset {
 		
 		//Check for preset transition completion		
 		if(targetIdentifierTransition!= null && !transitionInProgress){
-			if(callback != null)callback.onPresetTransitionComplete(identifier, targetIdentifierTransition);
-			//System.out.println("trans complete: "+identifier+" -> "+targetIdentifierTransition);
+			VCameraPresetCollection.PresetsIdentifiers id1 = identifier;
+			VCameraPresetCollection.PresetsIdentifiers id2 = targetIdentifierTransition;			
+			
 			identifier = targetIdentifierTransition;
 			targetIdentifierTransition = null;
+
+			if(callback != null)callback.onPresetTransitionComplete(id1, id2);
+//			System.out.println("trans complete: "+identifier+" -> "+targetIdentifierTransition);
 		}
 		//System.out.println(anglePos);
 	}	
@@ -275,5 +288,8 @@ public class VCameraPreset {
 		wayPointsEnabled = target.wayPointsEnabled;
 		
 		targetIdentifierTransition = targetIdentifier;
+		
+		//System.out.println("trans to "+targetIdentifier+", "+identifier);
+
 	}
 }

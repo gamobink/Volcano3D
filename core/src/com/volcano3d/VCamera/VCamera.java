@@ -1,25 +1,28 @@
 package com.volcano3d.VCamera;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
 import com.volcano3d.SceneManager;
-import com.volcano3d.Utility.VCommon;
 import com.volcano3d.VCamera.VCameraPresetCollection.PresetsIdentifiers;
 
 public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPresetCallback {
-	
-	public SceneManager sceneManager = null;
-	
-	public PerspectiveCamera cam;
 
-	public VCameraPresetCollection cameraPresetsCollection = new VCameraPresetCollection(this);
+	public enum States{
+		MAIN,					//Main interactive camera
+		STATIC_1, 				//Volcano
+		STATIC_2,				//Hill	
+		STATIC_3,				//Sea	
+		STATIC_4,				//Beach			
+	}
 	
-	public int	cameraMode = 0;
+	private SceneManager sceneManager = null;
+	
+	private PerspectiveCamera cam;
+
+	private VCameraPresetCollection cameraPresetsCollection = new VCameraPresetCollection(this);
+	
+	private States	cameraState = States.MAIN;
 	
 	public VCamera(SceneManager o){
 		super(null);
@@ -30,42 +33,41 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
         cam.far = 3000;
         cam.update();
 	}
-	
-	//TODO: ENUM
-	//Transition sequences to specified views
-	//TRANSITION_TO_MAIN
-	//TRANSITION_TO_VIEW1
-	//TRANSITION_TO_VIEW2
-	public void setCameraMode(int mode){
-		cameraMode = mode;
-		if(mode == 0){
-			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN);
-		}
-		if(mode == 1){
+
+	public void setCameraState(States state){
+		switch(state){
+		case MAIN:
+			if(cameraState != States.MAIN)this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN);
+			break;
+		case STATIC_1:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1);
-		}		
-		if(mode == 2){
-			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_1);
-		}
-		if(mode == 3){
+			break;
+		case STATIC_2:
+			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_2);
+			break;
+		case STATIC_3:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_3);
-		}		
-		if(mode == 4){
+			break;			
+		case STATIC_4:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_4);
-		}
+			break;						
+		default:
+			break;			
+		};
+		cameraState = state;
 	}
 	public void update(){
-        
-		update(cam);
-        
+		update(cam);        
 	}	
-	
+	public States getState(){
+		return cameraState;
+	}	
 	public PerspectiveCamera get(){
 		return cam;
 	}
 	public void pan(Vector2 mouseDrag){
 		mouseDrag.x = -mouseDrag.x;
-		if(cameraMode == 0)addMomentum(mouseDrag);
+		if(cameraState == States.MAIN)addMomentum(mouseDrag);
 	}
 	//tmp: for testing
 	public void onKeyDown(int key){
@@ -76,7 +78,7 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 			System.out.println(anglePos);
 		}
 		if(key == 29){	//'a'
-			setCameraMode(1);
+//			setCameraMode(1);
 //			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1);			
 //			float pos = (float)Math.random() * 360.0f;
 //			setTransitionFov(90);
@@ -88,20 +90,22 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 	}
 	public void onPresetTransitionComplete(VCameraPresetCollection.PresetsIdentifiers sourceIdentifier, 
 			VCameraPresetCollection.PresetsIdentifiers targetIdentifier){
-		
-		sceneManager.renderUndergroundPart1 = false;
-		
-		switch(cameraMode){
-			case 1:				
-				switch(targetIdentifier){
-				case  MAIN_OVER_STATIC_VIEW_1:
-					sceneManager.renderUndergroundPart1 = true;
-					this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_1);
+		//System.out.println("complete: "+sourceIdentifier+" -> "+targetIdentifier);
+		if(cameraState != null){
+			switch(cameraState){
+				case STATIC_1:				
+					switch(targetIdentifier){
+					case  MAIN_OVER_STATIC_VIEW_1:
+						this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_1);
+						break;
+					default:
+						break;
+					}
 					break;
-				}
+			default:
 				break;		
+			}
 		}
-		System.out.println("complete: "+sourceIdentifier+" -> "+targetIdentifier);
 	}
 	public void onTransitionAngleXComplete(VCameraPresetCollection.PresetsIdentifiers sourceIdentifier, VCameraPresetCollection.PresetsIdentifiers targetIdentifier){
 	//	System.out.println("complete(AngleX): "+sourceIdentifier+" -> "+targetIdentifier);

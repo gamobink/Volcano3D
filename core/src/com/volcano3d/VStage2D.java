@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.volcano3d.VCamera.VCamera;
 
 public class VStage2D extends InputListener {
 
@@ -25,6 +26,8 @@ public class VStage2D extends InputListener {
 	protected BitmapFont font = null;
 
 	private TextButton buttonMain = null;
+	private TextButton buttonNavigation = null;
+	protected Table mainNavigationTable	= null;	
 	
 	VStage2D(SceneManager s){
 		sceneManager = s;
@@ -56,6 +59,10 @@ public class VStage2D extends InputListener {
         buttonMain.setName("BUTTON_MAIN");
         buttonMain.addListener(this);        
 		
+        buttonNavigation = new TextButton("Navi", style);
+        buttonNavigation.setName("BUTTON_NAVI");
+        buttonNavigation.addListener(this); 
+        
         Table table = new Table();
         table.setFillParent(true);
         mainStage.addActor(table);
@@ -66,21 +73,95 @@ public class VStage2D extends InputListener {
                 .height(Value.percentHeight(0.05f, table))
                 .top()
                 .left();
-        table.add().expand();
+        table.add().top().expandX();
+        table.add(buttonNavigation)
+			    .width(Value.percentWidth(0.2f, table))
+			    .height(Value.percentHeight(0.05f, table))
+			    .top()
+			    .right();
+        table.row();
+        table.add().expand();        
+        
+        //Navigation menu table
+        mainNavigationTable = new Table();
+        mainNavigationTable.setFillParent(true);
+        mainStage.addActor(mainNavigationTable);
+
+        TextButton buttonCloseNavi = new TextButton("X", style);
+        buttonCloseNavi.setName("BUTTON_CLOSENAVI");
+        buttonCloseNavi.addListener(this);
+        
+        TextButton buttonStaticView1 = new TextButton("Volcano", style);
+        buttonStaticView1.setName("BUTTON_VIEW1");
+        buttonStaticView1.addListener(this);         
+
+        TextButton buttonStaticView2 = new TextButton("Sea", style);
+        buttonStaticView2.setName("BUTTON_VIEW2");
+        buttonStaticView2.addListener(this); 
+        
+        TextButton buttonStaticView3 = new TextButton("Beach", style);
+        buttonStaticView3.setName("BUTTON_VIEW3");
+        buttonStaticView3.addListener(this);         
+        
+        mainNavigationTable.add(buttonCloseNavi)
+		        .width(Value.percentWidth(0.1f, table))
+		        .height(Value.percentHeight(0.05f, table));
+        mainNavigationTable.row();        
+        mainNavigationTable.add(buttonStaticView1)
+			    .width(Value.percentWidth(0.3f, table))
+			    .height(Value.percentHeight(0.05f, table));
+        mainNavigationTable.row();
+        mainNavigationTable.add(buttonStaticView2)
+			    .width(Value.percentWidth(0.3f, table))
+			    .height(Value.percentHeight(0.05f, table));
+        mainNavigationTable.row();        
+        mainNavigationTable.add(buttonStaticView3)
+			    .width(Value.percentWidth(0.3f, table))
+			    .height(Value.percentHeight(0.05f, table));
+        mainNavigationTable.row();
+        
+        mainNavigationTable.setVisible(false);	
+        
+        
 	}
 	
     public void renderLoader(){
         loaderStage.draw();
     }	
 	public void renderMainStage(){
+		if(sceneManager.camera.getState() == VCamera.States.MAIN){
+			buttonNavigation.setVisible(true);
+			buttonMain.setVisible(false);
+		}else{
+			buttonNavigation.setVisible(false);
+			buttonMain.setVisible(true);
+		}
 		mainStage.draw();
 	}
 	
     public void touchUp (InputEvent e, float x, float y, int pointer, int button) {
         Actor a = e.getListenerActor();
         if(a.getName() == "BUTTON_MAIN"){
-        	sceneManager.camera.setCameraMode(0);	
+        	sceneManager.camera.setCameraState(VCamera.States.MAIN);
         }
+        if(a.getName() == "BUTTON_VIEW1"){
+        	sceneManager.camera.setCameraState(VCamera.States.STATIC_1);
+        	mainNavigationTable.setVisible(false);	
+        }  
+        if(a.getName() == "BUTTON_VIEW2"){
+        	sceneManager.camera.setCameraState(VCamera.States.STATIC_3);
+        	mainNavigationTable.setVisible(false);	
+        }  
+        if(a.getName() == "BUTTON_VIEW3"){
+        	sceneManager.camera.setCameraState(VCamera.States.STATIC_4);
+        	mainNavigationTable.setVisible(false);	
+        }          
+        if(a.getName() == "BUTTON_NAVI"){
+        	mainNavigationTable.setVisible(true);	
+        }        
+        if(a.getName() == "BUTTON_CLOSENAVI"){
+        	mainNavigationTable.setVisible(false);	
+        }                
     }	
     public boolean touchDown (InputEvent e, float x, float y, int pointer, int button) {
 
