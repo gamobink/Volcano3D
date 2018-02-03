@@ -36,7 +36,7 @@ public class SceneManager {
     public boolean  objectsLoaded = false;    
     
     public Environment environment = null;
-    public VCamera camera = new VCamera();   
+    public VCamera camera = new VCamera(this);   
     public CameraInputController camController = null;
 
     public VRenderable modelSkybox = null; 
@@ -61,7 +61,7 @@ public class SceneManager {
     public VDecal decalMapTag3 = null;
     public VDecal decalMapTag4 = null;
     
-    private VStage2D stage2D = null;
+    public VStage2D stage2D = null;
     
     public SceneManager(){
 
@@ -157,6 +157,8 @@ public class SceneManager {
         decalMapTag3.render();
         decalMapTag4.render();
         
+        stage2D.renderMainStage();
+        
         //Load all assets before creating new objects
         if (assetsManager.getQueuedAssets() > 0) {
             assetsManager.finishLoading();
@@ -171,40 +173,45 @@ public class SceneManager {
     	
     	Ray r = camera.get().getPickRay(x, y);
     	if(decalMapTag1.Intersect(r)){
-    		//TODO: set state for state machine
-    		renderUndergroundPart1 = true;
+    	//	renderUndergroundPart1 = true;
     		camera.setCameraMode(1);
     	}
     	if(decalMapTag2.Intersect(r)){
+    		renderUndergroundPart1 = false;
     		
     	}
     	if(decalMapTag3.Intersect(r)){
+    		renderUndergroundPart1 = false;
+    		camera.setCameraMode(3);
     		
     	}
     	if(decalMapTag4.Intersect(r)){
-    		
+    		renderUndergroundPart1 = false;
+    		camera.setCameraMode(4);
     	}    	
     }
     
     public void onKeyDown(int keycode){
     	camera.onKeyDown(keycode);
-
+    	
     	if(keycode == 8){	//'1'    		
     		renderUndergroundPart1 = false;
     		camera.setCameraMode(0);
     	}
+    	/*
     	if(keycode == 9){	//'2'    		
-    		renderUndergroundPart1 = true;
+    		renderUndergroundPart1 = false;
     		camera.setCameraMode(1);
     	}    	
     	if(keycode == 10){	//'3'    		
-    		renderUndergroundPart1 = false;
+    		renderUndergroundPart1 = true;
     		camera.setCameraMode(2);
     	} 
     	if(keycode == 11){	//'4'    		
     		renderUndergroundPart1 = false;
     		camera.setCameraMode(3);
-    	}     	
+    	} 
+    	*/    	
     }
     
     public void dispose(){

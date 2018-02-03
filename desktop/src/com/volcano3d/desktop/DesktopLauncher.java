@@ -16,6 +16,8 @@ public class DesktopLauncher {
 		config.depth = 24;
 		config.vSyncEnabled = false; // Setting to false disables vertical sync
 		
+		//config.fullscreen = true;
+		
 		new LwjglApplication(new Volcano3D(), config);
 	}
 }

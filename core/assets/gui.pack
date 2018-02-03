@@ -1,0 +1,33 @@
+gui.png
+size: 437, 370
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+buttonoff
+  rotate: false
+  xy: 0, 0
+  size: 437, 85
+  orig: 437, 85
+  offset: 0, 0
+  index: -1
+buttonon
+  rotate: false
+  xy: 0, 85
+  size: 437, 85
+  orig: 437, 85
+  offset: 0, 0
+  index: -1
+mainbutton_off
+  rotate: false
+  xy: 0, 170
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+mainbutton_on
+  rotate: false
+  xy: 200, 170
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1

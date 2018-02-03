@@ -4,6 +4,7 @@ import java.util.EnumMap;
 
 import com.badlogic.gdx.utils.Array;
 import com.volcano3d.VCamera.CameraPresets.VCameraPresetMain;
+import com.volcano3d.VCamera.CameraPresets.VCameraPresetStatic;
 
 public class VCameraPresetCollection {
 	
@@ -15,6 +16,8 @@ public class VCameraPresetCollection {
 		//VCameraPresetStatic
 		STATIC_VIEW_1, 				//Volcano
 		STATIC_VIEW_2,				//Hill	
+		STATIC_VIEW_3,				//Sea	
+		STATIC_VIEW_4,				//Beach			
 	}
 	
 	public VCameraPreset 		finalPreset = null;
@@ -26,7 +29,12 @@ public class VCameraPresetCollection {
 		addPreset(PresetsIdentifiers.MAIN, new VCameraPresetMain(PresetsIdentifiers.MAIN));
 		addPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1, new VCameraPresetMain(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1));
 		addPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_2, new VCameraPresetMain(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_2));	
+		addPreset(PresetsIdentifiers.STATIC_VIEW_1, new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_1));
+		addPreset(PresetsIdentifiers.STATIC_VIEW_2, new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_2));	
+		addPreset(PresetsIdentifiers.STATIC_VIEW_3, new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_3));	
+		addPreset(PresetsIdentifiers.STATIC_VIEW_4, new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_4));	
 		
+		transitionToPreset(PresetsIdentifiers.MAIN);
 	}
 	
 	public void addPreset(PresetsIdentifiers identifier, VCameraPreset preset){
@@ -37,10 +45,10 @@ public class VCameraPresetCollection {
 	}	
 	
 	public void transitionToPreset(PresetsIdentifiers targetPresetIdentifier){
-		
+		System.out.println("trans to "+targetPresetIdentifier);
 		VCameraPreset target = getPreset(targetPresetIdentifier);
 		if(target != null){			
-			finalPreset.setTransitionFromPreset(target);			
+			finalPreset.setTransitionFromPreset(target, targetPresetIdentifier);			
 		}
 	}
 	

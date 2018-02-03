@@ -21,8 +21,9 @@ public class Volcano3D extends ApplicationAdapter implements InputProcessor, Ges
 		sceneManager = new SceneManager();
 		
 		GestureDetector gd = new GestureDetector(this);
-		Gdx.input.setInputProcessor(new InputMultiplexer(gd, this));
+		Gdx.input.setInputProcessor(new InputMultiplexer(sceneManager.stage2D.mainStage, gd, this));
 	}
+	//, sceneManager.stage2D
 
 	@Override
 	public void render () {

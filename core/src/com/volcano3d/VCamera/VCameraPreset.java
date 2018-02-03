@@ -9,38 +9,54 @@ import com.badlogic.gdx.utils.Array;
 import com.volcano3d.Utility.VCommon;
 
 public class VCameraPreset {
-
-	//Interface for camera callbacks
-	public class VCameraCallback{
+	
+	//Interface for camera callback
+	public interface VCameraPresetCallback{
 		
-		public void onPresetTransitionComplete(){
-			
-		}
-		//onTransitionAngleXComplete
-		//onTransitionAngleYComplete
-		//onTransitionFOVComplete
-		//onTransitionDistanceComplete
-		//onTransitionPivotComplete		
+		public void onPresetTransitionComplete(VCameraPresetCollection.PresetsIdentifiers sourceIdentifier, VCameraPresetCollection.PresetsIdentifiers targetIdentifier);
+		public void onTransitionAngleXComplete(VCameraPresetCollection.PresetsIdentifiers sourceIdentifier, VCameraPresetCollection.PresetsIdentifiers targetIdentifier);
+		public void onTransitionAngleYComplete(VCameraPresetCollection.PresetsIdentifiers sourceIdentifier, VCameraPresetCollection.PresetsIdentifiers targetIdentifier);
+		public void onTransitionFovComplete(VCameraPresetCollection.PresetsIdentifiers sourceIdentifier, VCameraPresetCollection.PresetsIdentifiers targetIdentifier);
+		public void onTransitionDistanceComplete(VCameraPresetCollection.PresetsIdentifiers sourceIdentifier, VCameraPresetCollection.PresetsIdentifiers targetIdentifier);
+		public void onTransitionPivotComplete(VCameraPresetCollection.PresetsIdentifiers sourceIdentifier, VCameraPresetCollection.PresetsIdentifiers targetIdentifier);		
 	}
+	//Internal variables
+	private Vector2 _momentum = new Vector2(0,0);
+	private Vector2 _velocity = new Vector2(0,0);
 	
+	//Preset transition variables
+	private VCameraPresetCallback callback = null;
+	private VCameraPresetCollection.PresetsIdentifiers identifier = null;
+	private VCameraPresetCollection.PresetsIdentifiers targetIdentifierTransition = null;
+	
+	//Public camera settings
 	public Vector3 	pivotPosition = new Vector3(-50,11,-150);
-	public float 	distance = 650.0f;
-	
-	public Vector2 anglePos = new Vector2(-26, 7);
-	public Vector2 friction = new Vector2(0.3f, 0.3f);
-	public Vector2 velocity = new Vector2(0,0);
-	public Vector2 velocityMax = new Vector2(100,100);
-	public Vector2 momentum = new Vector2(0,0);
-	
-	public float 	targetX = 0;	//[0 : 360]
-	public boolean 	moveToTargetX = false;
-	public float 	targetY = 0;	//[-85 : 85]
-	public boolean 	moveToTargetY = false;
-
+	public float	fov = 35.0f;
+	public float 	distance = 650.0f;	
+	public Vector2 	anglePos = new Vector2(75, 11);
+	public Vector2 	friction = new Vector2(0.3f, 0.3f);
+	public Vector2 	velocityMax = new Vector2(100,100);
+	public float	fovChangeMax = 20;
+	public float	distanceChangeMax = 200;
+	public float	pivotVelocityMax = 100;
+	public float 	targetAngleX = 0;						//[0 : 360]
+	public boolean 	transitionAngleXEnabled = false;
+	public float 	targetAngleY = 0;						//[-85 : 85]
+	public boolean 	transitionAngleYEnabled = false;
+	public float	targetFov = 0;
+	public boolean 	transitionFovEnabled = false;
+	public float	targetDistance = 0;
+	public boolean 	transitionDistanceEnabled = false;
+	public Vector3 	targetPivot = new Vector3();
+	public boolean	transitionPivotEnabled = false;
 	public boolean 	gravityEnabled = true;
-	private boolean wayPointsEnabled = true;
-	//public boolean wayPointsEnabled = true;
-	//public boolean paningEnabled = true;
+	public boolean 	wayPointsEnabled = false;
+	//Target goal 	
+	public float	transitionAngleXGoal = 8.0f;	//4.0f;
+	public float	transitionAngleYGoal = 8.0f;	//4.0f
+	public float 	transitionFovGoal = 8.0f;		//2.0f
+	public float 	transitionDistanceGoal = 8.0f;	//2.0f
+	public float 	transitionPivotGoal = 8.0f;		//2.0f
 	
 	public class WayPoint{
 		public WayPoint(float a, float my){
@@ -49,33 +65,15 @@ public class VCameraPreset {
 		}
 		public float anglePos = 0; //[0 : 360]
 		public float minY = 5; //[-85 : 85]
-		//targetDistance
-		//targetFOV
 	};
 	public Array<WayPoint> wayPoints = new Array<WayPoint>();	
 	
-	public VCameraPreset(){
-		
-        wayPoints.add(new WayPoint(0, 2));
-        wayPoints.add(new WayPoint(10, 3));
-        wayPoints.add(new WayPoint(25, 5));
-        wayPoints.add(new WayPoint(40, 6));        
-        wayPoints.add(new WayPoint(60, 7));
-        wayPoints.add(new WayPoint(80, 5));
-        wayPoints.add(new WayPoint(100, 8));        
-        wayPoints.add(new WayPoint(110, 10));
-        wayPoints.add(new WayPoint(120, 9)); 
-        wayPoints.add(new WayPoint(140, 10)); 
-        wayPoints.add(new WayPoint(160, 9));
-        wayPoints.add(new WayPoint(170, 8));
-        wayPoints.add(new WayPoint(185, 5)); 
-        wayPoints.add(new WayPoint(200, 6)); 
-        wayPoints.add(new WayPoint(205, 2)); 
-        wayPoints.add(new WayPoint(340, 2)); 
-        wayPoints.add(new WayPoint(360, 2)); 
-               
+	public VCameraPreset(VCameraPresetCollection.PresetsIdentifiers idt){
+		identifier = idt;
 	}
-	
+	public void setCallback(VCameraPresetCallback call){
+		callback = call;
+	}
 	public void addWayPoint(WayPoint wp){
 		wayPoints.add(wp);		
 	}
@@ -93,71 +91,124 @@ public class VCameraPreset {
 		nm.scl(distance);
 		
 		cam.position.set((pivotPosition.cpy().sub(nm)));
-        cam.up.set(0,1,0);        
+        cam.up.set(0,1,0);   
+        cam.fieldOfView = fov;
         cam.update();               
 	}	
 	private void updateMotion(){
 		float dt = Gdx.graphics.getDeltaTime();
+		boolean transitionInProgress = false;
 		
-		velocity.add(momentum);
-		momentum.set(0,0);
+		_velocity.add(_momentum);
+		_momentum.set(0,0);
 		
-		anglePos.add(velocity.cpy().scl(dt));
+		anglePos.add(_velocity.cpy().scl(dt));
 		
-		velocity.x = velocity.x * (float)Math.pow(friction.x, dt);
-		velocity.y = velocity.y * (float)Math.pow(friction.y, dt);
+		_velocity.x = _velocity.x * (float)Math.pow(friction.x, dt);
+		_velocity.y = _velocity.y * (float)Math.pow(friction.y, dt);
 		
-		if(moveToTargetX){			
-			float diffX = targetX - anglePos.x;
+		if(transitionAngleXEnabled){			
+			float diffX = targetAngleX - anglePos.x;
 	        while (diffX < -180) diffX += 360;
 	        while (diffX > 180) diffX -= 360;
-	        velocity.x = diffX;
-	        if(Math.abs(diffX) < 4.0f)moveToTargetX = false;
+	        _velocity.x = diffX;
+	        if(Math.abs(diffX) < transitionAngleXGoal){
+	        	transitionAngleXEnabled = false;
+	        	if(callback != null)callback.onTransitionAngleXComplete(identifier, targetIdentifierTransition);
+	        }else transitionInProgress = true;
 		}
-		if(moveToTargetY){
-			float diffY = targetY - anglePos.y;
+		if(transitionAngleYEnabled){
+			float diffY = targetAngleY - anglePos.y;
 	        while (diffY < -180) diffY += 360;
 	        while (diffY > 180) diffY -= 360;
-	        velocity.y = diffY;
-	        if(Math.abs(diffY) < 4.0f)moveToTargetY = false;
-		}		
+	        _velocity.y = diffY;
+	        if(Math.abs(diffY) < transitionAngleYGoal){
+	        	transitionAngleYEnabled = false;
+	        	if(callback != null)callback.onTransitionAngleYComplete(identifier, targetIdentifierTransition);
+	        }else transitionInProgress = true;
+		}
+		if(transitionFovEnabled){
+			float diffF = targetFov - fov;			
+			fov += Math.max(-fovChangeMax, Math.min(diffF, fovChangeMax)) * dt;
+			if(Math.abs(diffF) < transitionFovGoal){
+				transitionFovEnabled = false;
+				if(callback != null)callback.onTransitionFovComplete(identifier, targetIdentifierTransition);
+			}else transitionInProgress = true;
+		}
+		if(transitionDistanceEnabled){
+			float diffF = targetDistance - distance;			
+			distance += Math.max(-distanceChangeMax, Math.min(diffF, distanceChangeMax)) * dt;
+			if(Math.abs(diffF) < transitionDistanceGoal){
+				transitionDistanceEnabled = false;
+				if(callback != null)callback.onTransitionDistanceComplete(identifier, targetIdentifierTransition);
+			}else transitionInProgress = true;
+		}	
+		if(transitionPivotEnabled){
+			Vector3 diff = targetPivot.cpy().sub(pivotPosition);
+			if(diff.len2() < transitionPivotGoal){
+				transitionPivotEnabled = false;	
+				if(callback != null)callback.onTransitionPivotComplete(identifier, targetIdentifierTransition);
+			}else transitionInProgress = true;
+			diff.clamp(-pivotVelocityMax, pivotVelocityMax);
+			pivotPosition.add(diff.scl(dt));
+		}
 		WayPoint wp = getInterpolatedWayPoint();
 		//Limit camera movement Y axis
-		if(wp.minY > anglePos.y && wayPointsEnabled)velocity.y = -(anglePos.y - wp.minY) * 10.0f;
+		if(wp.minY > anglePos.y && wayPointsEnabled)_velocity.y = -(anglePos.y - wp.minY) * 10.0f;
 		
 		//Add small gravity to camera
 		if(gravityEnabled){
 			float offsetY = 3.0f;
 			if(anglePos.y > (wp.minY + offsetY)){
-				velocity.y += ((wp.minY + offsetY) - anglePos.y) * 0.3f * dt;
+				_velocity.y += ((wp.minY + offsetY) - anglePos.y) * 0.3f * dt;
 			}
+			_velocity.x += 2 * dt;
 		}
 		//Clamp to maximum velocity
-		velocity.x = Math.min(Math.max(velocity.x, -velocityMax.x), velocityMax.x);
-		velocity.y = Math.min(Math.max(velocity.y, -velocityMax.y), velocityMax.y);		
+		_velocity.x = Math.min(Math.max(_velocity.x, -velocityMax.x), velocityMax.x);
+		_velocity.y = Math.min(Math.max(_velocity.y, -velocityMax.y), velocityMax.y);		
 		
 		if(anglePos.x > 360 || anglePos.x < -360)anglePos.x = 0;
 		if(anglePos.y > 360 || anglePos.y < -360)anglePos.y = 0;		
 		
 		if(anglePos.y > 85)anglePos.y = 85;
 		if(anglePos.y < -85)anglePos.y = -85;
-
+		
+		//Check for preset transition completion		
+		if(targetIdentifierTransition!= null && !transitionInProgress){
+			if(callback != null)callback.onPresetTransitionComplete(identifier, targetIdentifierTransition);
+			//System.out.println("trans complete: "+identifier+" -> "+targetIdentifierTransition);
+			identifier = targetIdentifierTransition;
+			targetIdentifierTransition = null;
+		}
 		//System.out.println(anglePos);
 	}	
 	public void addMomentum(Vector2 v){
 		Vector2 mv = v.scl(Gdx.graphics.getDeltaTime());
 		mv.scl(new Vector2(10,5));
-		momentum.add(mv);
+		_momentum.add(mv);
 	}
-	public void moveToTargetX(float angleX){
+	public void setTransitionAngleX(float angleX){
 		angleX = Math.min(Math.max(angleX, 0), 360);
-		moveToTargetX = true;
-		targetX = angleX;
+		transitionAngleXEnabled = true;
+		targetAngleX = angleX;
 	}
-	public void moveToTargetY(float angleY){
+	public void setTransitionAngleY(float angleY){
 		angleY = Math.min(Math.max(angleY, -85), 85);
-		moveToTargetY = true;
-		targetY = angleY;
+		transitionAngleYEnabled = true;
+		targetAngleY = angleY;
+	}
+	public void setTransitionFov(float fov){
+		targetFov = fov;
+		transitionFovEnabled = true;
+	}
+	public void setTransitionDistance(float dist){
+		targetDistance = dist;
+		transitionDistanceEnabled = true;
+	}	
+	public void setTransitionPivot(Vector3 p){
+		targetPivot.set(p);
+		transitionPivotEnabled = true;
 	}
 	private WayPoint getInterpolatedWayPoint(){
 		
@@ -200,8 +251,29 @@ public class VCameraPreset {
 		return new WayPoint(0,0);
 	}
 	
-	public void setTransitionFromPreset(VCameraPreset target){
+	public void setTransitionFromPreset(VCameraPreset target, VCameraPresetCollection.PresetsIdentifiers targetIdentifier){
 		
+		this.wayPoints.clear();
+		if(target.wayPoints.size > 0){
+			this.wayPoints = new Array<WayPoint>(target.wayPoints);
+		}
 		
+		if(targetIdentifier != VCameraPresetCollection.PresetsIdentifiers.MAIN)this.setTransitionAngleX(target.anglePos.x);
+		this.setTransitionAngleY(target.anglePos.y);
+		this.setTransitionDistance(target.distance);
+		this.setTransitionFov(target.fov);
+		this.setTransitionPivot(target.pivotPosition);
+
+		friction.set(target.friction);
+		velocityMax.set(target.velocityMax);
+		fovChangeMax = target.fovChangeMax;
+		distanceChangeMax = target.distanceChangeMax;		
+		pivotVelocityMax = target.pivotVelocityMax;
+
+		//set after transition is finished
+		gravityEnabled = target.gravityEnabled;
+		wayPointsEnabled = target.wayPointsEnabled;
+		
+		targetIdentifierTransition = targetIdentifier;
 	}
 }
