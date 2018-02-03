@@ -150,8 +150,11 @@ public class SceneManager {
         	modelGroundAround2.render(camera.get(), environment);
         }
         if(camera.getState() == VCamera.States.MAIN){
-        	decalsTags.render();
+        	decalsTags.setFadeOn();
+        }else{
+        	decalsTags.setFadeOff();
         }
+    	decalsTags.render();
         
         stage2D.renderMainStage();
         
