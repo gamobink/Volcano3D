@@ -9,11 +9,13 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
+import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
@@ -30,32 +32,29 @@ import com.badlogic.gdx.utils.JsonReader;
 
 public class VRenderable {
 
-	private SceneManager sceneManager;
+	protected SceneManager sceneManager;
 
-    private String modelName = "";
+	protected String modelName = "";
 
-    public ModelBatch modelBatch = null;
-    public ModelInstance modelInstance = null;    
+	protected ModelBatch modelBatch = null;
+	protected ModelInstance modelInstance = null;    
     
     public VShader vShader = null;
     
-    
-    public DefaultShader shader = null;
+    protected BlendingAttribute blendingAttribute;
+    protected Material material;
+	
+	protected boolean 	fadeOffAlpha = false;
+	protected boolean 	fadeOnAlpha = false;
+	protected float		fadeAlphaSpeeed = 0.5f;
+	
+	protected DefaultShader shader = null;
     
     public VRenderable(SceneManager o){
     	sceneManager = o;
     }
     public VRenderable(SceneManager o, String filename){
-    	sceneManager = o;
-        modelName = filename;
-
-        ModelLoader.ModelParameters modelParameters = new ModelLoader.ModelParameters();
-        modelParameters.textureParameter.genMipMaps = true;
-        modelParameters.textureParameter.minFilter = TextureFilter.MipMap;
-        modelParameters.textureParameter.magFilter = TextureFilter.Linear;
-
-        sceneManager.assetsManager.load(modelName, Model.class, modelParameters);
-    	vShader = null;
+    	this(o, filename, null);
     }
     public VRenderable(SceneManager o, String filename, VShader shader){
     	sceneManager = o;
@@ -80,6 +79,10 @@ public class VRenderable {
         if(sceneManager.assetsManager.isLoaded(modelName)) {
             Model model = sceneManager.assetsManager.get(modelName, Model.class);
             modelInstance = new ModelInstance(model);
+            
+            material = modelInstance.materials.get(0);
+            
+            blendingAttribute = new BlendingAttribute(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
             
             if(vShader != null){
             	modelBatch = new ModelBatch(vert, frag);
@@ -108,21 +111,44 @@ public class VRenderable {
             modelInstance.transform.translate(pos);
         }
     }
-
+	public void setFadeOff(){
+		fadeOnAlpha = false;
+		fadeOffAlpha = true;		
+	}
+	public void setFadeOn(){
+		fadeOnAlpha = true;
+		fadeOffAlpha = false;				
+	}
     public void setColor(float r, float g, float b){
         if(modelInstance != null)modelInstance.materials.get(0).set(ColorAttribute.createDiffuse(r,g,b,1));
     }
-
+    public void setTransparency(float f){
+    	blendingAttribute.opacity = f;
+    	material.set(blendingAttribute);
+    }
+    
     public void render(PerspectiveCamera cam, Environment env){
-        modelBatch.begin(cam);
-        if(modelInstance != null){
-        	//modelBatch.render(modelInstance, env, shader);
-        	//if(vShader != null)modelBatch.render(modelInstance, env, vShader.shader);
-        	//else 
-        	modelBatch.render(modelInstance, env);
-        }
-        else System.out.println("Renderable:render instance not created "+modelName);
-        modelBatch.end();       
+    	float dt = Gdx.graphics.getDeltaTime();
+    	if(fadeOffAlpha){
+    		blendingAttribute.opacity -= dt * fadeAlphaSpeeed;
+    		if(blendingAttribute.opacity <= 0)blendingAttribute.opacity = 0;
+    		material.set(blendingAttribute);
+    	}else if(fadeOnAlpha){
+    		blendingAttribute.opacity += dt * fadeAlphaSpeeed;    		
+    		if(blendingAttribute.opacity >= 1)blendingAttribute.opacity = 1;
+    		material.set(blendingAttribute);
+    	}  
+    	if(blendingAttribute.opacity > 0){
+	        modelBatch.begin(cam);
+	        if(modelInstance != null){
+	        	//modelBatch.render(modelInstance, env, shader);
+	        	//if(vShader != null)modelBatch.render(modelInstance, env, vShader.shader);
+	        	//else 
+	        	modelBatch.render(modelInstance, env);
+	        }
+	        else System.out.println("Renderable:render instance not created "+modelName);
+	        modelBatch.end();       
+    	}
     }
 
     public void dispose(){

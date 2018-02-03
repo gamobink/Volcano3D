@@ -146,7 +146,7 @@ public class VStage2D extends InputListener {
         }
         if(a.getName() == "BUTTON_VIEW1"){
         	sceneManager.camera.setCameraState(VCamera.States.STATIC_1);
-        	mainNavigationTable.setVisible(false);	
+        	mainNavigationTable.setVisible(false);
         }  
         if(a.getName() == "BUTTON_VIEW2"){
         	sceneManager.camera.setCameraState(VCamera.States.STATIC_3);

@@ -50,17 +50,18 @@ public class VDecalGroup {
     		fadeAlpha += dt;    		
     		if(fadeAlpha >= 1)fadeAlpha = 1;
     	}
-    	
-    	Gdx.gl.glDisable(GL20.GL_DEPTH_TEST); 
-    	for(int i=0;i<decals.size;i++){
-	    	VDecal d = decals.get(i);
-	    	if(d!=null){
-	    		d.decal.lookAt(sceneManager.camera.get().position, sceneManager.camera.get().up);
-	    		d.decal.setColor(1, 1, 1, fadeAlpha);
-	    		decalBatch.add(d.decal);
+    	if(fadeAlpha > 0){
+	    	Gdx.gl.glDisable(GL20.GL_DEPTH_TEST); 
+	    	for(int i=0;i<decals.size;i++){
+		    	VDecal d = decals.get(i);
+		    	if(d!=null){
+		    		d.decal.lookAt(sceneManager.camera.get().position, sceneManager.camera.get().up);
+		    		d.decal.setColor(1, 1, 1, fadeAlpha);
+		    		decalBatch.add(d.decal);
+		    	}
 	    	}
+	    	decalBatch.flush();
     	}
-    	decalBatch.flush();
     }
 	public int Intersect(Ray r){
 		for(int i=0;i<decals.size;i++){

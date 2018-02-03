@@ -14,7 +14,7 @@ public class DesktopLauncher {
 		config.title = "Volcano3D";
 		config.samples = 6;
 		config.depth = 24;
-		config.vSyncEnabled = false; // Setting to false disables vertical sync
+		config.vSyncEnabled = true;//false; // Setting to false disables vertical sync
 		
 		//config.fullscreen = true;
 		

@@ -144,11 +144,20 @@ public class SceneManager {
         modelGroundAround3.render(camera.get(), environment); 
         
         if(camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_1){
-        	modelUnderground1.render(camera.get(), environment);	        	
+        	modelGround2.setFadeOff();
+        	modelGroundAround2.setFadeOff();        	
         }else{
-        	modelGround2.render(camera.get(), environment);
-        	modelGroundAround2.render(camera.get(), environment);
+        	modelGround2.setFadeOn();
+        	modelGroundAround2.setFadeOn();
         }
+        //TODO: Render parts based on camera states
+     //   if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
+        	modelUnderground1.render(camera.get(), environment);
+      //  }
+  
+        modelGround2.render(camera.get(), environment);  
+        modelGroundAround2.render(camera.get(), environment);
+    	
         if(camera.getState() == VCamera.States.MAIN){
         	decalsTags.setFadeOn();
         }else{
