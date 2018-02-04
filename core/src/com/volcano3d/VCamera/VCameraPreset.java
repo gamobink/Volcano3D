@@ -289,7 +289,7 @@ public class VCameraPreset {
 		
 		targetIdentifierTransition = targetIdentifier;
 		
-		//System.out.println("trans to "+targetIdentifier+", "+identifier);
+	//	System.out.println("trans to "+targetIdentifier+", "+identifier);
 
 	}
 }

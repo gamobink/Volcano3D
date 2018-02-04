@@ -26,7 +26,7 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 	
 	public VCamera(SceneManager o){
 		super(null);
-		sceneManager = o;
+		setSceneManager(o);
 		setCallback(this);
 		cam = new PerspectiveCamera(35, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cam.near = 1f;
@@ -37,7 +37,16 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 	public void setCameraState(States state){
 		switch(state){
 		case MAIN:
-			if(cameraState != States.MAIN)this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN);
+			if(cameraState != States.MAIN){
+				switch(this.getCurrentPreset()){
+				case STATIC_VIEW_1:
+					this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1);					
+				break;
+				default:
+					this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN);
+					break;
+				}			
+			}
 			break;
 		case STATIC_1:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1);
@@ -102,6 +111,15 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 						break;
 					}
 					break;
+				case MAIN:
+					switch(targetIdentifier){
+					case  MAIN_OVER_STATIC_VIEW_1:
+						this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN);
+						break;
+					default:
+						break;
+					}						
+					break;
 			default:
 				break;		
 			}
@@ -121,5 +139,13 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 	}
 	public void onTransitionPivotComplete(VCameraPresetCollection.PresetsIdentifiers sourceIdentifier, VCameraPresetCollection.PresetsIdentifiers targetIdentifier){
 //		System.out.println("complete(Pivot): "+sourceIdentifier+" -> "+targetIdentifier);	
+	}
+
+	public SceneManager getSceneManager() {
+		return sceneManager;
+	}
+
+	public void setSceneManager(SceneManager sceneManager) {
+		this.sceneManager = sceneManager;
 	}			
 }

@@ -1,26 +1,16 @@
 package com.volcano3d;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
-import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
-import com.badlogic.gdx.utils.Array;
 import com.volcano3d.Utility.TextAsset;
 import com.volcano3d.Utility.TextAssetLoader;
 import com.volcano3d.VCamera.VCamera;
@@ -178,21 +168,21 @@ public class SceneManager {
     }
 
     public void onTap(float x, float y, int count, int button){
-    	
-    	Ray r = camera.get().getPickRay(x, y);
-    	int iint = decalsTags.Intersect(r);
-		switch(iint){
-		case 0:
-			camera.setCameraState(VCamera.States.STATIC_1);
-			break;
-		case 2:
-			camera.setCameraState(VCamera.States.STATIC_3);
-			break;
-		case 3:
-			camera.setCameraState(VCamera.States.STATIC_4);
-			break;			
-		};
-
+    	if(camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.MAIN){
+	    	Ray r = camera.get().getPickRay(x, y);
+	    	int iint = decalsTags.Intersect(r);
+			switch(iint){
+			case 0:
+				camera.setCameraState(VCamera.States.STATIC_1);
+				break;
+			case 2:
+				camera.setCameraState(VCamera.States.STATIC_3);
+				break;
+			case 3:
+				camera.setCameraState(VCamera.States.STATIC_4);
+				break;			
+			};
+    	}
     }
     
     public void onKeyDown(int keycode){

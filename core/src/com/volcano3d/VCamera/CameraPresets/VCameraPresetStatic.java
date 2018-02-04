@@ -36,6 +36,8 @@ public class VCameraPresetStatic extends VCameraPreset {
 			this.distance = 300.0f;
 			this.pivotPosition.set(-7, 45, -550);
 			this.anglePos.x = 0;
+			break;
+		default:
 			break;						
 		}
 	}	

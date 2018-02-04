@@ -2,7 +2,6 @@ package com.volcano3d.VCamera.CameraPresets;
 
 import com.volcano3d.VCamera.VCameraPreset;
 import com.volcano3d.VCamera.VCameraPresetCollection;
-import com.volcano3d.VCamera.VCameraPreset.WayPoint;
 
 public class VCameraPresetMain extends VCameraPreset {
 	public VCameraPresetMain(VCameraPresetCollection.PresetsIdentifiers identifier){
@@ -43,6 +42,8 @@ public class VCameraPresetMain extends VCameraPreset {
 			break;			
 		case MAIN_OVER_STATIC_VIEW_2:
 			
+			break;
+		default:
 			break;			
 		}
 	}	

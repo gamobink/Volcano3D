@@ -2,7 +2,6 @@ package com.volcano3d.VCamera;
 
 import java.util.EnumMap;
 
-import com.badlogic.gdx.utils.Array;
 import com.volcano3d.VCamera.CameraPresets.VCameraPresetMain;
 import com.volcano3d.VCamera.CameraPresets.VCameraPresetStatic;
 
