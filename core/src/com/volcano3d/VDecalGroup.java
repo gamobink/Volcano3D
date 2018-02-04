@@ -45,7 +45,7 @@ public class VDecalGroup {
     		fadeAlpha -= dt;
     		if(fadeAlpha <= 0)fadeAlpha = 0;
     	}else if(fadeOnAlpha){
-    		fadeAlpha += dt;    		
+    		fadeAlpha += dt;
     		if(fadeAlpha >= 1)fadeAlpha = 1;
     	}
     	if(fadeAlpha > 0){

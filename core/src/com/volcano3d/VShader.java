@@ -1,8 +1,7 @@
 package com.volcano3d;
 
-import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.Renderable;
-import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.volcano3d.Utility.TextAsset;
 
@@ -26,19 +25,25 @@ public class VShader {
 	
 	public void init(Renderable renderable){
 
-		if(sceneManager.assetsManager.isLoaded(vsName)
-				&& sceneManager.assetsManager.isLoaded(fsName)) {
+		//if(sceneManager.assetsManager.isLoaded(vsName)
+		//		&& sceneManager.assetsManager.isLoaded(fsName)) {
 			
-			vsString = sceneManager.assetsManager.get(vsName, TextAsset.class ).getString();
-			fsString = sceneManager.assetsManager.get(fsName, TextAsset.class ).getString();
+			//vsString = sceneManager.assetsManager.get(vsName, TextAsset.class ).getString();
+			//fsString = sceneManager.assetsManager.get(fsName, TextAsset.class ).getString();
+			
+			//System.out.println(shaderConfig.fragmentShader);
+			
+	        String vert = Gdx.files.internal("shaders/sky.vertex.glsl").readString();
+	        String frag = Gdx.files.internal("shaders/sky.fragment.glsl").readString();
 
-			shaderConfig = new DefaultShader.Config(vsString, fsString);
-			
-			System.out.println(shaderConfig.fragmentShader);
-			
-			shader = new DefaultShader(renderable, shaderConfig, "", vsString, fsString);
+			shaderConfig = new DefaultShader.Config(vert, frag);
+
+			shader = new DefaultShader(renderable, shaderConfig, "", vert, frag);
 			shader.init();
-		}
+	//	}
+	}
+	public DefaultShader get(){
+		return shader;
 	}
 	
 }

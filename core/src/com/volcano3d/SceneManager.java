@@ -42,9 +42,6 @@ public class SceneManager {
     public VRenderable modelGroundAround3 = null; 
     public VRenderable modelUnderground1 = null; 
     
-    //TODO: state machine
-    //public boolean renderUndergroundPart1 = false;
-    
     public VShader shaderSky = null;
     
     public VDecalGroup decalsTags = new VDecalGroup(this);
@@ -70,6 +67,7 @@ public class SceneManager {
         environment.add(new DirectionalLight().set(0.4f, 0.4f, 0.6f,  0f, -0.8f, 1));  
         
         shaderSky = new VShader(this, "shaders/sky.vertex.glsl", "shaders/sky.fragment.glsl");
+        
 //        shaderSky = new VShader(this, "shaders/default.vertex.glsl", "shaders/default.fragment.glsl");
         
         modelSkybox = new VRenderable(this, "sky.g3dj", shaderSky);

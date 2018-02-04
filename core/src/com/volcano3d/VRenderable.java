@@ -2,11 +2,8 @@ package com.volcano3d;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
@@ -14,17 +11,11 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Renderable;
-import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
-import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
-import com.badlogic.gdx.graphics.g3d.shaders.BaseShader;
 import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.math.Vector;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.JsonReader;
 
 /**
  * Created by T510 on 8/6/2017.
@@ -73,8 +64,8 @@ public class VRenderable {
         
         String vert = Gdx.files.internal("shaders/sky.vertex.glsl").readString();
         String frag = Gdx.files.internal("shaders/sky.fragment.glsl").readString();
-//        modelBatch = new ModelBatch(vert, frag);
-        //modelBatch = new ModelBatch();
+
+        modelBatch = new ModelBatch();
         
         if(sceneManager.assetsManager.isLoaded(modelName)) {
             Model model = sceneManager.assetsManager.get(modelName, Model.class);
@@ -85,21 +76,17 @@ public class VRenderable {
             blendingAttribute = new BlendingAttribute(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
             
             if(vShader != null){
-            	modelBatch = new ModelBatch(vert, frag);
-		        //Renderable renderable = new Renderable();
-		        //renderable = modelInstance.getRenderable(renderable);
-		        //vShader.init(renderable);
-
-		        //System.out.println(vShader);
+            	//modelBatch = new ModelBatch(vert, frag);
+            	
+		        Renderable renderable = new Renderable();
+		        renderable = modelInstance.getRenderable(renderable);
 		        
-		        //DefaultShader.Config shaderConfig = new DefaultShader.Config(vert, frag);
-				
-				//System.out.println(shaderConfig.fragmentShader);
-				
-				//shader = new DefaultShader(renderable, shaderConfig, "", vert, frag);
-				//shader.init();		
-				//System.out.println(shader);
-            }else modelBatch = new ModelBatch();
+		        //vShader.init(renderable);
+		        
+		        DefaultShader.Config shaderConfig = new DefaultShader.Config(vert, frag);
+		        shader = new DefaultShader(renderable, shaderConfig, "", vert, frag);
+				shader.init();						
+           }
         }else{
             System.out.println("Renderable:init asset not loaded "+modelName);
         }
@@ -144,7 +131,10 @@ public class VRenderable {
 	        	//modelBatch.render(modelInstance, env, shader);
 	        	//if(vShader != null)modelBatch.render(modelInstance, env, vShader.shader);
 	        	//else 
-	        	modelBatch.render(modelInstance, env);
+//	        	modelBatch.render(modelInstance, env, shader);
+	        	
+//	        	modelBatch.render(modelInstance, vShader.get());
+	        	modelBatch.render(modelInstance, env, shader);
 	        }
 	        else System.out.println("Renderable:render instance not created "+modelName);
 	        modelBatch.end();       
