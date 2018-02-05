@@ -15,6 +15,10 @@ import com.volcano3d.Utility.TextAsset;
 import com.volcano3d.Utility.TextAssetLoader;
 import com.volcano3d.VCamera.VCamera;
 import com.volcano3d.VCamera.VCameraPresetCollection;
+import com.volcano3d.VCore.VDecal;
+import com.volcano3d.VCore.VDecalGroup;
+import com.volcano3d.VCore.VRenderable;
+import com.volcano3d.VCore.VShader;
 
 /**
  * Created by T510 on 8/2/2017.
@@ -46,7 +50,7 @@ public class SceneManager {
     
     public VDecalGroup decalsTags = new VDecalGroup(this);
     
-    public VStage2D stage2D = null;
+    public MainStage stage2D = null;
     
     public SceneManager(){
 
@@ -87,7 +91,7 @@ public class SceneManager {
         decalsTags.addDecal(new VDecal("sign3.png", new Vector3(146, 42, -216), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign4.png", new Vector3(-7, 45, -550), new Vector2(50,50)));        
         
-        stage2D = new VStage2D(this);
+        stage2D = new MainStage(this);
     }
     //Call init() on loading complete
     void init(){

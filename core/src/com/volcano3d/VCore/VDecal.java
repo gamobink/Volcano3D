@@ -1,4 +1,4 @@
-package com.volcano3d;
+package com.volcano3d.VCore;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

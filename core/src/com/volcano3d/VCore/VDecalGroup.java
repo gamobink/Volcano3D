@@ -1,4 +1,4 @@
-package com.volcano3d;
+package com.volcano3d.VCore;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.utils.Array;
+import com.volcano3d.SceneManager;
 
 public class VDecalGroup {
 

@@ -1,4 +1,4 @@
-package com.volcano3d;
+package com.volcano3d.VCore;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
@@ -11,12 +11,14 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Renderable;
+import com.badlogic.gdx.graphics.g3d.RenderableProvider;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
+import com.volcano3d.SceneManager;
 
 /**
  * Created by T510 on 8/6/2017.
@@ -26,18 +28,41 @@ public class VRenderable {
 
 	public class MyModelBatch extends ModelBatch{
 		
+		public DefaultShader customShader = null;
+		
+		public void render (final RenderableProvider renderableProvider, final Environment environment, final Shader shader) {
+			//System.out.println("shader "+shader);
+			final int offset = renderables.size;
+			renderableProvider.getRenderables(renderables, renderablesPool);
+			for (int i = offset; i < renderables.size; i++) {
+				Renderable renderable = renderables.get(i);
+				renderable.environment = environment;
+				renderable.shader = shader;
+				renderable.shader = shaderProvider.getShader(renderable);
+				
+				if(shader!=null)System.out.println(shader.canRender(renderable));
+
+				//if(shader!=null)renderable.shader = shader;
+			}
+		}		
+		
 		public void flush () {
 			sorter.sort(camera, renderables);
 			Shader currentShader = null;
+			
 			for (int i = 0; i < renderables.size; i++) {
 				final Renderable renderable = renderables.get(i);
 				if (currentShader != renderable.shader) {
 					if (currentShader != null) currentShader.end();
+					
+					//if(customShader!=null)renderable.shader=customShader;
+					
 					currentShader = renderable.shader;
 					currentShader.begin(camera, context);
 				}
+				if(renderable.shader == this.customShader)System.out.println("shader ok");
 				currentShader.render(renderable);
-				System.out.println(currentShader);
+				//System.out.println(currentShader);
 			}
 			if (currentShader != null) currentShader.end();
 			renderablesPool.flush();
@@ -51,7 +76,7 @@ public class VRenderable {
 
 	protected String modelName = "";
 
-	protected ModelBatch modelBatch = null;
+	protected MyModelBatch modelBatch = null;
 	protected ModelInstance modelInstance = null;    
     
     public VShader vShader = null;
@@ -112,6 +137,8 @@ public class VRenderable {
 		        //shader = new DefaultShader(renderable, shaderConfig, new ShaderProgram(vert, frag));
 				shader.init();						
 				System.out.println("my shader "+shader);
+				
+				modelBatch.customShader = shader;
            }
         }else{
             System.out.println("Renderable:init asset not loaded "+modelName);

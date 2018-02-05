@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.volcano3d.VCamera.VCamera;
 
-public class VStage2D extends InputListener {
+public class MainStage extends InputListener {
 
 	SceneManager sceneManager = null;
 	
@@ -29,7 +29,7 @@ public class VStage2D extends InputListener {
 	private TextButton buttonNavigation = null;
 	protected Table mainNavigationTable	= null;	
 	
-	VStage2D(SceneManager s){
+	MainStage(SceneManager s){
 		sceneManager = s;
 		loaderStage = new Stage();
 		mainStage = new Stage();

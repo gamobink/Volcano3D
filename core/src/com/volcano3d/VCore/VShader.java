@@ -1,8 +1,9 @@
-package com.volcano3d;
+package com.volcano3d.VCore;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
+import com.volcano3d.SceneManager;
 import com.volcano3d.Utility.TextAsset;
 
 public class VShader {
