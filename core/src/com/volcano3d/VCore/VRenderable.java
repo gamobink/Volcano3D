@@ -34,19 +34,37 @@ public class VRenderable {
 	
 	public class MyShaderProvider extends DefaultShaderProvider{
 		
+		private ShaderProgram	shaderProgram = null;
+		
+		public MyShaderProvider(){
+			super();
+//	        String vert = Gdx.files.internal("shaders/default.vertex.glsl").readString();
+//	        String frag = Gdx.files.internal("shaders/default.fragment.glsl").readString();	
+//	        String prefix = DefaultShader.createPrefix(renderable, shaderConfig);
+//	        shaderProgram = new ShaderProgram(prefix + vert, prefix + frag);
+		}
+		
 		public Shader getShader (Renderable renderable) {
-
+			
 			Shader suggestedShader = renderable.shader;
 			
 			if (suggestedShader != null && suggestedShader.canRender(renderable)) return suggestedShader;
 			
 			//System.out.println("get shader "+renderable);
 			
-	        String vert = Gdx.files.internal("shaders/default.vertex.glsl").readString();
-	        String frag = Gdx.files.internal("shaders/default.fragment.glsl").readString();			
-	        DefaultShader.Config shaderConfig = new DefaultShader.Config(vert, frag);
-	        Shader shaderC = new MyDefaultShader(renderable, shaderConfig);
+		
+	        DefaultShader.Config shaderConfig = new DefaultShader.Config();
+	        
+	        if(shaderProgram == null){
+		        String vert = Gdx.files.internal("shaders/default.vertex.glsl").readString();
+		        String frag = Gdx.files.internal("shaders/default.fragment.glsl").readString();	
+		        String prefix = DefaultShader.createPrefix(renderable, shaderConfig);
+		        shaderProgram = new ShaderProgram(prefix + vert, prefix + frag);
+	        }
+	        
+	        DefaultShader shaderC = new DefaultShader(renderable, shaderConfig, shaderProgram);
 			shaderC.init();
+			
 	        return shaderC;
 	        
 			/*

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.volcano3d.SceneManager;
 import com.volcano3d.Utility.TextAsset;
 
@@ -14,7 +15,10 @@ public class VShader extends DefaultShaderProvider{
 	private class DefaultShaderExt extends DefaultShader{
 		public DefaultShaderExt(Renderable renderable, Config config) {
 			super(renderable, config, createPrefix(renderable, config));
-		}		
+		}	
+		public DefaultShaderExt(Renderable renderable, Config config, ShaderProgram program) {
+			super(renderable, config, program);
+		}			
 		public boolean canRender (final Renderable renderable) {
 			return super.canRender(renderable);
 		}
@@ -22,11 +26,15 @@ public class VShader extends DefaultShaderProvider{
 	
 	protected SceneManager sceneManager = null;
 //	protected DefaultShaderExt shader = null;
+
 	protected DefaultShader.Config shaderConfig = null;
+
 	protected String vsName = "";
 	protected String fsName = "";
 	protected String vsString = "";
 	protected String fsString = "";	
+	
+	private ShaderProgram	shaderProgram = null;
 	
 	public VShader(SceneManager s, String vname, String fname){
 		super();
@@ -44,8 +52,10 @@ public class VShader extends DefaultShaderProvider{
 			vsString = sceneManager.assetsManager.get(vsName, TextAsset.class ).getString();
 			fsString = sceneManager.assetsManager.get(fsName, TextAsset.class ).getString();
 			
-			this.config.vertexShader = vsString;
-			this.config.fragmentShader = fsString;			
+			//this.config.vertexShader = vsString;
+			//this.config.fragmentShader = fsString;			
+			
+			shaderProgram = new ShaderProgram(vsString, fsString);
 			
 		//	shader = new DefaultShaderExt(renderable, shaderConfig);
 		//	shader.init();
@@ -74,7 +84,7 @@ public class VShader extends DefaultShaderProvider{
 	}
 	//Override DefaultShaderProvider
 	protected Shader createShader (final Renderable renderable) {
-		return new DefaultShaderExt(renderable, config);
+		return new DefaultShaderExt(renderable, config, shaderProgram);
 	}	
 }
 
