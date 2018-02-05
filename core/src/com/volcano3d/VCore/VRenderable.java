@@ -35,6 +35,21 @@ public class VRenderable {
 	public class MyShaderProvider extends DefaultShaderProvider{
 		
 		public Shader getShader (Renderable renderable) {
+
+			Shader suggestedShader = renderable.shader;
+			
+			if (suggestedShader != null && suggestedShader.canRender(renderable)) return suggestedShader;
+			
+			//System.out.println("get shader "+renderable);
+			
+	        String vert = Gdx.files.internal("shaders/default.vertex.glsl").readString();
+	        String frag = Gdx.files.internal("shaders/default.fragment.glsl").readString();			
+	        DefaultShader.Config shaderConfig = new DefaultShader.Config(vert, frag);
+	        Shader shaderC = new MyDefaultShader(renderable, shaderConfig);
+			shaderC.init();
+	        return shaderC;
+	        
+			/*
 			Shader suggestedShader = renderable.shader;
 			
 			//System.out.println(suggestedShader+" "+suggestedShader.canRender(renderable)+" / "+renderable);
@@ -49,7 +64,7 @@ public class VRenderable {
 			shader.init();
 			shaders.add(shader);
 			
-			return shader;
+			return shader;*/
 		}
 		
 	}
@@ -61,7 +76,7 @@ public class VRenderable {
 		
 		public boolean canRender (final Renderable renderable) {
 		//	return true;
-			//System.out.println("MyDefaultShader:canRender "+super.canRender(renderable));
+			System.out.println("MyDefaultShader:canRender "+super.canRender(renderable));
 			return super.canRender(renderable);
 		}		
 	}
@@ -71,41 +86,20 @@ public class VRenderable {
 		public MyModelBatch(ShaderProvider shaderProvider){
 			super(shaderProvider);
 		}
+		/*
 		public void render (final RenderableProvider renderableProvider, final Environment environment, final Shader shader) {
-			
-			//Array<Renderable> renderablesTest = new Array<Renderable>();				
-			renderableProvider.getRenderables(renderables, renderablesPool);
-			
-			for(int i=0; i<renderables.size; i++){
-				
-				Renderable r = renderables.get(i);
-				
-				System.out.println(r+" / "+shader.canRender(r)+" / "+shader);
-				
-				r.environment = environment;
-				r.shader = shader;
-				r.shader = shaderProvider.getShader(r);
 
-				//System.out.println("   rndrable2: "+r+" / "+r.shader.canRender(r));
-
-			}	
-			
-			/*	
 			final int offset = renderables.size;
 			renderableProvider.getRenderables(renderables, renderablesPool);
 			for (int i = offset; i < renderables.size; i++) {
 				Renderable renderable = renderables.get(i);
 				renderable.environment = environment;
-				renderable.shader = shader;
-				
-				//System.out.println("   can: "+shader.canRender(renderable));
-				
+				//renderable.shader = shader;				
 				renderable.shader = shaderProvider.getShader(renderable);
 //				System.out.println(renderable);
 
 			}
-			*/
-		}		
+		}		*/
 		
 		public void flush () {
 			sorter.sort(camera, renderables);
@@ -209,7 +203,8 @@ public class VRenderable {
             blendingAttribute = new BlendingAttribute(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
             
             if(vShader != null){
-            	//modelBatch = new ModelBatch(vert, frag);
+            	//modelBatch = new ModelBatch(vShader);
+            	
             	
 		        Renderable renderable = new Renderable();
 		        renderable = modelInstance.getRenderable(renderable);
@@ -295,7 +290,9 @@ public class VRenderable {
 	        //	if(vShader != null)modelBatch.render(modelInstance, env, vShader.get());
 	        //	else modelBatch.render(modelInstance, env);
 	        	
-	        	modelBatch.render(modelInstance, env, shader);
+//	        	modelBatch.render(modelInstance, env, shader);
+
+	        	modelBatch.render(modelInstance, env);
 	        }
 	        else System.out.println("Renderable:render instance not created "+modelName);
 	        modelBatch.end();       
