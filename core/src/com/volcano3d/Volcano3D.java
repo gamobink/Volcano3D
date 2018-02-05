@@ -8,14 +8,15 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.volcano3d.vcore.VMain;
 
 public class Volcano3D extends ApplicationAdapter implements InputProcessor, GestureListener {
 
-	protected SceneManager sceneManager;
+	protected VMain sceneManager;
 	
 	@Override
 	public void create () {	
-		sceneManager = new SceneManager();
+		sceneManager = new VMain();
 		
 		GestureDetector gd = new GestureDetector(this);
 		Gdx.input.setInputProcessor(new InputMultiplexer(sceneManager.stage2D.mainStage, gd, this));

@@ -1,9 +1,9 @@
-package com.volcano3d.VCamera;
+package com.volcano3d.vcamera;
 
 import java.util.EnumMap;
 
-import com.volcano3d.VCamera.CameraPresets.VCameraPresetMain;
-import com.volcano3d.VCamera.CameraPresets.VCameraPresetStatic;
+import com.volcano3d.vcamerapresets.VCameraPresetMain;
+import com.volcano3d.vcamerapresets.VCameraPresetStatic;
 
 public class VCameraPresetCollection {
 	

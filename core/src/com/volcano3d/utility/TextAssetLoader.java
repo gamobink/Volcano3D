@@ -1,4 +1,4 @@
-package com.volcano3d.Utility;
+package com.volcano3d.utility;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;

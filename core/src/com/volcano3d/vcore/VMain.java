@@ -1,4 +1,4 @@
-package com.volcano3d;
+package com.volcano3d.vcore;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
@@ -11,20 +11,20 @@ import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
-import com.volcano3d.Utility.TextAsset;
-import com.volcano3d.Utility.TextAssetLoader;
-import com.volcano3d.VCamera.VCamera;
-import com.volcano3d.VCamera.VCameraPresetCollection;
-import com.volcano3d.VCore.VDecal;
-import com.volcano3d.VCore.VDecalGroup;
-import com.volcano3d.VCore.VRenderable;
-import com.volcano3d.VCore.VShader;
+import com.volcano3d.utility.TextAsset;
+import com.volcano3d.utility.TextAssetLoader;
+import com.volcano3d.vcamera.VCamera;
+import com.volcano3d.vcamera.VCameraPresetCollection;
+import com.volcano3d.vdecal.VDecal;
+import com.volcano3d.vdecal.VDecalGroup;
+import com.volcano3d.vshaders.VDefaultShaderProvider;
+import com.volcano3d.vshaders.VMinimalistShaderProvider;
 
 /**
  * Created by T510 on 8/2/2017.
  */
 
-public class SceneManager {
+public class VMain {
 
     public AssetManager assetsManager;
     public boolean  assetsLoaded = false;
@@ -46,13 +46,14 @@ public class SceneManager {
     public VRenderable modelGroundAround3 = null; 
     public VRenderable modelUnderground1 = null; 
     
-    public VShader shaderSky = null;
+    public VDefaultShaderProvider shaderSky = null;    
+    public VMinimalistShaderProvider shaderSimple = null;
     
     public VDecalGroup decalsTags = new VDecalGroup(this);
     
-    public MainStage stage2D = null;
+    public VStageMain stage2D = null;
     
-    public SceneManager(){
+    public VMain(){
 
         assetsManager = new AssetManager();
 
@@ -60,7 +61,7 @@ public class SceneManager {
         
         assetsManager.setErrorListener(new AssetErrorListener() {
             @Override
-            public void error(AssetDescriptor assetDescriptor, Throwable throwable) {
+            public void error(@SuppressWarnings("rawtypes") AssetDescriptor assetDescriptor, Throwable throwable) {
                 System.out.println("ASSET: "+assetDescriptor.toString()+" - "+throwable.getMessage());
             }
         });
@@ -70,8 +71,9 @@ public class SceneManager {
         environment.add(new DirectionalLight().set(0.9f, 0.9f, 0.5f,  -1, -0.8f, 1));  
         environment.add(new DirectionalLight().set(0.4f, 0.4f, 0.6f,  0f, -0.8f, 1));  
         
-        shaderSky = new VShader(this, "shaders/sky.vertex.glsl", "shaders/sky.fragment.glsl");        
-//        shaderSky = new VShader(this, "shaders/default.vertex.glsl", "shaders/default.fragment.glsl");
+        shaderSky = new VDefaultShaderProvider(this, "shaders/sky.vertex.glsl", "shaders/sky.fragment.glsl");        
+//        shaderSky = new VShader(this, "shaders/default.vertex.glsl", "shaders/default.fragment.glsl");        
+        shaderSimple = new  VMinimalistShaderProvider(this, "shaders/sky.vertex.glsl", "shaders/sky.fragment.glsl");
         
         modelSkybox = new VRenderable(this, "sky.g3dj", shaderSky);
         modelWater = new VRenderable(this, "water.g3dj");     
@@ -84,17 +86,19 @@ public class SceneManager {
         modelGroundAround2 = new VRenderable(this, "groundAround2.g3dj");
         modelGroundAround3 = new VRenderable(this, "groundAround3.g3dj");
         
-        modelUnderground1 = new VRenderable(this, "underground.g3dj");
+        modelUnderground1 = new VRenderable(this, "underground.g3dj", shaderSky);
         
         decalsTags.addDecal(new VDecal("sign.png", new Vector3(-220, 150, -10), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign2.png", new Vector3(-32, 92, 8), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign3.png", new Vector3(146, 42, -216), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign4.png", new Vector3(-7, 45, -550), new Vector2(50,50)));        
         
-        stage2D = new MainStage(this);
+        stage2D = new VStageMain(this);
     }
     //Call init() on loading complete
     void init(){
+    	shaderSky.init();
+    	
     	modelSkybox.init();
     	modelWater.init();
     	
@@ -110,7 +114,7 @@ public class SceneManager {
     	decalsTags.init(); 	
     }	
     
-    void processFrame() {
+    public void processFrame() {
 
         if (!assetsManager.update()) {
             assetsLoaded = false;
@@ -128,7 +132,7 @@ public class SceneManager {
         
         //Frustum culling
         modelSkybox.render(camera.get(), environment);
-        /*
+        
         modelWater.render(camera.get(), environment);        
         modelGround1.render(camera.get(), environment);                
         modelGroundCenter.render(camera.get(), environment);
@@ -157,7 +161,7 @@ public class SceneManager {
         	decalsTags.setFadeOff();
         }
     	decalsTags.render();
-        */
+        
         stage2D.renderMainStage();
         
         //Load all assets before creating new objects

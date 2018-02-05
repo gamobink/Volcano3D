@@ -1,4 +1,4 @@
-package com.volcano3d.VCamera;
+package com.volcano3d.vcamera;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.volcano3d.Utility.VCommon;
+import com.volcano3d.utility.VCommon;
 
 public class VCameraPreset {
 	

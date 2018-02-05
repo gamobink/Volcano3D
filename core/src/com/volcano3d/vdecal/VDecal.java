@@ -1,4 +1,4 @@
-package com.volcano3d.VCore;
+package com.volcano3d.vdecal;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

@@ -1,4 +1,4 @@
-package com.volcano3d;
+package com.volcano3d.vcore;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,14 +14,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.volcano3d.VCamera.VCamera;
+import com.volcano3d.vcamera.VCamera;
 
-public class MainStage extends InputListener {
+public class VStageMain extends InputListener {
 
-	SceneManager sceneManager = null;
+	VMain sceneManager = null;
 	
 	protected Stage loaderStage = null;	
-	protected Stage mainStage = null;
+	public Stage mainStage = null;
 	
 	protected BitmapFont font = null;
 
@@ -29,7 +29,7 @@ public class MainStage extends InputListener {
 	private TextButton buttonNavigation = null;
 	protected Table mainNavigationTable	= null;	
 	
-	MainStage(SceneManager s){
+	VStageMain(VMain s){
 		sceneManager = s;
 		loaderStage = new Stage();
 		mainStage = new Stage();

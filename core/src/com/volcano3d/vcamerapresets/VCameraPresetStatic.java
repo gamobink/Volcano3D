@@ -1,7 +1,7 @@
-package com.volcano3d.VCamera.CameraPresets;
+package com.volcano3d.vcamerapresets;
 
-import com.volcano3d.VCamera.VCameraPreset;
-import com.volcano3d.VCamera.VCameraPresetCollection;
+import com.volcano3d.vcamera.VCameraPreset;
+import com.volcano3d.vcamera.VCameraPresetCollection;
 
 public class VCameraPresetStatic extends VCameraPreset {
 	public VCameraPresetStatic(VCameraPresetCollection.PresetsIdentifiers identifier){

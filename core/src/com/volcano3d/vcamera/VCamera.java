@@ -1,10 +1,10 @@
-package com.volcano3d.VCamera;
+package com.volcano3d.vcamera;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.Vector2;
-import com.volcano3d.SceneManager;
-import com.volcano3d.VCamera.VCameraPresetCollection.PresetsIdentifiers;
+import com.volcano3d.vcamera.VCameraPresetCollection.PresetsIdentifiers;
+import com.volcano3d.vcore.VMain;
 
 public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPresetCallback {
 
@@ -16,7 +16,7 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 		STATIC_4,				//Beach			
 	}
 	
-	private SceneManager sceneManager = null;
+	private VMain sceneManager = null;
 	
 	private PerspectiveCamera cam;
 
@@ -24,7 +24,7 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 	
 	private States	cameraState = States.MAIN;
 	
-	public VCamera(SceneManager o){
+	public VCamera(VMain o){
 		super(null);
 		setSceneManager(o);
 		setCallback(this);
@@ -141,11 +141,11 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 //		System.out.println("complete(Pivot): "+sourceIdentifier+" -> "+targetIdentifier);	
 	}
 
-	public SceneManager getSceneManager() {
+	public VMain getSceneManager() {
 		return sceneManager;
 	}
 
-	public void setSceneManager(SceneManager sceneManager) {
+	public void setSceneManager(VMain sceneManager) {
 		this.sceneManager = sceneManager;
 	}			
 }

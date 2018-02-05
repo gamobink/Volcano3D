@@ -1,4 +1,4 @@
-package com.volcano3d.Utility;
+package com.volcano3d.utility;
 
 public class VCommon {
 	public static float lerp(float a, float b, float f) 
