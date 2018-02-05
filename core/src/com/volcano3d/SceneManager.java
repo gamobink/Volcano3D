@@ -71,7 +71,7 @@ public class SceneManager {
 //        shaderSky = new VShader(this, "shaders/default.vertex.glsl", "shaders/default.fragment.glsl");
         
         modelSkybox = new VRenderable(this, "sky.g3dj", shaderSky);
-        modelWater = new VRenderable(this, "water.g3dj", shaderSky);     
+        modelWater = new VRenderable(this, "water.g3dj");     
         
         modelGround1 = new VRenderable(this, "ground1.g3dj");        
         modelGround2 = new VRenderable(this, "ground2.g3dj");
@@ -80,7 +80,7 @@ public class SceneManager {
         modelGroundAround1 = new VRenderable(this, "groundAround1.g3dj");
         modelGroundAround2 = new VRenderable(this, "groundAround2.g3dj");
         modelGroundAround3 = new VRenderable(this, "groundAround3.g3dj");
-        modelUnderground1 = new VRenderable(this, "underground.g3dj", shaderSky);
+        modelUnderground1 = new VRenderable(this, "underground.g3dj");
         
         decalsTags.addDecal(new VDecal("sign.png", new Vector3(-220, 150, -10), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign2.png", new Vector3(-32, 92, 8), new Vector2(50,50)));

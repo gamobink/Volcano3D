@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Renderable;
+import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
@@ -23,6 +24,29 @@ import com.badlogic.gdx.math.Vector3;
 
 public class VRenderable {
 
+	public class MyModelBatch extends ModelBatch{
+		
+		public void flush () {
+			sorter.sort(camera, renderables);
+			Shader currentShader = null;
+			for (int i = 0; i < renderables.size; i++) {
+				final Renderable renderable = renderables.get(i);
+				if (currentShader != renderable.shader) {
+					if (currentShader != null) currentShader.end();
+					currentShader = renderable.shader;
+					currentShader.begin(camera, context);
+				}
+				currentShader.render(renderable);
+				System.out.println(currentShader);
+			}
+			if (currentShader != null) currentShader.end();
+			renderablesPool.flush();
+			renderables.clear();
+		//	System.out.println("----finish frame");
+		}
+		
+	}	
+	
 	protected SceneManager sceneManager;
 
 	protected String modelName = "";
@@ -65,7 +89,7 @@ public class VRenderable {
         String vert = Gdx.files.internal("shaders/sky.vertex.glsl").readString();
         String frag = Gdx.files.internal("shaders/sky.fragment.glsl").readString();
 
-        modelBatch = new ModelBatch();
+        modelBatch = new MyModelBatch(); //new ModelBatch();
         
         if(sceneManager.assetsManager.isLoaded(modelName)) {
             Model model = sceneManager.assetsManager.get(modelName, Model.class);
@@ -85,7 +109,9 @@ public class VRenderable {
 		        
 		        DefaultShader.Config shaderConfig = new DefaultShader.Config(vert, frag);
 		        shader = new DefaultShader(renderable, shaderConfig, "", vert, frag);
+		        //shader = new DefaultShader(renderable, shaderConfig, new ShaderProgram(vert, frag));
 				shader.init();						
+				System.out.println("my shader "+shader);
            }
         }else{
             System.out.println("Renderable:init asset not loaded "+modelName);
