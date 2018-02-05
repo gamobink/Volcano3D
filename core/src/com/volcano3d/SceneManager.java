@@ -77,7 +77,7 @@ public class SceneManager {
         modelSkybox = new VRenderable(this, "sky.g3dj", shaderSky);
         modelWater = new VRenderable(this, "water.g3dj");     
         
-        modelGround1 = new VRenderable(this, "ground1.g3dj");        
+        modelGround1 = new VRenderable(this, "ground1.g3dj");
         modelGround2 = new VRenderable(this, "ground2.g3dj");
         modelGroundCenter = new VRenderable(this, "groundCenter.g3dj");
         modelGroundFar = new VRenderable(this, "groundFar.g3dj");
@@ -129,6 +129,7 @@ public class SceneManager {
         
         //Frustum culling
         modelSkybox.render(camera.get(), environment);
+        /*
         modelWater.render(camera.get(), environment);        
         modelGround1.render(camera.get(), environment);                
         modelGroundCenter.render(camera.get(), environment);
@@ -157,7 +158,7 @@ public class SceneManager {
         	decalsTags.setFadeOff();
         }
     	decalsTags.render();
-        
+        */
         stage2D.renderMainStage();
         
         //Load all assets before creating new objects

@@ -15,10 +15,15 @@ import com.badlogic.gdx.graphics.g3d.RenderableProvider;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader.Config;
+import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
+import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.FlushablePool;
 import com.volcano3d.SceneManager;
 
 /**
@@ -26,22 +31,107 @@ import com.volcano3d.SceneManager;
  */
 
 public class VRenderable {
-	/*
+	
+	public class MyShaderProvider extends DefaultShaderProvider{
+		
+		public Shader getShader (Renderable renderable) {
+			Shader suggestedShader = renderable.shader;
+			
+			//System.out.println(suggestedShader+" "+suggestedShader.canRender(renderable)+" / "+renderable);
+			
+			System.out.println(renderable+" / "+suggestedShader.canRender(renderable)+" / "+suggestedShader);
+			
+			if (suggestedShader != null && suggestedShader.canRender(renderable)) return suggestedShader;
+			for (Shader shader : shaders) {
+				if (shader.canRender(renderable)) return shader;
+			}
+			final Shader shader = createShader(renderable);
+			shader.init();
+			shaders.add(shader);
+			
+			return shader;
+		}
+		
+	}
+	
 	public class MyDefaultShader extends DefaultShader{
 		public MyDefaultShader(Renderable renderable, Config config) {
 			super(renderable, config, createPrefix(renderable, config));
 		}
 		
 		public boolean canRender (final Renderable renderable) {
-			return true;
+		//	return true;
+			//System.out.println("MyDefaultShader:canRender "+super.canRender(renderable));
+			return super.canRender(renderable);
 		}		
-	}*/
+	}
 
+	public class MyModelBatch extends ModelBatch{
+		
+		public MyModelBatch(ShaderProvider shaderProvider){
+			super(shaderProvider);
+		}
+		public void render (final RenderableProvider renderableProvider, final Environment environment, final Shader shader) {
+			
+			//Array<Renderable> renderablesTest = new Array<Renderable>();				
+			renderableProvider.getRenderables(renderables, renderablesPool);
+			
+			for(int i=0; i<renderables.size; i++){
+				
+				Renderable r = renderables.get(i);
+				
+				System.out.println(r+" / "+shader.canRender(r)+" / "+shader);
+				
+				r.environment = environment;
+				r.shader = shader;
+				r.shader = shaderProvider.getShader(r);
+
+				//System.out.println("   rndrable2: "+r+" / "+r.shader.canRender(r));
+
+			}	
+			
+			/*	
+			final int offset = renderables.size;
+			renderableProvider.getRenderables(renderables, renderablesPool);
+			for (int i = offset; i < renderables.size; i++) {
+				Renderable renderable = renderables.get(i);
+				renderable.environment = environment;
+				renderable.shader = shader;
+				
+				//System.out.println("   can: "+shader.canRender(renderable));
+				
+				renderable.shader = shaderProvider.getShader(renderable);
+//				System.out.println(renderable);
+
+			}
+			*/
+		}		
+		
+		public void flush () {
+			sorter.sort(camera, renderables);
+			Shader currentShader = null;
+			for (int i = 0; i < renderables.size; i++) {
+				final Renderable renderable = renderables.get(i);
+				if (currentShader != renderable.shader) {
+					if (currentShader != null) currentShader.end();
+					currentShader = renderable.shader;
+					currentShader.begin(camera, context);
+				}
+				//System.out.println(currentShader);
+				currentShader.render(renderable);
+			}
+			if (currentShader != null) currentShader.end();
+			renderablesPool.flush();
+			renderables.clear();
+		}
+
+	}
+	
 	protected SceneManager sceneManager;
 
 	protected String modelName = "";
 
-	protected ModelBatch modelBatch = null;
+	protected MyModelBatch modelBatch = null;
 	protected ModelInstance modelInstance = null;    
     
     public VShader vShader = null;
@@ -53,7 +143,7 @@ public class VRenderable {
 	protected boolean 	fadeOnAlpha = false;
 	protected float		fadeAlphaSpeeed = 0.5f;
 	
-	//protected DefaultShader shader = null;
+	protected DefaultShader shader = null;
     
     public VRenderable(SceneManager o){
     	sceneManager = o;
@@ -74,12 +164,41 @@ public class VRenderable {
     	vShader = shader;
     }
 
+	protected static class RenderablePool extends FlushablePool<Renderable> {
+		@Override
+		protected Renderable newObject () {
+			return new Renderable();
+		}
+
+		@Override
+		public Renderable obtain () {
+			Renderable renderable = super.obtain();
+			renderable.environment = null;
+			renderable.material = null;
+			renderable.meshPart.set("", null, 0, 0, 0);
+			renderable.shader = null;
+			renderable.userData = null;
+			return renderable;
+		}
+	}
+
+	protected final RenderablePool renderablesPool = new RenderablePool();    
+    
+//    public void getNodesRec(Node node){
+//    	
+//    	System.out.println("Node: "+node);
+//    	
+//		for (Node child : node.getChildren()) {
+//			getNodesRec(child);
+//		}
+//    }	
+    
     public void init(){
         
-       // String vert = Gdx.files.internal("shaders/sky.vertex.glsl").readString();
-       // String frag = Gdx.files.internal("shaders/sky.fragment.glsl").readString();
+        String vert = Gdx.files.internal("shaders/default.vertex.glsl").readString();
+        String frag = Gdx.files.internal("shaders/default.fragment.glsl").readString();
 
-        modelBatch = new ModelBatch();
+        modelBatch = new MyModelBatch(new MyShaderProvider());
         
         if(sceneManager.assetsManager.isLoaded(modelName)) {
             Model model = sceneManager.assetsManager.get(modelName, Model.class);
@@ -93,16 +212,37 @@ public class VRenderable {
             	//modelBatch = new ModelBatch(vert, frag);
             	
 		        Renderable renderable = new Renderable();
-		        renderable = modelInstance.getRenderable(renderable);		        
-		        vShader.init(renderable);
+		        renderable = modelInstance.getRenderable(renderable);
+
+//				for (Node node : modelInstance.nodes) {
+//					getNodesRec(node);
+//				}
 		        
-		        //DefaultShader.Config shaderConfig = new DefaultShader.Config(vert, frag);
+		        //vShader.init(renderable);
+		        
+		        DefaultShader.Config shaderConfig = new DefaultShader.Config(vert, frag);
 		        //shader = new DefaultShader(renderable, shaderConfig, "", vert, frag);
-		        //shader = new MyDefaultShader(renderable, shaderConfig);
+		        shader = new MyDefaultShader(renderable, shaderConfig);
 		        
 		        //shader = new DefaultShader(renderable, shaderConfig, new ShaderProgram(vert, frag));
-				//shader.init();						
-				//System.out.println("my shader "+shader);
+				shader.init();						
+				System.out.println("my shader "+shader);
+				System.out.println("renderable "+renderable);	
+				System.out.println("can render "+shader.canRender(renderable));				
+/*
+				
+				Array<Renderable> renderablesTest = new Array<Renderable>();				
+				modelInstance.getRenderables(renderablesTest, renderablesPool);
+				for(int i=0; i<renderablesTest.size; i++){
+					Renderable r = renderablesTest.get(i);
+					//System.out.println(" rndrable: "+r+" / "+shader.canRender(r));
+//					System.out.println("   opt  "+r.meshPart);		
+//					System.out.println("   opt  "+r.material);
+//					System.out.println("   opt  "+r.shader);		
+				}
+				
+				
+				*/
 				
 				//modelBatch.customShader = shader;
            }
@@ -152,10 +292,10 @@ public class VRenderable {
 	        	//else 
 //	        	modelBatch.render(modelInstance, env, shader);
 	        	
-	        	if(vShader != null)modelBatch.render(modelInstance, env, vShader.get());
-	        	else modelBatch.render(modelInstance, env);
+	        //	if(vShader != null)modelBatch.render(modelInstance, env, vShader.get());
+	        //	else modelBatch.render(modelInstance, env);
 	        	
-//	        	modelBatch.render(modelInstance, env, shader);
+	        	modelBatch.render(modelInstance, env, shader);
 	        }
 	        else System.out.println("Renderable:render instance not created "+modelName);
 	        modelBatch.end();       
