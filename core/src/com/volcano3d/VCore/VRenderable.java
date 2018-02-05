@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
+import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader.Config;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.volcano3d.SceneManager;
@@ -25,58 +26,22 @@ import com.volcano3d.SceneManager;
  */
 
 public class VRenderable {
-
-	public class MyModelBatch extends ModelBatch{
-		
-		public DefaultShader customShader = null;
-		
-		public void render (final RenderableProvider renderableProvider, final Environment environment, final Shader shader) {
-			//System.out.println("shader "+shader);
-			final int offset = renderables.size;
-			renderableProvider.getRenderables(renderables, renderablesPool);
-			for (int i = offset; i < renderables.size; i++) {
-				Renderable renderable = renderables.get(i);
-				renderable.environment = environment;
-				renderable.shader = shader;
-				renderable.shader = shaderProvider.getShader(renderable);
-				
-				if(shader!=null)System.out.println(shader.canRender(renderable));
-
-				//if(shader!=null)renderable.shader = shader;
-			}
-		}		
-		
-		public void flush () {
-			sorter.sort(camera, renderables);
-			Shader currentShader = null;
-			
-			for (int i = 0; i < renderables.size; i++) {
-				final Renderable renderable = renderables.get(i);
-				if (currentShader != renderable.shader) {
-					if (currentShader != null) currentShader.end();
-					
-					//if(customShader!=null)renderable.shader=customShader;
-					
-					currentShader = renderable.shader;
-					currentShader.begin(camera, context);
-				}
-				if(renderable.shader == this.customShader)System.out.println("shader ok");
-				currentShader.render(renderable);
-				//System.out.println(currentShader);
-			}
-			if (currentShader != null) currentShader.end();
-			renderablesPool.flush();
-			renderables.clear();
-		//	System.out.println("----finish frame");
+	/*
+	public class MyDefaultShader extends DefaultShader{
+		public MyDefaultShader(Renderable renderable, Config config) {
+			super(renderable, config, createPrefix(renderable, config));
 		}
 		
-	}	
-	
+		public boolean canRender (final Renderable renderable) {
+			return true;
+		}		
+	}*/
+
 	protected SceneManager sceneManager;
 
 	protected String modelName = "";
 
-	protected MyModelBatch modelBatch = null;
+	protected ModelBatch modelBatch = null;
 	protected ModelInstance modelInstance = null;    
     
     public VShader vShader = null;
@@ -88,7 +53,7 @@ public class VRenderable {
 	protected boolean 	fadeOnAlpha = false;
 	protected float		fadeAlphaSpeeed = 0.5f;
 	
-	protected DefaultShader shader = null;
+	//protected DefaultShader shader = null;
     
     public VRenderable(SceneManager o){
     	sceneManager = o;
@@ -111,10 +76,10 @@ public class VRenderable {
 
     public void init(){
         
-        String vert = Gdx.files.internal("shaders/sky.vertex.glsl").readString();
-        String frag = Gdx.files.internal("shaders/sky.fragment.glsl").readString();
+       // String vert = Gdx.files.internal("shaders/sky.vertex.glsl").readString();
+       // String frag = Gdx.files.internal("shaders/sky.fragment.glsl").readString();
 
-        modelBatch = new MyModelBatch(); //new ModelBatch();
+        modelBatch = new ModelBatch();
         
         if(sceneManager.assetsManager.isLoaded(modelName)) {
             Model model = sceneManager.assetsManager.get(modelName, Model.class);
@@ -128,17 +93,18 @@ public class VRenderable {
             	//modelBatch = new ModelBatch(vert, frag);
             	
 		        Renderable renderable = new Renderable();
-		        renderable = modelInstance.getRenderable(renderable);
+		        renderable = modelInstance.getRenderable(renderable);		        
+		        vShader.init(renderable);
 		        
-		        //vShader.init(renderable);
+		        //DefaultShader.Config shaderConfig = new DefaultShader.Config(vert, frag);
+		        //shader = new DefaultShader(renderable, shaderConfig, "", vert, frag);
+		        //shader = new MyDefaultShader(renderable, shaderConfig);
 		        
-		        DefaultShader.Config shaderConfig = new DefaultShader.Config(vert, frag);
-		        shader = new DefaultShader(renderable, shaderConfig, "", vert, frag);
 		        //shader = new DefaultShader(renderable, shaderConfig, new ShaderProgram(vert, frag));
-				shader.init();						
-				System.out.println("my shader "+shader);
+				//shader.init();						
+				//System.out.println("my shader "+shader);
 				
-				modelBatch.customShader = shader;
+				//modelBatch.customShader = shader;
            }
         }else{
             System.out.println("Renderable:init asset not loaded "+modelName);
@@ -186,8 +152,10 @@ public class VRenderable {
 	        	//else 
 //	        	modelBatch.render(modelInstance, env, shader);
 	        	
-//	        	modelBatch.render(modelInstance, vShader.get());
-	        	modelBatch.render(modelInstance, env, shader);
+	        	if(vShader != null)modelBatch.render(modelInstance, env, vShader.get());
+	        	else modelBatch.render(modelInstance, env);
+	        	
+//	        	modelBatch.render(modelInstance, env, shader);
 	        }
 	        else System.out.println("Renderable:render instance not created "+modelName);
 	        modelBatch.end();       

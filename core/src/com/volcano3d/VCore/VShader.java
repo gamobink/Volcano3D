@@ -1,6 +1,5 @@
 package com.volcano3d.VCore;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.shaders.DefaultShader;
 import com.volcano3d.SceneManager;
@@ -8,13 +7,24 @@ import com.volcano3d.Utility.TextAsset;
 
 public class VShader {
 	
-	private SceneManager sceneManager = null;
-	public DefaultShader shader = null;
-	public DefaultShader.Config shaderConfig = null;
-	public String vsName = "";
-	public String fsName = "";
-	public String vsString = "";
-	public String fsString = "";	
+	//Default shader will render all models
+	//Use only if you know what you do!!!!
+	private class DefaultShaderExt extends DefaultShader{
+		public DefaultShaderExt(Renderable renderable, Config config) {
+			super(renderable, config, createPrefix(renderable, config));
+		}		
+		public boolean canRender (final Renderable renderable) {
+			return true;
+		}
+	}
+	
+	protected SceneManager sceneManager = null;
+	protected DefaultShaderExt shader = null;
+	protected DefaultShader.Config shaderConfig = null;
+	protected String vsName = "";
+	protected String fsName = "";
+	protected String vsString = "";
+	protected String fsString = "";	
 	
 	public VShader(SceneManager s, String vname, String fname){
 		sceneManager = s;
@@ -25,26 +35,19 @@ public class VShader {
 	}	
 	
 	public void init(Renderable renderable){
-
-		//if(sceneManager.assetsManager.isLoaded(vsName)
-		//		&& sceneManager.assetsManager.isLoaded(fsName)) {
+		if(sceneManager.assetsManager.isLoaded(vsName)
+				&& sceneManager.assetsManager.isLoaded(fsName)) {
 			
-			//vsString = sceneManager.assetsManager.get(vsName, TextAsset.class ).getString();
-			//fsString = sceneManager.assetsManager.get(fsName, TextAsset.class ).getString();
+			vsString = sceneManager.assetsManager.get(vsName, TextAsset.class ).getString();
+			fsString = sceneManager.assetsManager.get(fsName, TextAsset.class ).getString();
 			
-			//System.out.println(shaderConfig.fragmentShader);
+			shaderConfig = new DefaultShader.Config(vsString, fsString);
 			
-	        String vert = Gdx.files.internal("shaders/sky.vertex.glsl").readString();
-	        String frag = Gdx.files.internal("shaders/sky.fragment.glsl").readString();
-
-			shaderConfig = new DefaultShader.Config(vert, frag);
-
-			shader = new DefaultShader(renderable, shaderConfig, "", vert, frag);
+			shader = new DefaultShaderExt(renderable, shaderConfig);
 			shader.init();
-	//	}
+		}
 	}
 	public DefaultShader get(){
 		return shader;
 	}
-	
 }
