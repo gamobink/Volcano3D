@@ -10,7 +10,7 @@ import com.volcano3d.vcore.VMain;
 
 public class VDefaultShaderProvider extends DefaultShaderProvider{
 	
-	protected VMain sceneManager = null;
+	protected VMain volcano = null;
 
 	protected 	DefaultShader.Config shaderConfig = null;
 	protected 	ShaderProgram	shaderProgram = null;
@@ -22,18 +22,18 @@ public class VDefaultShaderProvider extends DefaultShaderProvider{
 	
 	public VDefaultShaderProvider(VMain s, String vname, String fname){
 		super();
-		sceneManager = s;
+		volcano = s;
 		vsName = vname;
 		fsName = fname;
-		sceneManager.assetsManager.load(vsName, TextAsset.class);		
-		sceneManager.assetsManager.load(fsName, TextAsset.class);
+		volcano.assetsManager.load(vsName, TextAsset.class);		
+		volcano.assetsManager.load(fsName, TextAsset.class);
 		shaderConfig = new DefaultShader.Config();
 	}		
 	public void init(){
-		if(sceneManager.assetsManager.isLoaded(vsName)
-				&& sceneManager.assetsManager.isLoaded(fsName)) {			
-			vsString = sceneManager.assetsManager.get(vsName, TextAsset.class ).getString();
-			fsString = sceneManager.assetsManager.get(fsName, TextAsset.class ).getString();
+		if(volcano.assetsManager.isLoaded(vsName)
+				&& volcano.assetsManager.isLoaded(fsName)) {			
+			vsString = volcano.assetsManager.get(vsName, TextAsset.class ).getString();
+			fsString = volcano.assetsManager.get(fsName, TextAsset.class ).getString();
 		}
 	}
 	public Shader getShader (Renderable renderable) {

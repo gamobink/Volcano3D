@@ -10,7 +10,7 @@ import com.volcano3d.vcore.VMain;
 
 public class VDecalGroup {
 
-	private VMain sceneManager;
+	private VMain volcano;
 
 	public Array<VDecal> decals = new Array<VDecal>();
 	
@@ -20,11 +20,11 @@ public class VDecalGroup {
 	public boolean 	fadeOffAlpha = false;
 	public boolean 	fadeOnAlpha = false;
 	
-    public VDecalGroup(VMain o){
-    	sceneManager = o;
+    public VDecalGroup(VMain v){
+    	volcano = v;
     }		
 	public void init(){
-		decalBatch = new DecalBatch(new CameraGroupStrategy(sceneManager.camera.get()));
+		decalBatch = new DecalBatch(new CameraGroupStrategy(volcano.camera.get()));
 		for(int i=0;i<decals.size;i++){
 			decals.get(i).init();
 		}
@@ -54,7 +54,7 @@ public class VDecalGroup {
 	    	for(int i=0;i<decals.size;i++){
 		    	VDecal d = decals.get(i);
 		    	if(d!=null){
-		    		d.decal.lookAt(sceneManager.camera.get().position, sceneManager.camera.get().up);
+		    		d.decal.lookAt(volcano.camera.get().position, volcano.camera.get().up);
 		    		d.decal.setColor(1, 1, 1, fadeAlpha);
 		    		decalBatch.add(d.decal);
 		    	}

@@ -12,10 +12,10 @@ import com.badlogic.gdx.math.collision.Ray;
 
 public class VDecal {
 	
-	public Decal decal = null;
+	public Decal 	decal = null;
 	public Vector3	position = new Vector3(0,0,0);
 	public Vector2	size = new Vector2(0,0);
-	private String imageName = "";
+	private String 	imageName = "";
 	
     public VDecal(String image, Vector3 pos, Vector2 sizei){
     	position = pos;

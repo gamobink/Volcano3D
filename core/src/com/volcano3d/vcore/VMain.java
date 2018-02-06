@@ -1,13 +1,15 @@
 package com.volcano3d.vcore;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
-import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
@@ -24,19 +26,18 @@ import com.volcano3d.vshaders.VMinimalistShaderProvider;
  * Created by T510 on 8/2/2017.
  */
 
-public class VMain {
+public class VMain{
 
-    public AssetManager assetsManager;
-    public boolean  assetsLoaded = false;
-    public boolean  objectsLoaded = false;    
-    
-    public Environment environment = null;
+    public AssetManager assetsManager = new AssetManager();
+    public Environment environment = new Environment();
     public VCamera camera = new VCamera(this);   
-    public CameraInputController camController = null;
+    public VInputProcessor inputProcessor = new VInputProcessor(this);
+    public VStageMain stage2D = new VStageMain(this);
+    public VDecalGroup decalsTags = new VDecalGroup(this);
+    public boolean  objectsLoaded = false;    
 
     public VRenderable modelSkybox = null; 
     public VRenderable modelWater = null; 
-    
     public VRenderable modelGround1 = null; 
     public VRenderable modelGround2 = null; 
     public VRenderable modelGroundCenter = null;     
@@ -49,24 +50,22 @@ public class VMain {
     public VDefaultShaderProvider shaderSky = null;    
     public VMinimalistShaderProvider shaderSimple = null;
     
-    public VDecalGroup decalsTags = new VDecalGroup(this);
-    
-    public VStageMain stage2D = null;
-    
     public VMain(){
-
-        assetsManager = new AssetManager();
-
+    	
         assetsManager.setLoader(TextAsset.class,new TextAssetLoader(new InternalFileHandleResolver()));
-        
         assetsManager.setErrorListener(new AssetErrorListener() {
             @Override
             public void error(@SuppressWarnings("rawtypes") AssetDescriptor assetDescriptor, Throwable throwable) {
                 System.out.println("ASSET: "+assetDescriptor.toString()+" - "+throwable.getMessage());
             }
         });
+        
+        Gdx.input.setInputProcessor(new InputMultiplexer(stage2D.mainStage, inputProcessor.gestureDetector, inputProcessor));
 
-        environment = new Environment();
+        create();
+    }
+    public void create(){
+    	
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.5f, 1f));
         environment.add(new DirectionalLight().set(0.9f, 0.9f, 0.5f,  -1, -0.8f, 1));  
         environment.add(new DirectionalLight().set(0.4f, 0.4f, 0.6f,  0f, -0.8f, 1));  
@@ -91,17 +90,15 @@ public class VMain {
         decalsTags.addDecal(new VDecal("sign.png", new Vector3(-220, 150, -10), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign2.png", new Vector3(-32, 92, 8), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign3.png", new Vector3(146, 42, -216), new Vector2(50,50)));
-        decalsTags.addDecal(new VDecal("sign4.png", new Vector3(-7, 45, -550), new Vector2(50,50)));        
+        decalsTags.addDecal(new VDecal("sign4.png", new Vector3(-7, 45, -550), new Vector2(50,50)));
         
-        stage2D = new VStageMain(this);
-    }
-    //Call init() on loading complete
+    }    
+    //Call on loading complete
     void init(){
     	shaderSky.init();
     	
     	modelSkybox.init();
     	modelWater.init();
-    	
     	modelGround1.init();    	
     	modelGround2.init();    	
     	modelGroundCenter.init();
@@ -110,18 +107,20 @@ public class VMain {
     	modelGroundAround2.init();
     	modelGroundAround3.init();
     	modelUnderground1.init();
-
     	decalsTags.init(); 	
     }	
     
-    public void processFrame() {
-
+    public void render() {
+        
+    	Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
+        Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1.0f);
+        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
+        
         if (!assetsManager.update()) {
-            assetsLoaded = false;
             stage2D.renderLoader();
             return;
         }
-        assetsLoaded = true;
         
         if(!objectsLoaded){
         	init();

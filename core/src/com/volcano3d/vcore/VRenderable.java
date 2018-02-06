@@ -22,7 +22,7 @@ import com.badlogic.gdx.math.Vector3;
 //TODO: modelInstance.(Array<Node>)nodes.get(0).(Array<NodePart>)parts.get(0).enabled
 public class VRenderable {
 	
-	protected VMain sceneManager;
+	protected VMain volcano;
 
 	protected String modelName = "";
 
@@ -39,13 +39,13 @@ public class VRenderable {
 	protected float		fadeAlphaSpeeed = 0.5f;
 	
     public VRenderable(VMain o){
-    	sceneManager = o;
+    	volcano = o;
     }
     public VRenderable(VMain o, String filename){
     	this(o, filename, null);
     }
     public VRenderable(VMain o, String filename, ShaderProvider shader){
-    	sceneManager = o;
+    	volcano = o;
         modelName = filename;
         
         ModelLoader.ModelParameters modelParameters = new ModelLoader.ModelParameters();
@@ -53,14 +53,14 @@ public class VRenderable {
         modelParameters.textureParameter.minFilter = TextureFilter.MipMap;
         modelParameters.textureParameter.magFilter = TextureFilter.Linear;
         
-    	sceneManager.assetsManager.load(modelName, Model.class, modelParameters);
+    	volcano.assetsManager.load(modelName, Model.class, modelParameters);
     	shaderProvider = shader;
     }
 
     public void init(){
         
-        if(sceneManager.assetsManager.isLoaded(modelName)) {
-            Model model = sceneManager.assetsManager.get(modelName, Model.class);
+        if(volcano.assetsManager.isLoaded(modelName)) {
+            Model model = volcano.assetsManager.get(modelName, Model.class);
             modelInstance = new ModelInstance(model);
             
             material = modelInstance.materials.get(0);            

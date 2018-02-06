@@ -18,7 +18,7 @@ import com.volcano3d.vcamera.VCamera;
 
 public class VStageMain extends InputListener {
 
-	VMain sceneManager = null;
+	VMain volcano = null;
 	
 	protected Stage loaderStage = null;	
 	public Stage mainStage = null;
@@ -30,7 +30,7 @@ public class VStageMain extends InputListener {
 	protected Table mainNavigationTable	= null;	
 	
 	VStageMain(VMain s){
-		sceneManager = s;
+		volcano = s;
 		loaderStage = new Stage();
 		mainStage = new Stage();
 		
@@ -129,7 +129,7 @@ public class VStageMain extends InputListener {
         loaderStage.draw();
     }	
 	public void renderMainStage(){
-		if(sceneManager.camera.getState() == VCamera.States.MAIN){
+		if(volcano.camera.getState() == VCamera.States.MAIN){
 			buttonNavigation.setVisible(true);
 			buttonMain.setVisible(false);
 		}else{
@@ -142,18 +142,18 @@ public class VStageMain extends InputListener {
     public void touchUp (InputEvent e, float x, float y, int pointer, int button) {
         Actor a = e.getListenerActor();
         if(a.getName() == "BUTTON_MAIN"){
-        	sceneManager.camera.setCameraState(VCamera.States.MAIN);
+        	volcano.camera.setCameraState(VCamera.States.MAIN);
         }
         if(a.getName() == "BUTTON_VIEW1"){
-        	sceneManager.camera.setCameraState(VCamera.States.STATIC_1);
+        	volcano.camera.setCameraState(VCamera.States.STATIC_1);
         	mainNavigationTable.setVisible(false);
         }  
         if(a.getName() == "BUTTON_VIEW2"){
-        	sceneManager.camera.setCameraState(VCamera.States.STATIC_3);
+        	volcano.camera.setCameraState(VCamera.States.STATIC_3);
         	mainNavigationTable.setVisible(false);	
         }  
         if(a.getName() == "BUTTON_VIEW3"){
-        	sceneManager.camera.setCameraState(VCamera.States.STATIC_4);
+        	volcano.camera.setCameraState(VCamera.States.STATIC_4);
         	mainNavigationTable.setVisible(false);	
         }          
         if(a.getName() == "BUTTON_NAVI"){

@@ -16,7 +16,7 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 		STATIC_4,				//Beach			
 	}
 	
-	private VMain sceneManager = null;
+	private VMain volcano = null;
 	
 	private PerspectiveCamera cam;
 
@@ -142,10 +142,10 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 	}
 
 	public VMain getSceneManager() {
-		return sceneManager;
+		return volcano;
 	}
 
-	public void setSceneManager(VMain sceneManager) {
-		this.sceneManager = sceneManager;
+	public void setSceneManager(VMain volcano) {
+		this.volcano = volcano;
 	}			
 }
