@@ -21,10 +21,10 @@ void main() {
 	vec3 view = v_viewDirection;
 	
   	vec3 reflectedDir = reflect(view.xyz, normalize(v_normal).xyz);
-	
+	//pow(,5)
 	float d = dot(normalize(-v_viewDirection).xyz, normalize(v_normal).xyz);
 	
 	vec4 env = textureCube(u_environmentCubemap, reflectedDir);
 	
-	gl_FragColor = mix(env,diffuse, 1.0 - d) + (env * d);
+	gl_FragColor = mix(env,diffuse, d);
 }
