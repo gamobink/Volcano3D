@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.CubemapAttribute;
 import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.math.Vector3;
@@ -83,6 +84,9 @@ public class VRenderable {
             modelInstance.transform.idt();
             modelInstance.transform.translate(pos);
         }
+    }
+    public void setEnvironmentCubemap(VCubemap cubemap){
+    	modelInstance.materials.get(0).set(new CubemapAttribute(CubemapAttribute.EnvironmentMap, cubemap.cubemap));
     }
 	public void setFadeOff(){
 		fadeOnAlpha = false;

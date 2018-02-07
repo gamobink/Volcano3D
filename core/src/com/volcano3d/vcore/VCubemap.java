@@ -33,7 +33,7 @@ public class VCubemap {
 		camFb.position.set(0f, 200f, 0f);
 		camFb.lookAt(0, 1, 0);
 		camFb.near = 0.1f;
-		camFb.far = 3000;
+		camFb.far = 4000;
 		camFb.update();
 
 		fb = new FrameBufferCubemap(Format.RGBA8888, 800, 800, true);

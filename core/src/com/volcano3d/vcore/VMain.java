@@ -50,6 +50,7 @@ public class VMain{
     
     public VDefaultShaderProvider shaderSky = null;    
     public VMinimalistShaderProvider shaderSimple = null;
+    public VDefaultShaderProvider shaderWater = null; 
     
     public VCubemap environmentCubemap = null;
     
@@ -76,9 +77,10 @@ public class VMain{
         shaderSky = new VDefaultShaderProvider(this, "shaders/sky.vertex.glsl", "shaders/sky.fragment.glsl");        
 //        shaderSky = new VShader(this, "shaders/default.vertex.glsl", "shaders/default.fragment.glsl");        
         shaderSimple = new  VMinimalistShaderProvider(this, "shaders/sky.vertex.glsl", "shaders/sky.fragment.glsl");
+        shaderWater = new VDefaultShaderProvider(this, "shaders/cubemap.vertex.glsl", "shaders/cubemap.fragment.glsl");
         
         modelSkybox = new VRenderable(this, "sky.g3dj", shaderSky);
-        modelWater = new VRenderable(this, "water.g3dj");     
+        modelWater = new VRenderable(this, "water.g3dj", shaderWater);     
         
         modelGround1 = new VRenderable(this, "ground1.g3dj");
         modelGround2 = new VRenderable(this, "ground2.g3dj");
@@ -100,6 +102,8 @@ public class VMain{
     //Call on loading complete
     void init(){
     	shaderSky.init();
+    	shaderSimple.init();
+    	shaderWater.init();
     	
     	modelSkybox.init();
     	modelWater.init();
@@ -127,7 +131,7 @@ public class VMain{
         }
 
         environmentCubemap.renderCubemap();
-        //modelWater.setEnvironmentCubemap(environmentCubemap);
+        modelWater.setEnvironmentCubemap(environmentCubemap);
         
         //environmentCubemap.renderTest();
         
@@ -241,7 +245,8 @@ public class VMain{
         modelGroundFar.render(cam, environment);
         modelGroundAround1.render(cam, environment);        
         modelGroundAround3.render(cam, environment);     	
-    	
+        modelGround2.render(cam, environment);  
+        modelGroundAround2.render(cam, environment);    	
     }
     
     
