@@ -43,8 +43,8 @@ public class VCubemap {
 		ObjLoader objLoader = new ObjLoader();
 		cubeMesh = objLoader.loadModel(Gdx.files.internal("cube.obj"));
 		cubeInstance = new ModelInstance(cubeMesh);		
-		cubeBatch = new ModelBatch(Gdx.files.internal("shaders/cubemap.vertex.glsl"),
-				 Gdx.files.internal("shaders/cubemap.fragment.glsl"));
+		cubeBatch = new ModelBatch(Gdx.files.internal("shaders/water.vertex.glsl"),
+				 Gdx.files.internal("shaders/water.fragment.glsl"));
 
 		cubeInstance.materials.get(0).set(new CubemapAttribute(CubemapAttribute.EnvironmentMap, cubemap));
 

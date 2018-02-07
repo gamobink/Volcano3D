@@ -75,9 +75,8 @@ public class VMain{
         environment.add(new DirectionalLight().set(0.4f, 0.4f, 0.6f,  0f, -0.8f, 1));  
         
         shaderSky = new VDefaultShaderProvider(this, "shaders/sky.vertex.glsl", "shaders/sky.fragment.glsl");        
-//        shaderSky = new VShader(this, "shaders/default.vertex.glsl", "shaders/default.fragment.glsl");        
-        shaderSimple = new  VMinimalistShaderProvider(this, "shaders/sky.vertex.glsl", "shaders/sky.fragment.glsl");
-        shaderWater = new VDefaultShaderProvider(this, "shaders/cubemap.vertex.glsl", "shaders/cubemap.fragment.glsl");
+        shaderSimple = new  VMinimalistShaderProvider(this, "shaders/min.vertex.glsl", "shaders/min.fragment.glsl");
+        shaderWater = new VDefaultShaderProvider(this, "shaders/water.vertex.glsl", "shaders/water.fragment.glsl");
         
         modelSkybox = new VRenderable(this, "sky.g3dj", shaderSky);
         modelWater = new VRenderable(this, "water.g3dj", shaderWater);     
@@ -130,17 +129,15 @@ public class VMain{
         	objectsLoaded = true;
         }
 
+        camera.update();
+        
         environmentCubemap.renderCubemap();
         modelWater.setEnvironmentCubemap(environmentCubemap);
-        
-        //environmentCubemap.renderTest();
         
     	Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
         Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1.0f);
         Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
-        
-        camera.update();
         
         //Frustum culling
         modelSkybox.render(camera.get(), environment);

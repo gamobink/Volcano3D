@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g3d.Attributes;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.shaders.BaseShader;
 import com.badlogic.gdx.graphics.g3d.utils.RenderContext;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -27,6 +28,8 @@ public class VMinimalistShader  extends BaseShader{
 		public final static Uniform viewWorldTrans = new Uniform("u_viewWorldTrans");
 		public final static Uniform projViewWorldTrans = new Uniform("u_projViewWorldTrans");
 		
+		public final static Uniform diffuseTexture = new Uniform("u_diffuseTexture", TextureAttribute.Diffuse);
+		public final static Uniform diffuseUVTransform = new Uniform("u_diffuseUVTransform", TextureAttribute.Diffuse);		
 	}
 	public static class Setters {
 		public final static Setter projTrans = new GlobalSetter() {
@@ -94,6 +97,21 @@ public class VMinimalistShader  extends BaseShader{
 				shader.set(inputID, temp.set(shader.camera.combined).mul(renderable.worldTransform));
 			}
 		};
+		public final static Setter diffuseTexture = new LocalSetter() {
+			@Override
+			public void set (BaseShader shader, int inputID, Renderable renderable, Attributes combinedAttributes) {
+				final int unit = shader.context.textureBinder.bind(((TextureAttribute)(combinedAttributes
+					.get(TextureAttribute.Diffuse))).textureDescription);
+				shader.set(inputID, unit);
+			}
+		};
+		public final static Setter diffuseUVTransform = new LocalSetter() {
+			@Override
+			public void set (BaseShader shader, int inputID, Renderable renderable, Attributes combinedAttributes) {
+				final TextureAttribute ta = (TextureAttribute)(combinedAttributes.get(TextureAttribute.Diffuse));
+				shader.set(inputID, ta.offsetU, ta.offsetV, ta.scaleU, ta.scaleV);
+			}
+		};		
 	}
 	// Global uniforms
 	public final int u_projTrans;
@@ -111,10 +129,12 @@ public class VMinimalistShader  extends BaseShader{
 	private Renderable renderable;	
 	private float time = 0;
 	
+	public final int u_diffuseTexture;
+	public final int u_diffuseUVTransform;	
+	
 	public VMinimalistShader(Renderable renderable, ShaderProgram shaderProgram) {
 		
 		this.program = shaderProgram;
-		//this.config = config;			??
 		this.renderable = renderable;
 		
 		// Global uniforms
@@ -130,6 +150,9 @@ public class VMinimalistShader  extends BaseShader{
 		u_worldTrans = register(Inputs.worldTrans, Setters.worldTrans);
 		u_viewWorldTrans = register(Inputs.viewWorldTrans, Setters.viewWorldTrans);
 		u_projViewWorldTrans = register(Inputs.projViewWorldTrans, Setters.projViewWorldTrans);		
+		//Materials
+		u_diffuseTexture = register(Inputs.diffuseTexture, Setters.diffuseTexture);
+		u_diffuseUVTransform = register(Inputs.diffuseUVTransform, Setters.diffuseUVTransform);
 	}
 
 	public VMinimalistShader(Renderable renderable) {
@@ -167,7 +190,9 @@ public class VMinimalistShader  extends BaseShader{
 			context.setBlending(false, GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
 //		bindMaterial(combinedAttributes);	//TODO
-
+		
+		context.setDepthTest(GL30.GL_LEQUAL, 0.0f, 1.0f);
+		
 		super.render(renderable, combinedAttributes);
 	}
 

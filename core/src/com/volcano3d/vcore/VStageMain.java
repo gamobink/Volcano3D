@@ -101,7 +101,19 @@ public class VStageMain extends InputListener {
         
         TextButton buttonStaticView3 = new TextButton("Beach", style);
         buttonStaticView3.setName("BUTTON_VIEW3");
-        buttonStaticView3.addListener(this);         
+        buttonStaticView3.addListener(this); 
+        
+        TextButton buttonStaticView4 = new TextButton("TODO:Hill", style);
+        buttonStaticView4.setName("BUTTON_VIEW4");
+        buttonStaticView4.addListener(this);         
+
+        TextButton buttonStaticView5 = new TextButton("TODO:Cloud", style);
+        buttonStaticView5.setName("BUTTON_VIEW5");
+        buttonStaticView5.addListener(this);                 
+        
+        TextButton buttonStaticView6 = new TextButton("TODO:Rocks", style);
+        buttonStaticView6.setName("BUTTON_VIEW6");
+        buttonStaticView6.addListener(this);                         
         
         mainNavigationTable.add(buttonCloseNavi)
 		        .width(Value.percentWidth(0.1f, table))
@@ -116,6 +128,18 @@ public class VStageMain extends InputListener {
 			    .height(Value.percentHeight(0.05f, table));
         mainNavigationTable.row();        
         mainNavigationTable.add(buttonStaticView3)
+			    .width(Value.percentWidth(0.3f, table))
+			    .height(Value.percentHeight(0.05f, table));
+        mainNavigationTable.row();
+        mainNavigationTable.add(buttonStaticView4)
+			    .width(Value.percentWidth(0.3f, table))
+			    .height(Value.percentHeight(0.05f, table));
+        mainNavigationTable.row();        
+        mainNavigationTable.add(buttonStaticView5)
+			    .width(Value.percentWidth(0.3f, table))
+			    .height(Value.percentHeight(0.05f, table));
+        mainNavigationTable.row();        
+        mainNavigationTable.add(buttonStaticView6)
 			    .width(Value.percentWidth(0.3f, table))
 			    .height(Value.percentHeight(0.05f, table));
         mainNavigationTable.row();
