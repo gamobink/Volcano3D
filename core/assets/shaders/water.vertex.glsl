@@ -17,9 +17,14 @@ varying vec4 v_position;
 
 varying vec3 v_viewDirection;
 
+varying vec4 v_projectedPos;
+
 void main() {
 	v_position = vec4(a_position, 1.0);
-	gl_Position = u_projViewTrans * u_worldTrans *  v_position;
+
+	v_projectedPos = u_projViewTrans * u_worldTrans *  v_position;
+	
+	gl_Position = v_projectedPos;
 	
 	v_normal = normalize(u_normalMatrix * a_normal);
 
@@ -28,4 +33,8 @@ void main() {
 	v_viewDirection = (u_worldTrans * v_position).xyz - camp;
  	 
  	v_diffuseUV = u_diffuseUVTransform.xy + a_texCoord0 * u_diffuseUVTransform.zw;              
+
+	
+
+	
 }

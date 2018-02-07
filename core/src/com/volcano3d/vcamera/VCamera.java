@@ -18,7 +18,7 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 	
 	private VMain volcano = null;
 	
-	private PerspectiveCamera cam;
+	public PerspectiveCamera cam;
 
 	private VCameraPresetCollection cameraPresetsCollection = new VCameraPresetCollection(this);
 	

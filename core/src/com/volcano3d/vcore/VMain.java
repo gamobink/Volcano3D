@@ -52,7 +52,9 @@ public class VMain{
     public VMinimalistShaderProvider shaderSimple = null;
     public VDefaultShaderProvider shaderWater = null; 
     
-    public VCubemap environmentCubemap = null;
+    public VCubemapRender environmentCubemap = null;
+    public VTextureRender reflectionTexture = null;
+    public VTextureRender refractionTexture = null;
     
     public VMain(){
     	
@@ -75,6 +77,8 @@ public class VMain{
         environment.add(new DirectionalLight().set(0.4f, 0.4f, 0.6f,  0f, -0.8f, 1));  
         
         shaderSky = new VDefaultShaderProvider(this, "shaders/sky.vertex.glsl", "shaders/sky.fragment.glsl");        
+        shaderSky.setDepthFunc(0);
+        
         shaderSimple = new  VMinimalistShaderProvider(this, "shaders/min.vertex.glsl", "shaders/min.fragment.glsl");
         shaderWater = new VDefaultShaderProvider(this, "shaders/water.vertex.glsl", "shaders/water.fragment.glsl");
         
@@ -89,14 +93,18 @@ public class VMain{
         modelGroundAround2 = new VRenderable(this, "groundAround2.g3dj");
         modelGroundAround3 = new VRenderable(this, "groundAround3.g3dj");
         
-        modelUnderground1 = new VRenderable(this, "underground.g3dj", shaderSky);
+        modelUnderground1 = new VRenderable(this, "underground.g3dj", shaderSimple);
         
         decalsTags.addDecal(new VDecal("sign.png", new Vector3(-220, 150, -10), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign2.png", new Vector3(-32, 92, 8), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign3.png", new Vector3(146, 42, -216), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign4.png", new Vector3(-7, 45, -550), new Vector2(50,50)));
         
-        environmentCubemap = new VCubemap(this);
+        environmentCubemap = new VCubemapRender(this);
+
+        reflectionTexture = new VTextureRender(this);
+        refractionTexture = new VTextureRender(this);        
+    
     }    
     //Call on loading complete
     void init(){
@@ -128,12 +136,16 @@ public class VMain{
         	init();
         	objectsLoaded = true;
         }
-
+        
+        
         camera.update();
         
-        environmentCubemap.renderCubemap();
-        modelWater.setEnvironmentCubemap(environmentCubemap);
+        renderWaterReflectionScene(camera.get());
+        modelWater.setDiffuseTexture(reflectionTexture.get());
         
+        //environmentCubemap.renderCubemap();
+        //modelWater.setEnvironmentCubemap(environmentCubemap);
+        /*
     	Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
         Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1.0f);
@@ -229,10 +241,46 @@ public class VMain{
 
     }
 
+    public void renderWaterReflectionScene(PerspectiveCamera cam){
+    	
+    	PerspectiveCamera c = new PerspectiveCamera(35, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    	c.position.set(cam.position);
+    	c.direction.set(cam.direction);
+    	c.up.set(cam.up);
+    	c.fieldOfView = cam.fieldOfView;
+    	c.near = 0.1f;
+    	c.far = 3000;
+    	
+    	c.position.y = -c.position.y + 30;
+    	c.direction.y = -c.direction.y;
+    	c.update();
+    	
+    	//reflectionTexture.beginRender();
+    	
+    	Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
+        Gdx.gl.glClearColor(0,0,1,1.0f);
+        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);   
+        
+        modelSkybox.render(c, environment);        
+       // modelWater.render(c, environment);        
+        modelGround1.render(c, environment);                
+        modelGroundCenter.render(c, environment);
+        modelGroundFar.render(c, environment);
+        modelGroundAround1.render(c, environment);        
+        modelGroundAround3.render(c, environment);     	
+        modelGround2.render(c, environment);  
+        modelGroundAround2.render(c, environment);  
+        
+      //  reflectionTexture.endRender();
+    }
+    public void renderWaterRefractionScene(PerspectiveCamera cam){
+
+    }
+    
     public void renderCubemapScene(PerspectiveCamera cam){
         
     	Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
-        Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1.0f);
+        Gdx.gl.glClearColor(0,0,0,1.0f);
         Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
         
         modelSkybox.render(cam, environment);        

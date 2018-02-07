@@ -29,6 +29,9 @@ public class VDefaultShaderProvider extends DefaultShaderProvider{
 		volcano.assetsManager.load(fsName, TextAsset.class);
 		shaderConfig = new DefaultShader.Config();
 	}		
+	public void setDepthFunc(int depth){
+		shaderConfig.defaultDepthFunc = depth;		
+	}
 	public void init(){
 		if(volcano.assetsManager.isLoaded(vsName)
 				&& volcano.assetsManager.isLoaded(fsName)) {			

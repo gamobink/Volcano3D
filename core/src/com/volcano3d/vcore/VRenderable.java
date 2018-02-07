@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.CubemapAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.math.Vector3;
@@ -85,9 +87,12 @@ public class VRenderable {
             modelInstance.transform.translate(pos);
         }
     }
-    public void setEnvironmentCubemap(VCubemap cubemap){
+    public void setEnvironmentCubemap(VCubemapRender cubemap){
     	modelInstance.materials.get(0).set(new CubemapAttribute(CubemapAttribute.EnvironmentMap, cubemap.cubemap));
     }
+    public void setDiffuseTexture(Texture texture){
+    	modelInstance.materials.get(0).set(new TextureAttribute(TextureAttribute.Diffuse, texture));
+    }    
 	public void setFadeOff(){
 		fadeOnAlpha = false;
 		fadeOffAlpha = true;		

@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.glutils.FrameBufferCubemap;
 import com.badlogic.gdx.math.Vector3;
 
-public class VCubemap {
+public class VCubemapRender {
 
 	protected VMain volcano = null;
 	
@@ -26,7 +26,7 @@ public class VCubemap {
 	float yaw, pitch, roll;
 	protected PerspectiveCamera camCube;
 	
-	public VCubemap(VMain v){
+	public VCubemapRender(VMain v){
 		volcano = v;
 
 		camFb = new PerspectiveCamera(90, 800, 800);
