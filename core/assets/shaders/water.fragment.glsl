@@ -6,7 +6,7 @@ varying vec2 v_diffuseUV;
 
 uniform sampler2D u_diffuseTexture;
  
-uniform samplerCube u_environmentCubemap;
+uniform sampler2D u_ambientTexture;
  
 varying vec4 v_position;
  
@@ -22,14 +22,10 @@ void main() {
 	vec2 refractionUV = vec2(ndc.x, ndc.y);
 	vec2 reflectionUV = vec2(ndc.x, 1.0-ndc.y);
 		
-	//vec4 diffuse = texture2D(u_diffuseTexture, v_diffuseUV);	
-	vec4 diffuse = texture2D(u_diffuseTexture, reflectionUV);
+	vec4 diffuse = texture2D(u_diffuseTexture, v_diffuseUV);	
+	vec4 ambient = texture2D(u_ambientTexture, reflectionUV);
+
+	float d = pow(dot(normalize(-v_viewDirection).xyz, normalize(v_normal).xyz), 0.5);	
 	
-	//	vec3 view = v_viewDirection;	
-  	//vec3 reflectedDir = reflect(view.xyz, normalize(v_normal).xyz);
-	//pow(,5)
-	//float d = dot(normalize(-v_viewDirection).xyz, normalize(v_normal).xyz);	
-	//vec4 env = textureCube(u_environmentCubemap, reflectedDir);
-	
-	gl_FragColor = diffuse;	//mix(env,diffuse, d);
+	gl_FragColor = mix(ambient,diffuse, d);
 }

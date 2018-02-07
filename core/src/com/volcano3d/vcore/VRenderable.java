@@ -93,6 +93,9 @@ public class VRenderable {
     public void setDiffuseTexture(Texture texture){
     	modelInstance.materials.get(0).set(new TextureAttribute(TextureAttribute.Diffuse, texture));
     }    
+    public void setAmbientTexture(Texture texture){
+    	modelInstance.materials.get(0).set(new TextureAttribute(TextureAttribute.Ambient, texture));
+    }        
 	public void setFadeOff(){
 		fadeOnAlpha = false;
 		fadeOffAlpha = true;		

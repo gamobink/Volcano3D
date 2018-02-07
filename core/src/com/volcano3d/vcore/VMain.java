@@ -39,20 +39,13 @@ public class VMain{
 
     public VRenderable modelSkybox = null; 
     public VRenderable modelWater = null; 
-    public VRenderable modelGround1 = null; 
-    public VRenderable modelGround2 = null; 
-    public VRenderable modelGroundCenter = null;     
-    public VRenderable modelGroundFar = null;    
-    public VRenderable modelGroundAround1 = null; 
-    public VRenderable modelGroundAround2 = null;     
-    public VRenderable modelGroundAround3 = null; 
-    public VRenderable modelUnderground1 = null; 
+    public VRenderable modelGround = null; 
+    public VRenderable modelIsland = null; 
     
     public VDefaultShaderProvider shaderSky = null;    
     public VMinimalistShaderProvider shaderSimple = null;
     public VDefaultShaderProvider shaderWater = null; 
-    
-    public VCubemapRender environmentCubemap = null;
+        
     public VTextureRender reflectionTexture = null;
     public VTextureRender refractionTexture = null;
     
@@ -82,25 +75,16 @@ public class VMain{
         shaderSimple = new  VMinimalistShaderProvider(this, "shaders/min.vertex.glsl", "shaders/min.fragment.glsl");
         shaderWater = new VDefaultShaderProvider(this, "shaders/water.vertex.glsl", "shaders/water.fragment.glsl");
         
-        modelSkybox = new VRenderable(this, "sky.g3dj", shaderSky);
-        modelWater = new VRenderable(this, "water.g3dj", shaderWater);     
+        modelSkybox = new VRenderable(this, "skybox.g3dj", shaderSky);
+        modelWater = new VRenderable(this, "water.g3dj", shaderWater);    //shaderWater 
         
-        modelGround1 = new VRenderable(this, "ground1.g3dj");
-        modelGround2 = new VRenderable(this, "ground2.g3dj");
-        modelGroundCenter = new VRenderable(this, "groundCenter.g3dj");
-        modelGroundFar = new VRenderable(this, "groundFar.g3dj");
-        modelGroundAround1 = new VRenderable(this, "groundAround1.g3dj");
-        modelGroundAround2 = new VRenderable(this, "groundAround2.g3dj");
-        modelGroundAround3 = new VRenderable(this, "groundAround3.g3dj");
-        
-        modelUnderground1 = new VRenderable(this, "underground.g3dj", shaderSimple);
+        modelGround = new VRenderable(this, "ground.g3dj");
+        modelIsland = new VRenderable(this, "island.g3dj");        
         
         decalsTags.addDecal(new VDecal("sign.png", new Vector3(-220, 150, -10), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign2.png", new Vector3(-32, 92, 8), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign3.png", new Vector3(146, 42, -216), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign4.png", new Vector3(-7, 45, -550), new Vector2(50,50)));
-        
-        environmentCubemap = new VCubemapRender(this);
 
         reflectionTexture = new VTextureRender(this);
         refractionTexture = new VTextureRender(this);        
@@ -114,14 +98,10 @@ public class VMain{
     	
     	modelSkybox.init();
     	modelWater.init();
-    	modelGround1.init();    	
-    	modelGround2.init();    	
-    	modelGroundCenter.init();
-    	modelGroundFar.init();
-    	modelGroundAround1.init();
-    	modelGroundAround2.init();
-    	modelGroundAround3.init();
-    	modelUnderground1.init();
+    	
+    	modelGround.init();
+    	modelIsland.init();
+    	    	
     	decalsTags.init(); 	
     }	
     
@@ -140,41 +120,34 @@ public class VMain{
         
         camera.update();
         
-        renderWaterReflectionScene(camera.get());
-        modelWater.setDiffuseTexture(reflectionTexture.get());
+        renderWaterScene(camera.get(), true);
+        modelWater.setAmbientTexture(reflectionTexture.get());
         
-        //environmentCubemap.renderCubemap();
-        //modelWater.setEnvironmentCubemap(environmentCubemap);
-        /*
     	Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
         Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1.0f);
         Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
         
         //Frustum culling
-        modelSkybox.render(camera.get(), environment);
-        
-        modelWater.render(camera.get(), environment);        
-        modelGround1.render(camera.get(), environment);                
-        modelGroundCenter.render(camera.get(), environment);
-        modelGroundFar.render(camera.get(), environment);
-        modelGroundAround1.render(camera.get(), environment);        
-        modelGroundAround3.render(camera.get(), environment); 
+        modelSkybox.render(camera.get(), environment);        
+        modelWater.render(camera.get(), environment); 
+        modelGround.render(camera.get(), environment);
+        modelIsland.render(camera.get(), environment);
         
         if(camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_1){
-        	modelGround2.setFadeOff();
-        	modelGroundAround2.setFadeOff();        	
+//        	modelGround2.setFadeOff();
+//        	modelGroundAround2.setFadeOff();        	
         }else{
-        	modelGround2.setFadeOn();
-        	modelGroundAround2.setFadeOn();
+//        	modelGround2.setFadeOn();
+//        	modelGroundAround2.setFadeOn();
         }
         //TODO: Render parts based on camera states
      //   if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
-        	modelUnderground1.render(camera.get(), environment);
+  //      	modelUnderground1.render(camera.get(), environment);
       //  }
   
-        modelGround2.render(camera.get(), environment);  
-        modelGroundAround2.render(camera.get(), environment);
+//        modelGround2.render(camera.get(), environment);  
+//        modelGroundAround2.render(camera.get(), environment);
     	
         if(camera.getState() == VCamera.States.MAIN){
         	decalsTags.setFadeOn();
@@ -241,7 +214,7 @@ public class VMain{
 
     }
 
-    public void renderWaterReflectionScene(PerspectiveCamera cam){
+    public void renderWaterScene(PerspectiveCamera cam, boolean reflectOrRefract){
     	
     	PerspectiveCamera c = new PerspectiveCamera(35, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     	c.position.set(cam.position);
@@ -251,49 +224,24 @@ public class VMain{
     	c.near = 0.1f;
     	c.far = 3000;
     	
-    	c.position.y = -c.position.y + 30;
+    	c.position.y = -c.position.y;
     	c.direction.y = -c.direction.y;
     	c.update();
     	
-    	//reflectionTexture.beginRender();
+    	reflectionTexture.beginRender();
     	
     	Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
         Gdx.gl.glClearColor(0,0,1,1.0f);
         Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);   
         
         modelSkybox.render(c, environment);        
-       // modelWater.render(c, environment);        
-        modelGround1.render(c, environment);                
-        modelGroundCenter.render(c, environment);
-        modelGroundFar.render(c, environment);
-        modelGroundAround1.render(c, environment);        
-        modelGroundAround3.render(c, environment);     	
-        modelGround2.render(c, environment);  
-        modelGroundAround2.render(c, environment);  
-        
-      //  reflectionTexture.endRender();
+        modelGround.render(c, environment);
+        modelIsland.render(c, environment);
+
+        reflectionTexture.endRender();
     }
     public void renderWaterRefractionScene(PerspectiveCamera cam){
 
     }
-    
-    public void renderCubemapScene(PerspectiveCamera cam){
-        
-    	Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
-        Gdx.gl.glClearColor(0,0,0,1.0f);
-        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
-        
-        modelSkybox.render(cam, environment);        
-        modelWater.render(cam, environment);        
-        modelGround1.render(cam, environment);                
-        modelGroundCenter.render(cam, environment);
-        modelGroundFar.render(cam, environment);
-        modelGroundAround1.render(cam, environment);        
-        modelGroundAround3.render(cam, environment);     	
-        modelGround2.render(cam, environment);  
-        modelGroundAround2.render(cam, environment);    	
-    }
-    
-    
     
 }

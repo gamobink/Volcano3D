@@ -120,7 +120,7 @@
 			], 
 			"parts": [
 				{
-					"id": "water_part1", 
+					"id": "water01_part1", 
 					"type": "TRIANGLES", 
 					"indices": [
 						  0,   1,   2,   0,   2,   3,   3,   4,   0,   5,   4,   3, 
@@ -164,17 +164,17 @@
 	], 
 	"materials": [
 		{
-			"id": "water", 
-			"ambient": [ 0.0,  0.0,  0.0], 
-			"diffuse": [ 1.0,  1.0,  1.0], 
+			"id": "waterddd", 
+			"ambient": [ 0.588235,  0.588235,  0.588235], 
+			"diffuse": [ 1,  1,  1], 
 			"emissive": [ 0.000000,  0.000000,  0.000000], 
-			"opacity":  1.000000, 
-			"specular": [ 1.000000,  1.000000,  1.000000], 
-			"shininess":  0.000000, 
+			"opacity":  0.530000, 
+			"specular": [ 0.900000,  0.900000,  0.900000], 
+			"shininess":  0, 
 			"textures": [
 				{
 					"id": "Map #3", 
-					"filename": "water.png", 
+					"filename": "water.png",  
 					"type": "DIFFUSE"
 				}
 			]
@@ -182,13 +182,13 @@
 	], 
 	"nodes": [
 		{
-			"id": "water", 
+			"id": "water01", 
 			"rotation": [-0.681883,  0.187180,  0.187180,  0.681883], 
-			"translation": [ 282.796265,  13.254272, -343.153076], 
+			"translation": [ 282.796265,  0.024113, -343.153076], 
 			"parts": [
 				{
-					"meshpartid": "water_part1", 
-					"materialid": "water", 
+					"meshpartid": "water01_part1", 
+					"materialid": "waterddd", 
 					"uvMapping": [[  0]]
 				}
 			]

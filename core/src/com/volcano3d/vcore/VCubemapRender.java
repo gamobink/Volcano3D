@@ -74,7 +74,7 @@ public class VCubemapRender {
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 			Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
 
-			volcano.renderCubemapScene(camFb);
+		//	volcano.renderCubemapScene(camFb);
 		}
 		fb.end();
 	}
