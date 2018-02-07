@@ -22,5 +22,9 @@ void main() {
 	
   	vec3 reflectedDir = reflect(view.xyz, normalize(v_normal).xyz);
 	
-	gl_FragColor = (textureCube(u_environmentCubemap, reflectedDir) + diffuse) * 0.5;
+	float d = dot(normalize(-v_viewDirection).xyz, normalize(v_normal).xyz);
+	
+	vec4 env = textureCube(u_environmentCubemap, reflectedDir);
+	
+	gl_FragColor = mix(env,diffuse, 1.0 - d) + (env * d);
 }
