@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
@@ -50,6 +51,8 @@ public class VMain{
     public VDefaultShaderProvider shaderSky = null;    
     public VMinimalistShaderProvider shaderSimple = null;
     
+    public VCubemap environmentCubemap = null;
+    
     public VMain(){
     	
         assetsManager.setLoader(TextAsset.class,new TextAssetLoader(new InternalFileHandleResolver()));
@@ -92,6 +95,7 @@ public class VMain{
         decalsTags.addDecal(new VDecal("sign3.png", new Vector3(146, 42, -216), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign4.png", new Vector3(-7, 45, -550), new Vector2(50,50)));
         
+        environmentCubemap = new VCubemap(this);
     }    
     //Call on loading complete
     void init(){
@@ -112,12 +116,7 @@ public class VMain{
     
     public void render() {
         
-    	Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
-        Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1.0f);
-        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
-        
-        if (!assetsManager.update()) {
+    	if (!assetsManager.update()) {
             stage2D.renderLoader();
             return;
         }
@@ -126,6 +125,16 @@ public class VMain{
         	init();
         	objectsLoaded = true;
         }
+
+        environmentCubemap.renderCubemap();
+        //modelWater.setEnvironmentCubemap(environmentCubemap);
+        
+        //environmentCubemap.renderTest();
+        
+    	Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
+        Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1.0f);
+        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
         
         camera.update();
         
@@ -167,6 +176,7 @@ public class VMain{
         if (assetsManager.getQueuedAssets() > 0) {
             assetsManager.finishLoading();
         }
+        /**/
     }
     
     public void onPan(float x, float y, float deltaX, float deltaY){
@@ -218,4 +228,22 @@ public class VMain{
 
     }
 
+    public void renderCubemapScene(PerspectiveCamera cam){
+        
+    	Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
+        Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1.0f);
+        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
+        
+        modelSkybox.render(cam, environment);        
+        modelWater.render(cam, environment);        
+        modelGround1.render(cam, environment);                
+        modelGroundCenter.render(cam, environment);
+        modelGroundFar.render(cam, environment);
+        modelGroundAround1.render(cam, environment);        
+        modelGroundAround3.render(cam, environment);     	
+    	
+    }
+    
+    
+    
 }
