@@ -88,7 +88,15 @@ public class VMain{
 
         reflectionTexture = new VTextureRender(this);
         refractionTexture = new VTextureRender(this);        
-    
+        
+        modelGround.enableTween();
+        //add faders to all ground parts to be faded 
+        modelGround.alphaFader.set("groundPart1", 1.0f, 1.0f);
+        
+        //Fading for under water part
+        //modelWater.enableTween();
+        //modelWater.alphaFader.set("waterPart1", 1.0f, 1.0f);
+        //modelWater.alphaFader.set("waterPart2", 1.0f, 1.0f);
     }    
     //Call on loading complete
     void init(){
@@ -128,19 +136,19 @@ public class VMain{
         Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1.0f);
         Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
         
-        //Frustum culling
-        modelSkybox.render(camera.get(), environment);        
+        modelSkybox.render(camera.get(), environment);
         modelWater.render(camera.get(), environment); 
+
+        //Frustum culling???!!
         modelGround.render(camera.get(), environment);
         modelIsland.render(camera.get(), environment);
         
-        if(camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_1){
-//        	modelGround2.setFadeOff("groundPart1");
-//        	modelGroundAround2.setFadeOff();        	
+        if(camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_1){  
+        	modelGround.alphaFader.set("groundPart1", 0.0f, 0.3f);
         }else{
-//        	modelGround2.setFadeOn();
-//        	modelGroundAround2.setFadeOn();
+        	modelGround.alphaFader.set("groundPart1", 1.0f, 0.3f);        	
         }
+        
         //TODO: Render parts based on camera states
      //   if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
   //      	modelUnderground1.render(camera.get(), environment);
@@ -189,6 +197,7 @@ public class VMain{
     
     public void onKeyDown(int keycode){
     	camera.onKeyDown(keycode);
+    	//modelGround.alphaFader.set("groundPart1", 0.0f, 0.1f);
     	
     	/*
     	if(keycode == 8){	//'1'    		

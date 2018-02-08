@@ -1,5 +1,6 @@
 package com.volcano3d.vcore;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.math.Vector3;
+import com.volcano3d.utility.VTween;
 
 /**
  * Created by T510 on 8/6/2017.
@@ -28,12 +30,14 @@ public class VRenderable {
 	protected String modelName = "";
 
 	protected ModelBatch modelBatch = null;
-	protected ModelInstance modelInstance = null;    
+	protected ModelInstance modelInstance = null;
     
     public ShaderProvider shaderProvider = null;
     
     protected BlendingAttribute blendingAttribute;
 	
+    public VTween alphaFader = null;
+    
     public VRenderable(VMain o){
     	volcano = o;
     }
@@ -65,6 +69,14 @@ public class VRenderable {
         }else{
             System.out.println("Renderable:init asset not loaded "+modelName);
         }
+    }
+    public void enableTween(){
+    	if(alphaFader == null){
+    		alphaFader = new VTween();
+    	}
+    }
+    public void disableTween(){
+    	alphaFader = null;
     }
     public void setNodeEnabled(String id, boolean enabled){
     	Node n = getNode(id);
@@ -102,9 +114,10 @@ public class VRenderable {
     public void setColor(String id, float r, float g, float b){
     	setNodeMaterialAttribute(id, ColorAttribute.createDiffuse(r,g,b,1));
     }    
-    public void setTransparency(String id, float f){    	
-		blendingAttribute.opacity = f;
-		setNodeMaterialAttribute(id, blendingAttribute);	
+    public void setTransparency(String id, float f){    
+    	BlendingAttribute b = new BlendingAttribute(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+		b.opacity = f;
+		setNodeMaterialAttribute(id, b);	
     }    
     public void setNodeMaterialAttribute(String id, Attribute attr){
     	Node n = getNode(id);
@@ -117,9 +130,15 @@ public class VRenderable {
     public Node getNode(String id){
     	if(id != null && id.length() > 0)return modelInstance.getNode(id, true);
     	else return modelInstance.nodes.get(0);
-    }
-    
-    public void render(PerspectiveCamera cam, Environment env){ 
+    }    
+    public void render(PerspectiveCamera cam, Environment env){
+    	if(alphaFader != null){
+    		alphaFader.tween(Gdx.graphics.getDeltaTime());
+    		for(int i = 0; i < alphaFader.values.size; i++){
+    			VTween.Value v = alphaFader.values.get(i);
+    			setTransparency(v.id, v.value);
+    		}
+    	}
     	if(blendingAttribute.opacity > 0){
 	        modelBatch.begin(cam);
 	        if(modelInstance != null){

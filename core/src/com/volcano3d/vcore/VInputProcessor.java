@@ -71,7 +71,7 @@ public class VInputProcessor implements InputProcessor, GestureListener {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
+		volcano.onKeyDown(keycode);
 		return false;
 	}
 
