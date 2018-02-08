@@ -91,7 +91,8 @@ public class VMain{
         
         modelGround.enableTween();
         //add faders to all ground parts to be faded 
-        modelGround.alphaFader.set("groundPart1", 1.0f, 1.0f);
+        modelGround.alphaFader.set("groundPart2", 1.0f, 1.0f);
+        modelGround.alphaFader.set("groundFar1", 1.0f, 1.0f);
         
         //Fading for under water part
         //modelWater.enableTween();
@@ -144,9 +145,11 @@ public class VMain{
         modelIsland.render(camera.get(), environment);
         
         if(camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_1){  
-        	modelGround.alphaFader.set("groundPart1", 0.0f, 0.3f);
+        	modelGround.alphaFader.set("groundPart2", 0.0f, 0.2f);
+        	modelGround.alphaFader.set("groundFar1", 0.0f, 0.2f);
         }else{
-        	modelGround.alphaFader.set("groundPart1", 1.0f, 0.3f);        	
+        	modelGround.alphaFader.set("groundPart2", 1.0f, 0.3f);        	
+        	modelGround.alphaFader.set("groundFar1", 1.0f, 0.3f);        	
         }
         
         //TODO: Render parts based on camera states
@@ -233,7 +236,7 @@ public class VMain{
     	c.near = 0.1f;
     	c.far = 3000;
     	
-    	for(int i=0; i<2; i++){    		
+    	for(int i=0; i<2; i++){
     		if(i==1){
 		    	c.position.y = -c.position.y;
 		    	c.direction.y = -c.direction.y;

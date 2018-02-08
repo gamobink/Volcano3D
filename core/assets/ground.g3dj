@@ -32952,7 +32952,7 @@
 	], 
 	"materials": [
 		{
-			"id": "17 - Default", 
+			"id": "groundCenter", 
 			"ambient": [ 0.0,  0.0,  0.0], 
 			"diffuse": [1, 1, 1],
 			"emissive": [ 0.000000,  0.000000,  0.000000], 
@@ -32968,14 +32968,29 @@
 			]
 		}, 
 		{
-			"id": "22 - Default", 
-			"ambient": [ 0.0,  0.0,  0.0], 
+			"id": "groundFar1", 
 			"diffuse": [0.274, 0.211, 0.125],
-			"emissive": [ 0.000000,  0.000000,  0.000000], 
-			"opacity":  1.000000, 
-			"specular": [ 0.000000,  0.000000,  0.000000], 
-			"shininess":  1.000000
-		}
+		},
+		{
+			"id": "ground",
+			"diffuse": [0.274, 0.211, 0.125],
+		},
+		{
+			"id": "groundFar2",
+			"diffuse": [0.274, 0.211, 0.125],
+		},
+		{
+			"id": "groundPart2",
+			"diffuse": [0.274, 0.211, 0.125],
+		},
+		{
+			"id": "groundPart1",
+			"diffuse": [0.274, 0.211, 0.125],
+		},	
+		{
+			"id": "groundPart3",
+			"diffuse": [0.274, 0.211, 0.125],
+		},										
 	], 
 	"nodes": [
 		{
@@ -32985,7 +33000,7 @@
 			"parts": [
 				{
 					"meshpartid": "groundFar1_part1", 
-					"materialid": "22 - Default"
+					"materialid": "groundFar1"
 				}
 			]
 		}, 
@@ -32997,7 +33012,7 @@
 			"parts": [
 				{
 					"meshpartid": "groundCenter_part1", 
-					"materialid": "17 - Default", 
+					"materialid": "groundCenter", 
 					"uvMapping": [[]]
 				}
 			]
@@ -33010,7 +33025,7 @@
 			"parts": [
 				{
 					"meshpartid": "groundFar2_part1", 
-					"materialid": "22 - Default", 
+					"materialid": "groundFar2", 
 					"uvMapping": [[  0,   1]]
 				}
 			]
@@ -33023,7 +33038,7 @@
 			"parts": [
 				{
 					"meshpartid": "groundPart2_part1", 
-					"materialid": "22 - Default", 
+					"materialid": "groundPart2", 
 					"uvMapping": [[  0,   1]]
 				}
 			]
@@ -33036,7 +33051,7 @@
 			"parts": [
 				{
 					"meshpartid": "groundPart1_part1", 
-					"materialid": "22 - Default", 
+					"materialid": "groundPart1", 
 					"uvMapping": [[  0,   1]]
 				}
 			]
@@ -33049,7 +33064,7 @@
 			"parts": [
 				{
 					"meshpartid": "groundPart3_part1", 
-					"materialid": "22 - Default", 
+					"materialid": "groundPart3", 
 					"uvMapping": [[  0,   1]]
 				}
 			]
