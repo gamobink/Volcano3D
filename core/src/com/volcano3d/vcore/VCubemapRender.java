@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.CubemapAttribute;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.glutils.FrameBufferCubemap;
-import com.badlogic.gdx.math.Vector3;
 
 public class VCubemapRender {
 

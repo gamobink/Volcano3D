@@ -9,7 +9,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
 //		config.width = 1200;config.height = 800;
-		config.width = 562;config.height = 1000;		
+//		config.width = 562;config.height = 1000;		
+		config.width = 490;config.height = 800;		
 		
 		config.title = "Volcano3D";
 		config.samples = 6;

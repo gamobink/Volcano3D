@@ -22,6 +22,8 @@ import com.volcano3d.vdecal.VDecal;
 import com.volcano3d.vdecal.VDecalGroup;
 import com.volcano3d.vshaders.VDefaultShaderProvider;
 import com.volcano3d.vshaders.VMinimalistShaderProvider;
+import com.volcano3d.vstage.VActionFollowPath;
+import com.volcano3d.vstage.VStageMain;
 
 /**
  * Created by T510 on 8/2/2017.
@@ -50,6 +52,17 @@ public class VMain{
     public VTextureRender refractionTexture = null;
     
     public VMain(){
+    	
+//    	VActionFollowPath pth = new VActionFollowPath();
+//    	pth.addPoint(0,0);
+//    	pth.addPoint(0,2);
+//    	pth.addPoint(2,2);
+//    	pth.addPoint(2,0);
+//    	pth.addPoint(4,0);
+//
+//    	System.out.println(pth.getBezierPoint(0.2f));
+//    	System.out.println(pth.getBezierPoint(0.5f));
+//    	System.out.println(pth.getBezierPoint(0.99f));
     	
         assetsManager.setLoader(TextAsset.class,new TextAssetLoader(new InternalFileHandleResolver()));
         assetsManager.setErrorListener(new AssetErrorListener() {
@@ -188,12 +201,15 @@ public class VMain{
 			switch(iint){
 			case 0:
 				camera.setCameraState(VCamera.States.STATIC_1);
+				this.stage2D.transitionToStaticView();
 				break;
 			case 2:
 				camera.setCameraState(VCamera.States.STATIC_3);
+				this.stage2D.transitionToStaticView();
 				break;
 			case 3:
 				camera.setCameraState(VCamera.States.STATIC_4);
+				this.stage2D.transitionToStaticView();
 				break;			
 			};
     	}
