@@ -30,7 +30,7 @@ public class VCameraPreset {
 	private VCameraPresetCollection.PresetsIdentifiers targetIdentifierTransition = null;
 	
 	//Public camera settings
-	public Vector3 	pivotPosition = new Vector3(-50,11,-150);
+	public Vector3 	pivotPosition = new Vector3(-50,-5,-150);
 	public float	fov = 35.0f;
 	public float 	distance = 650.0f;	
 	public Vector2 	anglePos = new Vector2(75, 11);

@@ -81,10 +81,10 @@ public class VMain{
         modelGround = new VRenderable(this, "ground.g3dj");
         modelIsland = new VRenderable(this, "island.g3dj");        
         
-        decalsTags.addDecal(new VDecal("sign.png", new Vector3(-220, 150, -10), new Vector2(50,50)));
-        decalsTags.addDecal(new VDecal("sign2.png", new Vector3(-32, 92, 8), new Vector2(50,50)));
-        decalsTags.addDecal(new VDecal("sign3.png", new Vector3(146, 42, -216), new Vector2(50,50)));
-        decalsTags.addDecal(new VDecal("sign4.png", new Vector3(-7, 45, -550), new Vector2(50,50)));
+        decalsTags.addDecal(new VDecal("sign.png", new Vector3(-220, 140, -10), new Vector2(50,50)));
+        decalsTags.addDecal(new VDecal("sign2.png", new Vector3(-32, 82, 8), new Vector2(50,50)));
+        decalsTags.addDecal(new VDecal("sign3.png", new Vector3(146, 32, -216), new Vector2(50,50)));
+        decalsTags.addDecal(new VDecal("sign4.png", new Vector3(-7, 35, -550), new Vector2(50,50)));
 
         reflectionTexture = new VTextureRender(this);
         refractionTexture = new VTextureRender(this);        
@@ -120,8 +120,8 @@ public class VMain{
         
         camera.update();
         
-        renderWaterScene(camera.get(), true);
-        modelWater.setAmbientTexture(reflectionTexture.get());
+        renderWaterScene(camera.get());
+        modelWater.setAmbientTexture(null, reflectionTexture.get());
         
     	Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
@@ -135,7 +135,7 @@ public class VMain{
         modelIsland.render(camera.get(), environment);
         
         if(camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_1){
-//        	modelGround2.setFadeOff();
+//        	modelGround2.setFadeOff("groundPart1");
 //        	modelGroundAround2.setFadeOff();        	
         }else{
 //        	modelGround2.setFadeOn();
@@ -214,7 +214,7 @@ public class VMain{
 
     }
 
-    public void renderWaterScene(PerspectiveCamera cam, boolean reflectOrRefract){
+    public void renderWaterScene(PerspectiveCamera cam){
     	
     	PerspectiveCamera c = new PerspectiveCamera(35, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     	c.position.set(cam.position);
@@ -224,21 +224,32 @@ public class VMain{
     	c.near = 0.1f;
     	c.far = 3000;
     	
-    	c.position.y = -c.position.y;
-    	c.direction.y = -c.direction.y;
-    	c.update();
-    	
-    	reflectionTexture.beginRender();
-    	
-    	Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
-        Gdx.gl.glClearColor(0,0,1,1.0f);
-        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);   
-        
-        modelSkybox.render(c, environment);        
-        modelGround.render(c, environment);
-        modelIsland.render(c, environment);
-
-        reflectionTexture.endRender();
+    	for(int i=0; i<2; i++){    		
+    		if(i==1){
+		    	c.position.y = -c.position.y;
+		    	c.direction.y = -c.direction.y;
+    		}
+	    	c.update();
+	    	
+	    	if(i==1)reflectionTexture.beginRender();
+	    	else refractionTexture.beginRender();
+	    	
+	    	Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
+	        Gdx.gl.glClearColor(0,0,1,1.0f);
+	        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);   
+	        
+	        if(i==1){
+		        modelSkybox.render(c, environment);        
+		        modelGround.render(c, environment);
+		        modelIsland.render(c, environment);
+	        }else{
+	        	
+	        	//TODO: render under water part
+	        	
+	        }
+	        if(i==1)reflectionTexture.endRender();
+	        else refractionTexture.endRender();
+    	}
     }
     public void renderWaterRefractionScene(PerspectiveCamera cam){
 
