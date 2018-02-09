@@ -22,7 +22,6 @@ import com.volcano3d.vdecal.VDecal;
 import com.volcano3d.vdecal.VDecalGroup;
 import com.volcano3d.vshaders.VDefaultShaderProvider;
 import com.volcano3d.vshaders.VMinimalistShaderProvider;
-import com.volcano3d.vstage.VActionFollowPath;
 import com.volcano3d.vstage.VFollowPathEditor;
 import com.volcano3d.vstage.VStageMain;
 
@@ -63,14 +62,13 @@ public class VMain{
             }
         });
 
-        Gdx.input.setInputProcessor(new InputMultiplexer(pathEdit.stage));        
-//        Gdx.input.setInputProcessor(new InputMultiplexer(pathEdit.stage, stage2D.mainStage, inputProcessor.gestureDetector, inputProcessor));
+        Gdx.input.setInputProcessor(new InputMultiplexer(stage2D.mainStage, inputProcessor.gestureDetector, inputProcessor));
 
         create();
     }
     public void switchInputProc(boolean i){
     	if(i)Gdx.input.setInputProcessor(new InputMultiplexer(pathEdit.stage)); 
-    	else Gdx.input.setInputProcessor(new InputMultiplexer(pathEdit.stage, stage2D.mainStage, inputProcessor.gestureDetector, inputProcessor));
+    	else Gdx.input.setInputProcessor(new InputMultiplexer(stage2D.mainStage, inputProcessor.gestureDetector, inputProcessor));
     }
     public void create(){
     	
@@ -181,7 +179,7 @@ public class VMain{
         
         stage2D.renderMainStage();
         
-        pathEdit.render();
+        //pathEdit.render();
         
         //Load all assets before creating new objects
         if (assetsManager.getQueuedAssets() > 0) {
@@ -201,15 +199,15 @@ public class VMain{
 			switch(iint){
 			case 0:
 				camera.setCameraState(VCamera.States.STATIC_1);
-				this.stage2D.transitionToStaticView();
+				this.stage2D.transitionToStaticView(0);
 				break;
 			case 2:
 				camera.setCameraState(VCamera.States.STATIC_3);
-				this.stage2D.transitionToStaticView();
+				this.stage2D.transitionToStaticView(0);
 				break;
 			case 3:
 				camera.setCameraState(VCamera.States.STATIC_4);
-				this.stage2D.transitionToStaticView();
+				this.stage2D.transitionToStaticView(0);
 				break;			
 			};
     	}
@@ -217,30 +215,26 @@ public class VMain{
     
     public void onKeyDown(int keycode){
     	camera.onKeyDown(keycode);
-
-    	//modelGround.alphaFader.set("groundPart1", 0.0f, 0.1f);
     	
-    	//System.out.println(keycode);
-    	
-//    	pathEdit.setPath(stage2D.pathAction1, "pathAction1");
+//    	System.out.println(keycode);
     	/*
-    	if(keycode == 8){	//'1'    		
-    		renderUndergroundPart1 = false;
-    		camera.setCameraMode(0);
+    	if(keycode == 51){	//'W'   
+    		this.switchInputProc(true);
+    	}
+    	if(keycode == 8){	//'1'   
+    		pathEdit.setPath(stage2D.pathAction1, "pathAction1");
     	}
     	if(keycode == 9){	//'2'    		
-    		renderUndergroundPart1 = false;
-    		camera.setCameraMode(1);
+    		pathEdit.setPath(stage2D.pathAction2, "pathAction2");    		
     	}    	
     	if(keycode == 10){	//'3'    		
-    		renderUndergroundPart1 = true;
-    		camera.setCameraMode(2);
+    		pathEdit.setPath(stage2D.pathAction3, "pathAction3");    		
     	} 
     	if(keycode == 11){	//'4'    		
-    		renderUndergroundPart1 = false;
-    		camera.setCameraMode(3);
+    	//	renderUndergroundPart1 = false;
+    	//	camera.setCameraMode(3);
     	} 
-    	*/    	
+    	 	*/
     }
     
     public void dispose(){

@@ -4,13 +4,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcore.VMain;
 
 public class VFollowPathEditor extends InputListener  {
@@ -101,12 +99,17 @@ public class VFollowPathEditor extends InputListener  {
 
 	}	
 	public boolean 	keyDown(InputEvent event, int keycode){
+		//System.out.println(keycode);
+		if(keycode == 45){	//'Q'
+			volcano.switchInputProc(false);			
+		}	
 		addPoints = false;
-		if(keycode == 112 && pathSelectedPoint >= 0){
+		if(keycode == 112 && pathSelectedPoint >= 0){		//DEL
 			path.controlPoints.removeIndex(pathSelectedPoint);
 		}
-		if(keycode == 8)addPoints = true;
-		if(keycode == 62){
+		if(keycode == 29)addPoints = true;	//A
+		if(keycode == 62){		//SPACE	
+			System.out.println("//---------------------- "+varName+" -------------------------");
 			for(int i=0; i<path.controlPoints.size; i++){
 				Vector2 p = path.controlPoints.get(i).cpy();
 				p.x = p.x / stage.getWidth();

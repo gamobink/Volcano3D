@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -23,7 +24,7 @@ import com.volcano3d.vcore.VMain;
 
 public class VStageMain extends InputListener {
 
-	VMain volcano = null;
+	public VMain volcano = null;
 	
 	protected Stage loaderStage = null;	
 	public Stage mainStage = null;
@@ -37,6 +38,8 @@ public class VStageMain extends InputListener {
 	private Vector2	buttonNavigationRightPos = new Vector2();
 	private Vector2	buttonInfoLeftPos = new Vector2();	
 	protected Table mainNavigationTable	= null;	
+	
+	protected TextButton buttonCloseNavi = null;
 	
 	public ShapeRenderer shapeRenderer = new ShapeRenderer();
 
@@ -115,38 +118,54 @@ public class VStageMain extends InputListener {
         //TODO: a.setOrigin(a.getWidth()/2, a.getHeight()/2); 
         //center of button
         
-        TextButton buttonCloseNavi = new TextButton("X", style);
+        float buttonIconSize = swidth * 0.15f;
+        
+        buttonCloseNavi = new TextButton("X", style);
         buttonCloseNavi.setName("BUTTON_CLOSENAVI");
+        buttonCloseNavi.setSize(buttonSize, buttonSize);
+        buttonCloseNavi.setOrigin(buttonSize/2, buttonSize/2);
         buttonCloseNavi.addListener(this);
         
         TextButton buttonStaticView1 = new TextButton("Volcano", style);
         buttonStaticView1.setName("BUTTON_VIEW1");
+        buttonStaticView1.setSize(buttonIconSize, buttonIconSize);
+        buttonStaticView1.setOrigin(buttonIconSize/2, buttonIconSize/2);        
         buttonStaticView1.addListener(this);         
 
         TextButton buttonStaticView2 = new TextButton("Sea", style);
         buttonStaticView2.setName("BUTTON_VIEW2");
+        buttonStaticView2.setSize(buttonIconSize, buttonIconSize);
+        buttonStaticView2.setOrigin(buttonIconSize/2, buttonIconSize/2);           
         buttonStaticView2.addListener(this); 
         
         TextButton buttonStaticView3 = new TextButton("Beach", style);
         buttonStaticView3.setName("BUTTON_VIEW3");
+        buttonStaticView3.setSize(buttonIconSize, buttonIconSize);
+        buttonStaticView3.setOrigin(buttonIconSize/2, buttonIconSize/2);           
         buttonStaticView3.addListener(this); 
         
         TextButton buttonStaticView4 = new TextButton("TODO:Hill", style);
         buttonStaticView4.setName("BUTTON_VIEW4");
+        buttonStaticView4.setSize(buttonIconSize, buttonIconSize);
+        buttonStaticView4.setOrigin(buttonIconSize/2, buttonIconSize/2);           
         buttonStaticView4.addListener(this);         
 
         TextButton buttonStaticView5 = new TextButton("TODO:Cloud", style);
         buttonStaticView5.setName("BUTTON_VIEW5");
+        buttonStaticView5.setSize(buttonIconSize, buttonIconSize);
+        buttonStaticView5.setOrigin(buttonIconSize/2, buttonIconSize/2);           
         buttonStaticView5.addListener(this);                 
         
         TextButton buttonStaticView6 = new TextButton("TODO:Rocks", style);
         buttonStaticView6.setName("BUTTON_VIEW6");
+        buttonStaticView6.setSize(buttonIconSize, buttonIconSize);
+        buttonStaticView6.setOrigin(buttonIconSize/2, buttonIconSize/2);           
         buttonStaticView6.addListener(this);                         
         
-        mainNavigationTable.add(buttonCloseNavi)
-		        .width(Value.percentWidth(0.1f, mainNavigationTable))
-		        .height(Value.percentHeight(0.05f, mainNavigationTable));
-        mainNavigationTable.row();        
+//        mainNavigationTable.add(buttonCloseNavi)
+//		        .width(Value.percentWidth(0.1f, mainNavigationTable))
+//		        .height(Value.percentHeight(0.05f, mainNavigationTable));
+//        mainNavigationTable.row();        
         mainNavigationTable.add(buttonStaticView1)
 			    .width(Value.percentWidth(0.3f, mainNavigationTable))
 			    .height(Value.percentHeight(0.05f, mainNavigationTable));
@@ -174,6 +193,10 @@ public class VStageMain extends InputListener {
         
         mainNavigationTable.setVisible(false);	
         
+        mainStage.addActor(buttonCloseNavi);
+        buttonCloseNavi.setVisible(false);
+        
+        
 		float sWidth = mainStage.getWidth();
 		float sHeight = mainStage.getHeight();		
         pathAction1.addPoint(0.489796f * sWidth, 0.012500f * sHeight);
@@ -194,30 +217,37 @@ public class VStageMain extends InputListener {
 		
 		mainStage.act(Gdx.graphics.getDeltaTime());
 		mainStage.draw();
-		
+		/*
 		shapeRenderer.setProjectionMatrix(mainStage.getCamera().combined);
 		pathAction1.drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
 		pathAction2.drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
 		pathAction3.drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
+		*/
 	}
 	
-	public void transitionToStaticView(){
-		
-		//TODO: Actions.touchable(Touchable.disabled),
+	public void transitionToStaticView(float delay){
 		
 		buttonReturn.clearActions();
 		buttonInfo.clearActions();
 		buttonNavigation.clearActions();
 		
-		buttonReturn.addAction(Actions.sequence(Actions.show(), 
+		buttonReturn.addAction(Actions.sequence(Actions.touchable(Touchable.disabled),
+												Actions.delay(delay),
+												Actions.show(), 
 												Actions.fadeIn(0.1f),
-												Actions.moveTo(this.buttonNavigationRightPos.x, this.buttonNavigationRightPos.y, 0.5f, Interpolation.swingIn)));
+												Actions.moveTo(this.buttonNavigationRightPos.x, this.buttonNavigationRightPos.y, 0.5f, Interpolation.swingIn),
+												Actions.touchable(Touchable.enabled)));
 		
-		buttonInfo.addAction(Actions.sequence(Actions.show(), 
+		buttonInfo.addAction(Actions.sequence(Actions.touchable(Touchable.disabled),
+												Actions.delay(delay),
+												Actions.show(), 
 												Actions.fadeIn(0.1f),
-												Actions.moveTo(this.buttonInfoLeftPos.x, this.buttonInfoLeftPos.y, 0.5f, Interpolation.swingIn)));
+												Actions.moveTo(this.buttonInfoLeftPos.x, this.buttonInfoLeftPos.y, 0.5f, Interpolation.swingIn),
+												Actions.touchable(Touchable.enabled)));
 
-		buttonNavigation.addAction(Actions.sequence(Actions.delay(0.4f),
+		buttonNavigation.addAction(Actions.sequence(Actions.touchable(Touchable.disabled),
+													Actions.delay(delay),
+													Actions.delay(0.4f),
 													Actions.fadeOut(0.1f),
 													Actions.hide()
 													));													
@@ -228,20 +258,24 @@ public class VStageMain extends InputListener {
 		buttonInfo.clearActions();		
 		buttonNavigation.clearActions();
 		
-		buttonReturn.addAction(Actions.sequence(Actions.show(), 
+		buttonReturn.addAction(Actions.sequence(Actions.touchable(Touchable.disabled),
+												Actions.show(), 
 												Actions.moveTo(this.buttonCenterPos.x, this.buttonCenterPos.y, 0.5f, Interpolation.swingIn),
 												Actions.fadeOut(0.5f), 
 												Actions.hide()
 											));
 
-		buttonInfo.addAction(Actions.sequence(Actions.show(), 
+		buttonInfo.addAction(Actions.sequence(Actions.touchable(Touchable.disabled),
+												Actions.show(), 
 												Actions.moveTo(this.buttonCenterPos.x, this.buttonCenterPos.y, 0.5f, Interpolation.swingIn),
 												Actions.fadeOut(0.5f), 
 												Actions.hide()
 											));		
 		
-		buttonNavigation.addAction(Actions.sequence(Actions.show(), 
-													Actions.fadeIn(0.5f)));
+		buttonNavigation.addAction(Actions.sequence(Actions.touchable(Touchable.disabled),
+													Actions.show(), 
+													Actions.fadeIn(0.5f),
+													Actions.touchable(Touchable.enabled)));
 	}	
 	
 	public void transitionOpenNavigationTable(){
@@ -251,16 +285,37 @@ public class VStageMain extends InputListener {
 		mainNavigationTable.addAction(Actions.sequence(Actions.show(), 
 										Actions.moveTo(0, 0, 0.5f, Interpolation.circle)
 									));
+		
+		pathAction1.setDuration(0.8f);
+		pathAction1.setReverse(false);
+		pathAction1.setInterpolation(Interpolation.circleOut);
+		buttonCloseNavi.addAction(Actions.sequence(Actions.fadeIn(0.5f),
+													Actions.show(),
+													pathAction1,
+													Actions.touchable(Touchable.enabled)
+													));
+		
+		
+		
 	}
 	
 	public void transitionCloseNavigationTable(){
 		
 		mainNavigationTable.clearActions();
 		
-		mainNavigationTable.addAction(Actions.sequence(Actions.show(), 
+		mainNavigationTable.addAction(Actions.sequence(Actions.show(),
 				Actions.moveTo(0, -700, 0.5f, Interpolation.circle),
 				Actions.hide()
 			));
+		
+		pathAction1.setDuration(0.7f);
+		pathAction1.setReverse(true);
+		pathAction1.setInterpolation(Interpolation.circleIn);
+		buttonCloseNavi.addAction(Actions.sequence(Actions.touchable(Touchable.disabled),
+													Actions.show(),
+													pathAction1,
+													Actions.fadeOut(0.5f)
+													));
 	}	
 	
     public void touchUp (InputEvent e, float x, float y, int pointer, int button) {
@@ -272,24 +327,22 @@ public class VStageMain extends InputListener {
         if(a.getName() == "BUTTON_VIEW1"){
         	volcano.camera.setCameraState(VCamera.States.STATIC_1);
         	transitionCloseNavigationTable();
-        	transitionToStaticView();
+        	transitionToStaticView(0.8f);
         }  
         if(a.getName() == "BUTTON_VIEW2"){
         	volcano.camera.setCameraState(VCamera.States.STATIC_3);
         	transitionCloseNavigationTable();
-        	transitionToStaticView();
+        	transitionToStaticView(0.8f);
         }  
         if(a.getName() == "BUTTON_VIEW3"){
         	volcano.camera.setCameraState(VCamera.States.STATIC_4);
         	transitionCloseNavigationTable();	
-        	transitionToStaticView();
+        	transitionToStaticView(0.8f);
         }          
         if(a.getName() == "BUTTON_NAVI"){
-//        	mainNavigationTable.setVisible(true);
         	transitionOpenNavigationTable();
         }        
         if(a.getName() == "BUTTON_CLOSENAVI"){
-//        	mainNavigationTable.setVisible(false);	
         	transitionCloseNavigationTable();
         }                
     }	

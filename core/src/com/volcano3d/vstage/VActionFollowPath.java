@@ -38,7 +38,7 @@ public class VActionFollowPath extends TemporalAction {
 	@Override
 	protected void update(float percent) {
 		Vector2 p = getBezierPoint(percent);
-		target.setPosition(p.x, p.y); 		
+		target.setPosition(p.x-target.getWidth()/2, p.y-target.getHeight()/2); 		
 	}
 	public void drawDebug(ShapeRenderer shapeRenderer){
 		drawDebug(shapeRenderer, 1,1,0,1);		
