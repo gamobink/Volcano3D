@@ -74,8 +74,9 @@ public class VMain{
                 System.out.println("ASSET: "+assetDescriptor.toString()+" - "+throwable.getMessage());
             }
         });
-        
-        Gdx.input.setInputProcessor(new InputMultiplexer(pathEdit.stage, stage2D.mainStage, inputProcessor.gestureDetector, inputProcessor));
+
+        Gdx.input.setInputProcessor(new InputMultiplexer(pathEdit.stage));        
+//        Gdx.input.setInputProcessor(new InputMultiplexer(pathEdit.stage, stage2D.mainStage, inputProcessor.gestureDetector, inputProcessor));
 
         create();
     }

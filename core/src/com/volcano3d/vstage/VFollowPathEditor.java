@@ -25,6 +25,10 @@ public class VFollowPathEditor extends InputListener  {
 	public int pathSelectedPoint = -1;
 	public boolean addPoints = false;
 	
+	public String varName = "path";
+	public String suffixX = " * sWidth";
+	public String suffixY = " * sHeight";	
+	
 	public VFollowPathEditor(){
 		
         font = new BitmapFont();
@@ -40,12 +44,19 @@ public class VFollowPathEditor extends InputListener  {
      
         stage.addListener(this);
         
-        path.setDuration(0.5f);
-        path.addPoint(240, 10);
-        path.addPoint(300, 150);
-        path.addPoint(50, 180);
-        path.addPoint(50, 340);
-        path.addPoint(200, 400);
+		float sWidth = stage.getWidth();
+		float sHeight = stage.getHeight();	
+		
+        path.addPoint(0.489796f * sWidth, 0.012500f * sHeight);
+        path.addPoint(0.497959f * sWidth, 0.226250f * sHeight);
+        path.addPoint(0.322449f * sWidth, 0.215000f * sHeight);
+        path.addPoint(0.053061f * sWidth, 0.261250f * sHeight);
+        path.addPoint(0.038775f * sWidth, 0.427500f * sHeight);
+        path.addPoint(0.116326f * sWidth, 0.700000f * sHeight);
+        path.addPoint(0.606122f * sWidth, 0.758750f * sHeight);
+        path.addPoint(0.914286f * sWidth, 0.506250f * sHeight);
+        path.addPoint(0.781633f * sWidth, 0.350000f * sHeight);
+              
 	}
 	public void render(){	
 
@@ -91,7 +102,7 @@ public class VFollowPathEditor extends InputListener  {
 				Vector2 p = path.controlPoints.get(i).cpy();
 				p.x = p.x / stage.getWidth();
 				p.y = p.y / stage.getHeight();				
-				System.out.println("p.addPoint("+p+");");
+				System.out.format(varName+".addPoint(%ff"+suffixX+", %ff"+suffixY+");", p.x, p.y);System.out.println("");
 			}	
 		}
 		return true;

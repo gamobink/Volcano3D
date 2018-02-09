@@ -40,10 +40,13 @@ public class VActionFollowPath extends TemporalAction {
 		Vector2 p = getBezierPoint(percent);
 		target.setPosition(p.x, p.y); 		
 	}
-	
 	public void drawDebug(ShapeRenderer shapeRenderer){
+		drawDebug(shapeRenderer, 1,1,0,1);		
+	}
+	
+	public void drawDebug(ShapeRenderer shapeRenderer, float r, float g, float b, float a){
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-		shapeRenderer.setColor(1, 1, 0, 1);
+		shapeRenderer.setColor(r, g, b, a);
 		for(float f = 0; f < 1.0f; f += 0.01f){
 			Vector2 v = getBezierPoint(f);
 			Vector2 v2 = getBezierPoint(f + 0.01f);			

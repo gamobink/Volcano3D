@@ -169,13 +169,17 @@ public class VStageMain extends InputListener {
         
         mainNavigationTable.setVisible(false);	
         
-		
-        pathAction1.setDuration(0.5f);
-        pathAction1.addPoint(240, 10);
-        pathAction1.addPoint(300, 150);
-        pathAction1.addPoint(50, 180);
-        pathAction1.addPoint(50, 340);
-        pathAction1.addPoint(200, 400);
+		float sWidth = mainStage.getWidth();
+		float sHeight = mainStage.getHeight();		
+        pathAction1.addPoint(0.489796f * sWidth, 0.012500f * sHeight);
+        pathAction1.addPoint(0.497959f * sWidth, 0.226250f * sHeight);
+        pathAction1.addPoint(0.322449f * sWidth, 0.215000f * sHeight);
+        pathAction1.addPoint(0.053061f * sWidth, 0.261250f * sHeight);
+        pathAction1.addPoint(0.038775f * sWidth, 0.427500f * sHeight);
+        pathAction1.addPoint(0.116326f * sWidth, 0.700000f * sHeight);
+        pathAction1.addPoint(0.606122f * sWidth, 0.758750f * sHeight);
+        pathAction1.addPoint(0.914286f * sWidth, 0.506250f * sHeight);
+        pathAction1.addPoint(0.781633f * sWidth, 0.350000f * sHeight);
 	}
 	
     public void renderLoader(){
@@ -186,8 +190,8 @@ public class VStageMain extends InputListener {
 		mainStage.act(Gdx.graphics.getDeltaTime());
 		mainStage.draw();
 		
-	//	shapeRenderer.setProjectionMatrix(mainStage.getCamera().combined);
-		//pathAction1.drawDebug(shapeRenderer);
+		shapeRenderer.setProjectionMatrix(mainStage.getCamera().combined);
+		pathAction1.drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
 	}
 	
 	public void transitionToStaticView(){
