@@ -23,6 +23,7 @@ import com.volcano3d.vdecal.VDecalGroup;
 import com.volcano3d.vshaders.VDefaultShaderProvider;
 import com.volcano3d.vshaders.VMinimalistShaderProvider;
 import com.volcano3d.vstage.VActionFollowPath;
+import com.volcano3d.vstage.VFollowPathEditor;
 import com.volcano3d.vstage.VStageMain;
 
 /**
@@ -51,6 +52,8 @@ public class VMain{
     public VTextureRender reflectionTexture = null;
     public VTextureRender refractionTexture = null;
     
+    public VFollowPathEditor pathEdit = new VFollowPathEditor();
+    
     public VMain(){
     	
 //    	VActionFollowPath pth = new VActionFollowPath();
@@ -72,7 +75,7 @@ public class VMain{
             }
         });
         
-        Gdx.input.setInputProcessor(new InputMultiplexer(stage2D.mainStage, inputProcessor.gestureDetector, inputProcessor));
+        Gdx.input.setInputProcessor(new InputMultiplexer(pathEdit.stage, stage2D.mainStage, inputProcessor.gestureDetector, inputProcessor));
 
         create();
     }
@@ -182,6 +185,8 @@ public class VMain{
     	decalsTags.render();
         
         stage2D.renderMainStage();
+        
+        pathEdit.render();
         
         //Load all assets before creating new objects
         if (assetsManager.getQueuedAssets() > 0) {

@@ -186,11 +186,13 @@ public class VStageMain extends InputListener {
 		mainStage.act(Gdx.graphics.getDeltaTime());
 		mainStage.draw();
 		
-		shapeRenderer.setProjectionMatrix(mainStage.getCamera().combined);
-		pathAction1.drawDebug(shapeRenderer);
+	//	shapeRenderer.setProjectionMatrix(mainStage.getCamera().combined);
+		//pathAction1.drawDebug(shapeRenderer);
 	}
 	
 	public void transitionToStaticView(){
+		
+		//TODO: Actions.touchable(Touchable.disabled),
 		
 		buttonReturn.clearActions();
 		buttonInfo.clearActions();

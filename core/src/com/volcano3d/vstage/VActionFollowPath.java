@@ -49,14 +49,6 @@ public class VActionFollowPath extends TemporalAction {
 			Vector2 v2 = getBezierPoint(f + 0.01f);			
 			shapeRenderer.line(v.x, v.y, v2.x, v2.y);			
 		}
-		shapeRenderer.end();
-		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-		for(int i=0; i<controlPoints.size; i++){
-			Vector2 p = controlPoints.get(i);
-			shapeRenderer.setColor(0, 0, 1, 1);
-			shapeRenderer.circle(p.x, p.y, 5);
-		}
-		shapeRenderer.end();
-		
+		shapeRenderer.end();		
 	}
 }
