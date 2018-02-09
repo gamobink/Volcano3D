@@ -40,7 +40,9 @@ public class VStageMain extends InputListener {
 	
 	public ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-	VActionFollowPath pathAction1 = new VActionFollowPath();	
+	public VActionFollowPath pathAction1 = new VActionFollowPath();	
+	public VActionFollowPath pathAction2 = new VActionFollowPath();	
+	public VActionFollowPath pathAction3 = new VActionFollowPath();	
 	
 //	private ImageButton buttonReturn = new ImageButton(buttonSkin.getDrawable("buttonon"), buttonSkin.getDrawable("buttonoff"));
 	
@@ -109,7 +111,10 @@ public class VStageMain extends InputListener {
         mainNavigationTable = new Table();
         mainNavigationTable.setFillParent(true);
         mainStage.addActor(mainNavigationTable);
-
+        
+        //TODO: a.setOrigin(a.getWidth()/2, a.getHeight()/2); 
+        //center of button
+        
         TextButton buttonCloseNavi = new TextButton("X", style);
         buttonCloseNavi.setName("BUTTON_CLOSENAVI");
         buttonCloseNavi.addListener(this);
@@ -192,6 +197,8 @@ public class VStageMain extends InputListener {
 		
 		shapeRenderer.setProjectionMatrix(mainStage.getCamera().combined);
 		pathAction1.drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
+		pathAction2.drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
+		pathAction3.drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
 	}
 	
 	public void transitionToStaticView(){

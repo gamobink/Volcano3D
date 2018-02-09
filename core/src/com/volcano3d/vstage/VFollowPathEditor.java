@@ -11,9 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.volcano3d.vcamera.VCamera;
+import com.volcano3d.vcore.VMain;
 
 public class VFollowPathEditor extends InputListener  {
-
+	
+	public VMain	volcano;
+	
 	public Stage stage = new Stage();
 	
 	protected BitmapFont font = null;
@@ -29,7 +32,9 @@ public class VFollowPathEditor extends InputListener  {
 	public String suffixX = " * sWidth";
 	public String suffixY = " * sHeight";	
 	
-	public VFollowPathEditor(){
+	public VFollowPathEditor(VMain	v){
+		
+		volcano = v;
 		
         font = new BitmapFont();
 
@@ -57,6 +62,10 @@ public class VFollowPathEditor extends InputListener  {
         path.addPoint(0.914286f * sWidth, 0.506250f * sHeight);
         path.addPoint(0.781633f * sWidth, 0.350000f * sHeight);
               
+	}
+	public void setPath(VActionFollowPath p, String n){
+		path = p;
+		varName = n;
 	}
 	public void render(){	
 

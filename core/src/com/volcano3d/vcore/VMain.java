@@ -52,21 +52,9 @@ public class VMain{
     public VTextureRender reflectionTexture = null;
     public VTextureRender refractionTexture = null;
     
-    public VFollowPathEditor pathEdit = new VFollowPathEditor();
+    public VFollowPathEditor pathEdit = new VFollowPathEditor(this);
     
     public VMain(){
-    	
-//    	VActionFollowPath pth = new VActionFollowPath();
-//    	pth.addPoint(0,0);
-//    	pth.addPoint(0,2);
-//    	pth.addPoint(2,2);
-//    	pth.addPoint(2,0);
-//    	pth.addPoint(4,0);
-//
-//    	System.out.println(pth.getBezierPoint(0.2f));
-//    	System.out.println(pth.getBezierPoint(0.5f));
-//    	System.out.println(pth.getBezierPoint(0.99f));
-    	
         assetsManager.setLoader(TextAsset.class,new TextAssetLoader(new InternalFileHandleResolver()));
         assetsManager.setErrorListener(new AssetErrorListener() {
             @Override
@@ -79,6 +67,10 @@ public class VMain{
 //        Gdx.input.setInputProcessor(new InputMultiplexer(pathEdit.stage, stage2D.mainStage, inputProcessor.gestureDetector, inputProcessor));
 
         create();
+    }
+    public void switchInputProc(boolean i){
+    	if(i)Gdx.input.setInputProcessor(new InputMultiplexer(pathEdit.stage)); 
+    	else Gdx.input.setInputProcessor(new InputMultiplexer(pathEdit.stage, stage2D.mainStage, inputProcessor.gestureDetector, inputProcessor));
     }
     public void create(){
     	
@@ -116,6 +108,8 @@ public class VMain{
         //modelWater.enableTween();
         //modelWater.alphaFader.set("waterPart1", 1.0f, 1.0f);
         //modelWater.alphaFader.set("waterPart2", 1.0f, 1.0f);
+        
+        pathEdit.setPath(stage2D.pathAction1, "pathAction1");
     }    
     //Call on loading complete
     void init(){
@@ -223,8 +217,12 @@ public class VMain{
     
     public void onKeyDown(int keycode){
     	camera.onKeyDown(keycode);
+
     	//modelGround.alphaFader.set("groundPart1", 0.0f, 0.1f);
     	
+    	//System.out.println(keycode);
+    	
+//    	pathEdit.setPath(stage2D.pathAction1, "pathAction1");
     	/*
     	if(keycode == 8){	//'1'    		
     		renderUndergroundPart1 = false;
