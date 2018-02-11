@@ -54,7 +54,8 @@ public class VStageMain extends InputListener {
 	
 	protected Map<String, Group> viewButtonsMap = new HashMap<String, Group>(); 
 	
-	protected VStageMainInfoWindow infoWindow;
+	public VStageMainInfoWindow infoStage;
+	public VStageMainIntro introStage;
     
 	public VStageMain(VMain s){
 		volcano = s;
@@ -69,8 +70,10 @@ public class VStageMain extends InputListener {
         				new TextureRegion(
         						new Texture(Gdx.files.internal("ldm_logo_loder.png")))));
         loaderStage.addActor(tableLoader);
-                
-        infoWindow = new VStageMainInfoWindow(this);
+        
+        introStage = new VStageMainIntro(this);
+        
+        infoStage = new VStageMainInfoWindow(this);
         
         buttonReturn = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-return-on"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-return"));
         buttonReturn.setName("BUTTON_MAIN");

@@ -127,7 +127,9 @@ public class VMain{
     	modelGround.init();
     	modelIsland.init();
     	    	
-    	decalsTags.init(); 	
+    	decalsTags.init();
+    	
+    	stage2D.introStage.startIntroSequence();
     }	
     
     public void render() {
