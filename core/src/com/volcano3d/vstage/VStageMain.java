@@ -1,6 +1,10 @@
 package com.volcano3d.vstage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -9,18 +13,22 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcore.VMain;
+import com.volcano3d.vcore.VStaticAssets;
 
 public class VStageMain extends InputListener {
 
@@ -29,26 +37,25 @@ public class VStageMain extends InputListener {
 	protected Stage loaderStage = null;	
 	public Stage mainStage = null;
 	
-	protected BitmapFont font = null;
+	private ImageButton buttonReturn = null;
+	private ImageButton buttonNavigation = null;
+	private ImageButton buttonInfo = null;		
+	protected ImageButton buttonCloseNavi = null;
 
-	private TextButton buttonReturn = null;
-	private TextButton buttonNavigation = null;
-	private TextButton buttonInfo = null;	
 	private Vector2	buttonCenterPos = new Vector2();
 	private Vector2	buttonNavigationRightPos = new Vector2();
 	private Vector2	buttonInfoLeftPos = new Vector2();	
-	protected Table mainNavigationTable	= null;	
-	
-	protected TextButton buttonCloseNavi = null;
 	
 	public ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-	public VActionFollowPath pathAction1 = new VActionFollowPath();	
+	public VActionFollowPath pathAction1 = null;	
 	public VActionFollowPath pathAction2 = new VActionFollowPath();	
 	public VActionFollowPath pathAction3 = new VActionFollowPath();	
 	
-//	private ImageButton buttonReturn = new ImageButton(buttonSkin.getDrawable("buttonon"), buttonSkin.getDrawable("buttonoff"));
+	protected Map<String, Group> viewButtonsMap = new HashMap<String, Group>(); 
 	
+	protected VStageMainInfoWindow infoWindow;
+    
 	public VStageMain(VMain s){
 		volcano = s;
 		loaderStage = new Stage();
@@ -60,30 +67,20 @@ public class VStageMain extends InputListener {
         tableLoader.background(
         		new TextureRegionDrawable(
         				new TextureRegion(
-        						new Texture(Gdx.files.internal("ldm_logo_loder.png")))));		
+        						new Texture(Gdx.files.internal("ldm_logo_loder.png")))));
         loaderStage.addActor(tableLoader);
-
-        font = new BitmapFont();
-        font.getData().setScale(1.5f, 1.5f);        
+                
+        infoWindow = new VStageMainInfoWindow(this);
         
-        TextureAtlas buttonsAtlas = new TextureAtlas("gui.pack");
-        Skin buttonSkin = new Skin();
-        buttonSkin.addRegions(buttonsAtlas);
-        
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.down = buttonSkin.getDrawable("buttonon");
-        style.up = buttonSkin.getDrawable("buttonoff");
-        style.font = font;
-        
-        buttonReturn = new TextButton("Return", style);
+        buttonReturn = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-return-on"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-return"));
         buttonReturn.setName("BUTTON_MAIN");
         buttonReturn.addListener(this);        
 		
-        buttonNavigation = new TextButton("Navi", style);
+        buttonNavigation = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-main-on"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-main"));
         buttonNavigation.setName("BUTTON_NAVI");
         buttonNavigation.addListener(this); 
         
-        buttonInfo = new TextButton("Info", style);
+        buttonInfo = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-info-on"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-info"));
         buttonInfo.setName("BUTTON_INFO");
         buttonInfo.addListener(this);         
         
@@ -110,104 +107,64 @@ public class VStageMain extends InputListener {
         mainStage.addActor(buttonReturn);
         mainStage.addActor(buttonNavigation);
         
-        //Navigation menu table
-        mainNavigationTable = new Table();
-        mainNavigationTable.setFillParent(true);
-        mainStage.addActor(mainNavigationTable);
-        
-        //TODO: a.setOrigin(a.getWidth()/2, a.getHeight()/2); 
-        //center of button
-        
         float buttonIconSize = swidth * 0.15f;
         
-        buttonCloseNavi = new TextButton("X", style);
+        buttonCloseNavi = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-close-on"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-close"));
         buttonCloseNavi.setName("BUTTON_CLOSENAVI");
         buttonCloseNavi.setSize(buttonSize, buttonSize);
-        buttonCloseNavi.setOrigin(buttonSize/2, buttonSize/2);
         buttonCloseNavi.addListener(this);
-        
-        TextButton buttonStaticView1 = new TextButton("Volcano", style);
-        buttonStaticView1.setName("BUTTON_VIEW1");
-        buttonStaticView1.setSize(buttonIconSize, buttonIconSize);
-        buttonStaticView1.setOrigin(buttonIconSize/2, buttonIconSize/2);        
-        buttonStaticView1.addListener(this);         
-
-        TextButton buttonStaticView2 = new TextButton("Sea", style);
-        buttonStaticView2.setName("BUTTON_VIEW2");
-        buttonStaticView2.setSize(buttonIconSize, buttonIconSize);
-        buttonStaticView2.setOrigin(buttonIconSize/2, buttonIconSize/2);           
-        buttonStaticView2.addListener(this); 
-        
-        TextButton buttonStaticView3 = new TextButton("Beach", style);
-        buttonStaticView3.setName("BUTTON_VIEW3");
-        buttonStaticView3.setSize(buttonIconSize, buttonIconSize);
-        buttonStaticView3.setOrigin(buttonIconSize/2, buttonIconSize/2);           
-        buttonStaticView3.addListener(this); 
-        
-        TextButton buttonStaticView4 = new TextButton("TODO:Hill", style);
-        buttonStaticView4.setName("BUTTON_VIEW4");
-        buttonStaticView4.setSize(buttonIconSize, buttonIconSize);
-        buttonStaticView4.setOrigin(buttonIconSize/2, buttonIconSize/2);           
-        buttonStaticView4.addListener(this);         
-
-        TextButton buttonStaticView5 = new TextButton("TODO:Cloud", style);
-        buttonStaticView5.setName("BUTTON_VIEW5");
-        buttonStaticView5.setSize(buttonIconSize, buttonIconSize);
-        buttonStaticView5.setOrigin(buttonIconSize/2, buttonIconSize/2);           
-        buttonStaticView5.addListener(this);                 
-        
-        TextButton buttonStaticView6 = new TextButton("TODO:Rocks", style);
-        buttonStaticView6.setName("BUTTON_VIEW6");
-        buttonStaticView6.setSize(buttonIconSize, buttonIconSize);
-        buttonStaticView6.setOrigin(buttonIconSize/2, buttonIconSize/2);           
-        buttonStaticView6.addListener(this);                         
-        
-//        mainNavigationTable.add(buttonCloseNavi)
-//		        .width(Value.percentWidth(0.1f, mainNavigationTable))
-//		        .height(Value.percentHeight(0.05f, mainNavigationTable));
-//        mainNavigationTable.row();        
-        mainNavigationTable.add(buttonStaticView1)
-			    .width(Value.percentWidth(0.3f, mainNavigationTable))
-			    .height(Value.percentHeight(0.05f, mainNavigationTable));
-        mainNavigationTable.row();
-        mainNavigationTable.add(buttonStaticView2)
-			    .width(Value.percentWidth(0.3f, mainNavigationTable))
-			    .height(Value.percentHeight(0.05f, mainNavigationTable));
-        mainNavigationTable.row();        
-        mainNavigationTable.add(buttonStaticView3)
-			    .width(Value.percentWidth(0.3f, mainNavigationTable))
-			    .height(Value.percentHeight(0.05f, mainNavigationTable));
-        mainNavigationTable.row();
-        mainNavigationTable.add(buttonStaticView4)
-			    .width(Value.percentWidth(0.3f, mainNavigationTable))
-			    .height(Value.percentHeight(0.05f, mainNavigationTable));
-        mainNavigationTable.row();        
-        mainNavigationTable.add(buttonStaticView5)
-			    .width(Value.percentWidth(0.3f, mainNavigationTable))
-			    .height(Value.percentHeight(0.05f, mainNavigationTable));
-        mainNavigationTable.row();        
-        mainNavigationTable.add(buttonStaticView6)
-			    .width(Value.percentWidth(0.3f, mainNavigationTable))
-			    .height(Value.percentHeight(0.05f, mainNavigationTable));
-        mainNavigationTable.row();
-        
-        mainNavigationTable.setVisible(false);	
+        buttonCloseNavi.setPosition(200, 300); 
         
         mainStage.addActor(buttonCloseNavi);
-        buttonCloseNavi.setVisible(false);
         
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = VStaticAssets.Fonts.calibri18Font;
+        
+        String[] buttonLabelsTexts = {
+        		"Vulkāns",
+        		"Zemūdens",
+        		"Pludmale",
+        		"Kalns",
+        		"Nogruvums",
+        		"Lietus"
+        };
+        
+        for(int i=1; i<=6; i++){
+        	Group g = new Group();
+            ImageButton imgb = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-generic-on"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-generic"));
+            imgb.setSize(buttonIconSize, buttonIconSize);
+        	g.setVisible(false);
+        	
+        	Label l = new Label(buttonLabelsTexts[i-1], labelStyle);
+        	l.setPosition(0, -10);
+        	l.setAlignment(Align.center);
+        	l.setWidth(buttonIconSize);
+
+            g.setName("B_VIEW"+i);
+            g.addListener(this);        		
+        	
+            g.addActor(imgb);
+            g.addActor(l);
+        	viewButtonsMap.put("B_VIEW"+i, g);
+        	mainStage.addActor(g);
+        }
+        
+        viewButtonsMap.get("B_VIEW1").setPosition(100, 200);
+        viewButtonsMap.get("B_VIEW2").setPosition(60, 300);
+        viewButtonsMap.get("B_VIEW3").setPosition(100, 400);
+        viewButtonsMap.get("B_VIEW4").setPosition(300, 400);
+        viewButtonsMap.get("B_VIEW5").setPosition(340, 300);
+        viewButtonsMap.get("B_VIEW6").setPosition(300, 200);        
         
 		float sWidth = mainStage.getWidth();
-		float sHeight = mainStage.getHeight();		
-        pathAction1.addPoint(0.489796f * sWidth, 0.012500f * sHeight);
-        pathAction1.addPoint(0.497959f * sWidth, 0.226250f * sHeight);
-        pathAction1.addPoint(0.322449f * sWidth, 0.215000f * sHeight);
-        pathAction1.addPoint(0.053061f * sWidth, 0.261250f * sHeight);
-        pathAction1.addPoint(0.038775f * sWidth, 0.427500f * sHeight);
-        pathAction1.addPoint(0.116326f * sWidth, 0.700000f * sHeight);
-        pathAction1.addPoint(0.606122f * sWidth, 0.758750f * sHeight);
-        pathAction1.addPoint(0.914286f * sWidth, 0.506250f * sHeight);
-        pathAction1.addPoint(0.781633f * sWidth, 0.350000f * sHeight);
+		float sHeight = mainStage.getHeight();	
+		
+		pathAction1 = new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView1ButtonMoveIn, sWidth, sHeight);
+        
+        transitionCloseNavigationTable();
+        
+        //!!!!!!!!!!!!! DEBUG 
+        //mainStage.setDebugUnderMouse(true);
 	}
 	
     public void renderLoader(){
@@ -226,6 +183,8 @@ public class VStageMain extends InputListener {
 	}
 	
 	public void transitionToStaticView(float delay){
+		
+		transitionCloseNavigationTable();
 		
 		buttonReturn.clearActions();
 		buttonInfo.clearActions();
@@ -280,6 +239,15 @@ public class VStageMain extends InputListener {
 	
 	public void transitionOpenNavigationTable(){
 		
+		for(Map.Entry m:viewButtonsMap.entrySet()){  
+			   Group g = (Group) m.getValue();   
+			   g.setVisible(true);
+			   g.addAction(Actions.fadeIn(0.5f));
+		} 
+		buttonCloseNavi.setVisible(true);
+		buttonCloseNavi.addAction(Actions.fadeIn(0.5f));
+		
+		/*
 		mainNavigationTable.clearActions();
 		
 		mainNavigationTable.addAction(Actions.sequence(Actions.show(), 
@@ -296,11 +264,17 @@ public class VStageMain extends InputListener {
 													));
 		
 		
-		
+		*/
 	}
 	
 	public void transitionCloseNavigationTable(){
 		
+		for(Map.Entry m:viewButtonsMap.entrySet()){  
+			   Group g = (Group) m.getValue();   
+			   g.addAction(Actions.fadeOut(0.5f));
+		} 
+		buttonCloseNavi.addAction(Actions.fadeOut(0.5f));
+		/*
 		mainNavigationTable.clearActions();
 		
 		mainNavigationTable.addAction(Actions.sequence(Actions.show(),
@@ -316,33 +290,34 @@ public class VStageMain extends InputListener {
 													pathAction1,
 													Actions.fadeOut(0.5f)
 													));
+													*/
 	}	
 	
     public void touchUp (InputEvent e, float x, float y, int pointer, int button) {
-        Actor a = e.getListenerActor();
-        if(a.getName() == "BUTTON_MAIN"){
+    	Actor a = e.getListenerActor();
+    	if(a.getName().compareTo("BUTTON_MAIN") == 0){
         	volcano.camera.setCameraState(VCamera.States.MAIN);
         	transitionToMainView();
         }
-        if(a.getName() == "BUTTON_VIEW1"){
+        if(a.getName().compareTo("B_VIEW1") == 0){
         	volcano.camera.setCameraState(VCamera.States.STATIC_1);
         	transitionCloseNavigationTable();
         	transitionToStaticView(0.8f);
         }  
-        if(a.getName() == "BUTTON_VIEW2"){
+        if(a.getName().compareTo("B_VIEW2") == 0){
         	volcano.camera.setCameraState(VCamera.States.STATIC_3);
         	transitionCloseNavigationTable();
         	transitionToStaticView(0.8f);
         }  
-        if(a.getName() == "BUTTON_VIEW3"){
+        if(a.getName().compareTo("B_VIEW3") == 0){
         	volcano.camera.setCameraState(VCamera.States.STATIC_4);
         	transitionCloseNavigationTable();	
         	transitionToStaticView(0.8f);
         }          
-        if(a.getName() == "BUTTON_NAVI"){
+        if(a.getName().compareTo("BUTTON_NAVI") == 0){
         	transitionOpenNavigationTable();
         }        
-        if(a.getName() == "BUTTON_CLOSENAVI"){
+        if(a.getName().compareTo("BUTTON_CLOSENAVI") == 0){
         	transitionCloseNavigationTable();
         }                
     }	

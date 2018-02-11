@@ -28,7 +28,7 @@ public class VFollowPathEditor extends InputListener  {
 	
 	public String varName = "path";
 	public String suffixX = " * sWidth";
-	public String suffixY = " * sHeight";	
+	public String suffixY = " * sHeight";
 	
 	public VFollowPathEditor(VMain	v){
 		
@@ -36,14 +36,14 @@ public class VFollowPathEditor extends InputListener  {
 		
         font = new BitmapFont();
 
-        TextureAtlas buttonsAtlas = new TextureAtlas("gui.pack");
-        Skin buttonSkin = new Skin();
-        buttonSkin.addRegions(buttonsAtlas);        
-        
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.down = buttonSkin.getDrawable("buttonon");
-        style.up = buttonSkin.getDrawable("buttonoff");
-        style.font = font;        
+//        TextureAtlas buttonsAtlas = new TextureAtlas("gui.txt");
+//        Skin buttonSkin = new Skin();
+//        buttonSkin.addRegions(buttonsAtlas);        
+//        
+//        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+//        style.down = buttonSkin.getDrawable("buttonon");
+//        style.up = buttonSkin.getDrawable("buttonoff");
+//        style.font = font;        
      
         stage.addListener(this);
         

@@ -9,6 +9,20 @@ public class VActionFollowPath extends TemporalAction {
 	
 	public Array<Vector2> controlPoints = new Array<Vector2>();
 
+	public VActionFollowPath(){
+		
+	}
+	public VActionFollowPath(float[][] points){
+		this(points, 1.0f, 1.0f);
+	}
+	public VActionFollowPath(float[][] points, float scalex, float scaley){
+		for(int i=0;i<points.length; i++){
+			if(points[i] instanceof float[] && points[i].length == 2) {
+				addPoint(points[i][0] * scalex, points[i][1] * scaley);
+			}
+		}
+	}
+	
 	public void addPoint(float x, float y){
 		controlPoints.add(new Vector2(x,y));
 	}

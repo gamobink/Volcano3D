@@ -33,10 +33,10 @@ public class VMain{
 
     public AssetManager assetsManager = new AssetManager();
     public Environment environment = new Environment();
-    public VCamera camera = new VCamera(this);   
+    public VCamera camera = null;   
     public VInputProcessor inputProcessor = new VInputProcessor(this);
-    public VStageMain stage2D = new VStageMain(this);
-    public VDecalGroup decalsTags = new VDecalGroup(this);
+    public VStageMain stage2D = null;
+    public VDecalGroup decalsTags = null;
     public boolean  objectsLoaded = false;    
 
     public VRenderable modelSkybox = null; 
@@ -52,7 +52,7 @@ public class VMain{
     public VTextureRender refractionTexture = null;
     
     public VFollowPathEditor pathEdit = new VFollowPathEditor(this);
-    
+        
     public VMain(){
         assetsManager.setLoader(TextAsset.class,new TextAssetLoader(new InternalFileHandleResolver()));
         assetsManager.setErrorListener(new AssetErrorListener() {
@@ -61,10 +61,12 @@ public class VMain{
                 System.out.println("ASSET: "+assetDescriptor.toString()+" - "+throwable.getMessage());
             }
         });
+        
+        VStaticAssets.Init();
+        
+        create();
 
         Gdx.input.setInputProcessor(new InputMultiplexer(stage2D.mainStage, inputProcessor.gestureDetector, inputProcessor));
-
-        create();
     }
     public void switchInputProc(boolean i){
     	if(i)Gdx.input.setInputProcessor(new InputMultiplexer(pathEdit.stage)); 
@@ -72,6 +74,10 @@ public class VMain{
     }
     public void create(){
     	
+        stage2D = new VStageMain(this);
+        camera = new VCamera(this);
+        decalsTags = new VDecalGroup(this);
+        		
         environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.5f, 1f));
         environment.add(new DirectionalLight().set(0.9f, 0.9f, 0.5f,  -1, -0.8f, 1));  
         environment.add(new DirectionalLight().set(0.4f, 0.4f, 0.6f,  0f, -0.8f, 1));  
