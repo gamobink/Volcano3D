@@ -1,6 +1,7 @@
 package com.volcano3d.vstage;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,10 +16,16 @@ public class VStageMainIntro {
 	protected Array<Label> textLabelsArray = new Array<Label>(); 
 	protected float stageWidth;
 	protected float labelOffset;
-	protected float[] labelShownInterval = {2,2,3,3,4,3};
+	protected float[] labelShownInterval = {4,6,9,6,6,5};
 	private Timer.Task labelShownTimerTask = null;
 	protected int currentLabelIndex = 0;
 	protected Label titleLabel = null;
+	protected float titleLabelYTop = 0;
+	protected float titleLabelYInitial = 0;
+	protected float titleLabelVisibleDelay = 8;
+	
+	protected float labelSwipeDuration = 0.8f;
+	protected float titleMoveYDuration = 4f;
 	
 	public VStageMainIntro(VStageMain main){
 		
@@ -44,17 +51,20 @@ public class VStageMainIntro {
 	        l.setWidth(width);
 	        l.setHeight(main.mainStage.getHeight());
 	        l.setAlignment(Align.top);
-	        l.setVisible(false);		
+	        l.setPosition(0, -160);
+	        l.setVisible(false);
 	        introGroup.addActor(l);
 	        textLabelsArray.add(l);
 		}
 		
+		titleLabelYInitial = main.mainStage.getHeight() * 0.55f;
+		titleLabelYTop = main.mainStage.getHeight() - 100;		
+				
 		titleLabel = new Label(VStaticAssets.Text.titleText, new Label.LabelStyle(VStaticAssets.Fonts.calibriLightFont, Color.WHITE));
 		titleLabel.setWrap(true);
         titleLabel.setWidth(stageWidth);
-        titleLabel.setHeight(50);
         titleLabel.setAlignment(Align.center);
-        titleLabel.setPosition(0, 400);        
+        titleLabel.setPosition(0, titleLabelYInitial);        
         //titleLabel.setVisible(false);		
         introGroup.addActor(titleLabel);
 		
@@ -67,13 +77,11 @@ public class VStageMainIntro {
 			   Label l = textLabelsArray.get(i);
 			   l.setVisible(true);
 			   l.addAction(Actions.fadeIn(0));
-			   l.setPosition(-stageWidth, 0);
+			   l.setPosition(-stageWidth, l.getY());
 		} 
+		titleLabel.setPosition(0, titleLabelYInitial);
 	}
 	public void startIntroSequence(){
-		reset();
-		introGroup.setVisible(true);
-		introGroup.addAction(Actions.fadeIn(0));
 		
 		Runnable r = new Runnable(){    
 							@Override
@@ -81,25 +89,37 @@ public class VStageMainIntro {
 								startLabelShownTimer(0);
 							}};
 		
-		textLabelsArray.get(0).setPosition(labelOffset, 0);
-							
-		//Show first label with fadeIn
-		textLabelsArray.get(0).addAction(Actions.sequence(Actions.fadeOut(0),
-														Actions.show(),
-														Actions.fadeIn(0.7f),
-														Actions.run(r)));
+		Label l = textLabelsArray.get(0);
+		
+		l.setPosition(labelOffset, l.getY());
+		l.setColor(1, 1, 1, 0);					
+		l.addAction(Actions.sequence(
+									Actions.fadeIn(0.7f),
+									Actions.run(r)
+									));
 	}
 	
 	public void showIntro(){
+
+		reset();
+		introGroup.setVisible(true);
 		
-		hideIntro();
+		introGroup.addAction(Actions.fadeIn(1));
+				
+		Runnable r = new Runnable(){
+			@Override
+		    public void run() {
+				startIntroSequence();
+			}};	
+			
+		titleLabel.addAction(Actions.sequence(
+				Actions.fadeIn(1),
+				Actions.delay(titleLabelVisibleDelay),
+				Actions.moveTo(titleLabel.getX(), titleLabelYTop, titleMoveYDuration, Interpolation.smooth2),
+				Actions.delay(1),
+				Actions.run(r)
+				));		
 		
-		//TODO: Show title and start count down
-		
-		titleLabel.addAction(Actions.sequence(Actions.fadeIn(0.7f)));
-		
-		
-		startIntroSequence();
 	}
 
 	public void hideIntro(){
@@ -107,31 +127,55 @@ public class VStageMainIntro {
 		if(labelShownTimerTask != null)labelShownTimerTask.cancel();
 		labelShownTimerTask = null;
 		
-		introGroup.addAction(Actions.sequence(Actions.fadeOut(1)));
+		titleLabel.clearActions();
+		for(int i=0; i<textLabelsArray.size; i++){  
+			textLabelsArray.get(i).clearActions();			   
+		}
+		introGroup.addAction(Actions.sequence(Actions.fadeOut(1)));	
 	}	
 	
 	private void transitionToNext(){
 
-		textLabelsArray.get(currentLabelIndex).addAction(Actions.sequence(Actions.moveTo(-stageWidth, 0, 1)));
-
-		currentLabelIndex++;
-		if(currentLabelIndex < 6){
+		Label l = textLabelsArray.get(currentLabelIndex);
+		if(currentLabelIndex < (textLabelsArray.size - 1)){
+			l.addAction(Actions.parallel(
+										Actions.moveTo(-stageWidth, l.getY(), labelSwipeDuration, Interpolation.swingIn),
+										Actions.fadeOut(1.4f)
+										));
+		}else{
+			l.addAction(Actions.sequence(Actions.fadeOut(1)));
+		}
+		currentLabelIndex++;	
+		
+		if(currentLabelIndex < textLabelsArray.size){
 			Runnable r = new Runnable(){
 				@Override
 			    public void run() {
 					startLabelShownTimer(currentLabelIndex);
 				}};			
-			textLabelsArray.get(currentLabelIndex).setPosition(stageWidth, 0);
-			textLabelsArray.get(currentLabelIndex).addAction(Actions.sequence(Actions.moveTo(labelOffset, 0, 1),
-																				Actions.run(r)));
+			l = textLabelsArray.get(currentLabelIndex);
+			l.setPosition(stageWidth, l.getY());
+			l.addAction(Actions.sequence(
+										Actions.moveTo(labelOffset, l.getY(), labelSwipeDuration, Interpolation.swingIn),
+										Actions.run(r)
+										));
 		}else{
-			textLabelsArray.get(currentLabelIndex-1).addAction(Actions.sequence(Actions.fadeOut(1)));			
-			//TODO: Show title
+			Runnable r = new Runnable(){
+				@Override
+			    public void run() {
+					showIntro();	//start over
+				}};	
+				
+			titleLabel.addAction(Actions.sequence(
+					Actions.delay(1.4f),
+					Actions.moveTo(titleLabel.getX(), titleLabelYInitial, titleMoveYDuration, Interpolation.smooth2),
+					Actions.run(r)
+					));				
 			
 		}
 	}
 	private void startLabelShownTimer(int labelIndex){
-		if(labelIndex < 0 || labelIndex > 5)return;
+		if(labelIndex < 0 || labelIndex > (textLabelsArray.size-1))return;
 		
 		if(labelShownTimerTask != null)labelShownTimerTask.cancel();
 		

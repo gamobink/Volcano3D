@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
+import com.badlogic.gdx.utils.Timer;
 import com.volcano3d.utility.TextAsset;
 import com.volcano3d.utility.TextAssetLoader;
 import com.volcano3d.vcamera.VCamera;
@@ -50,6 +51,9 @@ public class VMain{
         
     public VTextureRender reflectionTexture = null;
     public VTextureRender refractionTexture = null;
+    
+    protected boolean userActionActive = false;
+    private Timer.Task userActionActiveCountdown = null;
     
     public VFollowPathEditor pathEdit = new VFollowPathEditor(this);
         
@@ -129,7 +133,7 @@ public class VMain{
     	    	
     	decalsTags.init();
     	
-    	stage2D.introStage.startIntroSequence();
+    	stage2D.introStage.showIntro();
     }	
     
     public void render() {
@@ -178,7 +182,7 @@ public class VMain{
 //        modelGround2.render(camera.get(), environment);  
 //        modelGroundAround2.render(camera.get(), environment);
     	
-        if(camera.getState() == VCamera.States.MAIN){
+        if(camera.getState() == VCamera.States.MAIN && userActionActive){
         	decalsTags.setFadeOn();
         }else{
         	decalsTags.setFadeOff();
@@ -197,10 +201,16 @@ public class VMain{
     }
     
     public void onPan(float x, float y, float deltaX, float deltaY){
+    	
+    	setUserActionActive();
+    	
     	camera.pan(new Vector2(deltaX, deltaY));
     }
 
     public void onTap(float x, float y, int count, int button){
+    	
+    	setUserActionActive();
+    	
     	if(camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.MAIN){
 	    	Ray r = camera.get().getPickRay(x, y);
 	    	int iint = decalsTags.Intersect(r);
@@ -274,7 +284,7 @@ public class VMain{
 	        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);   
 	        
 	        if(i==1){
-		        modelSkybox.render(c, environment);        
+		        modelSkybox.render(c, environment);
 		        modelGround.render(c, environment);
 		        modelIsland.render(c, environment);
 	        }else{
@@ -288,6 +298,26 @@ public class VMain{
     }
     public void renderWaterRefractionScene(PerspectiveCamera cam){
 
+    }
+    public void setUserActionActive(){
+    	
+    	userActionActive = true;
+    	stage2D.introStage.hideIntro();
+    	
+    	if(userActionActiveCountdown != null)userActionActiveCountdown.cancel();
+    	
+    	userActionActiveCountdown = Timer.schedule(new Timer.Task() {
+	        @Override
+	        public void run(){
+	        	onUserActionLost();
+	        }}, 5);
+    }
+    public void onUserActionLost(){
+    	userActionActiveCountdown = null;
+    	userActionActive = false;
+    	stage2D.introStage.showIntro();
+    	camera.setCameraState(VCamera.States.MAIN);
+    	stage2D.transitionToMainView();
     }
     
 }

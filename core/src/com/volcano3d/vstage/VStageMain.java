@@ -211,6 +211,8 @@ public class VStageMain extends InputListener {
 	}
 	public void transitionToMainView(){
 		
+		transitionCloseNavigationTable();
+		
 		buttonReturn.clearActions();
 		buttonInfo.clearActions();		
 		buttonNavigation.clearActions();
@@ -320,7 +322,7 @@ public class VStageMain extends InputListener {
         }                
     }	
     public boolean touchDown (InputEvent e, float x, float y, int pointer, int button) {
-
+    	volcano.setUserActionActive();
         return true;   //return true stops event propagation
     }	
 }
