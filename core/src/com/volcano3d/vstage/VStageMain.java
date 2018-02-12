@@ -4,10 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
@@ -21,9 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.volcano3d.vcamera.VCamera;
@@ -242,8 +237,8 @@ public class VStageMain extends InputListener {
 	
 	public void transitionOpenNavigationTable(){
 		
-		for(Map.Entry m:viewButtonsMap.entrySet()){  
-			   Group g = (Group) m.getValue();   
+		for(Map.Entry<String, Group> m:viewButtonsMap.entrySet()){  
+			   Group g = m.getValue();
 			   g.setVisible(true);
 			   g.addAction(Actions.fadeIn(0.5f));
 		} 
@@ -272,8 +267,8 @@ public class VStageMain extends InputListener {
 	
 	public void transitionCloseNavigationTable(){
 		
-		for(Map.Entry m:viewButtonsMap.entrySet()){  
-			   Group g = (Group) m.getValue();   
+		for(Map.Entry<String, Group> m:viewButtonsMap.entrySet()){  
+			   Group g = m.getValue();   
 			   g.addAction(Actions.fadeOut(0.5f));
 		} 
 		buttonCloseNavi.addAction(Actions.fadeOut(0.5f));

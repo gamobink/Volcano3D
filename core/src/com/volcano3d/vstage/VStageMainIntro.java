@@ -1,8 +1,5 @@
 package com.volcano3d.vstage;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -58,7 +55,7 @@ public class VStageMainIntro {
         titleLabel.setHeight(50);
         titleLabel.setAlignment(Align.center);
         titleLabel.setPosition(0, 400);        
-        titleLabel.setVisible(false);		
+        //titleLabel.setVisible(false);		
         introGroup.addActor(titleLabel);
 		
         main.mainStage.addActor(introGroup);
@@ -76,6 +73,7 @@ public class VStageMainIntro {
 	public void startIntroSequence(){
 		reset();
 		introGroup.setVisible(true);
+		introGroup.addAction(Actions.fadeIn(0));
 		
 		Runnable r = new Runnable(){    
 							@Override
@@ -91,7 +89,28 @@ public class VStageMainIntro {
 														Actions.fadeIn(0.7f),
 														Actions.run(r)));
 	}
-	public void transitionToNext(){
+	
+	public void showIntro(){
+		
+		hideIntro();
+		
+		//TODO: Show title and start count down
+		
+		titleLabel.addAction(Actions.sequence(Actions.fadeIn(0.7f)));
+		
+		
+		startIntroSequence();
+	}
+
+	public void hideIntro(){
+		
+		if(labelShownTimerTask != null)labelShownTimerTask.cancel();
+		labelShownTimerTask = null;
+		
+		introGroup.addAction(Actions.sequence(Actions.fadeOut(1)));
+	}	
+	
+	private void transitionToNext(){
 
 		textLabelsArray.get(currentLabelIndex).addAction(Actions.sequence(Actions.moveTo(-stageWidth, 0, 1)));
 
