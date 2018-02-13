@@ -16,8 +16,17 @@ varying vec3 v_viewDirection;
 varying vec3 v_normal;
 varying vec4 v_projectedPos;
 varying vec2 v_dudvUV;
-
 varying float v_fog; 
+ 
+//const float shineDamper = 15.0;
+//const float reflectivity = 0.2; 
+ 
+const float shineDamper = 60.0;
+const float reflectivity = 0.4;  
+ 
+varying vec3 v_lightDir; 
+
+const vec3 lightColor = vec3(1,1,0.5); 
  
 void main() {
 	
@@ -36,28 +45,34 @@ void main() {
 										-(normalSample.y * 2.0 - 1.0))), 
 										1.0);
 				
-	vec2 dispalce1 = (texture2D(u_emissiveTexture, uv1).rg * 2.0 - 1.0) * 0.02 * v_fog;
+	vec2 dispalce1 = (texture2D(u_emissiveTexture, uv1).rg * 2.0 - 1.0) * 0.02 * (v_fog * v_fog);
 	
-	vec2 uv2 = v_dudvUV;
-	uv1.y -= u_shininess;
-	uv1.x -= u_shininess;			
-	vec2 dispalce2 = (texture2D(u_emissiveTexture, uv2).rg * 2.0 - 1.0) * 0.01 * v_fog;
+	//vec2 uv2 = v_dudvUV;
+	//uv1.y -= u_shininess;
+	//uv1.x -= u_shininess;			
+	//vec2 dispalce2 = (texture2D(u_emissiveTexture, uv2).rg * 2.0 - 1.0) * 0.01 * v_fog;
 	
-	reflectionUV += dispalce1 + dispalce2;
+	reflectionUV += dispalce1; // + dispalce2;
 		
 	reflectionUV.x = clamp(reflectionUV.x, 0.001, 0.999);
 	reflectionUV.y = clamp(reflectionUV.y, 0.001, 0.999);
 	
 	vec4 diffuse = texture2D(u_diffuseTexture, v_diffuseUV);
-	vec4 ambient = texture2D(u_ambientTexture, reflectionUV);
+	vec4 ambient = texture2D(u_ambientTexture, reflectionUV) * vec4(0.8, 0.8, 0.7, 1);
 
-	float d = dot(normalize(-v_viewDirection).xyz, normalize(normal).xyz);
+	float d = dot(normalize(-v_viewDirection).xyz, normal.xyz);
+	
+	vec3 reflectedLight = reflect(normalize(-v_lightDir), normal);//normal
+	float specular = max(dot(reflectedLight, normalize(v_viewDirection)), 0.0);
+	specular = pow(specular, shineDamper);
+	vec3 specHilight = lightColor * specular * reflectivity;
 	
 	//gl_FragColor = vec4(d,d,d,1);
 	//gl_FragColor = normal;
 	//gl_FragColor = vec4(0,1,0, 1);
 		
-	gl_FragColor = mix(ambient,diffuse, d);
+	gl_FragColor = mix(ambient, diffuse, d) + vec4(specHilight, 0.0);	//*(v_fog * v_fog)
 	
-	//gl_FragColor = vec4(v_fog, v_fog, v_fog, 1);	
+	//gl_FragColor = vec4(v_fog*v_fog, v_fog*v_fog, v_fog*v_fog, 1);		
+	//gl_FragColor = vec4(normalize(v_lightDir), 1.0);	
 }

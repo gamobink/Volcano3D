@@ -315,7 +315,7 @@ public class VMain{
 	        @Override
 	        public void run(){
 	        	onUserActionLost();
-	        }}, 5);
+	        }}, 50);
     }
     public void onUserActionLost(){
     	userActionActiveCountdown = null;
