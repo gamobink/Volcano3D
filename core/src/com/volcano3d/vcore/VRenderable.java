@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.CubemapAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
@@ -113,7 +114,10 @@ public class VRenderable {
     }                  
     public void setColor(String id, float r, float g, float b){
     	setNodeMaterialAttribute(id, ColorAttribute.createDiffuse(r,g,b,1));
-    }    
+    }   
+    public void setShininess(String id, float f){
+    	setNodeMaterialAttribute(id, FloatAttribute.createShininess(f));
+    }       
     public void setTransparency(String id, float f){    
     	BlendingAttribute b = new BlendingAttribute(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 		b.opacity = f;

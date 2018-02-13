@@ -55,6 +55,8 @@ public class VMain{
     protected boolean userActionActive = false;
     private Timer.Task userActionActiveCountdown = null;
     
+    private float waterMove = 0;
+    
     public VFollowPathEditor pathEdit = new VFollowPathEditor(this);
         
     public VMain(){
@@ -151,9 +153,11 @@ public class VMain{
         
         camera.update();
         
+        waterMove += 0.02f * Gdx.graphics.getDeltaTime();
+        waterMove = waterMove % 1;
         renderWaterScene(camera.get());
         modelWater.setAmbientTexture(null, reflectionTexture.get());
-        //modelWater.setEmissiveTexture(null, );
+        modelWater.setShininess(null, waterMove);
         
     	Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);

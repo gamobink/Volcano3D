@@ -18,6 +18,8 @@ varying vec3 v_viewDirection;
 varying vec4 v_projectedPos;
 varying vec2 v_dudvUV; 
 
+varying float v_fog; 
+
 void main() {
 	v_position = vec4(a_position, 1.0);
 
@@ -34,6 +36,11 @@ void main() {
  	v_diffuseUV = u_diffuseUVTransform.xy + a_texCoord0 * u_diffuseUVTransform.zw;              
 
 	v_dudvUV = vec2(v_position.x / 150, v_position.y / 150);
+	
+    vec3 flen = u_cameraPosition.xyz - v_position.xyz;
 
+    float fog = dot(flen, flen) * u_cameraPosition.w;
+
+	v_fog = 1.0 - min(fog, 1.0);
 	
 }
