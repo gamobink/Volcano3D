@@ -242,7 +242,7 @@ public class VStageMain extends InputListener {
 		for(Map.Entry<String, Group> m:viewButtonsMap.entrySet()){  
 			   Group g = m.getValue();
 			   g.setVisible(true);
-			   g.addAction(Actions.fadeIn(0.5f));
+			   g.addAction(Actions.sequence(Actions.fadeIn(0.5f), Actions.touchable(Touchable.enabled)));
 		} 
 		buttonCloseNavi.setVisible(true);
 		buttonCloseNavi.addAction(Actions.fadeIn(0.5f));
@@ -271,7 +271,7 @@ public class VStageMain extends InputListener {
 		
 		for(Map.Entry<String, Group> m:viewButtonsMap.entrySet()){  
 			   Group g = m.getValue();   
-			   g.addAction(Actions.fadeOut(0.5f));
+			   g.addAction(Actions.sequence(Actions.touchable(Touchable.disabled), Actions.fadeOut(0.5f)));
 		} 
 		buttonCloseNavi.addAction(Actions.fadeOut(0.5f));
 		/*

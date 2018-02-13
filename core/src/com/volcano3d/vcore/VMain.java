@@ -209,9 +209,7 @@ public class VMain{
 
     public void onTap(float x, float y, int count, int button){
     	
-    	setUserActionActive();
-    	
-    	if(camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.MAIN){
+    	if(camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.MAIN && userActionActive){
 	    	Ray r = camera.get().getPickRay(x, y);
 	    	int iint = decalsTags.Intersect(r);
 			switch(iint){
@@ -229,6 +227,8 @@ public class VMain{
 				break;			
 			};
     	}
+    	
+    	setUserActionActive();
     }
     
     public void onKeyDown(int keycode){
