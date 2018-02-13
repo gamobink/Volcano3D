@@ -173,10 +173,20 @@
 			"shininess":  0, 
 			"textures": [
 				{
-					"id": "Map #3", 
+					"id": "Map #1", 
 					"filename": "water.png",  
 					"type": "DIFFUSE"
-				}
+				},
+				{
+					"id": "Map #2", 
+					"filename": "water_normal2_dudv.jpg",  
+					"type": "EMISSIVE"
+				},
+				{
+					"id": "Map #3", 
+					"filename": "water_normal2.jpg",  
+					"type": "NORMAL"
+				}									
 			]
 		}
 	], 

@@ -14,10 +14,9 @@ varying vec3 v_normal;
 attribute vec3 a_position;
 
 varying vec4 v_position; 
-
 varying vec3 v_viewDirection;
-
 varying vec4 v_projectedPos;
+varying vec2 v_dudvUV; 
 
 void main() {
 	v_position = vec4(a_position, 1.0);
@@ -34,7 +33,7 @@ void main() {
  	 
  	v_diffuseUV = u_diffuseUVTransform.xy + a_texCoord0 * u_diffuseUVTransform.zw;              
 
-	
+	v_dudvUV = vec2(v_position.x / 150, v_position.y / 150);
 
 	
 }

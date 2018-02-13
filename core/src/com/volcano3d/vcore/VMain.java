@@ -153,6 +153,7 @@ public class VMain{
         
         renderWaterScene(camera.get());
         modelWater.setAmbientTexture(null, reflectionTexture.get());
+        //modelWater.setEmissiveTexture(null, );
         
     	Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
