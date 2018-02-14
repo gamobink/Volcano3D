@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.volcano3d.utility.TextAsset;
 import com.volcano3d.utility.TextAssetLoader;
@@ -49,8 +50,7 @@ public class VMain{
     public VMinimalistShaderProvider shaderSimple = null;
     public VDefaultShaderProvider shaderWater = null; 
         
-    public VTextureRender reflectionTexture = null;
-    public VTextureRender refractionTexture = null;
+    public Array<VTextureRender> waterTexturesArray = new Array<VTextureRender>();
     
     protected boolean userActionActive = false;
     private Timer.Task userActionActiveCountdown = null;
@@ -106,8 +106,9 @@ public class VMain{
         decalsTags.addDecal(new VDecal("sign3.png", new Vector3(146, 32, -216), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign4.png", new Vector3(-7, 35, -550), new Vector2(50,50)));
 
-        reflectionTexture = new VTextureRender(this);
-        refractionTexture = new VTextureRender(this);        
+        waterTexturesArray.add(new VTextureRender(this));		//reflection
+        waterTexturesArray.add(new VTextureRender(this));		//reflected skybox stretched
+        waterTexturesArray.add(new VTextureRender(this));		//refraction
         
         modelGround.enableTween();
         //add faders to all ground parts to be faded 
@@ -153,10 +154,14 @@ public class VMain{
         
         camera.update();
         
-        waterMove += 0.02f * Gdx.graphics.getDeltaTime();
+        waterMove += 0.1f * Gdx.graphics.getDeltaTime();	//Math.random() * 
         waterMove = waterMove % 1;
+        
         renderWaterScene(camera.get());
-        modelWater.setAmbientTexture(null, reflectionTexture.get());
+        
+        modelWater.setReflectionTexture(null, waterTexturesArray.get(0).get());	//Reflection
+        modelWater.setAmbientTexture(null, waterTexturesArray.get(1).get());	//Stretched reflection
+        modelWater.setSpecularTexture(null, waterTexturesArray.get(2).get());	//Refraction
         modelWater.setShininess(null, waterMove);
         
     	Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -164,7 +169,8 @@ public class VMain{
         Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1.0f);
         Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
         
-        modelSkybox.render(camera.get(), environment);
+        modelSkybox.scale(1, 1, 1);
+        modelSkybox.render(camera.get(), environment);        
         modelWater.render(camera.get(), environment); 
 
         //Frustum culling???!!
@@ -274,31 +280,46 @@ public class VMain{
     	c.near = 0.1f;
     	c.far = 3000;
     	
-    	for(int i=0; i<2; i++){
+    	for(int i=0; i<3; i++){
+    		if(i==0 || i==1){
+		    	c.position.y = -cam.position.y;
+		    	c.direction.y = -cam.direction.y;
+    		}
     		if(i==1){
-		    	c.position.y = -c.position.y;
-		    	c.direction.y = -c.direction.y;
+    			c.far = 10000;
+    		}else{
+    			c.far = 3000;
     		}
 	    	c.update();
 	    	
-	    	if(i==1)reflectionTexture.beginRender();
-	    	else refractionTexture.beginRender();
+	    	waterTexturesArray.get(i).beginRender();
+//	    	if(i==1)reflectionTexture.beginRender();
+//	    	else refractionTexture.beginRender();
+	    	//reflectionTextureSkyboxFar
 	    	
 	    	Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
 	        Gdx.gl.glClearColor(0,0,1,1.0f);
 	        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);   
 	        
-	        if(i==1){
+	        if(i==0){	//reflection
+	        	modelSkybox.scale(1, 1, 1);
 		        modelSkybox.render(c, environment);
 		        modelGround.render(c, environment);
 		        modelIsland.render(c, environment);
-	        }else{
+		        
+	        }else if(i==1){	//reflection stretched skybox
+
+	        	modelSkybox.scale(1, 50, 1);
+	        	modelSkybox.render(c, environment);
+	        	
+	        }else if(i == 2){	//under water part - refraction
 	        	
 	        	//TODO: render under water part
 	        	
 	        }
-	        if(i==1)reflectionTexture.endRender();
-	        else refractionTexture.endRender();
+	        waterTexturesArray.get(i).endRender();
+//	        if(i==1)reflectionTexture.endRender();
+//	        else refractionTexture.endRender();
     	}
     }
     public void renderWaterRefractionScene(PerspectiveCamera cam){

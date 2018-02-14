@@ -89,8 +89,18 @@ public class VRenderable {
         if(modelInstance != null) {
             modelInstance.transform.idt();
             modelInstance.transform.translate(pos);
+            modelInstance.calculateTransforms();  
         }
     }
+    public void scale(float x, float y, float z){
+        if(modelInstance != null) {
+            modelInstance.transform.idt();
+            modelInstance.transform.scale(x,y,z);
+            modelInstance.calculateTransforms();  
+        }        
+    	
+    }
+    
     public void setEnvironmentCubemap(String id, VCubemapRender cubemap){
     	setNodeMaterialAttribute(id, new CubemapAttribute(CubemapAttribute.EnvironmentMap, cubemap.cubemap));
     }
