@@ -90,10 +90,11 @@ void main() {
 		
 	//Mix reflections by specular highlight
 	vec4 relfMix = mix(reflection, reflectionStretch, specularCoefficientWide);
+
 		//vec4(0.2, 0.2, 0.2, 1)
 	gl_FragColor = mix(relfMix, relfMix * vec4(0.2, 0.2, 0.2, 1), d) + vec4(specHilight, 0.0);	
 	
-	//gl_FragColor = vec4(d,d,d, 1);
+	//gl_FragColor = vec4(fog,fog,fog, 1);
 }
 
 
