@@ -189,7 +189,7 @@ public class VMinimalistShader  extends BaseShader{
 		if (!combinedAttributes.has(BlendingAttribute.Type))
 			context.setBlending(false, GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
-//		bindMaterial(combinedAttributes);	//TODO
+//		bindMaterial(combinedAttributes);
 		
 		context.setDepthTest(GL30.GL_LEQUAL, 0.0f, 1.0f);
 		

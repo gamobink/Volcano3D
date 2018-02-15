@@ -10,6 +10,7 @@ public class VStaticAssets {
 	public static void Init(){
 		Fonts.calibri25Font.getData().setLineHeight(25);
 		Fonts.calibriLightFont.getData().setLineHeight(45);
+		//TODO Button on/off state images
 		GUI.buttonsSkin.addRegions(new TextureAtlas("gui.txt"));
 	}
 	public static class Text{

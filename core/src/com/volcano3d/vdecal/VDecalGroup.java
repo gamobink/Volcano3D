@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g3d.decals.CameraGroupStrategy;
 import com.badlogic.gdx.graphics.g3d.decals.DecalBatch;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.utils.Array;
+import com.volcano3d.utility.VTween;
 import com.volcano3d.vcore.VMain;
 
 public class VDecalGroup {
@@ -16,12 +17,11 @@ public class VDecalGroup {
 	
 	private DecalBatch decalBatch = null;
 	
-	public float	fadeAlpha = 1.0f;
-	public boolean 	fadeOffAlpha = false;
-	public boolean 	fadeOnAlpha = false;
-	
+	public VTween 	alphaFader;
+
     public VDecalGroup(VMain v){
     	volcano = v;
+    	alphaFader = new VTween();
     }		
 	public void init(){
 		decalBatch = new DecalBatch(new CameraGroupStrategy(volcano.camera.get()));
@@ -32,25 +32,15 @@ public class VDecalGroup {
 	public void addDecal(VDecal d){
 		decals.add(d);
 	}	
-	public void setFadeOff(){
-		fadeOnAlpha = false;
-		fadeOffAlpha = true;		
-	}
-	public void setFadeOn(){
-		fadeOnAlpha = true;
-		fadeOffAlpha = false;				
-	}	
     public void render(){
-    	float dt = Gdx.graphics.getDeltaTime();
-    	if(fadeOffAlpha){
-    		fadeAlpha -= dt;
-    		if(fadeAlpha <= 0)fadeAlpha = 0;
-    	}else if(fadeOnAlpha){
-    		fadeAlpha += dt;
-    		if(fadeAlpha >= 1)fadeAlpha = 1;
+    	float fadeAlpha = 1.0f;
+    	if(alphaFader != null){
+    		alphaFader.tween(Gdx.graphics.getDeltaTime());
+			VTween.Value v = alphaFader.get("all");
+			if(v != null)fadeAlpha = v.value;
     	}
     	if(fadeAlpha > 0){
-	    	Gdx.gl.glDisable(GL20.GL_DEPTH_TEST); 
+	    	Gdx.gl.glDisable(GL20.GL_DEPTH_TEST);
 	    	for(int i=0;i<decals.size;i++){
 		    	VDecal d = decals.get(i);
 		    	if(d!=null){

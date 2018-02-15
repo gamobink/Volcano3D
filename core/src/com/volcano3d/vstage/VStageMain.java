@@ -119,12 +119,12 @@ public class VStageMain extends InputListener {
         labelStyle.font = VStaticAssets.Fonts.calibri18Font;
         
         String[] buttonLabelsTexts = {
-        		"Vulkāns",
-        		"Zemūdens",
-        		"Pludmale",
-        		"Kalns",
-        		"Nogruvums",
-        		"Lietus"
+        		"Magm./Hidrot./Pegmat.",
+        		"Hidrotermālie",
+        		"Iztvaikošana",
+        		"Dēdēšana/Nogulas/Metamorf.",
+        		"Pneimatolītiskie",
+        		"Erozija"
         };
         
         for(int i=1; i<=6; i++){

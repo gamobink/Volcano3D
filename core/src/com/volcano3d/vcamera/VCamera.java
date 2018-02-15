@@ -45,20 +45,20 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 				default:
 					this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN);
 					break;
-				}			
+				}
 			}
 			break;
 		case STATIC_1:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1);
 			break;
 		case STATIC_2:
-			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_2);
+			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_2);
 			break;
 		case STATIC_3:
-			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_3);
+			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_3);
 			break;			
 		case STATIC_4:
-			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_4);
+			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_4);
 			break;						
 		default:
 			break;			
@@ -106,14 +106,45 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 					switch(targetIdentifier){
 					case  MAIN_OVER_STATIC_VIEW_1:
 						this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_1);
-						break;
+						break;					
 					default:
 						break;
 					}
 					break;
+				case STATIC_2:				
+					switch(targetIdentifier){
+					case  MAIN_OVER_STATIC_VIEW_2:
+						this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_2);
+						break;					
+					default:
+						break;
+					}
+					break;
+				case STATIC_3:				
+					switch(targetIdentifier){
+					case  MAIN_OVER_STATIC_VIEW_3:
+						this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_3);
+						break;					
+					default:
+						break;
+					}
+					break;
+				case STATIC_4:				
+					switch(targetIdentifier){
+					case  MAIN_OVER_STATIC_VIEW_4:
+						this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_4);
+						break;					
+					default:
+						break;
+					}
+					break;
+					
 				case MAIN:
 					switch(targetIdentifier){
 					case  MAIN_OVER_STATIC_VIEW_1:
+					case  MAIN_OVER_STATIC_VIEW_2:
+					case  MAIN_OVER_STATIC_VIEW_3:
+					case  MAIN_OVER_STATIC_VIEW_4:
 						this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN);
 						break;
 					default:
