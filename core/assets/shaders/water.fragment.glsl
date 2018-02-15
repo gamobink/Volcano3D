@@ -50,7 +50,7 @@ void main() {
 
 	//gl_FragColor = vec4(waves, waves, waves, 1);	return;	
 	
-//	gl_FragColor = vec4(fog, fog, fog, 1);	return;		
+//	gl_FragColor = vec4(fog, fog, fog, 1);	return;
 		
 	//Normal map sample - normal
 	vec4 normalSample = texture2D(u_normalTexture, uv1);		

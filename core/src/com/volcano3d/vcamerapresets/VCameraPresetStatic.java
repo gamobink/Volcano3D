@@ -31,11 +31,12 @@ public class VCameraPresetStatic extends VCameraPreset {
 			break;			
 		case STATIC_VIEW_4:
 			//Beach cross-section
-			this.fov = 40.0f;
+			this.fov = 54.0f;
 			this.gravityEnabled = false;
-			this.distance = 300.0f;
-			this.pivotPosition.set(-7, 45, -550);
-			this.anglePos.x = 0;
+			this.distance = 600.0f;
+			this.pivotPosition.set(100, 45, -550);
+			this.anglePos.x = 340;
+			this.anglePos.y = 3;			
 			break;
 		default:
 			break;						
