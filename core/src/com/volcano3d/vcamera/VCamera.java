@@ -13,7 +13,9 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 		STATIC_1, 				//Volcano
 		STATIC_2,				//Hill	
 		STATIC_3,				//Sea	
-		STATIC_4,				//Beach			
+		STATIC_4,				//Beach	
+		STATIC_5,				//Rocks
+		STATIC_6,				//Rain
 	}
 	
 	private VMain volcano = null;
@@ -60,6 +62,12 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 		case STATIC_4:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_4);
 			break;						
+		case STATIC_5:
+			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_5);
+			break;						
+		case STATIC_6:
+			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_6);
+			break;									
 		default:
 			break;			
 		};

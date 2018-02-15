@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.CubemapAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.model.Node;
+import com.badlogic.gdx.graphics.g3d.model.NodePart;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.math.Vector3;
 import com.volcano3d.utility.VTween;
@@ -131,7 +132,17 @@ public class VRenderable {
     public void setTransparency(String id, float f){    
     	BlendingAttribute b = new BlendingAttribute(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 		b.opacity = f;
-		setNodeMaterialAttribute(id, b);	
+    	Node n = getNode(id);
+    	if(n!=null){
+    		for(int i=0; i<n.parts.size; i++){
+    			if(f < 0.001f)n.parts.get(i).enabled = false;
+    			else{
+    				NodePart np = n.parts.get(i);
+    				np.material.set(b);
+    				np.enabled = true;
+    			}
+    		}
+    	}		
     }    
     public void setNodeMaterialAttribute(String id, Attribute attr){
     	Node n = getNode(id);

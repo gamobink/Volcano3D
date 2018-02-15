@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.volcano3d.utility.TextAsset;
 import com.volcano3d.utility.TextAssetLoader;
+import com.volcano3d.utility.VCommon;
 import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vdecal.VDecal;
@@ -103,13 +104,20 @@ public class VMain{
         modelGround = new VRenderable(this, "ground.g3dj");
         modelIsland = new VRenderable(this, "island.g3dj");        
         
-        modelUnderground = new VRenderable(this, "ground.g3dj");
+        modelUnderground = new VRenderable(this, "underground.g3dj");
         
         //TODO Change images for decal signs
-        decalsTags.addDecal(new VDecal("sign.png", new Vector3(-220, 140, -10), new Vector2(50,50)));
-        decalsTags.addDecal(new VDecal("sign2.png", new Vector3(-32, 82, 8), new Vector2(50,50)));
-        decalsTags.addDecal(new VDecal("sign3.png", new Vector3(146, 32, -216), new Vector2(50,50)));
-        decalsTags.addDecal(new VDecal("sign4.png", new Vector3(-7, 35, -550), new Vector2(50,50)));
+        
+
+        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-220, 140, -10), new Vector2(36,50)));        
+        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-32, 82, 8), new Vector2(36,50)));
+        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(146, 26, -216), new Vector2(36,50)));
+        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-7, 35, -550), new Vector2(36,50)));
+        
+//        decalsTags.addDecal(new VDecal("sign.png", new Vector3(-220, 140, -10), new Vector2(50,50)));
+//        decalsTags.addDecal(new VDecal("sign2.png", new Vector3(-32, 82, 8), new Vector2(50,50)));
+//        decalsTags.addDecal(new VDecal("sign3.png", new Vector3(146, 32, -216), new Vector2(50,50)));
+//        decalsTags.addDecal(new VDecal("sign4.png", new Vector3(-7, 35, -550), new Vector2(50,50)));
 
         waterTexturesArray.add(new VTextureRender(this));		//reflection
         waterTexturesArray.add(new VTextureRender(this));		//reflected skybox stretched
@@ -117,13 +125,16 @@ public class VMain{
         
         modelGround.enableTween();
         //add faders to all ground parts to be faded 
+        modelGround.alphaFader.set("groundPart1", 1.0f, 1.0f);
         modelGround.alphaFader.set("groundPart2", 1.0f, 1.0f);
+        modelGround.alphaFader.set("groundPart3", 1.0f, 1.0f);
         modelGround.alphaFader.set("groundFar1", 1.0f, 1.0f);
+        modelGround.alphaFader.set("groundFar2", 1.0f, 1.0f);
         
         //Fading for under water part
-        //modelWater.enableTween();
-        //modelWater.alphaFader.set("waterPart1", 1.0f, 1.0f);
-        //modelWater.alphaFader.set("waterPart2", 1.0f, 1.0f);
+        modelWater.enableTween();
+        modelWater.alphaFader.set("waterCenter", 1.0f, 1.0f);
+        modelWater.alphaFader.set("water", 1.0f, 1.0f);
         
         pathEdit.setPath(stage2D.pathAction1, "pathAction1");
     }    
@@ -144,6 +155,7 @@ public class VMain{
     	decalsTags.init();
     	
     	stage2D.introStage.showIntro();
+//    	stage2D.introStage.hideIntro();
     }	
     
     public void render() {
@@ -167,10 +179,16 @@ public class VMain{
         
         renderWaterScene(camera.get());
         
-        modelWater.setReflectionTexture(null, waterTexturesArray.get(0).get());	//Reflection
-        modelWater.setAmbientTexture(null, waterTexturesArray.get(1).get());	//Stretched reflection
-        modelWater.setSpecularTexture(null, waterTexturesArray.get(2).get());	//Refraction
-        modelWater.setShininess(null, waterMove);
+        modelWater.setReflectionTexture("water", waterTexturesArray.get(0).get());	//Reflection
+        modelWater.setAmbientTexture("water", waterTexturesArray.get(1).get());	//Stretched reflection
+        modelWater.setSpecularTexture("water", waterTexturesArray.get(2).get());	//Refraction
+        
+        modelWater.setReflectionTexture("waterCenter", waterTexturesArray.get(0).get());	//Reflection
+        modelWater.setAmbientTexture("waterCenter", waterTexturesArray.get(1).get());	//Stretched reflection
+        modelWater.setSpecularTexture("waterCenter", waterTexturesArray.get(2).get());	//Refraction
+
+        modelWater.setShininess("water", waterMove);
+        modelWater.setShininess("waterCenter", waterMove);
         
     	Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
@@ -178,15 +196,17 @@ public class VMain{
         Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
         
         modelSkybox.render(camera.get(), environment);
-        modelWater.render(camera.get(), environment);
-
+        
+        //TODO Render underground parts based on camera states
+      //  if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
+        	modelUnderground.render(camera.get(), environment);
+      //  }
+        	
+        modelWater.render(camera.get(), environment);        	
         modelGround.render(camera.get(), environment);
         modelIsland.render(camera.get(), environment);
-
-        //TODO Render underground parts based on camera states
-        if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
-        //	modelUnderground.render(camera.get(), environment);
-        }
+        
+        VCommon.drawGrid(camera.get());
         
     	decalsTags.render();       
         stage2D.renderMainStage();
@@ -216,6 +236,10 @@ public class VMain{
 				camera.setCameraState(VCamera.States.STATIC_1);
 				this.stage2D.transitionToStaticView(0);
 				break;
+			case 1:
+				camera.setCameraState(VCamera.States.STATIC_2);
+				this.stage2D.transitionToStaticView(0);
+				break;
 			case 2:
 				camera.setCameraState(VCamera.States.STATIC_3);
 				this.stage2D.transitionToStaticView(0);
@@ -223,7 +247,7 @@ public class VMain{
 			case 3:
 				camera.setCameraState(VCamera.States.STATIC_4);
 				this.stage2D.transitionToStaticView(0);
-				break;			
+				break;				
 			};
     	}
     	
@@ -283,7 +307,7 @@ public class VMain{
 	    	waterTexturesArray.get(i).beginRender();
 	    	
 	    	Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
-	        Gdx.gl.glClearColor(0,0,1,1.0f);
+	        Gdx.gl.glClearColor(0.4f,0.4f,0.4f,1.0f);
 	        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);   
 	        
 	        if(i==0){	//reflection
@@ -304,7 +328,7 @@ public class VMain{
 	        }
 	        waterTexturesArray.get(i).endRender();
     	}
-    	modelSkybox.scale(1, 1, 1);
+    	modelSkybox.scale(1, 1.2f, 1);
     }
     public void renderWaterRefractionScene(PerspectiveCamera cam){
 
@@ -330,14 +354,30 @@ public class VMain{
     	stage2D.transitionToMainView();
     }
     public void updateModelFaders(){
-    	    	
+
+//		STATIC_VIEW_1, 				//Volcano
+//		STATIC_VIEW_2,				//Hill	
+//		STATIC_VIEW_3,				//Sea	
+//		STATIC_VIEW_4,				//Beach
+//		STATIC_VIEW_5,				//Rocks
+//		STATIC_VIEW_6				//Rain	    	
+    	
     	float fadeView1 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_1) ? 0.0f : 1.0f;
     	float fadeView2 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_2) ? 0.0f : 1.0f;
     	float fadeView3 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_3) ? 0.0f : 1.0f;
     	float fadeView4 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_4) ? 0.0f : 1.0f;
     	
-    	modelGround.alphaFader.set("groundPart2", fadeView1, 0.3f);
-    	modelGround.alphaFader.set("groundFar1", Math.min(fadeView1 + fadeView2, 1.0f), 0.3f);
+    	modelGround.alphaFader.set("groundPart2", fadeView1 * fadeView2, 0.3f);
+    	modelGround.alphaFader.set("groundFar1", fadeView1 * fadeView2, 0.3f);
+    	
+    	modelGround.alphaFader.set("groundPart1", fadeView2, 0.3f);
+    	
+    	modelGround.alphaFader.set("groundPart3", fadeView4, 0.3f);
+    	modelGround.alphaFader.set("groundFar2", fadeView4, 0.3f);
+    	
+    	modelWater.alphaFader.set("water", fadeView2 * fadeView3 * fadeView4, 0.4f);
+
+    	
     	
     	//TODO Fade in and out different parts of ground geometry
     	

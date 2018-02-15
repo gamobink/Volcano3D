@@ -15,6 +15,8 @@ uniform sampler2D u_ambientTexture;		//Reflection of stretched skybox
 uniform sampler2D u_specularTexture;	//Refraction - underwater part
 uniform sampler2D u_emissiveTexture;	//DuDv map
 uniform sampler2D u_normalTexture;		//Waves normals map
+
+uniform float u_opacity;
  
 varying vec4 v_position;
 varying vec3 v_viewDirection; 
@@ -94,7 +96,7 @@ void main() {
 		//vec4(0.2, 0.2, 0.2, 1)
 	gl_FragColor = mix(relfMix, relfMix * vec4(0.2, 0.2, 0.2, 1), d) + vec4(specHilight, 0.0);	
 	
-	//gl_FragColor = vec4(fog,fog,fog, 1);
+	gl_FragColor.w = u_opacity;
 }
 
 

@@ -19,24 +19,30 @@ public class VCameraPresetStatic extends VCameraPreset {
 			break;
 		case STATIC_VIEW_2:
 			//Hill cross-section
-			//TODO Camera settings for static views
+			this.fov = 65.0f;
+			this.gravityEnabled = false;
+			this.distance = 300.0f;
+			this.pivotPosition.set(80, -20, 00);
+			this.anglePos.x = 200;
+			this.anglePos.y = 20;
 			break;			
 		case STATIC_VIEW_3:
 			//Sea cross-section
-			this.fov = 40.0f;
+			this.fov = 65.0f;
 			this.gravityEnabled = false;
-			this.distance = 300.0f;
-			this.pivotPosition.set(146, 42, -216);
+			this.distance = 600.0f;
+			this.pivotPosition.set(-25, -120, -240);
 			this.anglePos.x = 270;
+			this.anglePos.y = 20;			
 			break;			
 		case STATIC_VIEW_4:
 			//Beach cross-section
-			this.fov = 54.0f;
+			this.fov = 55.0f;
 			this.gravityEnabled = false;
-			this.distance = 600.0f;
-			this.pivotPosition.set(100, 45, -550);
+			this.distance = 400.0f;
+			this.pivotPosition.set(100, -20, -550);
 			this.anglePos.x = 340;
-			this.anglePos.y = 3;			
+			this.anglePos.y = 15;			
 			break;
 		default:
 			break;						

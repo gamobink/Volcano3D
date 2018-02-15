@@ -41,12 +41,30 @@ public class VCameraPresetMain extends VCameraPreset {
 			
 			break;			
 		case MAIN_OVER_STATIC_VIEW_2:
-			//TODO Camera settings for main transition views
+			
+			fov = 40.0f;
+			gravityEnabled = false;
+			distance = 750.0f;
+//			pivotPosition.set(-220, 0, -10);
+			this.anglePos.x = 200;
+			
 			break;
 		case MAIN_OVER_STATIC_VIEW_3:
+
+			fov = 40.0f;
+			gravityEnabled = false;
+			distance = 750.0f;
+//			pivotPosition.set(-220, 0, -10);
+			this.anglePos.x = 270;			
 			
 			break;			
 		case MAIN_OVER_STATIC_VIEW_4:
+
+			fov = 40.0f;
+			gravityEnabled = false;
+			distance = 750.0f;
+//			pivotPosition.set(-220, 0, -10);
+			this.anglePos.x = 340;			
 			
 			break;			
 		default:

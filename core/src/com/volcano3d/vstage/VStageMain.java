@@ -120,11 +120,17 @@ public class VStageMain extends InputListener {
         
         String[] buttonLabelsTexts = {
         		"Magm./Hidrot./Pegmat.",
+        		"Dēdēšana/Nogulas/Metamorf.",
         		"Hidrotermālie",
         		"Iztvaikošana",
-        		"Dēdēšana/Nogulas/Metamorf.",
-        		"Pneimatolītiskie",
-        		"Erozija"
+        		"Erozija",
+        		"Pneimatolītiskie"        		
+//        		"Volcano",
+//        		"Hill",
+//        		"Sea",
+//        		"Beach",
+//        		"Rocks",
+//        		"Rain"        		        		
         };
         
         for(int i=1; i<=6; i++){
@@ -305,15 +311,30 @@ public class VStageMain extends InputListener {
         	transitionToStaticView(0.8f);
         }  
         if(a.getName().compareTo("B_VIEW2") == 0){
-        	volcano.camera.setCameraState(VCamera.States.STATIC_3);
+        	volcano.camera.setCameraState(VCamera.States.STATIC_2);
         	transitionCloseNavigationTable();
         	transitionToStaticView(0.8f);
         }  
         if(a.getName().compareTo("B_VIEW3") == 0){
+        	volcano.camera.setCameraState(VCamera.States.STATIC_3);
+        	transitionCloseNavigationTable();	
+        	transitionToStaticView(0.8f);
+        } 
+        if(a.getName().compareTo("B_VIEW4") == 0){
         	volcano.camera.setCameraState(VCamera.States.STATIC_4);
         	transitionCloseNavigationTable();	
         	transitionToStaticView(0.8f);
-        }          
+        } 
+        if(a.getName().compareTo("B_VIEW5") == 0){
+        	volcano.camera.setCameraState(VCamera.States.STATIC_5);
+        	transitionCloseNavigationTable();	
+        	transitionToStaticView(0.8f);
+        } 
+        if(a.getName().compareTo("B_VIEW6") == 0){
+        	volcano.camera.setCameraState(VCamera.States.STATIC_6);
+        	transitionCloseNavigationTable();	
+        	transitionToStaticView(0.8f);
+        }         
         if(a.getName().compareTo("BUTTON_NAVI") == 0){
         	transitionOpenNavigationTable();
         }        
