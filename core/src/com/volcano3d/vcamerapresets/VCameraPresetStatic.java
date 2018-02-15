@@ -19,7 +19,7 @@ public class VCameraPresetStatic extends VCameraPreset {
 			break;
 		case STATIC_VIEW_2:
 			//Hill cross-section
-			
+			//TODO Camera settings for static views
 			break;			
 		case STATIC_VIEW_3:
 			//Sea cross-section

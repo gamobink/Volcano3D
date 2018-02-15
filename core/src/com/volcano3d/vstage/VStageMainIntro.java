@@ -59,7 +59,8 @@ public class VStageMainIntro {
 		
 		titleLabelYInitial = main.mainStage.getHeight() * 0.55f;
 		titleLabelYTop = main.mainStage.getHeight() - 100;		
-				
+		
+		//TODO Title label as image
 		titleLabel = new Label(VStaticAssets.Text.titleText, new Label.LabelStyle(VStaticAssets.Fonts.calibriLightFont, Color.WHITE));
 		titleLabel.setWrap(true);
         titleLabel.setWidth(stageWidth);

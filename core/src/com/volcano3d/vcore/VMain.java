@@ -45,6 +45,8 @@ public class VMain{
     public VRenderable modelWater = null; 
     public VRenderable modelGround = null; 
     public VRenderable modelIsland = null; 
+    public VRenderable modelUnderground = null; 
+    
     
     public VDefaultShaderProvider shaderSky = null;    
     public VMinimalistShaderProvider shaderSimple = null;
@@ -101,6 +103,9 @@ public class VMain{
         modelGround = new VRenderable(this, "ground.g3dj");
         modelIsland = new VRenderable(this, "island.g3dj");        
         
+        modelUnderground = new VRenderable(this, "ground.g3dj");
+        
+        //TODO Change images for decal signs
         decalsTags.addDecal(new VDecal("sign.png", new Vector3(-220, 140, -10), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign2.png", new Vector3(-32, 82, 8), new Vector2(50,50)));
         decalsTags.addDecal(new VDecal("sign3.png", new Vector3(146, 32, -216), new Vector2(50,50)));
@@ -133,7 +138,9 @@ public class VMain{
     	
     	modelGround.init();
     	modelIsland.init();
-    	    	
+    	
+    	modelUnderground.init();
+    	
     	decalsTags.init();
     	
     	stage2D.introStage.showIntro();
@@ -153,6 +160,8 @@ public class VMain{
                 
         camera.update();
         
+        updateModelFaders();
+
         waterMove += 0.1f * Gdx.graphics.getDeltaTime();
         waterMove = waterMove % 1;
         
@@ -168,20 +177,16 @@ public class VMain{
         Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1.0f);
         Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
         
-        modelSkybox.scale(1, 1, 1);
         modelSkybox.render(camera.get(), environment);
         modelWater.render(camera.get(), environment);
 
-        //Frustum culling???!!
         modelGround.render(camera.get(), environment);
         modelIsland.render(camera.get(), environment);
-                
-        updateModelFaders();
 
-        //TODO: Render parts based on camera states
-     //   if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
-  //      	modelUnderground1.render(camera.get(), environment);
-      //  }
+        //TODO Render underground parts based on camera states
+        if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
+        //	modelUnderground.render(camera.get(), environment);
+        }
         
     	decalsTags.render();       
         stage2D.renderMainStage();
@@ -294,11 +299,12 @@ public class VMain{
 	        	
 	        }else if(i == 2){	//under water part - refraction
 	        	
-	        	//TODO: render under water part
+	        	//TODO Render under water part for refraction texture
 	        	
 	        }
 	        waterTexturesArray.get(i).endRender();
     	}
+    	modelSkybox.scale(1, 1, 1);
     }
     public void renderWaterRefractionScene(PerspectiveCamera cam){
 
@@ -330,9 +336,11 @@ public class VMain{
     	float fadeView3 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_3) ? 0.0f : 1.0f;
     	float fadeView4 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_4) ? 0.0f : 1.0f;
     	
-    	modelGround.alphaFader.set("groundPart2", fadeView1, 0.2f);
-    	modelGround.alphaFader.set("groundFar1", fadeView1, 0.2f);
-
+    	modelGround.alphaFader.set("groundPart2", fadeView1, 0.3f);
+    	modelGround.alphaFader.set("groundFar1", Math.min(fadeView1 + fadeView2, 1.0f), 0.3f);
+    	
+    	//TODO Fade in and out different parts of ground geometry
+    	
         float decalsFade = (camera.getState() == VCamera.States.MAIN && userActionActive) ? 1.0f : 0.0f;
     	
         decalsTags.alphaFader.set("all", decalsFade, 1.0f);

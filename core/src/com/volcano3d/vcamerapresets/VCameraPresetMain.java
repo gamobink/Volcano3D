@@ -41,8 +41,14 @@ public class VCameraPresetMain extends VCameraPreset {
 			
 			break;			
 		case MAIN_OVER_STATIC_VIEW_2:
-			
+			//TODO Camera settings for main transition views
 			break;
+		case MAIN_OVER_STATIC_VIEW_3:
+			
+			break;			
+		case MAIN_OVER_STATIC_VIEW_4:
+			
+			break;			
 		default:
 			break;			
 		}

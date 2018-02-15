@@ -12,6 +12,8 @@ public class VCameraPresetCollection {
 		MAIN,						//Main interactive camera
 		MAIN_OVER_STATIC_VIEW_1, 	//Main camera over Volcano view. Transition to STATIC_VIEW_1
 		MAIN_OVER_STATIC_VIEW_2,	//Main camera over Hill view. Transition to STATIC_VIEW_2 
+		MAIN_OVER_STATIC_VIEW_3,	//Main camera over Hill view. Transition to STATIC_VIEW_2 
+		MAIN_OVER_STATIC_VIEW_4,	//Main camera over Hill view. Transition to STATIC_VIEW_2 
 		//VCameraPresetStatic
 		STATIC_VIEW_1, 				//Volcano
 		STATIC_VIEW_2,				//Hill	
@@ -27,19 +29,21 @@ public class VCameraPresetCollection {
 	public VCameraPresetCollection(VCameraPreset cam){
 		finalPreset = cam;
 		
-		addPreset(PresetsIdentifiers.MAIN, new VCameraPresetMain(PresetsIdentifiers.MAIN));
-		addPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1, new VCameraPresetMain(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1));
-		addPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_2, new VCameraPresetMain(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_2));	
-		addPreset(PresetsIdentifiers.STATIC_VIEW_1, new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_1));
-		addPreset(PresetsIdentifiers.STATIC_VIEW_2, new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_2));	
-		addPreset(PresetsIdentifiers.STATIC_VIEW_3, new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_3));	
-		addPreset(PresetsIdentifiers.STATIC_VIEW_4, new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_4));	
+		addPreset(new VCameraPresetMain(PresetsIdentifiers.MAIN));
+		addPreset(new VCameraPresetMain(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1));
+		addPreset(new VCameraPresetMain(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_2));
+		addPreset(new VCameraPresetMain(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_3));
+		addPreset(new VCameraPresetMain(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_4));
+		addPreset(new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_1));
+		addPreset(new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_2));	
+		addPreset(new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_3));	
+		addPreset(new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_4));	
 		
 		transitionToPreset(PresetsIdentifiers.MAIN);
 	}
 	
-	public void addPreset(PresetsIdentifiers identifier, VCameraPreset preset){
-		cameraPresets.put(identifier, preset);
+	public void addPreset(VCameraPreset preset){
+		cameraPresets.put(preset.getPreset(), preset);
 	}
 	public VCameraPreset getPreset(PresetsIdentifiers identifier){
 		return cameraPresets.get(identifier);
