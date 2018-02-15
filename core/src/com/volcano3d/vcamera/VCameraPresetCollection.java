@@ -16,7 +16,9 @@ public class VCameraPresetCollection {
 		STATIC_VIEW_1, 				//Volcano
 		STATIC_VIEW_2,				//Hill	
 		STATIC_VIEW_3,				//Sea	
-		STATIC_VIEW_4,				//Beach			
+		STATIC_VIEW_4,				//Beach
+		STATIC_VIEW_5,				//Rocks
+		STATIC_VIEW_6				//Rain			
 	}
 	
 	public VCameraPreset 		finalPreset = null;

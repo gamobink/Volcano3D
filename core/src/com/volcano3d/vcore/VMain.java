@@ -150,11 +150,10 @@ public class VMain{
         	init();
         	objectsLoaded = true;
         }
-        
-        
+                
         camera.update();
         
-        waterMove += 0.1f * Gdx.graphics.getDeltaTime();	//Math.random() * 
+        waterMove += 0.1f * Gdx.graphics.getDeltaTime();
         waterMove = waterMove % 1;
         
         renderWaterScene(camera.get());
@@ -170,36 +169,21 @@ public class VMain{
         Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
         
         modelSkybox.scale(1, 1, 1);
-        modelSkybox.render(camera.get(), environment);        
-        modelWater.render(camera.get(), environment); 
+        modelSkybox.render(camera.get(), environment);
+        modelWater.render(camera.get(), environment);
 
         //Frustum culling???!!
         modelGround.render(camera.get(), environment);
         modelIsland.render(camera.get(), environment);
-        
-        if(camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_1){  
-        	modelGround.alphaFader.set("groundPart2", 0.0f, 0.2f);
-        	modelGround.alphaFader.set("groundFar1", 0.0f, 0.2f);
-        }else{
-        	modelGround.alphaFader.set("groundPart2", 1.0f, 0.3f);        	
-        	modelGround.alphaFader.set("groundFar1", 1.0f, 0.3f);        	
-        }
-        
+                
+        updateModelFaders();
+
         //TODO: Render parts based on camera states
      //   if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
   //      	modelUnderground1.render(camera.get(), environment);
       //  }
-  
-//        modelGround2.render(camera.get(), environment);  
-//        modelGroundAround2.render(camera.get(), environment);
-    	
-        if(camera.getState() == VCamera.States.MAIN && userActionActive){
-        	decalsTags.setFadeOn();
-        }else{
-        	decalsTags.setFadeOff();
-        }
-    	decalsTags.render();
         
+    	decalsTags.render();       
         stage2D.renderMainStage();
         
         //pathEdit.render();
@@ -208,7 +192,6 @@ public class VMain{
         if (assetsManager.getQueuedAssets() > 0) {
             assetsManager.finishLoading();
         }
-        /**/
     }
     
     public void onPan(float x, float y, float deltaX, float deltaY){
@@ -254,10 +237,10 @@ public class VMain{
     		pathEdit.setPath(stage2D.pathAction1, "pathAction1");
     	}
     	if(keycode == 9){	//'2'    		
-    		pathEdit.setPath(stage2D.pathAction2, "pathAction2");    		
+    		pathEdit.setPath(stage2D.pathAction2, "pathAction2");
     	}    	
     	if(keycode == 10){	//'3'    		
-    		pathEdit.setPath(stage2D.pathAction3, "pathAction3");    		
+    		pathEdit.setPath(stage2D.pathAction3, "pathAction3");
     	} 
     	if(keycode == 11){	//'4'    		
     	//	renderUndergroundPart1 = false;
@@ -293,9 +276,6 @@ public class VMain{
 	    	c.update();
 	    	
 	    	waterTexturesArray.get(i).beginRender();
-//	    	if(i==1)reflectionTexture.beginRender();
-//	    	else refractionTexture.beginRender();
-	    	//reflectionTextureSkyboxFar
 	    	
 	    	Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
 	        Gdx.gl.glClearColor(0,0,1,1.0f);
@@ -318,8 +298,6 @@ public class VMain{
 	        	
 	        }
 	        waterTexturesArray.get(i).endRender();
-//	        if(i==1)reflectionTexture.endRender();
-//	        else refractionTexture.endRender();
     	}
     }
     public void renderWaterRefractionScene(PerspectiveCamera cam){
@@ -345,5 +323,19 @@ public class VMain{
     	camera.setCameraState(VCamera.States.MAIN);
     	stage2D.transitionToMainView();
     }
-    
+    public void updateModelFaders(){
+    	    	
+    	float fadeView1 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_1) ? 0.0f : 1.0f;
+    	float fadeView2 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_2) ? 0.0f : 1.0f;
+    	float fadeView3 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_3) ? 0.0f : 1.0f;
+    	float fadeView4 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_4) ? 0.0f : 1.0f;
+    	
+    	modelGround.alphaFader.set("groundPart2", fadeView1, 0.2f);
+    	modelGround.alphaFader.set("groundFar1", fadeView1, 0.2f);
+
+        float decalsFade = (camera.getState() == VCamera.States.MAIN && userActionActive) ? 1.0f : 0.0f;
+    	
+        decalsTags.alphaFader.set("all", decalsFade, 1.0f);
+    	
+    }
 }
