@@ -31,7 +31,22 @@ import com.volcano3d.vstage.VStageMain;
 /**
  * Created by T510 on 8/2/2017.
  */
-
+/*
+ * TODO Korekcijas
+ * 
+ * 
+ * -) Juuras skataa nogulsnes - biologjiskie procesi
+ * -) Kalna skatā ķīmiskā dēdēšana - tikai informatīvs process, bes vizualizācijas. Ar attēliem un shēmām
+ * -) Pludmales skatā lielāka lagūna/sēklis kur ūdens žūst un  nogulsnējas ģipsis un sāļi
+ * -) Vulkāna dūmos ikona uz gāzveida procesiem (seera fotogrāfijas)
+ * -) Magmatiskie kristāli - jāparāda arī shēma ar atdzišanu
+ * -) Magma sarkanākā krāsā
+ * -) Metamorfiskie, skats starp kalnu un vulkaanu, dziļumā, spiediena ietekmē starp magmatiskajiem un nogulumiežiem
+ * 		veidojas kristāli. Shematiska bilde!? +Fotogrāfijas	
+ * 
+ * -) Skaņa ??
+ * 
+ * */
 public class VMain{
 
     public AssetManager assetsManager = new AssetManager();
