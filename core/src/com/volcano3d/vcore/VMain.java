@@ -206,7 +206,7 @@ public class VMain{
         modelGround.render(camera.get(), environment);
         modelIsland.render(camera.get(), environment);
         
-        VCommon.drawGrid(camera.get());
+        //VCommon.drawGrid(camera.get());
         
     	decalsTags.render();       
         stage2D.renderMainStage();
