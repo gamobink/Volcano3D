@@ -36,15 +36,15 @@ import com.volcano3d.vstage.VStageMain;
  * 
  * 
  * -) Juuras skataa nogulsnes - biologjiskie procesi
- * -) Kalna skatā ķīmiskā dēdēšana - tikai informatīvs process, bes vizualizācijas. Ar attēliem un shēmām
- * -) Pludmales skatā lielāka lagūna/sēklis kur ūdens žūst un  nogulsnējas ģipsis un sāļi
- * -) Vulkāna dūmos ikona uz gāzveida procesiem (seera fotogrāfijas)
- * -) Magmatiskie kristāli - jāparāda arī shēma ar atdzišanu
- * -) Magma sarkanākā krāsā
- * -) Metamorfiskie, skats starp kalnu un vulkaanu, dziļumā, spiediena ietekmē starp magmatiskajiem un nogulumiežiem
- * 		veidojas kristāli. Shematiska bilde!? +Fotogrāfijas	
+ * -) Kalna skatÄ� Ä·Ä«miskÄ� dÄ“dÄ“Å¡ana - tikai informatÄ«vs process, bes vizualizÄ�cijas. Ar attÄ“liem un shÄ“mÄ�m
+ * -) Pludmales skatÄ� lielÄ�ka lagÅ«na/sÄ“klis kur Å«dens Å¾Å«st un  nogulsnÄ“jas Ä£ipsis un sÄ�Ä¼i
+ * -) VulkÄ�na dÅ«mos ikona uz gÄ�zveida procesiem (seera fotogrÄ�fijas)
+ * -) Magmatiskie kristÄ�li - jÄ�parÄ�da arÄ« shÄ“ma ar atdziÅ¡anu
+ * -) Magma sarkanÄ�kÄ� krÄ�sÄ�
+ * -) Metamorfiskie, skats starp kalnu un vulkaanu, dziÄ¼umÄ�, spiediena ietekmÄ“ starp magmatiskajiem un nogulumieÅ¾iem
+ * 		veidojas kristÄ�li. Shematiska bilde!? +FotogrÄ�fijas	
  * 
- * -) Skaņa ??
+ * -) SkaÅ†a ??
  * 
  * */
 public class VMain{
@@ -117,7 +117,7 @@ public class VMain{
         modelWater = new VRenderable(this, "water.g3dj", shaderWater);    //shaderWater 
         
         modelGround = new VRenderable(this, "ground.g3dj");
-        modelIsland = new VRenderable(this, "island.g3dj");        
+        modelIsland = new VRenderable(this, "island.g3dj", shaderSimple);        
         
         modelUnderground = new VRenderable(this, "underground.g3dj");
         
@@ -304,7 +304,7 @@ public class VMain{
     	c.direction.set(cam.direction);
     	c.up.set(cam.up);
     	c.fieldOfView = cam.fieldOfView;
-    	c.near = 0.1f;
+    	c.near = 10f;
     	c.far = 3000;
     	
     	for(int i=0; i<3; i++){
@@ -369,6 +369,34 @@ public class VMain{
     	stage2D.transitionToMainView();
     }
     public void updateModelFaders(){
+    	
+    	
+
+		float angleUnits = camera.anglePos.x;
+    	if(angleUnits < 0){    		
+    		angleUnits += 360.0f;    		
+    	}
+    	
+    	//System.out.println(angleUnits);
+    	
+    	float waterFade = 1.0f;
+    	float groundPart1Fade = 1.0f;
+    	float groundPart2Fade = 1.0f;
+    	float groundPart3Fade = 1.0f;
+    	
+    	if(camera.getState() != VCamera.States.MAIN){
+	    	if(angleUnits < 3 || (angleUnits > 190 && angleUnits < 360))waterFade = 0.0f;
+	    	if(angleUnits < 220 && angleUnits > 190)groundPart1Fade = 0.0f;
+	    	if(angleUnits < 190 && angleUnits > 110)groundPart2Fade = 0.0f;
+	    	if(angleUnits < 110 || (angleUnits > 330 && angleUnits < 360))groundPart3Fade = 0.0f;    	
+    	}
+    	modelWater.alphaFader.set("water", waterFade, 1f);    	
+    	modelGround.alphaFader.set("groundPart1", groundPart1Fade, 1f);
+    	modelGround.alphaFader.set("groundPart2", groundPart2Fade, 1f);
+    	modelGround.alphaFader.set("groundPart3", groundPart3Fade, 1f);
+    	
+    	modelGround.alphaFader.set("groundFar1", groundPart1Fade * groundPart2Fade, 1f);
+    	modelGround.alphaFader.set("groundFar2", groundPart3Fade, 1f);
 
 //		STATIC_VIEW_1, 				//Volcano
 //		STATIC_VIEW_2,				//Hill	
@@ -376,7 +404,7 @@ public class VMain{
 //		STATIC_VIEW_4,				//Beach
 //		STATIC_VIEW_5,				//Rocks
 //		STATIC_VIEW_6				//Rain	    	
-    	
+    	/*
     	float fadeView1 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_1) ? 0.0f : 1.0f;
     	float fadeView2 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_2) ? 0.0f : 1.0f;
     	float fadeView3 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_3) ? 0.0f : 1.0f;
@@ -392,12 +420,12 @@ public class VMain{
     	
     	modelWater.alphaFader.set("water", fadeView2 * fadeView3 * fadeView4, 0.4f);
 
-    	
+    	*/
     	
     	//TODO Fade in and out different parts of ground geometry
     	
         float decalsFade = (camera.getState() == VCamera.States.MAIN && userActionActive) ? 1.0f : 0.0f;
-    	
+    	    	
         decalsTags.alphaFader.set("all", decalsFade, 1.0f);
     	
     }

@@ -50,7 +50,14 @@ public class VCameraPreset {
 	public Vector3 	targetPivot = new Vector3();
 	public boolean	transitionPivotEnabled = false;
 	public boolean 	gravityEnabled = true;
-	public boolean 	wayPointsEnabled = false;
+	public boolean 	wayPointsEnabled = false;	
+	public boolean 	cameraPanEnabled = true;
+	
+//	public boolean 	cameraPanAngleXLimitEnabled = false;			
+//	public boolean 	cameraPanAngleYLimitEnabled = false;				
+//	public Vector2	cameraPanAngleXLimit = new Vector2();
+//	public Vector2	cameraPanAngleYLimit = new Vector2();	
+	
 	//Target goal 	
 	public float	transitionAngleXGoal = 8.0f;	//4.0f;
 	public float	transitionAngleYGoal = 8.0f;	//4.0f
@@ -63,8 +70,14 @@ public class VCameraPreset {
 			anglePos = a;
 			minY = my;
 		}
+		public WayPoint(float a, float my, float maxy){
+			anglePos = a;
+			minY = my;
+			maxY = maxy;
+		}		
 		public float anglePos = 0; //[0 : 360]
 		public float minY = 5; //[-85 : 85]
+		public float maxY = 85; //[-85 : 85]		
 	};
 	public Array<WayPoint> wayPoints = new Array<WayPoint>();	
 	
@@ -163,7 +176,10 @@ public class VCameraPreset {
 		}
 		WayPoint wp = getInterpolatedWayPoint();
 		//Limit camera movement Y axis
-		if(wp.minY > anglePos.y && wayPointsEnabled)_velocity.y = -(anglePos.y - wp.minY) * 10.0f;
+		if(wayPointsEnabled){
+			if(wp.minY > anglePos.y)_velocity.y = -(anglePos.y - wp.minY) * 10.0f;
+			if(wp.maxY < anglePos.y)_velocity.y = -(wp.maxY - anglePos.y) * 10.0f;
+		}
 		
 		//Add small gravity to camera
 		if(gravityEnabled){
@@ -286,6 +302,13 @@ public class VCameraPreset {
 		//set after transition is finished
 		gravityEnabled = target.gravityEnabled;
 		wayPointsEnabled = target.wayPointsEnabled;
+		
+		cameraPanEnabled = target.cameraPanEnabled;
+		
+//		cameraPanAngleXLimitEnabled = target.cameraPanAngleXLimitEnabled;			
+//		cameraPanAngleYLimitEnabled = target.cameraPanAngleYLimitEnabled;			
+//		cameraPanAngleXLimit.set(target.cameraPanAngleXLimit);
+//		cameraPanAngleYLimit.set(target.cameraPanAngleYLimit);			
 		
 		targetIdentifierTransition = targetIdentifier;
 		

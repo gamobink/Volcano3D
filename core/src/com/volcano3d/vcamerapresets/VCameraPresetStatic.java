@@ -6,6 +6,8 @@ import com.volcano3d.vcamera.VCameraPresetCollection;
 public class VCameraPresetStatic extends VCameraPreset {
 	public VCameraPresetStatic(VCameraPresetCollection.PresetsIdentifiers identifier){
 		super(identifier);
+
+		
 		
 		switch(identifier){
 		case STATIC_VIEW_1:

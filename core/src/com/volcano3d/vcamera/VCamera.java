@@ -84,7 +84,8 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 	}
 	public void pan(Vector2 mouseDrag){
 		mouseDrag.x = -mouseDrag.x;
-		if(cameraState == States.MAIN)addMomentum(mouseDrag);
+		//if(cameraState == States.MAIN)addMomentum(mouseDrag);
+		if(cameraPanEnabled)addMomentum(mouseDrag);
 	}
 	//tmp: for testing
 	public void onKeyDown(int key){
@@ -131,7 +132,7 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 				case STATIC_3:				
 					switch(targetIdentifier){
 					case  MAIN_OVER_STATIC_VIEW_3:
-						this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_3);
+					//	this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_3);
 						break;					
 					default:
 						break;

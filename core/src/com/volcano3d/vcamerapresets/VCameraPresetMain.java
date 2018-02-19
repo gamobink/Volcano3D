@@ -1,5 +1,6 @@
 package com.volcano3d.vcamerapresets;
 
+import com.badlogic.gdx.math.Vector3;
 import com.volcano3d.vcamera.VCameraPreset;
 import com.volcano3d.vcamera.VCameraPresetCollection;
 
@@ -7,7 +8,7 @@ public class VCameraPresetMain extends VCameraPreset {
 	public VCameraPresetMain(VCameraPresetCollection.PresetsIdentifiers identifier){
 		super(identifier);
 		
-        addWayPoint(new WayPoint(0, 2));
+        addWayPoint(new WayPoint(0, 2, 30));
         addWayPoint(new WayPoint(10, 3));
         addWayPoint(new WayPoint(25, 5));
         addWayPoint(new WayPoint(40, 6));        
@@ -50,11 +51,12 @@ public class VCameraPresetMain extends VCameraPreset {
 			
 			break;
 		case MAIN_OVER_STATIC_VIEW_3:
-
-			fov = 40.0f;
+			//Sea
+	//		fov = 40.0f;
 			gravityEnabled = false;
-			distance = 750.0f;
+			distance = 850.0f;
 //			pivotPosition.set(-220, 0, -10);
+			pivotPosition.set(-50,-50,-250);
 			this.anglePos.x = 270;			
 			
 			break;			
