@@ -119,7 +119,7 @@ public class VMain{
         modelSkybox = new VRenderable(this, "skybox.g3dj", shaderSky);
         modelWater = new VRenderable(this, "water.g3dj", shaderWater);    //shaderWater 
         
-        modelUnderwater = new VRenderable(this, "underwater.g3dj");	//TODO underwater model
+        modelUnderwater = new VRenderable(this, "underwater.g3dj",shaderSimple);	//TODO underwater model
         
         modelGround = new VRenderable(this, "ground_reef.g3dj");
         modelIsland = new VRenderable(this, "island.g3dj", shaderSimple);        
@@ -330,7 +330,7 @@ public class VMain{
 	    	waterTexturesArray.get(i).beginRender();
 	    	
 	    	Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
-	        Gdx.gl.glClearColor(0.4f,0.4f,0.4f,1.0f);
+	        Gdx.gl.glClearColor(0,0,0,1.0f);
 	        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);   
 	        
 	        if(i==0){	//reflection

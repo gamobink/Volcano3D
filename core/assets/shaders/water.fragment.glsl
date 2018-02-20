@@ -155,8 +155,8 @@ void main() {
 	refractionUV.y = clamp(refractionUV.y, 0.001, 0.999);
 
 //	vec4 refraction = texture2D(u_specularTexture, refractionUV);
-	vec4 rer1 = blur13(u_specularTexture, refractionUV, vec2(0,1));
-	vec4 rer2 = blur13(u_specularTexture, refractionUV, vec2(0,2));
+	vec4 rer1 = blur13(u_specularTexture, refractionUV, vec2(0,2));
+	vec4 rer2 = blur13(u_specularTexture, refractionUV, vec2(0,4));
 	vec4 refraction = (rer1 + rer2) * 0.5; 
 
 	vec4 ref1 = blur13(u_reflectionTexture, reflectionUV, vec2(0,1));
@@ -187,17 +187,24 @@ void main() {
 	vec4 relfMix = mix(reflection, reflectionStretch, specularCoefficientWide);
 
 	//vec4(0.2, 0.2, 0.2, 1)
-	vec4 refractionFactor = refraction * vec4(0.7, 0.7, 0.7, 1);
+	vec4 refractionFactor = refraction.g;// * vec4(0.7, 0.7, 0.7, 1);
 //	vec4 refractionFactor = relfMix * vec4(0.2, 0.2, 0.2, 1);
 	
-	d = diffuse.r * (1.0 - d);
+	d = (1-refraction.r) * (1.0 - d);
 			
-	//diffuse.r = 0 krasts, 1 dzilums
-	//d = 1 - transparent, 0 - reflective
+	//a) refraction.r = 1 seklums, 0 dzilums
+	//b) d = 1 - transparent, 0 - reflective
+	//c) mix = 1 - refl, 0 - underwater
 	
-				
+	//c[0] = a 
 	
-	//gl_FragColor = vec4(d,d,d,1);return;
+	//float dl = d * (1 - refraction.r);	//mix(refraction.r, refraction.g, 0.5);	
+	
+					
+	
+//	gl_FragColor = vec4(d,d,d,1);return;
+//	gl_FragColor = vec4(refraction.r,refraction.r,refraction.r,1);return;
+//	gl_FragColor = vec4(refraction.g,refraction.g,refraction.g,1);return;
 				
 	gl_FragColor = mix(refractionFactor, relfMix, d) + vec4(specHilight, 0.0);	
 	
