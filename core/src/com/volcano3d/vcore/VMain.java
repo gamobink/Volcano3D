@@ -44,6 +44,7 @@ import com.volcano3d.vstage.VStageMain;
  * -) Metamorfiskie, skats starp kalnu un vulkaanu, dziÄ¼umÄ�, spiediena ietekmÄ“ starp magmatiskajiem un nogulumieÅ¾iem
  * 		veidojas kristÄ�li. Shematiska bilde!? +FotogrÄ�fijas	
  * 
+ * 
  * -) SkaÅ†a ??
  * 
  * */
@@ -119,10 +120,7 @@ public class VMain{
         modelGround = new VRenderable(this, "ground.g3dj");
         modelIsland = new VRenderable(this, "island.g3dj", shaderSimple);        
         
-        modelUnderground = new VRenderable(this, "underground.g3dj");
-        
-        //TODO Change images for decal signs
-        
+        modelUnderground = new VRenderable(this, "underground.g3dj");     
 
         decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-220, 140, -10), new Vector2(36,50)));        
         decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-32, 82, 8), new Vector2(36,50)));

@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.volcano3d.utility.VCommon;
 import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VStaticAssets;
@@ -119,18 +120,18 @@ public class VStageMain extends InputListener {
         labelStyle.font = VStaticAssets.Fonts.calibri18Font;
         
         String[] buttonLabelsTexts = {
-        		"Magm./Hidrot./Pegmat.",
-        		"Dēdēšana/Nogulas/Metamorf.",
-        		"Hidrotermālie",
-        		"Iztvaikošana",
-        		"Erozija",
-        		"Pneimatolītiskie"        		
-//        		"Volcano",
-//        		"Hill",
-//        		"Sea",
-//        		"Beach",
-//        		"Rocks",
-//        		"Rain"        		        		
+//        		"Magm./Hidrot./Pegmat.",
+//        		"Dēdēšana/Nogulas/Metamorf.",
+//        		"Hidrotermālie",
+//        		"Iztvaikošana",
+//        		"Erozija",
+//        		"Pneimatolītiskie"        		
+        		"Static 1",
+        		"Hill",
+        		"Sea",
+        		"Beach",
+        		"Rocks",
+        		"Rain"        		        		
         };
         
         for(int i=1; i<=6; i++){
@@ -178,6 +179,9 @@ public class VStageMain extends InputListener {
 		
 		mainStage.act(Gdx.graphics.getDeltaTime());
 		mainStage.draw();
+		
+		VCommon.drawSystemStats();
+		
 		/*
 		shapeRenderer.setProjectionMatrix(mainStage.getCamera().combined);
 		pathAction1.drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);

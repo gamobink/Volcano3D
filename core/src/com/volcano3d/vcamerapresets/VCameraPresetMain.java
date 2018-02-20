@@ -8,7 +8,7 @@ public class VCameraPresetMain extends VCameraPreset {
 	public VCameraPresetMain(VCameraPresetCollection.PresetsIdentifiers identifier){
 		super(identifier);
 		
-        addWayPoint(new WayPoint(0, 2, 30));
+        addWayPoint(new WayPoint(0, 2));
         addWayPoint(new WayPoint(10, 3));
         addWayPoint(new WayPoint(25, 5));
         addWayPoint(new WayPoint(40, 6));        
@@ -34,10 +34,10 @@ public class VCameraPresetMain extends VCameraPreset {
 			break;
 		case MAIN_OVER_STATIC_VIEW_1:
 
-			fov = 40.0f;
+			fov = 45.0f;
 			gravityEnabled = false;
 			distance = 750.0f;
-//			pivotPosition.set(-220, 0, -10);
+			pivotPosition.set(-100, 0, -250);
 			anglePos.x = 138;
 			
 			break;			

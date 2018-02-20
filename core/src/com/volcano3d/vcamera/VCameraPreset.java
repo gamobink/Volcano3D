@@ -74,6 +74,11 @@ public class VCameraPreset {
 			anglePos = a;
 			minY = my;
 			maxY = maxy;
+		}
+		public WayPoint(WayPoint w){
+			anglePos = w.anglePos;
+			minY = w.minY;
+			maxY = w.maxY;
 		}		
 		public float anglePos = 0; //[0 : 360]
 		public float minY = 5; //[-85 : 85]
@@ -178,7 +183,10 @@ public class VCameraPreset {
 		//Limit camera movement Y axis
 		if(wayPointsEnabled){
 			if(wp.minY > anglePos.y)_velocity.y = -(anglePos.y - wp.minY) * 10.0f;
-			if(wp.maxY < anglePos.y)_velocity.y = -(wp.maxY - anglePos.y) * 10.0f;
+			if(wp.maxY < anglePos.y){
+				_velocity.y = -(wp.maxY - anglePos.y) * 10.0f;
+			}
+		//	System.out.println(wp.maxY);
 		}
 		
 		//Add small gravity to camera
@@ -273,7 +281,7 @@ public class VCameraPreset {
 			if(found){				
 				//System.out.println(f+" ["+a.anglePos+" - "+b.anglePos+"] "+absAngleX);
 				//System.out.println(f+" ["+a.minY+" - "+b.minY+"]");				
-				return new WayPoint(absAngleX, VCommon.lerp(a.minY, b.minY, f));
+				return new WayPoint(absAngleX, VCommon.lerp(a.minY, b.minY, f), VCommon.lerp(a.maxY, b.maxY, f));
 			}
 		}
 		
@@ -282,9 +290,19 @@ public class VCameraPreset {
 	
 	public void setTransitionFromPreset(VCameraPreset target, VCameraPresetCollection.PresetsIdentifiers targetIdentifier){
 		
-		this.wayPoints.clear();
+		//System.out.println(this.identifier+" targ:"+target.identifier);
+		
+		wayPoints.clear();
 		if(target.wayPoints.size > 0){
-			this.wayPoints = new Array<WayPoint>(target.wayPoints);
+			//System.out.println("this wp "+wayPoints);
+			//wayPoints = new Array<WayPoint>(target.wayPoints);
+			
+			for(int i=0; i<target.wayPoints.size; i++){
+				wayPoints.add(new WayPoint(target.wayPoints.get(i)));
+			}
+			//System.out.println("this wp "+wayPoints);
+//			System.out.println(this+" this: "+this.wayPoints.get(0).maxY);
+//			System.out.println("target: "+target.wayPoints.get(0).maxY);
 		}
 		
 		if(targetIdentifier != VCameraPresetCollection.PresetsIdentifiers.MAIN)this.setTransitionAngleX(target.anglePos.x);

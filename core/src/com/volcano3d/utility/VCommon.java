@@ -1,15 +1,26 @@
 package com.volcano3d.utility;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
+import com.volcano3d.vcore.VStaticAssets;
 
 public class VCommon {
 	
 	static ImmediateModeRenderer20 lineRenderer = new ImmediateModeRenderer20(false, true, 0);
 	
-	public static float lerp(float a, float b, float f) 
-	{
+	static SpriteBatch spriteBatch = new SpriteBatch();
+	
+	public static void drawSystemStats(){		
+		float fps = 1.0f/Gdx.graphics.getDeltaTime();		
+		spriteBatch.begin();	
+		VStaticAssets.Fonts.calibri18Font.draw(spriteBatch, "fps:"+fps, 10, 20);
+		spriteBatch.end();		
+	}
+	
+	public static float lerp(float a, float b, float f){
 	    return (a * (1.0f - f)) + (b * f);
 	}
 	

@@ -40,19 +40,21 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 		switch(state){
 		case MAIN:
 			if(cameraState != States.MAIN){
-				switch(this.getCurrentPreset()){
-				case STATIC_VIEW_1:
-					this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1);					
-				break;
-				default:
-					this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN);
-					break;
-				}
-			}
+//				switch(this.getCurrentPreset()){
+//				case STATIC_VIEW_1:
+//					this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1);					
+//				break;
+//				default:
+//					this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN);
+//					break;
+//				}
+				this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN);
+			}			
 			break;
 		case STATIC_1:
-			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1);
+			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_1);
 			break;
+/*
 		case STATIC_2:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_2);
 			break;
@@ -67,7 +69,7 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 			break;						
 		case STATIC_6:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_6);
-			break;									
+			break;	*/								
 		default:
 			break;			
 		};
@@ -110,6 +112,7 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 			VCameraPresetCollection.PresetsIdentifiers targetIdentifier){
 		//System.out.println("complete: "+sourceIdentifier+" -> "+targetIdentifier);
 		if(cameraState != null){
+			/*
 			switch(cameraState){
 				case STATIC_1:				
 					switch(targetIdentifier){
@@ -162,7 +165,7 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 					break;
 			default:
 				break;		
-			}
+			}*/
 		}
 	}
 	public void onTransitionAngleXComplete(VCameraPresetCollection.PresetsIdentifiers sourceIdentifier, VCameraPresetCollection.PresetsIdentifiers targetIdentifier){
