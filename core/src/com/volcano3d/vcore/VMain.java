@@ -119,9 +119,9 @@ public class VMain{
         modelSkybox = new VRenderable(this, "skybox.g3dj", shaderSky);
         modelWater = new VRenderable(this, "water.g3dj", shaderWater);    //shaderWater 
         
-        modelUnderwater = new VRenderable(this, "water.g3dj");	//TODO underwater model
+        modelUnderwater = new VRenderable(this, "underwater.g3dj");	//TODO underwater model
         
-        modelGround = new VRenderable(this, "ground.g3dj");
+        modelGround = new VRenderable(this, "ground_reef.g3dj");
         modelIsland = new VRenderable(this, "island.g3dj", shaderSimple);        
         
         modelUnderground = new VRenderable(this, "underground.g3dj");     
@@ -217,10 +217,12 @@ public class VMain{
         
         //TODO Render underground parts based on camera states
       //  if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
-        	modelUnderground.render(camera.get(), environment);
+        //	modelUnderground.render(camera.get(), environment);
       //  }
         	
         modelWater.render(camera.get(), environment);        	
+        //modelUnderwater.render(camera.get(), environment);        	
+            
         modelGround.render(camera.get(), environment);
         modelIsland.render(camera.get(), environment);
         
@@ -314,6 +316,9 @@ public class VMain{
     		if(i==0 || i==1){
 		    	c.position.y = -cam.position.y;
 		    	c.direction.y = -cam.direction.y;
+    		}else{
+		    	c.position.y = cam.position.y;
+		    	c.direction.y = cam.direction.y;
     		}
     		if(i==1){
     			c.far = 10000;
@@ -339,9 +344,7 @@ public class VMain{
 	        	modelSkybox.scale(1, 50, 1);
 	        	modelSkybox.render(c, environment);
 	        	
-	        }else if(i == 2){	//under water part - refraction
-	        	
-	        	//TODO Render under water part for refraction texture
+	        }else if(i == 2){	//under water part - refraction	        	
 	        	modelUnderwater.render(c, environment);
 	        }
 	        waterTexturesArray.get(i).endRender();

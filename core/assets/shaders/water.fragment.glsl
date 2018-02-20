@@ -110,13 +110,13 @@ void main() {
 	vec2 ndc = (v_projectedPos.xy / v_projectedPos.w)/2.0 + 0.5;
 	vec2 refractionUV = vec2(ndc.x, ndc.y);
 	vec2 reflectionUV = vec2(ndc.x, 1.0-ndc.y);
-	
-	
 
-
-//	gl_FragColor = vec4(sum.rgb, 1.0);
+		
+	//Sample texture maps
+	vec4 diffuse = texture2D(u_diffuseTexture, v_diffuseUV);
+	
+//	gl_FragColor = vec4(diffuse.r, diffuse.r, diffuse.r, 1);
 //	return;
-	
 	
 	//Animate DuDv map translation		
 	vec2 uv1 = v_dudvUV;		
@@ -138,19 +138,26 @@ void main() {
 										normalSample.z, 
 										-(normalSample.y * 2.0 - 1.0))),
 										1.0);
+	normal = vec4(normalize(mix(vec3(0,1,0), normal.xyz, diffuse.r)).xyz, 1);
 	
 	//DuDv map sample - displacement of reflection texture				
-	vec2 dispalce1 = (texture2D(u_emissiveTexture, uv1).rg * 2.0 - 1.0) * 0.02;
+	vec2 dispalce1 = (texture2D(u_emissiveTexture, uv1).rg * 2.0 - 1.0) * 0.02 * diffuse.r;
 	
 	//Displace reflection UVs
 	reflectionUV += dispalce1;
+	refractionUV += dispalce1;
 	
 	//Clamp to edges	
 	reflectionUV.x = clamp(reflectionUV.x, 0.001, 0.999);
 	reflectionUV.y = clamp(reflectionUV.y, 0.001, 0.999);
 	
-	//Sample texture maps
-	vec4 diffuse = texture2D(u_diffuseTexture, v_diffuseUV);
+	refractionUV.x = clamp(refractionUV.x, 0.001, 0.999);
+	refractionUV.y = clamp(refractionUV.y, 0.001, 0.999);
+
+//	vec4 refraction = texture2D(u_specularTexture, refractionUV);
+	vec4 rer1 = blur13(u_specularTexture, refractionUV, vec2(0,1));
+	vec4 rer2 = blur13(u_specularTexture, refractionUV, vec2(0,2));
+	vec4 refraction = (rer1 + rer2) * 0.5; 
 
 	vec4 ref1 = blur13(u_reflectionTexture, reflectionUV, vec2(0,1));
 	vec4 ref2 = blur13(u_reflectionTexture, reflectionUV, vec2(0,2));	
@@ -179,8 +186,20 @@ void main() {
 	//Mix reflections by specular highlight
 	vec4 relfMix = mix(reflection, reflectionStretch, specularCoefficientWide);
 
-		//vec4(0.2, 0.2, 0.2, 1)
-	gl_FragColor = mix(relfMix, relfMix * vec4(0.2, 0.2, 0.2, 1), d) + vec4(specHilight, 0.0);	
+	//vec4(0.2, 0.2, 0.2, 1)
+	vec4 refractionFactor = refraction * vec4(0.7, 0.7, 0.7, 1);
+//	vec4 refractionFactor = relfMix * vec4(0.2, 0.2, 0.2, 1);
+	
+	d = diffuse.r * (1.0 - d);
+			
+	//diffuse.r = 0 krasts, 1 dzilums
+	//d = 1 - transparent, 0 - reflective
+	
+				
+	
+	//gl_FragColor = vec4(d,d,d,1);return;
+				
+	gl_FragColor = mix(refractionFactor, relfMix, d) + vec4(specHilight, 0.0);	
 	
 	gl_FragColor.w = u_opacity;
 }
