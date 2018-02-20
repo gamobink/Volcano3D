@@ -8,23 +8,11 @@ public class VCameraPresetStatic extends VCameraPreset {
 	public VCameraPresetStatic(VCameraPresetCollection.PresetsIdentifiers identifier){
 		super(identifier);
 
-        addWayPoint(new WayPoint(0, 2, 30));
-        addWayPoint(new WayPoint(10, 3, 30));
-        addWayPoint(new WayPoint(25, 5, 30));
-        addWayPoint(new WayPoint(40, 6, 30));        
-        addWayPoint(new WayPoint(60, 7, 30));
-        addWayPoint(new WayPoint(80, 5, 30));
-        addWayPoint(new WayPoint(100, 8, 30));        
-        addWayPoint(new WayPoint(110, 10, 30));
-        addWayPoint(new WayPoint(120, 9, 30)); 
-        addWayPoint(new WayPoint(140, 10, 30)); 
-        addWayPoint(new WayPoint(160, 9, 30));
-        addWayPoint(new WayPoint(170, 8, 30));
-        addWayPoint(new WayPoint(185, 5, 30)); 
-        addWayPoint(new WayPoint(200, 6, 30)); 
-        addWayPoint(new WayPoint(205, 2, 30)); 
-        addWayPoint(new WayPoint(340, 2, 30)); 
-        addWayPoint(new WayPoint(360, 2, 30)); 
+        addWayPoint(new WayPoint(0, -1, 20));
+        addWayPoint(new WayPoint(10, -1, 20));
+
+        addWayPoint(new WayPoint(340, -1, 20)); 
+        addWayPoint(new WayPoint(360, -1, 20)); 
 		
         wayPointsEnabled = true;
         

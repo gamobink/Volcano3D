@@ -184,9 +184,8 @@ public class VCameraPreset {
 		if(wayPointsEnabled){
 			if(wp.minY > anglePos.y)_velocity.y = -(anglePos.y - wp.minY) * 10.0f;
 			if(wp.maxY < anglePos.y){
-				_velocity.y = -(wp.maxY - anglePos.y) * 10.0f;
+				_velocity.y = -(anglePos.y - wp.maxY) * 10.0f;
 			}
-		//	System.out.println(wp.maxY);
 		}
 		
 		//Add small gravity to camera
