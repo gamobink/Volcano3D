@@ -60,6 +60,8 @@ public class VMain{
 
     public VRenderable modelSkybox = null; 
     public VRenderable modelWater = null; 
+    public VRenderable modelUnderwater = null;
+    
     public VRenderable modelGround = null; 
     public VRenderable modelIsland = null; 
     public VRenderable modelUnderground = null; 
@@ -117,6 +119,8 @@ public class VMain{
         modelSkybox = new VRenderable(this, "skybox.g3dj", shaderSky);
         modelWater = new VRenderable(this, "water.g3dj", shaderWater);    //shaderWater 
         
+        modelUnderwater = new VRenderable(this, "water.g3dj");	//TODO underwater model
+        
         modelGround = new VRenderable(this, "ground.g3dj");
         modelIsland = new VRenderable(this, "island.g3dj", shaderSimple);        
         
@@ -159,6 +163,7 @@ public class VMain{
     	
     	modelSkybox.init();
     	modelWater.init();
+    	modelUnderwater.init();
     	
     	modelGround.init();
     	modelIsland.init();
@@ -337,7 +342,7 @@ public class VMain{
 	        }else if(i == 2){	//under water part - refraction
 	        	
 	        	//TODO Render under water part for refraction texture
-	        	
+	        	modelUnderwater.render(c, environment);
 	        }
 	        waterTexturesArray.get(i).endRender();
     	}
