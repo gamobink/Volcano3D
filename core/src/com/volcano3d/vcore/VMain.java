@@ -23,6 +23,7 @@ import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vdecal.VDecal;
 import com.volcano3d.vdecal.VDecalGroup;
+import com.volcano3d.vparticles.VParticleEffect;
 import com.volcano3d.vshaders.VDefaultShaderProvider;
 import com.volcano3d.vshaders.VMinimalistShaderProvider;
 import com.volcano3d.vstage.VFollowPathEditor;
@@ -65,12 +66,13 @@ public class VMain{
     public VRenderable modelGround = null; 
     public VRenderable modelIsland = null; 
     public VRenderable modelUnderground = null; 
-    
-    
+       
     public VDefaultShaderProvider shaderSky = null;    
     public VMinimalistShaderProvider shaderSimple = null;
     public VDefaultShaderProvider shaderWater = null; 
-        
+    
+    public VParticleEffect	particleEffectSmoke = null;
+    
     public Array<VTextureRender> waterTexturesArray = new Array<VTextureRender>();
     
     protected boolean userActionActive = false;
@@ -136,6 +138,8 @@ public class VMain{
 //        decalsTags.addDecal(new VDecal("sign3.png", new Vector3(146, 32, -216), new Vector2(50,50)));
 //        decalsTags.addDecal(new VDecal("sign4.png", new Vector3(-7, 35, -550), new Vector2(50,50)));
 
+        particleEffectSmoke = new VParticleEffect(this, "point.pfx");
+        
         waterTexturesArray.add(new VTextureRender(this));		//reflection
         waterTexturesArray.add(new VTextureRender(this));		//reflected skybox stretched
         waterTexturesArray.add(new VTextureRender(this));		//refraction
@@ -171,6 +175,8 @@ public class VMain{
     	modelUnderground.init();
     	
     	decalsTags.init();
+    	
+    	particleEffectSmoke.init();
     	
     	stage2D.introStage.showIntro();
 //    	stage2D.introStage.hideIntro();
@@ -215,13 +221,15 @@ public class VMain{
         
         modelSkybox.render(camera.get(), environment);
         
+        particleEffectSmoke.render(camera.get());
+        
         //TODO Render underground parts based on camera states
       //  if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
         //	modelUnderground.render(camera.get(), environment);
       //  }
         	
         modelWater.render(camera.get(), environment);        	
-        //modelUnderwater.render(camera.get(), environment);        	
+        //modelUnderwater.render(camera.get(), environment);
             
         modelGround.render(camera.get(), environment);
         modelIsland.render(camera.get(), environment);

@@ -110,13 +110,9 @@ void main() {
 	vec2 ndc = (v_projectedPos.xy / v_projectedPos.w)/2.0 + 0.5;
 	vec2 refractionUV = vec2(ndc.x, ndc.y);
 	vec2 reflectionUV = vec2(ndc.x, 1.0-ndc.y);
-
 		
 	//Sample texture maps
 	vec4 diffuse = texture2D(u_diffuseTexture, v_diffuseUV);
-	
-//	gl_FragColor = vec4(diffuse.r, diffuse.r, diffuse.r, 1);
-//	return;
 	
 	//Animate DuDv map translation		
 	vec2 uv1 = v_dudvUV;		
@@ -126,10 +122,6 @@ void main() {
 	uv1.x -= n2;
 	//Specular multiplier for large waves effect
 	float wavesSpecularMul = pow((n1 + n2 + 2) * 0.5, 5);
-
-	//gl_FragColor = vec4(waves, waves, waves, 1);	return;	
-	
-//	gl_FragColor = vec4(fog, fog, fog, 1);	return;
 		
 	//Normal map sample - normal
 	vec4 normalSample = texture2D(u_normalTexture, uv1);		
@@ -154,19 +146,21 @@ void main() {
 	refractionUV.x = clamp(refractionUV.x, 0.001, 0.999);
 	refractionUV.y = clamp(refractionUV.y, 0.001, 0.999);
 
-//	vec4 refraction = texture2D(u_specularTexture, refractionUV);
 	vec4 rer1 = blur13(u_specularTexture, refractionUV, vec2(0,2));
 	vec4 rer2 = blur13(u_specularTexture, refractionUV, vec2(0,4));
+//	vec4 rer3 = blur13(u_specularTexture, refractionUV, vec2(0,8));
+//	vec4 rer4 = blur13(u_specularTexture, refractionUV, vec2(0,10));	
 	vec4 refraction = (rer1 + rer2) * 0.5; 
+//	vec4 refraction = (rer1 + rer2 + rer3 + rer4) / 4;
 
 	vec4 ref1 = blur13(u_reflectionTexture, reflectionUV, vec2(0,1));
 	vec4 ref2 = blur13(u_reflectionTexture, reflectionUV, vec2(0,2));	
+	vec4 reflection = (ref1 + ref2) * 0.5;
 //	vec4 ref3 = blur13(u_reflectionTexture, reflectionUV, vec2(0,4));	
 //	vec4 ref4 = blur13(u_reflectionTexture, reflectionUV, vec2(0,8));	
 //	vec4 ref5 = blur13(u_reflectionTexture, reflectionUV, vec2(0,10));	
 //	vec4 ref6 = blur13(u_reflectionTexture, reflectionUV, vec2(0,12));		
 //	vec4 reflection = (ref1 + ref2 + ref3 + ref4 + ref5 + ref6) / 6;
-	vec4 reflection = (ref1 + ref2) * 0.5;
 	
 	vec4 reflectionStretch = texture2D(u_ambientTexture, reflectionUV);
 	
@@ -186,28 +180,16 @@ void main() {
 	//Mix reflections by specular highlight
 	vec4 relfMix = mix(reflection, reflectionStretch, specularCoefficientWide);
 
-	//vec4(0.2, 0.2, 0.2, 1)
-	vec4 refractionFactor = refraction.g;// * vec4(0.7, 0.7, 0.7, 1);
-//	vec4 refractionFactor = relfMix * vec4(0.2, 0.2, 0.2, 1);
-	
-	d = (1-refraction.r) * (1.0 - d);
-			
-	//a) refraction.r = 1 seklums, 0 dzilums
+	float depthFactor = clamp(pow(refraction.r, 0.2), 0,1);
+	vec4 refractionFactor = vec4(refraction.g * depthFactor);
+
+	//a) refraction.r = 1 - deep, 0 - shallow
 	//b) d = 1 - transparent, 0 - reflective
-	//c) mix = 1 - refl, 0 - underwater
+	//c) output = 1 - refl, 0 - underwater
 	
-	//c[0] = a 
-	
-	//float dl = d * (1 - refraction.r);	//mix(refraction.r, refraction.g, 0.5);	
-	
-					
-	
-//	gl_FragColor = vec4(d,d,d,1);return;
-//	gl_FragColor = vec4(refraction.r,refraction.r,refraction.r,1);return;
-//	gl_FragColor = vec4(refraction.g,refraction.g,refraction.g,1);return;
+	d = (1 - refraction.r) * (1.0 - d);
 				
 	gl_FragColor = mix(refractionFactor, relfMix, d) + vec4(specHilight, 0.0);	
-	
 	gl_FragColor.w = u_opacity;
 }
 
