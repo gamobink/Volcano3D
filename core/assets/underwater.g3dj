@@ -8200,8 +8200,13 @@
 			"textures": [
 				{
 					"id": "Map #22", 
-					"filename": "underwaterMaterial.png", 
+					"filename": "underwaterDiffuse.png", 
 					"type": "DIFFUSE"
+				},
+				{
+					"id": "Map #22", 
+					"filename": "underwaterDepth.png", 
+					"type": "AMBIENT"
 				}
 			]
 		}

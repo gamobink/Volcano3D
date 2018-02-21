@@ -70,6 +70,7 @@ public class VMain{
     public VDefaultShaderProvider shaderSky = null;    
     public VMinimalistShaderProvider shaderSimple = null;
     public VDefaultShaderProvider shaderWater = null; 
+    public VDefaultShaderProvider shaderUnderwater = null; 
     
     public VParticleEffect	particleEffectSmoke = null;
     
@@ -117,11 +118,13 @@ public class VMain{
         
         shaderSimple = new  VMinimalistShaderProvider(this, "shaders/min.vertex.glsl", "shaders/min.fragment.glsl");
         shaderWater = new VDefaultShaderProvider(this, "shaders/water.vertex.glsl", "shaders/water.fragment.glsl");
+        shaderUnderwater = new VDefaultShaderProvider(this, "shaders/min.vertex.glsl", "shaders/underwater.fragment.glsl");
+        
         
         modelSkybox = new VRenderable(this, "skybox.g3dj", shaderSky);
         modelWater = new VRenderable(this, "water.g3dj", shaderWater);    //shaderWater 
         
-        modelUnderwater = new VRenderable(this, "underwater.g3dj",shaderSimple);	//TODO underwater model
+        modelUnderwater = new VRenderable(this, "underwater.g3dj", shaderUnderwater);	//TODO underwater model
         
         modelGround = new VRenderable(this, "ground_reef.g3dj");
         modelIsland = new VRenderable(this, "island.g3dj", shaderSimple);        
@@ -164,6 +167,7 @@ public class VMain{
     	shaderSky.init();
     	shaderSimple.init();
     	shaderWater.init();
+    	shaderUnderwater.init();
     	
     	modelSkybox.init();
     	modelWater.init();
@@ -337,8 +341,8 @@ public class VMain{
 	    	
 	    	waterTexturesArray.get(i).beginRender();
 	    	
+	    	Gdx.gl.glClearColor(0,0,0,0.0f);
 	    	Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
-	        Gdx.gl.glClearColor(0,0,0,1.0f);
 	        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);   
 	        
 	        if(i==0){	//reflection

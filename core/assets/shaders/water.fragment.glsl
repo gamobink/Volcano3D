@@ -110,6 +110,9 @@ void main() {
 	vec2 ndc = (v_projectedPos.xy / v_projectedPos.w)/2.0 + 0.5;
 	vec2 refractionUV = vec2(ndc.x, ndc.y);
 	vec2 reflectionUV = vec2(ndc.x, 1.0-ndc.y);
+	
+	//vec4 sp = texture2D(u_specularTexture, refractionUV);	
+	//gl_FragColor = vec4(sp.a, sp.a, sp.a, 1);	return;
 		
 	//Sample texture maps
 	vec4 diffuse = texture2D(u_diffuseTexture, v_diffuseUV);
@@ -180,10 +183,10 @@ void main() {
 	//Mix reflections by specular highlight
 	vec4 relfMix = mix(reflection, reflectionStretch, specularCoefficientWide);
 
-	float depthFactor = clamp(pow(refraction.r, 0.2), 0,1);
-	vec4 refractionFactor = vec4(refraction.g * depthFactor);
+	float depthFactor = clamp(pow(refraction.a, 0.2), 0,1);
+	vec4 refractionFactor = vec4(refraction.rgb, 1) * depthFactor;
 
-	//a) refraction.r = 1 - deep, 0 - shallow
+	//a) refraction.a = 1 - deep, 0 - shallow
 	//b) d = 1 - transparent, 0 - reflective
 	//c) output = 1 - refl, 0 - underwater
 	
