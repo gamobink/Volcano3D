@@ -40,30 +40,22 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 		switch(state){
 		case MAIN:
 			if(cameraState != States.MAIN){
-//				switch(this.getCurrentPreset()){
-//				case STATIC_VIEW_1:
-//					this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1);					
-//				break;
-//				default:
-//					this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN);
-//					break;
-//				}
 				this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN);
 			}			
 			break;
 		case STATIC_1:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_1);
 			break;
-/*
 		case STATIC_2:
-			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_2);
+			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_2);
 			break;
 		case STATIC_3:
-			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_3);
+			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_3);
 			break;			
 		case STATIC_4:
-			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_4);
-			break;						
+			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_4);
+			break;		
+			/*				
 		case STATIC_5:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_5);
 			break;						

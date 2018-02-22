@@ -155,6 +155,23 @@ void main() {
 //	vec4 rer4 = blur13(u_specularTexture, refractionUV, vec2(0,10));	
 	vec4 refraction = (rer1 + rer2) * 0.5; 
 //	vec4 refraction = (rer1 + rer2 + rer3 + rer4) / 4;
+	
+	//Depth variable blur	
+/*	
+	int steps = 1;
+	vec4 refraction = blur13(u_specularTexture, refractionUV, vec2(0,2));
+	float depthv = refraction.a;
+	float stp = 1.0f;
+	for(int i=1; i<=6; i++){
+	//	if(depthv > stp)break;
+		refraction = refraction + blur13(u_specularTexture, refractionUV, vec2(0,(i*4)));
+		steps++;
+		stp = stp - 0.1;
+	}
+	refraction = refraction / steps;
+	gl_FragColor = refraction;
+	gl_FragColor.a = 1; return;
+	*/
 
 	vec4 ref1 = blur13(u_reflectionTexture, reflectionUV, vec2(0,1));
 	vec4 ref2 = blur13(u_reflectionTexture, reflectionUV, vec2(0,2));	

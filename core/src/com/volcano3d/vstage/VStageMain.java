@@ -48,7 +48,7 @@ public class VStageMain extends InputListener {
 	public VActionFollowPath pathAction2 = new VActionFollowPath();	
 	public VActionFollowPath pathAction3 = new VActionFollowPath();	
 	
-	protected Map<String, Group> viewButtonsMap = new HashMap<String, Group>(); 
+	protected Map<String, Group> viewButtonsMap = new HashMap<String, Group>();
 	
 	public VStageMainInfoWindow infoStage;
 	public VStageMainIntro introStage;
