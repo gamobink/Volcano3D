@@ -201,7 +201,7 @@ void main() {
 	vec4 relfMix = mix(reflection, reflectionStretch, specularCoefficientWide);
 
 	float depthFactor = clamp(pow(refraction.a, 0.2), 0,1);
-	vec4 refractionFactor = vec4(refraction.rgb, 1) * depthFactor;
+	vec4 refractionFactor = vec4(refraction.rgb, 1) * depthFactor * vec4(depthFactor,depthFactor,1, 1);
 
 	//a) refraction.a = 1 - deep, 0 - shallow
 	//b) d = 1 - transparent, 0 - reflective

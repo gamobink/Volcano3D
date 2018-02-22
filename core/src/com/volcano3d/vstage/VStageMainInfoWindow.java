@@ -11,7 +11,7 @@ public class VStageMainInfoWindow {
 
 	public VStageMainInfoWindow(VStageMain main){
 		
-        float infoTextWidth = main.mainStage.getWidth() * 0.9f;
+        float infoTextWidth = main.mainStage.getWidth();// * 0.9f;
 
         infoText1 = new Label(VStaticAssets.Text.methamorphicProcessText, new Label.LabelStyle(VStaticAssets.Fonts.calibri25Font, Color.WHITE));	
         infoText1.setWrap(true);
@@ -20,7 +20,7 @@ public class VStageMainInfoWindow {
         infoText1.setAlignment(Align.top);
         infoText1.setPosition((main.mainStage.getWidth() - infoTextWidth) / 2, 0);
         
-        infoText1.setVisible(false);
+//        infoText1.setVisible(false);
         
         main.mainStage.addActor(infoText1);
 	}
