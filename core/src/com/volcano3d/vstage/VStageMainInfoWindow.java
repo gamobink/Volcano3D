@@ -20,7 +20,7 @@ public class VStageMainInfoWindow {
         infoText1.setAlignment(Align.top);
         infoText1.setPosition((main.mainStage.getWidth() - infoTextWidth) / 2, 0);
         
-//        infoText1.setVisible(false);
+        infoText1.setVisible(false);
         
         main.mainStage.addActor(infoText1);
 	}

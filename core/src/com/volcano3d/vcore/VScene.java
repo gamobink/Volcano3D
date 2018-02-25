@@ -20,7 +20,9 @@ public class VScene {
     public VDefaultShaderProvider shaderSky = null;    
     public VMinimalistShaderProvider shaderSimple = null;
     public VDefaultShaderProvider shaderWater = null; 
-    public VDefaultShaderProvider shaderUnderwater = null; 	
+    public VDefaultShaderProvider shaderUnderwater = null; 
+    public VDefaultShaderProvider shaderUnderground = null; 
+    public VDefaultShaderProvider shaderWaterWall = null; 
 	
     protected Map<String, VRenderable> renderables = new HashMap<String, VRenderable>();
     
@@ -39,11 +41,15 @@ public class VScene {
         shaderSimple = new  VMinimalistShaderProvider(volcano, "shaders/min.vertex.glsl", "shaders/min.fragment.glsl");
         shaderWater = new VDefaultShaderProvider(volcano, "shaders/water.vertex.glsl", "shaders/water.fragment.glsl");
         shaderUnderwater = new VDefaultShaderProvider(volcano, "shaders/min.vertex.glsl", "shaders/underwater.fragment.glsl");
+        shaderUnderground = new VDefaultShaderProvider(volcano, "shaders/under.vertex.glsl", "shaders/under.fragment.glsl");
+        shaderWaterWall = new VDefaultShaderProvider(volcano, "shaders/waterwall.vertex.glsl", "shaders/waterwall.fragment.glsl");
         
         add("skybox", shaderSky);
         add("underwater", shaderUnderwater);
         add("island", shaderSimple);
         add("underground");
+        add("waterWall", shaderWaterWall);
+        add("undergroundComp", shaderUnderground);
         
         VRenderable r = add("ground");
         r.enableTween();
@@ -68,7 +74,9 @@ public class VScene {
     	shaderSimple.init();
     	shaderWater.init();
     	shaderUnderwater.init();
-    	    	
+    	shaderUnderground.init();
+    	shaderWaterWall.init();
+    	
 		for(Map.Entry<String, VRenderable> m:renderables.entrySet()){  
 			m.getValue().init();			   
 		}
@@ -82,6 +90,9 @@ public class VScene {
         r.setReflectionTexture("waterCenter", waterTexturesArray.get(0).get());
         r.setAmbientTexture("waterCenter", waterTexturesArray.get(1).get());
         r.setSpecularTexture("waterCenter", waterTexturesArray.get(2).get());	
+        
+        r = get("waterWall");
+        r.setSpecularTexture(null, waterTexturesArray.get(2).get());
     }    
     public void render(VCamera camera, Environment environment){
         
@@ -97,6 +108,19 @@ public class VScene {
         get("ground").render(camera.get(), environment);
         get("island").render(camera.get(), environment);
         
+        get("waterWall").render(camera.get(), environment);
+        
+        get("undergroundComp").render(camera.get(), environment);
+        
+        
+        
+        get("water").alphaFader.set("water", 0, 1f);    	
+    	get("ground").alphaFader.set("groundPart1", 0, 1f);
+    	get("ground").alphaFader.set("groundPart2", 0, 1f);
+    	get("ground").alphaFader.set("groundPart3", 0, 1f);    	
+    	get("ground").alphaFader.set("groundFar1", 0, 1f);
+    	get("ground").alphaFader.set("groundFar2", 0, 1f); 
+    	
         //TODO Render underground parts based on camera states
       //  if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
         //	modelUnderground.render(camera.get(), environment);

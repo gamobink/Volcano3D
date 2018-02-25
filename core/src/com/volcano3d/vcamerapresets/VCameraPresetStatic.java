@@ -14,9 +14,9 @@ public class VCameraPresetStatic extends VCameraPreset {
         addWayPoint(new WayPoint(340, -1, 20)); 
         addWayPoint(new WayPoint(360, -1, 20)); 
 		
-        wayPointsEnabled = true;
+     //   wayPointsEnabled = true;
         
-		fov = 45.0f;
+		fov = 55f; //45.0f;
 		gravityEnabled = false;
 		distance = 750.0f;
 		pivotPosition.set(-100, 0, -250);
