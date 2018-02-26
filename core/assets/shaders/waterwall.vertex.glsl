@@ -15,6 +15,8 @@ varying vec3 v_normal;
 
 varying vec4 v_projectedPos;
 
+varying float v_edgeGradient;
+
 void main() {
 	v_diffuseUV = u_diffuseUVTransform.xy + a_texCoord0 * u_diffuseUVTransform.zw;
 	vec4 pos = u_worldTrans * vec4(a_position, 1.0);
@@ -26,4 +28,6 @@ void main() {
 	v_lightDir = u_cameraPosition.xyz - a_position.xyz;
 	
 	v_normal = normalize(u_normalMatrix * a_normal);
+	
+	v_edgeGradient = pos.y;
 }

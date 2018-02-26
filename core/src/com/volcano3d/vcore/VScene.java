@@ -178,11 +178,11 @@ public class VScene {
 	            
 	        }else if(i == 2){	//under water part - refraction	   
 	        	//Render only for under-water cross section part, when camera is under horizon
-	        	if(c.position.y < 0){
+	        	//if(c.position.y < 50){
 		        	get("skybox").scale(1, 1, 1);
 		            get("skybox").render(c, environment);
 		            get("ground").render(c, environment);
-	        	}
+	        	//}
 	        	get("underwater").render(c, environment);
 	        }
 	        waterTexturesArray.get(i).endRender();
