@@ -117,7 +117,7 @@ public class VScene {
         get("water").alphaFader.set("water", 0, 1f);    	
     	get("ground").alphaFader.set("groundPart1", 0, 1f);
     	get("ground").alphaFader.set("groundPart2", 0, 1f);
-    	get("ground").alphaFader.set("groundPart3", 0, 1f);    	
+    	//get("ground").alphaFader.set("groundPart3", 0, 1f);    	
     	get("ground").alphaFader.set("groundFar1", 0, 1f);
     	get("ground").alphaFader.set("groundFar2", 0, 1f); 
     	
@@ -162,7 +162,7 @@ public class VScene {
 	    	
 	    	waterTexturesArray.get(i).beginRender();
 	    	
-	    	Gdx.gl.glClearColor(0,0,0,0.0f);
+	    	Gdx.gl.glClearColor(0,0,0, 0.0f);
 	    	Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
 	        Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);   
 	        
