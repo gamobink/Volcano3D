@@ -14,9 +14,9 @@ void main() {
 //	gl_FragColor = vec4( normalize(v_lightDir), 1);
 
 	dot = pow(dot, 50);
-	dot = clamp(dot, 0,1);
+	dot = clamp(dot, 0, 0.2);
 	
 	
 	
-	gl_FragColor = u_diffuseColor + vec4(dot,dot,dot, 1);
+	gl_FragColor = u_diffuseColor + vec4(dot,dot,dot*0.5, 1);
 }
