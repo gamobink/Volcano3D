@@ -29,21 +29,6 @@ import com.volcano3d.vstage.VStageMain;
  * Created by T510 on 8/2/2017.
  */
 /*
- * TODO Korekcijas
- * 
- * 
- * -) Juuras skataa nogulsnes - biologjiskie procesi
- * -) Kalna skatÄ� Ä·Ä«miskÄ� dÄ“dÄ“Å¡ana - tikai informatÄ«vs process, bes vizualizÄ�cijas. Ar attÄ“liem un shÄ“mÄ�m
- * -) Pludmales skatÄ� lielÄ�ka lagÅ«na/sÄ“klis kur Å«dens Å¾Å«st un  nogulsnÄ“jas Ä£ipsis un sÄ�Ä¼i
- * -) VulkÄ�na dÅ«mos ikona uz gÄ�zveida procesiem (seera fotogrÄ�fijas)
- * -) Magmatiskie kristÄ�li - jÄ�parÄ�da arÄ« shÄ“ma ar atdziÅ¡anu
- * -) Magma sarkanÄ�kÄ� krÄ�sÄ�
- * -) Metamorfiskie, skats starp kalnu un vulkaanu, dziÄ¼umÄ�, spiediena ietekmÄ“ starp magmatiskajiem un nogulumieÅ¾iem
- * 		veidojas kristÄ�li. Shematiska bilde!? +FotogrÄ�fijas	
- * 
- * 
- * -) SkaÅ†a ??
- * 
  * */
 public class VMain{
 

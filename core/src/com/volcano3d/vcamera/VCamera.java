@@ -54,14 +54,13 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 			break;			
 		case STATIC_4:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_4);
-			break;		
-			/*				
+			break;			
 		case STATIC_5:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_5);
 			break;						
 		case STATIC_6:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_6);
-			break;	*/								
+			break;							
 		default:
 			break;			
 		};
