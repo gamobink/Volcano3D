@@ -98,8 +98,8 @@ public class VMain{
     	
     	particleEffectSmoke.init();
     	
-    	stage2D.introStage.showIntro();
-//    	stage2D.introStage.hideIntro();
+//    	stage2D.introStage.showIntro();
+    	stage2D.introStage.hideIntro();
     }	
     
     public void render() {
