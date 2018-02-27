@@ -32,6 +32,71 @@ varying vec3 v_lightDir;
 
 const vec3 lightColor = vec3(1,1,0.5);
 
+
+vec4 dofBlur(sampler2D source, vec2 uv, float aspect, float depth){
+
+	float blurclamp = 3.0;  	// max blur amount
+	float bias = 0.6; 			//aperture - bigger values for shallower depth of field
+
+    vec2 aspectcorrect = vec2(1.0, aspect);
+          
+    vec2 dofblur = vec2 (clamp( depth * bias, -blurclamp, blurclamp ));
+        
+    vec4 col = vec4(0.0);
+   
+    col += texture2D(source, uv.xy);
+    col += texture2D(source, uv.xy + (vec2( 0.0,0.4 )*aspectcorrect) * dofblur);
+    col += texture2D(source, uv.xy + (vec2( 0.15,0.37 )*aspectcorrect) * dofblur);
+    col += texture2D(source, uv.xy + (vec2( 0.29,0.29 )*aspectcorrect) * dofblur);
+    col += texture2D(source, uv.xy + (vec2( -0.37,0.15 )*aspectcorrect) * dofblur);       
+    col += texture2D(source, uv.xy + (vec2( 0.4,0.0 )*aspectcorrect) * dofblur);   
+    col += texture2D(source, uv.xy + (vec2( 0.37,-0.15 )*aspectcorrect) * dofblur);       
+    col += texture2D(source, uv.xy + (vec2( 0.29,-0.29 )*aspectcorrect) * dofblur);       
+    col += texture2D(source, uv.xy + (vec2( -0.15,-0.37 )*aspectcorrect) * dofblur);
+    col += texture2D(source, uv.xy + (vec2( 0.0,-0.4 )*aspectcorrect) * dofblur); 
+    col += texture2D(source, uv.xy + (vec2( -0.15,0.37 )*aspectcorrect) * dofblur);
+    col += texture2D(source, uv.xy + (vec2( -0.29,0.29 )*aspectcorrect) * dofblur);
+    col += texture2D(source, uv.xy + (vec2( 0.37,0.15 )*aspectcorrect) * dofblur); 
+    col += texture2D(source, uv.xy + (vec2( -0.4,0.0 )*aspectcorrect) * dofblur); 
+    col += texture2D(source, uv.xy + (vec2( -0.37,-0.15 )*aspectcorrect) * dofblur);       
+    col += texture2D(source, uv.xy + (vec2( -0.29,-0.29 )*aspectcorrect) * dofblur);       
+    col += texture2D(source, uv.xy + (vec2( 0.15,-0.37 )*aspectcorrect) * dofblur);
+   
+    col += texture2D(source, uv.xy + (vec2( 0.15,0.37 )*aspectcorrect) * dofblur*0.9);
+    col += texture2D(source, uv.xy + (vec2( -0.37,0.15 )*aspectcorrect) * dofblur*0.9);           
+    col += texture2D(source, uv.xy + (vec2( 0.37,-0.15 )*aspectcorrect) * dofblur*0.9);           
+    col += texture2D(source, uv.xy + (vec2( -0.15,-0.37 )*aspectcorrect) * dofblur*0.9);
+    col += texture2D(source, uv.xy + (vec2( -0.15,0.37 )*aspectcorrect) * dofblur*0.9);
+    col += texture2D(source, uv.xy + (vec2( 0.37,0.15 )*aspectcorrect) * dofblur*0.9);            
+    col += texture2D(source, uv.xy + (vec2( -0.37,-0.15 )*aspectcorrect) * dofblur*0.9);   
+    col += texture2D(source, uv.xy + (vec2( 0.15,-0.37 )*aspectcorrect) * dofblur*0.9);   
+   
+    col += texture2D(source, uv.xy + (vec2( 0.29,0.29 )*aspectcorrect) * dofblur*0.7);
+    col += texture2D(source, uv.xy + (vec2( 0.4,0.0 )*aspectcorrect) * dofblur*0.7);       
+    col += texture2D(source, uv.xy + (vec2( 0.29,-0.29 )*aspectcorrect) * dofblur*0.7);   
+    col += texture2D(source, uv.xy + (vec2( 0.0,-0.4 )*aspectcorrect) * dofblur*0.7);     
+    col += texture2D(source, uv.xy + (vec2( -0.29,0.29 )*aspectcorrect) * dofblur*0.7);
+    col += texture2D(source, uv.xy + (vec2( -0.4,0.0 )*aspectcorrect) * dofblur*0.7);     
+    col += texture2D(source, uv.xy + (vec2( -0.29,-0.29 )*aspectcorrect) * dofblur*0.7);   
+    col += texture2D(source, uv.xy + (vec2( 0.0,0.4 )*aspectcorrect) * dofblur*0.7);
+                     
+    col += texture2D(source, uv.xy + (vec2( 0.29,0.29 )*aspectcorrect) * dofblur*0.4);
+    col += texture2D(source, uv.xy + (vec2( 0.4,0.0 )*aspectcorrect) * dofblur*0.4);       
+    col += texture2D(source, uv.xy + (vec2( 0.29,-0.29 )*aspectcorrect) * dofblur*0.4);   
+    col += texture2D(source, uv.xy + (vec2( 0.0,-0.4 )*aspectcorrect) * dofblur*0.4);     
+    col += texture2D(source, uv.xy + (vec2( -0.29,0.29 )*aspectcorrect) * dofblur*0.4);
+    col += texture2D(source, uv.xy + (vec2( -0.4,0.0 )*aspectcorrect) * dofblur*0.4);     
+    col += texture2D(source, uv.xy + (vec2( -0.29,-0.29 )*aspectcorrect) * dofblur*0.4);   
+    col += texture2D(source, uv.xy + (vec2( 0.0,0.4 )*aspectcorrect) * dofblur*0.4);       
+                   
+    col = col/41.0;
+    col.a = 1.0;
+    
+    return col;
+}
+
+
+
 vec4 boxBlur (sampler2D source, vec2 uv) {
 
 	vec2 texOffset = vec2(0.008, 0.008);
@@ -149,29 +214,10 @@ void main() {
 	refractionUV.x = clamp(refractionUV.x, 0.001, 0.999);
 	refractionUV.y = clamp(refractionUV.y, 0.001, 0.999);
 
-	vec4 rer1 = blur13(u_specularTexture, refractionUV, vec2(0,2));
-	vec4 rer2 = blur13(u_specularTexture, refractionUV, vec2(0,4));
-//	vec4 rer3 = blur13(u_specularTexture, refractionUV, vec2(0,8));
-//	vec4 rer4 = blur13(u_specularTexture, refractionUV, vec2(0,10));	
-	vec4 refraction = (rer1 + rer2) * 0.5; 
-//	vec4 refraction = (rer1 + rer2 + rer3 + rer4) / 4;
-	
 	//Depth variable blur	
-/*	
-	int steps = 1;
-	vec4 refraction = blur13(u_specularTexture, refractionUV, vec2(0,2));
-	float depthv = refraction.a;
-	float stp = 1.0f;
-	for(int i=1; i<=6; i++){
-	//	if(depthv > stp)break;
-		refraction = refraction + blur13(u_specularTexture, refractionUV, vec2(0,(i*4)));
-		steps++;
-		stp = stp - 0.1;
-	}
-	refraction = refraction / steps;
-	gl_FragColor = refraction;
-	gl_FragColor.a = 1; return;
-	*/
+	vec4 rer = texture2D(u_specularTexture, refractionUV);
+	float deptha1 = pow((1.0 - rer.a), 5.0);
+	vec4 refraction = dofBlur(u_specularTexture, refractionUV, 1,  deptha1 * 0.2);
 
 	vec4 ref1 = blur13(u_reflectionTexture, reflectionUV, vec2(0,1));
 	vec4 ref2 = blur13(u_reflectionTexture, reflectionUV, vec2(0,2));	
