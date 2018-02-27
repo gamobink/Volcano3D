@@ -46,8 +46,10 @@ public class VScene {
         
         add("skybox", shaderSky);
         add("underwater", shaderUnderwater);
+        add("underwaterCenter", shaderUnderwater);
+        
         add("island", shaderSimple);
-        add("underground");
+        //add("underground");
         add("waterWall", shaderWaterWall);
         add("undergroundComp", shaderUnderground);
         
@@ -116,10 +118,9 @@ public class VScene {
         
         get("water").alphaFader.set("water", 0, 1f);    	
     	get("ground").alphaFader.set("groundPart1", 0, 1f);
-    	get("ground").alphaFader.set("groundPart2", 0, 1f);
-    	//get("ground").alphaFader.set("groundPart3", 0, 1f);    	
+    	get("ground").alphaFader.set("groundPart4", 0, 1f);
     	get("ground").alphaFader.set("groundFar1", 0, 1f);
-    	get("ground").alphaFader.set("groundFar2", 0, 1f); 
+//    	get("ground").alphaFader.set("groundFar2", 0, 1f); 
     	
         //TODO Render underground parts based on camera states
       //  if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
@@ -183,7 +184,8 @@ public class VScene {
 		            get("skybox").render(c, environment);
 		            get("ground").render(c, environment);
 	        	//}
-	        	get("underwater").render(c, environment);
+//	        	get("underwater").render(c, environment);
+	        	get("underwaterCenter").render(c, environment);	        	
 	        }
 	        waterTexturesArray.get(i).endRender();
     	}

@@ -8,7 +8,8 @@ public class VCameraPresetStatic extends VCameraPreset {
 	public VCameraPresetStatic(VCameraPresetCollection.PresetsIdentifiers identifier){
 		super(identifier);
 
-		addWayPoint(new WayPoint(8, 7, 20));
+		addWayPoint(new WayPoint(0, 9, 20));		
+		addWayPoint(new WayPoint(8, 8, 20));
 		addWayPoint(new WayPoint(48, 8, 20));		
 		addWayPoint(new WayPoint(60, 10, 20));
 		addWayPoint(new WayPoint(90, 12, 20));
@@ -21,13 +22,15 @@ public class VCameraPresetStatic extends VCameraPreset {
         addWayPoint(new WayPoint(270, -7, 20));
         addWayPoint(new WayPoint(318, -3, 20));        
         addWayPoint(new WayPoint(340, 2, 20));                
-        addWayPoint(new WayPoint(349, 7, 20));                
-		
+        addWayPoint(new WayPoint(350, 5, 20));                
+        addWayPoint(new WayPoint(354, 10, 20));                        
+        addWayPoint(new WayPoint(360, 9, 20));                
+        
         wayPointsEnabled = true;
         
-		fov = 55f; //45.0f;
+		fov = 60f; //45.0f;
 		gravityEnabled = false;
-		distance = 750.0f;
+		distance = 700.0f;
 		pivotPosition.set(-100, 0, -250);
 		
 		switch(identifier){

@@ -26,7 +26,7 @@ public class VStageMainInfoWindow {
         title.setAlignment(Align.top);
         title.setPosition((main.mainStage.getWidth() - infoTextWidth) / 2, 0);      
         
-        main.mainStage.addActor(title);
+      //  main.mainStage.addActor(title);
         
         text = new Label(VStaticAssets.Text.methamorphicProcessText, new Label.LabelStyle(VStaticAssets.Fonts.calibri25Font, Color.WHITE));	
         text.setWrap(true);
@@ -44,7 +44,7 @@ public class VStageMainInfoWindow {
         
         labelColor.dispose();
         
-        main.mainStage.addActor(text);
+    //    main.mainStage.addActor(text);
 	}
 	
 	public void show(){
