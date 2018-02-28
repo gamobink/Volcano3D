@@ -226,62 +226,28 @@ public class VMain{
     	stage2D.transitionToMainView();
     }
     public void updateModelFaders(){
-    	
-    	
 
 		float angleUnits = camera.anglePos.x;
     	if(angleUnits < 0){    		
     		angleUnits += 360.0f;    		
     	}
     	
-    	//System.out.println(angleUnits);
-    	
     	float waterFade = 1.0f;
     	float groundPart1Fade = 1.0f;
     	float groundPart2Fade = 1.0f;
-    	float groundPart3Fade = 1.0f;
     	
     	if(camera.getState() != VCamera.States.MAIN){
-	    	if(angleUnits < 3 || (angleUnits > 190 && angleUnits < 360))waterFade = 0.0f;
-	    	if(angleUnits < 220 && angleUnits > 190)groundPart1Fade = 0.0f;
-	    	if(angleUnits < 190 && angleUnits > 110)groundPart2Fade = 0.0f;
-	    	if(angleUnits < 110 || (angleUnits > 330 && angleUnits < 360))groundPart3Fade = 0.0f;    	
+	    	if(angleUnits < 36 || (angleUnits > 177 && angleUnits < 360))waterFade = 0.0f;
+	    	if(angleUnits < 48 || angleUnits > 280)groundPart1Fade = 0.0f;
+	    	if(angleUnits < 241 && angleUnits > 76)groundPart2Fade = 0.0f;
     	}
-    	/*
-    	scene.modelWater.alphaFader.set("water", waterFade, 1f);    	
-    	scene.modelGround.alphaFader.set("groundPart1", groundPart1Fade, 1f);
-    	scene.modelGround.alphaFader.set("groundPart2", groundPart2Fade, 1f);
-    	scene.modelGround.alphaFader.set("groundPart3", groundPart3Fade, 1f);
-    	
-    	scene.modelGround.alphaFader.set("groundFar1", groundPart1Fade * groundPart2Fade, 1f);
-    	scene.modelGround.alphaFader.set("groundFar2", groundPart3Fade, 1f);
-*/
-//		STATIC_VIEW_1, 				//Volcano
-//		STATIC_VIEW_2,				//Hill	
-//		STATIC_VIEW_3,				//Sea	
-//		STATIC_VIEW_4,				//Beach
-//		STATIC_VIEW_5,				//Rocks
-//		STATIC_VIEW_6				//Rain	    	
-    	/*
-    	float fadeView1 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_1) ? 0.0f : 1.0f;
-    	float fadeView2 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_2) ? 0.0f : 1.0f;
-    	float fadeView3 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_3) ? 0.0f : 1.0f;
-    	float fadeView4 = (camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.STATIC_VIEW_4) ? 0.0f : 1.0f;
-    	
-    	modelGround.alphaFader.set("groundPart2", fadeView1 * fadeView2, 0.3f);
-    	modelGround.alphaFader.set("groundFar1", fadeView1 * fadeView2, 0.3f);
-    	
-    	modelGround.alphaFader.set("groundPart1", fadeView2, 0.3f);
-    	
-    	modelGround.alphaFader.set("groundPart3", fadeView4, 0.3f);
-    	modelGround.alphaFader.set("groundFar2", fadeView4, 0.3f);
-    	
-    	modelWater.alphaFader.set("water", fadeView2 * fadeView3 * fadeView4, 0.4f);
+    	    	
+        scene.get("water").alphaFader.set("water", waterFade, 1f);    	
+        scene.get("ground").alphaFader.set("groundPart1", groundPart2Fade, 1f);
+        scene.get("ground").alphaFader.set("groundPart4", groundPart1Fade, 1f);
+        scene.get("ground").alphaFader.set("groundFar1", groundPart2Fade, 1f);
 
-    	*/
-    	
-    	//TODO Fade in and out different parts of ground geometry
-    	
+        
         float decalsFade = (camera.getState() == VCamera.States.MAIN && userActionActive) ? 1.0f : 0.0f;
     	    	
         decalsTags.alphaFader.set("all", decalsFade, 1.0f);

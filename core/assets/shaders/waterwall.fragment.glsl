@@ -80,8 +80,8 @@ void main() {
 
 	float dot = dot(normalize(v_lightDir), v_normal);
 
-	dot = pow(dot, 5);
-	dot = clamp(dot, 0,1);
+	dot = pow(dot, 10);
+	dot = clamp(dot*3, 0,1);
 	
 	float depth = texture2D(u_specularTexture, refractionUV).a;
 	vec4 refraction = dofBlur(u_specularTexture, refractionUV, 1.42, depth / 15);

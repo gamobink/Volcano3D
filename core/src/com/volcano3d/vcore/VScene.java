@@ -106,22 +106,14 @@ public class VScene {
         r.setShininess("waterCenter", waterMove);  
 
         get("skybox").render(camera.get(), environment);
+        get("undergroundComp").render(camera.get(), environment);       
+        get("waterWall").render(camera.get(), environment);
+
         get("water").render(camera.get(), environment);        
         get("ground").render(camera.get(), environment);
         get("island").render(camera.get(), environment);
         
-        get("waterWall").render(camera.get(), environment);
-        
-        get("undergroundComp").render(camera.get(), environment);
-        
-        
-        
-        get("water").alphaFader.set("water", 0, 1f);    	
-    	get("ground").alphaFader.set("groundPart1", 0, 1f);
-    	get("ground").alphaFader.set("groundPart4", 0, 1f);
-    	get("ground").alphaFader.set("groundFar1", 0, 1f);
-//    	get("ground").alphaFader.set("groundFar2", 0, 1f); 
-    	
+  	
         //TODO Render underground parts based on camera states
       //  if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
         //	modelUnderground.render(camera.get(), environment);
@@ -177,15 +169,15 @@ public class VScene {
 	        	get("skybox").scale(1, 50, 1);
 	            get("skybox").render(c, environment);
 	            
-	        }else if(i == 2){	//under water part - refraction	   
-	        	//Render only for under-water cross section part, when camera is under horizon
-	        	//if(c.position.y < 50){
+	        }else if(i == 2){	//under water part - refraction	  
+		        if(c.position.y < 0){    
 		        	get("skybox").scale(1, 1, 1);
 		            get("skybox").render(c, environment);
-		            get("ground").render(c, environment);
-	        	//}
-//	        	get("underwater").render(c, environment);
-	        	get("underwaterCenter").render(c, environment);	        	
+		            get("ground").render(c, environment);		        	
+		        	get("underwaterCenter").render(c, environment);	        	
+		        }else{
+		        	get("underwater").render(c, environment);
+		        }
 	        }
 	        waterTexturesArray.get(i).endRender();
     	}

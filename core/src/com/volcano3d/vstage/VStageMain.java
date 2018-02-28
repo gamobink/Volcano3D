@@ -50,9 +50,10 @@ public class VStageMain extends InputListener {
 	
 	protected Map<String, Group> viewButtonsMap = new HashMap<String, Group>();
 	
-	public VStageMainInfoWindow infoStage;
 	public VStageMainIntro introStage;
     
+	protected Map<String, VStageInfoWindow> infoWindowMap = new HashMap<String, VStageInfoWindow>();
+	
 	public VStageMain(VMain s){
 		volcano = s;
 		loaderStage = new Stage();
@@ -69,7 +70,7 @@ public class VStageMain extends InputListener {
         
         introStage = new VStageMainIntro(this);
         
-        infoStage = new VStageMainInfoWindow(this);
+        createInfoWindows();       
         
         buttonReturn = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-return-on"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-return"));
         buttonReturn.setName("BUTTON_MAIN");
@@ -169,7 +170,8 @@ public class VStageMain extends InputListener {
         transitionCloseNavigationTable();
         
         //!!!!!!!!!!!!! DEBUG 
-        //mainStage.setDebugUnderMouse(true);
+        mainStage.setDebugUnderMouse(true);
+        
 	}
 	
     public void renderLoader(){
@@ -308,6 +310,7 @@ public class VStageMain extends InputListener {
     	if(a.getName().compareTo("BUTTON_MAIN") == 0){
         	volcano.camera.setCameraState(VCamera.States.MAIN);
         	transitionToMainView();
+        	hideAllInfoWindows();
         }
         if(a.getName().compareTo("B_VIEW1") == 0){
         	volcano.camera.setCameraState(VCamera.States.STATIC_1);
@@ -344,10 +347,49 @@ public class VStageMain extends InputListener {
         }        
         if(a.getName().compareTo("BUTTON_CLOSENAVI") == 0){
         	transitionCloseNavigationTable();
-        }                
+        } 
+		for(Map.Entry<String, VStageInfoWindow> m:infoWindowMap.entrySet()){  
+			m.getValue().touch(a, x, y);
+		}        
     }	
     public boolean touchDown (InputEvent e, float x, float y, int pointer, int button) {
     	volcano.setUserActionActive();
         return true;   //return true stops event propagation
     }	
+    public void touchDragged(InputEvent e, float x, float y, int pointer){
+    	Actor a = e.getListenerActor();
+		for(Map.Entry<String, VStageInfoWindow> m:infoWindowMap.entrySet()){  
+			m.getValue().drag(a, x, y);
+		}
+    }
+    
+    public void createInfoWindows(){
+
+        VStageInfoWindow inf = new VStageInfoWindow(this);
+        inf.setTitle(VStaticAssets.Text.magmaticProcessTitle);
+        inf.setText(VStaticAssets.Text.methamorphicProcessText, 210);
+        inf.addImage("foto/org1.jpg");
+        inf.addImage("foto/org1.jpg");
+        inf.addImage("foto/org1.jpg");
+        
+        //inf.hide();
+        infoWindowMap.put("volcano", inf);
+
+//        inf = new VStageInfoWindow(this);
+//        inf.setTitle(VStaticAssets.Text.pegmatiteProcessTitle);
+//        inf.setText(VStaticAssets.Text.pegmatiteProcessText, 210);
+//        inf.hide();
+//        infoWindowMap.put("hill", inf);
+        
+    }
+    //Called from camera transition complete callback
+    public void showInfoWindow(String name){
+    	infoWindowMap.get("volcano").show();
+    }        
+    public void hideAllInfoWindows(){
+		for(Map.Entry<String, VStageInfoWindow> m:infoWindowMap.entrySet()){  
+			m.getValue().hide();
+		}
+    }
+    
 }

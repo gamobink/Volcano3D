@@ -102,61 +102,32 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 	public void onPresetTransitionComplete(VCameraPresetCollection.PresetsIdentifiers sourceIdentifier, 
 			VCameraPresetCollection.PresetsIdentifiers targetIdentifier){
 		//System.out.println("complete: "+sourceIdentifier+" -> "+targetIdentifier);
-		if(cameraState != null){
-			/*
+		if(cameraState != null){			
 			switch(cameraState){
 				case STATIC_1:				
-					switch(targetIdentifier){
-					case  MAIN_OVER_STATIC_VIEW_1:
-						this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_1);
-						break;					
-					default:
-						break;
-					}
+					volcano.stage2D.showInfoWindow("volcano");
 					break;
 				case STATIC_2:				
-					switch(targetIdentifier){
-					case  MAIN_OVER_STATIC_VIEW_2:
-						this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_2);
-						break;					
-					default:
-						break;
-					}
+					volcano.stage2D.showInfoWindow("volcano");
 					break;
 				case STATIC_3:				
-					switch(targetIdentifier){
-					case  MAIN_OVER_STATIC_VIEW_3:
-					//	this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_3);
-						break;					
-					default:
-						break;
-					}
+					volcano.stage2D.showInfoWindow("volcano");
 					break;
 				case STATIC_4:				
-					switch(targetIdentifier){
-					case  MAIN_OVER_STATIC_VIEW_4:
-						this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_4);
-						break;					
-					default:
-						break;
-					}
+					volcano.stage2D.showInfoWindow("volcano");
 					break;
-					
+				case STATIC_5:				
+					volcano.stage2D.showInfoWindow("volcano");
+					break;
+				case STATIC_6:				
+					volcano.stage2D.showInfoWindow("volcano");
+					break;					
 				case MAIN:
-					switch(targetIdentifier){
-					case  MAIN_OVER_STATIC_VIEW_1:
-					case  MAIN_OVER_STATIC_VIEW_2:
-					case  MAIN_OVER_STATIC_VIEW_3:
-					case  MAIN_OVER_STATIC_VIEW_4:
-						this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.MAIN);
-						break;
-					default:
-						break;
-					}						
+					
 					break;
 			default:
 				break;		
-			}*/
+			}
 		}
 	}
 	public void onTransitionAngleXComplete(VCameraPresetCollection.PresetsIdentifiers sourceIdentifier, VCameraPresetCollection.PresetsIdentifiers targetIdentifier){

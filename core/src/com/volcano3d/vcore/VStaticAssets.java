@@ -14,13 +14,25 @@ public class VStaticAssets {
 		GUI.buttonsSkin.addRegions(new TextureAtlas("gui.txt"));
 	}
 	public static class Text{
+
+		public static final String magmaticProcessTitle = "Magmatiskie procesi";
+		public static final String pegmatiteProcessTitle = "Pegmatītu veidošanās procesi";
+		public static final String hydrothermalProcessTitle = "Hidrotermālie procesi";
+		public static final String pneymatholiticProcessTitle = "Pneimatolītiskie procesi";
+		public static final String methamorphicProcessTitle = "Metamorfisma procesi";
+		public static final String chemicalProcessTitle = "Dēdēšanas procesi";
+		public static final String organicProcessTitle = "Bioloģiskie (organiskie) procesi";
+		public static final String sedimentationProcessTitle = "Sedimentācijas (nogulsnēšanās) procesi";
 		
 		public static final String magmaticProcessText = "Minerāli rodas tieši no magmas, tai atdziestot, sacietējot un izveidojot kristāla graudus. Magmatiskie minerālu veidošanās procesi notiek ļoti augstas temperatūras un parasti - liela spiediena apstākļos.";
 		public static final String pegmatiteProcessText = "Minerāli rodas, kristalizējoties tā sauktajam magmatiskajam atlikumam, kas paliek pāri pēc tam, kad galvenā magma jau ir pārvērtusies minerālu graudos. Raksturīgi daudz lielāki minerālu graudu izmēri.";
 		public static final String hydrothermalProcessText = "Minerāli izdalās no karstiem ūdens šķīdumiem, kas savukārt rodas iežu plaisās, kondensējoties magmatiskas izcelsmes ūdens tvaikiem. Šiem šķīdumiem pārvēršoties minerālos, veidojas visdažādāko metāla rūdu un tīrradņu dzīslu atradnes.";
 		public static final String pneymatholiticProcessText = "Minerāli veidojas no gāzēm, kas izdalās magmatiskajos vai pegmatītu veidošanās procesos. Šie procesi notiek Zemes virsū vulkānisko gāzu izplūdes vietās vai arī iežu plaisās.";
 		public static final String methamorphicProcessText = "Minerāli rodas, kad zemes dzīlēs jau esoši (agrāk izveidojušies) minerāli izmainās paaugstināta spiediena un temperatūras dēļ. Tas notiek, kontaktējoties ar magmu vai reaģējot ar ķīmiski aktīviem šķīdumiem, tvaikiem un gāzēm tādā dziļumā, kurā vairs nesniedzas minerālu veidošanās procesi, kas notiek Zemes virspusē.";
-
+		public static final String chemicalProcessText = "Jau agrāk radušies minerāli pārveidojas – izmainās atmosfēras gāzu, ūdens un organismu ķīmiskās iedarbības rezultātā. Jaunie (dēdēšanas) minerāli rodas galvenokārt no endogēno (Zemes iekšienē) minerālu noārdīšanas materiāla.";
+		public static final String organicProcessText = "Minerāli visbiežāk rodas ezeros un jūrās, kur uzkrājas dzīvo organismu, galvenokārt mikroorganismu un planktona, minerālie skeleti un čaulas. Tādā veidā radies biogēnais kalcīts.";
+		public static final String sedimentationProcessText = "Notiek ūdens vidē, minerāliem izgulsnējoties no pārsātinātiem sāļu šķīdumiem. Kristāliskie minerālu graudi parasti veidojas izžūstošos ezeros vai izolētos lagūnu tipa baseinos sausā un karstā klimatā.";
+		
 		public static final String titleText = "Minerālu veidošanās procesi";
 		public static final String intro1Text = "Gandrīz visi minerāli uz Zemes ir radušies dabiskos ģeoloģiskos procesos.";
 		public static final String intro2Text = "Iežu aprites ciklā jaunu minerālu veidošanās – to pārveidošanās, noārdīšanās un citu minerālu veidošanās – ir ģeoloģisko procesu secīga virkne.";		
