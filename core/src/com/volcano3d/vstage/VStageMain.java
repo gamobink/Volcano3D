@@ -170,7 +170,7 @@ public class VStageMain extends InputListener {
         transitionCloseNavigationTable();
         
         //!!!!!!!!!!!!! DEBUG 
-        mainStage.setDebugUnderMouse(true);
+        //mainStage.setDebugUnderMouse(true);
         
 	}
 	
@@ -368,6 +368,8 @@ public class VStageMain extends InputListener {
         VStageInfoWindow inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.magmaticProcessTitle);
         inf.setText(VStaticAssets.Text.methamorphicProcessText, 210);
+        inf.addImage("foto/org1.jpg");
+        inf.addImage("foto/org1.jpg");
         inf.addImage("foto/org1.jpg");
         inf.addImage("foto/org1.jpg");
         inf.addImage("foto/org1.jpg");
