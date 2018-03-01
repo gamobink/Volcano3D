@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.volcano3d.utility.VCommon;
 import com.volcano3d.vcamera.VCamera;
+import com.volcano3d.vcamerapresets.VCameraPresetStatic;
 import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VStaticAssets;
 
@@ -120,14 +121,8 @@ public class VStageMain extends InputListener {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = VStaticAssets.Fonts.calibri18Font;
         
-        String[] buttonLabelsTexts = {
-//        		"Magm./Hidrot./Pegmat.",
-//        		"Dēdēšana/Nogulas/Metamorf.",
-//        		"Hidrotermālie",
-//        		"Iztvaikošana",
-//        		"Erozija",
-//        		"Pneimatolītiskie"        		
-        		"Static 1",
+        String[] buttonLabelsTexts = {      		
+        		"Volcano",
         		"Hill",
         		"Sea",
         		"Beach",
@@ -347,7 +342,47 @@ public class VStageMain extends InputListener {
         }        
         if(a.getName().compareTo("BUTTON_CLOSENAVI") == 0){
         	transitionCloseNavigationTable();
-        } 
+        }
+        if(a.getName().compareTo("BUTTON_INFO") == 0){        	
+        	VStageInfoWindow infoWnd = null;
+    		for(Map.Entry<String, VStageInfoWindow> m:infoWindowMap.entrySet()){  
+    			VStageInfoWindow iw = m.getValue();
+    			if(m.getValue().isVisible()){
+    				infoWnd = iw;
+    			}
+    		}
+    		if(infoWnd != null){
+    			infoWnd.hide();
+    			volcano.camera.cameraPanEnabled = true;
+    			volcano.camera.gravityEnabled = true;
+    		}else{
+    			float yaw = volcano.camera.anglePos.x;
+    	    	float minDst = 360;
+    	    	int nearestObj = 0;
+    	    	for(int i=0; i<VCameraPresetStatic.anglePositions.length; i++){
+    	    		float ad = Math.abs(VCommon.angleCircleDistance(yaw, VCameraPresetStatic.anglePositions[i][0]));
+    	    		if(ad < minDst){
+    	    			nearestObj = i;
+    	    			minDst = ad;
+    	    		}
+    	    	}
+    	    	switch(nearestObj){
+    	    	case 0:
+    	    		volcano.camera.setCameraState(VCamera.States.STATIC_1);
+    	    		break;
+    	    	case 1:
+    	    		volcano.camera.setCameraState(VCamera.States.STATIC_2);
+    	    		break;
+    	    	case 2:
+    	    		volcano.camera.setCameraState(VCamera.States.STATIC_3);
+    	    		break;
+    	    	case 3:
+    	    		volcano.camera.setCameraState(VCamera.States.STATIC_4);
+    	    		break;    	    		
+    	    	};
+    		}
+        }
+        
 		for(Map.Entry<String, VStageInfoWindow> m:infoWindowMap.entrySet()){  
 			m.getValue().touch(a, x, y);
 		}        
@@ -369,12 +404,12 @@ public class VStageMain extends InputListener {
         inf.setTitle(VStaticAssets.Text.magmaticProcessTitle);
         inf.setText(VStaticAssets.Text.methamorphicProcessText, 210);
         inf.addImage("foto/01.jpg");
-        inf.addImage("foto/02.jpg");
-        inf.addImage("foto/12.jpg");
-        inf.addImage("foto/13.jpg");
-        inf.addImage("foto/05.jpg");
+        inf.addImage("foto/01.jpg");
+        inf.addImage("foto/01.jpg");
+        inf.addImage("foto/01.jpg");
+        inf.addImage("foto/01.jpg");
         
-        //inf.hide();
+      //  inf.hide();
         infoWindowMap.put("volcano", inf);
 
 //        inf = new VStageInfoWindow(this);

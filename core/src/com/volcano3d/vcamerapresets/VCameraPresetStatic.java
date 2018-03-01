@@ -5,6 +5,14 @@ import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vcamera.VCameraPreset.WayPoint;
 
 public class VCameraPresetStatic extends VCameraPreset {
+	
+	public static final float anglePositions[][] = {
+			{138, 4},	//1
+			{200, 4},	//2   	                                             
+			{270, 2},	//3
+			{340, 8},	//4
+	};
+	
 	public VCameraPresetStatic(VCameraPresetCollection.PresetsIdentifiers identifier){
 		super(identifier);
 
@@ -31,26 +39,29 @@ public class VCameraPresetStatic extends VCameraPreset {
 		fov = 60f; //45.0f;
 		gravityEnabled = false;
 		distance = 700.0f;
-		pivotPosition.set(-100, 0, -250);
+		pivotPosition.set(-100, 0, -250);		
+		cameraPanEnabled = false;
 		
 		switch(identifier){
 		case STATIC_VIEW_1:
 			//View for volcano cross-section
-			anglePos.x = 138;
+			this.anglePos.x = anglePositions[0][0];
+			this.anglePos.y = anglePositions[0][1];	
 			break;
 		case STATIC_VIEW_2:
 			//Hill cross-section
-			this.anglePos.x = 200;
+			this.anglePos.x = anglePositions[1][0];
+			this.anglePos.y = anglePositions[1][1];	
 			break;			
 		case STATIC_VIEW_3:
 			//Sea cross-section
-			this.anglePos.x = 270;
-			this.anglePos.y = 2;			
+			this.anglePos.x = anglePositions[2][0];
+			this.anglePos.y = anglePositions[2][1];		
 			break;			
 		case STATIC_VIEW_4:
 			//Beach cross-section
-			this.anglePos.x = 340;
-			this.anglePos.y = 8;			
+			this.anglePos.x = anglePositions[3][0];
+			this.anglePos.y = anglePositions[3][1];					
 			break;
 		default:
 			break;						

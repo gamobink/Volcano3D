@@ -13,6 +13,13 @@ public class VCommon {
 	
 	static SpriteBatch spriteBatch = new SpriteBatch();
 	
+	public static float angleCircleDistance(float a, float b){
+		float diff = b - a;
+        while (diff < -180) diff += 360;
+        while (diff > 180) diff -= 360;
+        return diff;
+	} 
+	
 	public static void drawSystemStats(){		
 		float fps = 1.0f/Gdx.graphics.getDeltaTime();		
 		spriteBatch.begin();	

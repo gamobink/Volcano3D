@@ -76,7 +76,7 @@ public class VStageInfoWindow extends Group{
         text.setPosition((main.mainStage.getWidth() - contentWidth) / 2, 550);
         
         Pixmap labelColor = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        labelColor.setColor(0.1f, 0.1f, 0.1f, 0.5f);
+        labelColor.setColor(0.1f, 0.1f, 0.1f, 0.55f);
         labelColor.fill();
         text.getStyle().background = new Image(new Texture(labelColor)).getDrawable();        
         
@@ -163,15 +163,15 @@ public class VStageInfoWindow extends Group{
 		return imgOffset; 
 	}
 	public void show(){		
-		this.setVisible(true);
 		isDragging = false;
 		dragOffset = 0;
 		recalculateResetImgPositions();
+		this.addAction(Actions.sequence(Actions.show(), Actions.fadeIn(0.8f)));
 	}
 	public void hide(){
-		this.setVisible(false);		
 		isDragging = false;
 		dragOffset = 0;		
+		this.addAction(Actions.sequence(Actions.fadeOut(0.8f), Actions.hide()));
 	}
 	public void act(float delta){
 		super.act(delta);
