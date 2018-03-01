@@ -93,6 +93,8 @@ public class VStageInfoWindow extends Group{
         labelColor.dispose();
                 
         main.mainStage.addActor(this);
+        
+        this.setVisible(false);
 	}
 	
 	public void setTitle(String titleStr){

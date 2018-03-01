@@ -408,20 +408,17 @@ public class VStageMain extends InputListener {
         inf.addImage("foto/01.jpg");
         inf.addImage("foto/01.jpg");
         inf.addImage("foto/01.jpg");
-        
-      //  inf.hide();
-        infoWindowMap.put("volcano", inf);
+        infoWindowMap.put("info1", inf);
 
-//        inf = new VStageInfoWindow(this);
-//        inf.setTitle(VStaticAssets.Text.pegmatiteProcessTitle);
-//        inf.setText(VStaticAssets.Text.pegmatiteProcessText, 210);
-//        inf.hide();
-//        infoWindowMap.put("hill", inf);
+        inf = new VStageInfoWindow(this);
+        inf.setTitle(VStaticAssets.Text.pegmatiteProcessTitle);
+        inf.setText(VStaticAssets.Text.pegmatiteProcessText, 210);
+        infoWindowMap.put("info2", inf);
         
     }
     //Called from camera transition complete callback
     public void showInfoWindow(String name){
-    	infoWindowMap.get("volcano").show();
+    	infoWindowMap.get(name).show();
     }        
     public void hideAllInfoWindows(){
 		for(Map.Entry<String, VStageInfoWindow> m:infoWindowMap.entrySet()){  

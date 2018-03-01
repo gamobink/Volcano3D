@@ -105,22 +105,22 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 		if(cameraState != null){			
 			switch(cameraState){
 				case STATIC_1:				
-					volcano.stage2D.showInfoWindow("volcano");
+					volcano.stage2D.showInfoWindow("info1");
 					break;
 				case STATIC_2:				
-					volcano.stage2D.showInfoWindow("volcano");
+					volcano.stage2D.showInfoWindow("info2");
 					break;
 				case STATIC_3:				
-					volcano.stage2D.showInfoWindow("volcano");
+					volcano.stage2D.showInfoWindow("info1");
 					break;
 				case STATIC_4:				
-					volcano.stage2D.showInfoWindow("volcano");
+					volcano.stage2D.showInfoWindow("info1");
 					break;
 				case STATIC_5:				
-					volcano.stage2D.showInfoWindow("volcano");
+					volcano.stage2D.showInfoWindow("info1");
 					break;
 				case STATIC_6:				
-					volcano.stage2D.showInfoWindow("volcano");
+					volcano.stage2D.showInfoWindow("info1");
 					break;					
 				case MAIN:
 					
