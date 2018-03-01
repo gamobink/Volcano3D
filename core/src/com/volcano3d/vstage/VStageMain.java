@@ -368,11 +368,11 @@ public class VStageMain extends InputListener {
         VStageInfoWindow inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.magmaticProcessTitle);
         inf.setText(VStaticAssets.Text.methamorphicProcessText, 210);
-        inf.addImage("foto/org1.jpg");
-        inf.addImage("foto/org1.jpg");
-        inf.addImage("foto/org1.jpg");
-        inf.addImage("foto/org1.jpg");
-        inf.addImage("foto/org1.jpg");
+        inf.addImage("foto/01.jpg");
+        inf.addImage("foto/02.jpg");
+        inf.addImage("foto/12.jpg");
+        inf.addImage("foto/13.jpg");
+        inf.addImage("foto/05.jpg");
         
         //inf.hide();
         infoWindowMap.put("volcano", inf);

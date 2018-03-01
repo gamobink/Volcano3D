@@ -136,25 +136,37 @@ public class VStageInfoWindow extends Group{
         
         images.add(image);
         
-        recalculateImgPositions();
+        float w = recalculateResetImgPositions();
+        
+        if(w < contentWidth){
+        	dragPos = (contentWidth - w)/2;
+        	recalculateResetImgPositions();
+        }else{
+        	dragPos = 0;
+        }
 	}
-	public void recalculateImgPositions(){
+	public float recalculateResetImgPositions(){
 		float imgOffset = 0;
 		for(int i=0; i<images.size; i++){
 			ImageExpandable img = images.get(i);
-			//img.setWidth(img.thumbnailWidth);
-			//img.setHeight(img.thumbnailHeight);
+			img.setWidth(img.thumbnailWidth);
+			img.setHeight(img.thumbnailHeight);
+			img.imageOpen = false;
 			img.thumbnailPositionX = dragPos + imgOffset;
 			img.setPosition(img.thumbnailPositionX, imageMarginTopBottom);
 			imgOffset += (img.getWidth() + imageMarginRight);
 		}	
 		dragLimit = contentWidth - imgOffset + imageMarginRight;
+		if(dragLimit > 0)dragLimit = (contentWidth - imgOffset)/2;
+		isImageOpen = false;
+		imageSlider.setHeight(sliderHeight);
+		return imgOffset; 
 	}
 	public void show(){		
 		this.setVisible(true);
 		isDragging = false;
 		dragOffset = 0;
-		recalculateImgPositions();
+		recalculateResetImgPositions();
 	}
 	public void hide(){
 		this.setVisible(false);		
@@ -163,16 +175,26 @@ public class VStageInfoWindow extends Group{
 	}
 	public void act(float delta){
 		super.act(delta);
-		float imgOffset = 0;
+		float imgOpenOffset = 0;
+		float imgOpenX = 0;
+		boolean isOpen = false;
 		for(int i=0; i<images.size; i++){
 			ImageExpandable img = images.get(i);
 			if(img.imageOpen){				
-				dragPos = -(imgOffset - img.fullPositionX);
-				break;				
+				imgOpenX = img.getX();
+				isOpen = true;
+				break;
 			}
-			imgOffset += (img.getWidth() + imageMarginRight);
+			imgOpenOffset += (img.getWidth() + imageMarginRight);
 		}
-		recalculateImgPositions();
+		if(isOpen){
+			float offsetStart = -(imgOpenOffset - imgOpenX);
+			for(int i=0; i<images.size; i++){
+				ImageExpandable img = images.get(i);
+				img.setPosition(offsetStart, imageMarginTopBottom);
+				offsetStart += (img.getWidth() + imageMarginRight);
+			}
+		}
 	}
 	public void drag(Actor target, float relx, float rely){
 		if(!isVisible() || isImageOpen)return;		
@@ -184,7 +206,7 @@ public class VStageInfoWindow extends Group{
 		dragPos += (relx - dragOffset);
 		if(dragPos > 0)dragPos=0;
 		if(dragPos < dragLimit)dragPos = dragLimit;
-		recalculateImgPositions();		
+		recalculateResetImgPositions();		
 	}
 	public void touch(Actor target, float x, float y){
 		if(!isVisible())return;
@@ -192,10 +214,26 @@ public class VStageInfoWindow extends Group{
 		if(target.getClass() == ImageExpandable.class){
 			ImageExpandable im = (ImageExpandable)target;
 			if(isImageOpen && im.imageOpen){
-				isImageOpen = false;
-				im.imageOpen = false;
-				im.addAction(Actions.parallel(Actions.sizeTo(im.thumbnailWidth, im.thumbnailHeight, 0.3f),
-						Actions.moveTo(im.thumbnailPositionX, imageMarginTopBottom, 0.3f)));
+				
+				class MyRun implements Runnable{
+					public MyRun(ImageExpandable i){
+						im = i;
+					}
+					ImageExpandable im;
+					@Override
+				    public void run() {
+						isImageOpen = false;
+						im.imageOpen = false;
+					}
+				}
+
+				im.addAction(
+						Actions.sequence(
+							Actions.parallel(Actions.sizeTo(im.thumbnailWidth, im.thumbnailHeight, 0.3f),
+											Actions.moveTo(im.thumbnailPositionX, imageMarginTopBottom, 0.3f)),
+							Actions.run(new MyRun(im))
+							)
+						);
 				imageSlider.addAction(Actions.sizeTo(imageSlider.getWidth(), sliderHeight, 0.3f));				
 
 				return;
@@ -206,7 +244,6 @@ public class VStageInfoWindow extends Group{
 					for(int i=0; i<images.size; i++){
 						ImageExpandable img = images.get(i);
 						im.imageOpen = false;
-
 						if(img == target)img.setZIndex(50);
 						else img.setZIndex(0);						
 					}
