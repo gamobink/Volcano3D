@@ -436,60 +436,71 @@ public class VStageMain extends InputListener {
         VStageInfoWindow inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.magmaticProcessTitle);
         inf.setText(VStaticAssets.Text.methamorphicProcessText, 50);
-        inf.addImage("foto/01.jpg");
-        inf.addImage("foto/01.jpg");
-        inf.addImage("foto/01.jpg");
-        inf.addImage("foto/01.jpg");
-        inf.addImage("foto/01.jpg");
+        inf.addImage("foto/magm1.jpg");
+        inf.addImage("foto/magm2.jpg");
+        inf.addImage("foto/magm3.jpg");
+        inf.addImage("foto/magm4.jpg");
         infoWindowMap.put("info1", inf);
 
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.pegmatiteProcessTitle);
         inf.setText(VStaticAssets.Text.pegmatiteProcessText, 50);
-        inf.addImage("foto/01.jpg");
-        inf.addImage("foto/01.jpg");        
+        inf.addImage("foto/pegma1.jpg");
+        inf.addImage("foto/pegma2.jpg");        
+        inf.addImage("foto/pegma3.jpg");                
         infoWindowMap.put("info2", inf);
         
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.hydrothermalProcessTitle);
         inf.setText(VStaticAssets.Text.hydrothermalProcessText, 50);
-        inf.addImage("foto/01.jpg");
-        inf.addImage("foto/01.jpg");        
+        inf.addImage("foto/hidro1.jpg");
+        inf.addImage("foto/hidro2.jpg");        
+        inf.addImage("foto/hidro3.jpg");
+        inf.addImage("foto/hidro4.jpg");                
         infoWindowMap.put("info3", inf); 
         
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.pneymatholiticProcessTitle);
         inf.setText(VStaticAssets.Text.pneymatholiticProcessText, 50);
-        inf.addImage("foto/01.jpg");
-        inf.addImage("foto/01.jpg");        
+        inf.addImage("foto/pneim1.jpg");
+        inf.addImage("foto/pneim2.jpg");        
+        inf.addImage("foto/pneim3.jpg");
+        inf.addImage("foto/pneim4.jpg");        
+        inf.addImage("foto/pneim5.jpg");
         infoWindowMap.put("info4", inf);         
 
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.methamorphicProcessTitle);
         inf.setText(VStaticAssets.Text.methamorphicProcessText, 50);
-        inf.addImage("foto/01.jpg");
-        inf.addImage("foto/01.jpg");        
+        inf.addImage("foto/metam1.jpg");
+        inf.addImage("foto/metam2.jpg");        
+        inf.addImage("foto/metam3.jpg");
+        inf.addImage("foto/metam4.jpg");        
+        inf.addImage("foto/metam5.jpg");
         infoWindowMap.put("info5", inf);                 
 
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.chemicalProcessTitle);
         inf.setText(VStaticAssets.Text.chemicalProcessText, 50);
-        inf.addImage("foto/01.jpg");
-        inf.addImage("foto/01.jpg");        
+        inf.addImage("foto/chem1.jpg");
+        inf.addImage("foto/chem2.jpg");        
+        inf.addImage("foto/chem3.jpg");                
         infoWindowMap.put("info6", inf);           
         
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.organicProcessTitle);
         inf.setText(VStaticAssets.Text.organicProcessText, 50);
-        inf.addImage("foto/01.jpg");
-        inf.addImage("foto/01.jpg");        
+        inf.addImage("foto/organ1.jpg");
+        inf.addImage("foto/organ2.jpg");        
         infoWindowMap.put("info7", inf);          
 
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.sedimentationProcessTitle);
         inf.setText(VStaticAssets.Text.sedimentationProcessText, 50);
-        inf.addImage("foto/01.jpg");
-        inf.addImage("foto/01.jpg");        
+        inf.addImage("foto/sedim1.jpg");
+        inf.addImage("foto/sedim2.jpg");        
+        inf.addImage("foto/sedim3.jpg");
+        inf.addImage("foto/sedim4.jpg");                
         infoWindowMap.put("info8", inf);          
         
     }

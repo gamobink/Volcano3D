@@ -10,9 +10,8 @@ varying vec3 v_normal;
 
 void main() {
 
-	float dot = dot(normalize(v_lightDir), v_normal);
-//	gl_FragColor = vec4( normalize(v_lightDir), 1);
-
+	float dot = abs(dot(normalize(v_lightDir), v_normal));
+	
 	dot = pow(dot, 50) * 0.2;
 	vec4 diffc = u_diffuseColor;
 	

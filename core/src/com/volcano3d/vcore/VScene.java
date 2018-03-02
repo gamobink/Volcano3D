@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.utils.Array;
 import com.volcano3d.vcamera.VCamera;
+import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vshaders.VDefaultShaderProvider;
 import com.volcano3d.vshaders.VMinimalistShaderProvider;
 
@@ -106,7 +107,11 @@ public class VScene {
         r.setShininess("waterCenter", waterMove);  
 
         get("skybox").render(camera.get(), environment);
-        get("undergroundComp").render(camera.get(), environment);       
+        
+        if(volcano.camera.getPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN
+        	|| volcano.camera.getTargetPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN)
+        	get("undergroundComp").render(camera.get(), environment);       
+        
         get("waterWall").render(camera.get(), environment);
 
         get("water").render(camera.get(), environment);        
