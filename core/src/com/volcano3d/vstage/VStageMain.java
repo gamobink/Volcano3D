@@ -169,7 +169,8 @@ public class VStageMain extends InputListener {
         transitionCloseNavigationTable();
         
         //!!!!!!!!!!!!! DEBUG 
-        //mainStage.setDebugUnderMouse(true);
+//        mainStage.setDebugUnderMouse(true);
+//        mainStage.setDebugAll(true);
         
 	}
 	
@@ -363,7 +364,7 @@ public class VStageMain extends InputListener {
         if(a.getName().compareTo("BUTTON_CLOSENAVI") == 0){
         	transitionCloseNavigationTable();
         }
-        if(a.getName().compareTo("BUTTON_INFO") == 0){        	
+        if(a.getName().compareTo("BUTTON_INFO") == 0){
         	VStageInfoWindow infoWnd = null;
     		for(Map.Entry<String, VStageInfoWindow> m:infoWindowMap.entrySet()){  
     			VStageInfoWindow iw = m.getValue();
@@ -376,14 +377,14 @@ public class VStageMain extends InputListener {
     			volcano.camera.cameraPanEnabled = true;
     			volcano.camera.gravityEnabled = true;
     		}else{
-    			float yaw = volcano.camera.anglePos.x;
-    	    	float minDst = 360;
+    	    	float minDst = 720;
     	    	int nearestObj = 0;
     	    	for(int i=0; i<VCameraPresetStatic.anglePositions.length; i++){
-    	    		float ad = Math.abs(VCommon.angleCircleDistance(yaw, VCameraPresetStatic.anglePositions[i][0]));
-    	    		if(ad < minDst){
+    	    		float ad = Math.abs(VCommon.angleCircleDistance(volcano.camera.anglePos.x, VCameraPresetStatic.anglePositions[i][0]));
+    	    		float bd = Math.abs(VCommon.angleCircleDistance(volcano.camera.anglePos.y, VCameraPresetStatic.anglePositions[i][1]));
+    	    		if((ad + bd) < minDst){
     	    			nearestObj = i;
-    	    			minDst = ad;
+    	    			minDst = (ad + bd);
     	    		}
     	    	}
     	    	switch(nearestObj){
@@ -398,7 +399,19 @@ public class VStageMain extends InputListener {
     	    		break;
     	    	case 3:
     	    		volcano.camera.setCameraState(VCamera.States.STATIC_4);
-    	    		break;    	    		
+    	    		break; 
+    	    	case 4:
+    	    		volcano.camera.setCameraState(VCamera.States.STATIC_5);
+    	    		break;
+    	    	case 5:
+    	    		volcano.camera.setCameraState(VCamera.States.STATIC_6);
+    	    		break; 
+    	    	case 6:
+    	    		volcano.camera.setCameraState(VCamera.States.STATIC_7);
+    	    		break; 
+    	    	case 7:
+    	    		volcano.camera.setCameraState(VCamera.States.STATIC_8);
+    	    		break;     	    		
     	    	};
     		}
         }
@@ -422,7 +435,7 @@ public class VStageMain extends InputListener {
 
         VStageInfoWindow inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.magmaticProcessTitle);
-        inf.setText(VStaticAssets.Text.methamorphicProcessText, 210);
+        inf.setText(VStaticAssets.Text.methamorphicProcessText, 50);
         inf.addImage("foto/01.jpg");
         inf.addImage("foto/01.jpg");
         inf.addImage("foto/01.jpg");
@@ -432,49 +445,49 @@ public class VStageMain extends InputListener {
 
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.pegmatiteProcessTitle);
-        inf.setText(VStaticAssets.Text.pegmatiteProcessText, 210);
+        inf.setText(VStaticAssets.Text.pegmatiteProcessText, 50);
         inf.addImage("foto/01.jpg");
         inf.addImage("foto/01.jpg");        
         infoWindowMap.put("info2", inf);
         
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.hydrothermalProcessTitle);
-        inf.setText(VStaticAssets.Text.hydrothermalProcessText, 210);
+        inf.setText(VStaticAssets.Text.hydrothermalProcessText, 50);
         inf.addImage("foto/01.jpg");
         inf.addImage("foto/01.jpg");        
         infoWindowMap.put("info3", inf); 
         
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.pneymatholiticProcessTitle);
-        inf.setText(VStaticAssets.Text.pneymatholiticProcessText, 210);
+        inf.setText(VStaticAssets.Text.pneymatholiticProcessText, 50);
         inf.addImage("foto/01.jpg");
         inf.addImage("foto/01.jpg");        
         infoWindowMap.put("info4", inf);         
 
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.methamorphicProcessTitle);
-        inf.setText(VStaticAssets.Text.methamorphicProcessText, 210);
+        inf.setText(VStaticAssets.Text.methamorphicProcessText, 50);
         inf.addImage("foto/01.jpg");
         inf.addImage("foto/01.jpg");        
         infoWindowMap.put("info5", inf);                 
 
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.chemicalProcessTitle);
-        inf.setText(VStaticAssets.Text.chemicalProcessText, 210);
+        inf.setText(VStaticAssets.Text.chemicalProcessText, 50);
         inf.addImage("foto/01.jpg");
         inf.addImage("foto/01.jpg");        
         infoWindowMap.put("info6", inf);           
         
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.organicProcessTitle);
-        inf.setText(VStaticAssets.Text.organicProcessText, 210);
+        inf.setText(VStaticAssets.Text.organicProcessText, 50);
         inf.addImage("foto/01.jpg");
         inf.addImage("foto/01.jpg");        
         infoWindowMap.put("info7", inf);          
 
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.sedimentationProcessTitle);
-        inf.setText(VStaticAssets.Text.sedimentationProcessText, 210);
+        inf.setText(VStaticAssets.Text.sedimentationProcessText, 50);
         inf.addImage("foto/01.jpg");
         inf.addImage("foto/01.jpg");        
         infoWindowMap.put("info8", inf);          

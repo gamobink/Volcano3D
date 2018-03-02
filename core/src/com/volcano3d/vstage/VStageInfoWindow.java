@@ -1,14 +1,11 @@
 package com.volcano3d.vstage;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -37,7 +34,8 @@ public class VStageInfoWindow extends Group{
 	
 	public Label 		title = null;
     public Label		text = null;
-    public Table 		imageSlider = null;    
+    public Table		messageTable = null;
+    public Table 		imageSliderTable = null;    
     public Array<ImageExpandable>	images = new Array<ImageExpandable>();
     
     public float		dragLimit = 0;
@@ -46,13 +44,16 @@ public class VStageInfoWindow extends Group{
     public float		dragOffset = 0;    
     public boolean 		isImageOpen = false;    
     public float 		contentWidth = 0;
+	private float 		contentHeight = 0;
 
     //Slider dimensions
-    public final float	imageMarginRight = 15; 
-    public final float	imageMarginTopBottom = 5;     
-    public Vector2 		imageMaxSize = new Vector2(400,400);
-    public float 		sliderPositionY = 100;
-    public float 		sliderHeight = 100;
+    public final float		imageMarginRight = 15; 
+    public final float		imageMarginTopBottom = 5;     
+    public final Vector2 	imageMaxSize = new Vector2(400,400);
+    public final float 		sliderPositionY = 100;
+    public final float 		sliderHeight = 100;
+    public final float 		titleMargin = 10;
+    public final float 		textMargin = 20;
     
     public Array<String>	imagesFileNames = new Array<String>();
     
@@ -60,38 +61,42 @@ public class VStageInfoWindow extends Group{
 		
 		mainStage = main;
 		
-        contentWidth = main.mainStage.getWidth();	// * 0.9f;
+        contentWidth = main.mainStage.getWidth();
+        contentHeight = main.mainStage.getHeight();
 
         title = new Label("", new Label.LabelStyle(VStaticAssets.Fonts.calibri25Font, Color.WHITE));	
         title.setWrap(true);
         title.setWidth(contentWidth);
-        title.setHeight(main.mainStage.getHeight());
+        title.setHeight(25);
         title.setAlignment(Align.top);
         title.setPosition((main.mainStage.getWidth() - contentWidth) / 2, 0);
         
         this.addActor(title);
         
-        text = new Label("", new Label.LabelStyle(VStaticAssets.Fonts.calibri25Font, Color.WHITE));	
+        text = new Label("", new Label.LabelStyle(VStaticAssets.Fonts.calibri25Font, Color.WHITE));
         text.setWrap(true);
-        text.setWidth(contentWidth);
-        text.setHeight(210);
+        text.setWidth(contentWidth - (textMargin * 2));
         text.setAlignment(Align.top);
-        text.setPosition((main.mainStage.getWidth() - contentWidth) / 2, 550);
+        text.setPosition((main.mainStage.getWidth() - (contentWidth - (textMargin * 2))) / 2, 0);
         
         Pixmap labelColor = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         labelColor.setColor(0.1f, 0.1f, 0.1f, 0.55f);
         labelColor.fill();
-        text.getStyle().background = new Image(new Texture(labelColor)).getDrawable();        
+
+        messageTable = new Table();
+        messageTable.background(new Image(new Texture(labelColor)).getDrawable());
+        messageTable.setWidth(contentWidth);
+        messageTable.addActor(text);
         
-        this.addActor(text);
+        this.addActor(messageTable);
         
-        imageSlider = new Table();
-        imageSlider.background(new Image(new Texture(labelColor)).getDrawable());
-        imageSlider.setWidth(contentWidth);
-        imageSlider.setHeight(sliderHeight);
-        imageSlider.setPosition(0, sliderPositionY);
+        imageSliderTable = new Table();
+        imageSliderTable.background(new Image(new Texture(labelColor)).getDrawable());
+        imageSliderTable.setWidth(contentWidth);
+        imageSliderTable.setHeight(sliderHeight);
+        imageSliderTable.setPosition(0, sliderPositionY);
         
-        this.addActor(imageSlider);
+        this.addActor(imageSliderTable);
         
         labelColor.dispose();
                 
@@ -109,9 +114,15 @@ public class VStageInfoWindow extends Group{
 	public void setTitle(String titleStr){
 		title.setText(titleStr);
 	}
-	public void setText(String textStr, float height){
+	public void setText(String textStr, float topOffset){
 		text.setText(textStr);
-		text.setHeight(height);
+		text.setPosition((mainStage.mainStage.getWidth() - (contentWidth - (textMargin * 2))) / 2, text.getPrefHeight() + textMargin);	
+		messageTable.setHeight(text.getPrefHeight() + (textMargin * 2));
+		
+		float top = contentHeight - topOffset - title.getHeight();
+		title.setPosition((mainStage.mainStage.getWidth() - contentWidth) / 2, top);
+		top = top - titleMargin - messageTable.getHeight();
+		messageTable.setPosition(0, top);
 	}	
 	public void addImage(String imageFileName){
 		imagesFileNames.add(imageFileName);
@@ -130,7 +141,7 @@ public class VStageInfoWindow extends Group{
 		ImageExpandable image = new ImageExpandable(texImage);
         image.setName(imageFileName);
         
-        float maxHeight = imageSlider.getHeight() - (imageMarginTopBottom * 2);
+        float maxHeight = imageSliderTable.getHeight() - (imageMarginTopBottom * 2);
         
         image.thumbnailHeight = maxHeight;
         image.thumbnailWidth = (float)maxHeight * aspect;
@@ -151,7 +162,7 @@ public class VStageInfoWindow extends Group{
         
         image.addListener(mainStage);
         
-        imageSlider.addActor(image);
+        imageSliderTable.addActor(image);
         
         images.add(image);
         
@@ -178,7 +189,7 @@ public class VStageInfoWindow extends Group{
 		dragLimit = contentWidth - imgOffset + imageMarginRight;
 		if(dragLimit > 0)dragLimit = (contentWidth - imgOffset)/2;
 		isImageOpen = false;
-		imageSlider.setHeight(sliderHeight);
+		imageSliderTable.setHeight(sliderHeight);
 		return imgOffset; 
 	}
 	public void show(){		
@@ -253,7 +264,7 @@ public class VStageInfoWindow extends Group{
 							Actions.run(new MyRun(im))
 							)
 						);
-				imageSlider.addAction(Actions.sizeTo(imageSlider.getWidth(), sliderHeight, 0.3f));				
+				imageSliderTable.addAction(Actions.sizeTo(imageSliderTable.getWidth(), sliderHeight, 0.3f));				
 
 				return;
 			}
@@ -272,7 +283,7 @@ public class VStageInfoWindow extends Group{
 					im.imageOpen = true;
 					im.addAction(Actions.parallel(Actions.sizeTo(im.fullWidth, im.fullHeight, 0.3f),
 													Actions.moveTo(im.fullPositionX, imageMarginTopBottom, 0.3f)));
-					imageSlider.addAction(Actions.sizeTo(imageSlider.getWidth(), im.fullHeight + (imageMarginTopBottom * 2), 0.3f));
+					imageSliderTable.addAction(Actions.sizeTo(imageSliderTable.getWidth(), im.fullHeight + (imageMarginTopBottom * 2), 0.3f));
 				}
 			}else{		
 				isDragging = false;
