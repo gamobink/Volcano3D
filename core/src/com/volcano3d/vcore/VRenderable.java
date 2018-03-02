@@ -61,7 +61,7 @@ public class VRenderable {
         blendingAttribute = new BlendingAttribute(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
     }
 
-    public void init(){        
+    public void onLoad(){        
         if(volcano.assetsManager.isLoaded(modelName)) {
             Model model = volcano.assetsManager.get(modelName, Model.class);
             modelInstance = new ModelInstance(model);

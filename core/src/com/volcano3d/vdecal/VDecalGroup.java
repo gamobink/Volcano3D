@@ -23,10 +23,10 @@ public class VDecalGroup {
     	volcano = v;
     	alphaFader = new VTween();
     }		
-	public void init(){
+	public void onLoad(){
 		decalBatch = new DecalBatch(new CameraGroupStrategy(volcano.camera.get()));
 		for(int i=0;i<decals.size;i++){
-			decals.get(i).init();
+			decals.get(i).onLoad();
 		}
 	}
 	public void addDecal(VDecal d){

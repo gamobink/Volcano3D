@@ -23,7 +23,7 @@ public class VDecal {
     	size = sizei;
     }
 	
-    public void init(){
+    public void onLoad(){
 /*
         TextureAtlas buttonsAtlas = new TextureAtlas("gui.txt");
         Skin buttonSkin = new Skin();

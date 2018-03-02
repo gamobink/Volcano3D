@@ -28,7 +28,7 @@ public class VMinimalistShaderProvider extends BaseShaderProvider{
 		volcano.assetsManager.load(fsName, TextAsset.class);		
 	}
 	
-	public void init(){
+	public void onLoad(){
 		if(volcano.assetsManager.isLoaded(vsName)
 				&& volcano.assetsManager.isLoaded(fsName)) {			
 			vsString = volcano.assetsManager.get(vsName, TextAsset.class ).getString();

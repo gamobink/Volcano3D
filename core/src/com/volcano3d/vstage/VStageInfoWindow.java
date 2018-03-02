@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -53,6 +54,8 @@ public class VStageInfoWindow extends Group{
     public float 		sliderPositionY = 100;
     public float 		sliderHeight = 100;
     
+    public Array<String>	imagesFileNames = new Array<String>();
+    
 	public VStageInfoWindow(VStageMain main){
 		
 		mainStage = main;
@@ -97,6 +100,12 @@ public class VStageInfoWindow extends Group{
         this.setVisible(false);
 	}
 	
+	public void onLoad(){
+		for(int i=0; i<imagesFileNames.size; i++){
+			initCreateImage(imagesFileNames.get(i));
+		}
+	}
+	
 	public void setTitle(String titleStr){
 		title.setText(titleStr);
 	}
@@ -105,8 +114,16 @@ public class VStageInfoWindow extends Group{
 		text.setHeight(height);
 	}	
 	public void addImage(String imageFileName){
+		imagesFileNames.add(imageFileName);
+		mainStage.volcano.assetsManager.load(imageFileName, Texture.class);
+	}
+	public void initCreateImage(String imageFileName){
+		
+		if(!mainStage.volcano.assetsManager.isLoaded(imageFileName)){
+			return;
+		}
 			
-		Texture texImage = new Texture(Gdx.files.internal(imageFileName));
+		Texture texImage = mainStage.volcano.assetsManager.get(imageFileName, Texture.class);
 		
 		float aspect = (float)texImage.getWidth() / (float)texImage.getHeight();
 		

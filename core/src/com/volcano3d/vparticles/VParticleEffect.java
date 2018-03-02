@@ -36,7 +36,7 @@ public class VParticleEffect {
         
     	volcano.assetsManager.load(filename, ParticleEffect.class, loadParam);
     }
-    public void init(){        
+    public void onLoad(){        
     	
     	modelBatch = new ModelBatch();
     	pointSpriteBatch = new PointSpriteParticleBatch();

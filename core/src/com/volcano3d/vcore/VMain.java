@@ -80,23 +80,29 @@ public class VMain{
         
         scene.create();
 
-        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-220, 140, -10), new Vector2(36,50)));        
-        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-32, 82, 8), new Vector2(36,50)));
-        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(146, 26, -216), new Vector2(36,50)));
-        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-7, 35, -550), new Vector2(36,50)));
+        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-220, 140, -10), new Vector2(36,50))); 	//0 - Magmatic 
+        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-32, 82, 8), new Vector2(36,50)));		//1 - Pegmatite
+        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-330, 62, -80), new Vector2(36,50)));	//2 - hydrothermal
+        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-220, 170, -150), new Vector2(36,50)));	//3 - pneymatolitic
+        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-100, 32, -100), new Vector2(36,50)));	//4 - metamorphic        
+        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(80, 25, 8), new Vector2(36,50)));		//5 - chemical
+        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(146, 25, -216), new Vector2(36,50)));	//6 - organic
+        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(0, 25, -550), new Vector2(36,50)));		//7 - sediment        
 
         particleEffectSmoke = new VParticleEffect(this, "point.pfx");
 
         pathEdit.setPath(stage2D.pathAction1, "pathAction1");
     }    
     //Call on loading complete
-    void init(){
+    void onLoad(){
 
-    	scene.init();
+    	scene.onLoad();
     	
-    	decalsTags.init();
+    	decalsTags.onLoad();
     	
-    	particleEffectSmoke.init();
+    	particleEffectSmoke.onLoad();
+    	
+    	stage2D.onLoad();
     	
 //    	stage2D.introStage.showIntro();
     	stage2D.introStage.hideIntro();
@@ -110,7 +116,7 @@ public class VMain{
         }
         
         if(!objectsLoaded){
-        	init();
+        	onLoad();
         	objectsLoaded = true;
         }
                 
@@ -153,7 +159,15 @@ public class VMain{
     	
     	if(camera.getCurrentPreset() == VCameraPresetCollection.PresetsIdentifiers.MAIN && userActionActive){
 	    	Ray r = camera.get().getPickRay(x, y);
-	    	int iint = decalsTags.Intersect(r);
+	    	int iint = decalsTags.Intersect(r);	    	
+	        //0 - Magmatic 
+	        //1 - Pegmatite
+	        //2 - hydrothermal
+	        //3 - pneymatolitic
+	        //4 - metamorphic
+	        //5 - chemical
+	        //6 - organic
+	        //7 - sediment	    	
 			switch(iint){
 			case 0:
 				camera.setCameraState(VCamera.States.STATIC_1);
@@ -170,7 +184,23 @@ public class VMain{
 			case 3:
 				camera.setCameraState(VCamera.States.STATIC_4);
 				this.stage2D.transitionToStaticView(0);
-				break;				
+				break;	
+			case 4:
+				camera.setCameraState(VCamera.States.STATIC_5);
+				this.stage2D.transitionToStaticView(0);
+				break;	
+			case 5:
+				camera.setCameraState(VCamera.States.STATIC_6);
+				this.stage2D.transitionToStaticView(0);
+				break;	
+			case 6:
+				camera.setCameraState(VCamera.States.STATIC_7);
+				this.stage2D.transitionToStaticView(0);
+				break;					
+			case 7:
+				camera.setCameraState(VCamera.States.STATIC_8);
+				this.stage2D.transitionToStaticView(0);
+				break;									
 			};
     	}
     	

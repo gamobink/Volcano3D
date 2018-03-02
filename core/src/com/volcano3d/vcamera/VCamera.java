@@ -16,6 +16,8 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 		STATIC_4,				//Beach	
 		STATIC_5,				//Rocks
 		STATIC_6,				//Rain
+		STATIC_7,				//Rain
+		STATIC_8,				//Rain
 	}
 	
 	private VMain volcano = null;
@@ -61,6 +63,12 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 		case STATIC_6:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_6);
 			break;							
+		case STATIC_7:
+			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_7);
+			break;							
+		case STATIC_8:
+			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_8);
+			break;										
 		default:
 			break;			
 		};
@@ -111,17 +119,23 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 					volcano.stage2D.showInfoWindow("info2");
 					break;
 				case STATIC_3:				
-					volcano.stage2D.showInfoWindow("info1");
+					volcano.stage2D.showInfoWindow("info3");
 					break;
 				case STATIC_4:				
-					volcano.stage2D.showInfoWindow("info1");
+					volcano.stage2D.showInfoWindow("info4");
 					break;
 				case STATIC_5:				
-					volcano.stage2D.showInfoWindow("info1");
+					volcano.stage2D.showInfoWindow("info5");
 					break;
 				case STATIC_6:				
-					volcano.stage2D.showInfoWindow("info1");
-					break;					
+					volcano.stage2D.showInfoWindow("info6");
+					break;	
+				case STATIC_7:				
+					volcano.stage2D.showInfoWindow("info7");
+					break;	
+				case STATIC_8:				
+					volcano.stage2D.showInfoWindow("info8");
+					break;						
 				case MAIN:
 					
 					break;

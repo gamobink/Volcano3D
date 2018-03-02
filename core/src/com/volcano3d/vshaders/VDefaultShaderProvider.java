@@ -32,7 +32,7 @@ public class VDefaultShaderProvider extends DefaultShaderProvider{
 	public void setDepthFunc(int depth){
 		shaderConfig.defaultDepthFunc = depth;		
 	}
-	public void init(){
+	public void onLoad(){
 		if(volcano.assetsManager.isLoaded(vsName)
 				&& volcano.assetsManager.isLoaded(fsName)) {			
 			vsString = volcano.assetsManager.get(vsName, TextAsset.class ).getString();

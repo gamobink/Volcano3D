@@ -2,15 +2,26 @@ package com.volcano3d.vcamerapresets;
 
 import com.volcano3d.vcamera.VCameraPreset;
 import com.volcano3d.vcamera.VCameraPresetCollection;
-import com.volcano3d.vcamera.VCameraPreset.WayPoint;
 
 public class VCameraPresetStatic extends VCameraPreset {
 	
+    //0 - magmatic 
+    //1 - pegmatite
+    //2 - hydrothermal
+    //3 - pneymatolitic
+    //4 - metamorphic        
+    //5 - chemical
+    //6 - organic
+    //7 - sediment		
 	public static final float anglePositions[][] = {
-			{138, 4},	//1
-			{200, 4},	//2   	                                             
-			{270, 2},	//3
-			{340, 8},	//4
+			{168, -16},	//0 
+			{195, -10},	//1   	                                             
+			{133, -6},	//2
+			{136, 20},	//3
+			{203, -20},	//4
+			{224, 4},	//5   	                                             
+			{279, -4},	//6
+			{336, 0},	//7			
 	};
 	
 	public VCameraPresetStatic(VCameraPresetCollection.PresetsIdentifiers identifier){
@@ -28,7 +39,7 @@ public class VCameraPresetStatic extends VCameraPreset {
         addWayPoint(new WayPoint(209, -19, 20));
         addWayPoint(new WayPoint(219, -8, 20));
         addWayPoint(new WayPoint(270, -7, 20));
-        addWayPoint(new WayPoint(318, -3, 20));        
+        addWayPoint(new WayPoint(318, -3, 20));
         addWayPoint(new WayPoint(340, 2, 20));                
         addWayPoint(new WayPoint(350, 5, 20));                
         addWayPoint(new WayPoint(354, 10, 20));                        
@@ -44,25 +55,45 @@ public class VCameraPresetStatic extends VCameraPreset {
 		
 		switch(identifier){
 		case STATIC_VIEW_1:
-			//View for volcano cross-section
+			//Magmatic
 			this.anglePos.x = anglePositions[0][0];
 			this.anglePos.y = anglePositions[0][1];	
 			break;
 		case STATIC_VIEW_2:
-			//Hill cross-section
+			//Pegmatite
 			this.anglePos.x = anglePositions[1][0];
 			this.anglePos.y = anglePositions[1][1];	
 			break;			
 		case STATIC_VIEW_3:
-			//Sea cross-section
+			//Hydrothermal
 			this.anglePos.x = anglePositions[2][0];
 			this.anglePos.y = anglePositions[2][1];		
 			break;			
 		case STATIC_VIEW_4:
-			//Beach cross-section
+			//Pneymatolitic
 			this.anglePos.x = anglePositions[3][0];
 			this.anglePos.y = anglePositions[3][1];					
 			break;
+		case STATIC_VIEW_5:
+			//Metamorphic
+			this.anglePos.x = anglePositions[4][0];
+			this.anglePos.y = anglePositions[4][1];					
+			break;
+		case STATIC_VIEW_6:
+			//Chemical
+			this.anglePos.x = anglePositions[5][0];
+			this.anglePos.y = anglePositions[5][1];					
+			break;
+		case STATIC_VIEW_7:
+			//Organic
+			this.anglePos.x = anglePositions[6][0];
+			this.anglePos.y = anglePositions[6][1];					
+			break;
+		case STATIC_VIEW_8:
+			//Sediment
+			this.anglePos.x = anglePositions[7][0];
+			this.anglePos.y = anglePositions[7][1];					
+			break;			
 		default:
 			break;						
 		}

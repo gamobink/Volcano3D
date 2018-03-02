@@ -70,17 +70,17 @@ public class VScene {
         waterTexturesArray.add(new VTextureRender(volcano));		//Reflected skybox stretched
         waterTexturesArray.add(new VTextureRender(volcano));		//Refraction        
     }     
-    public void init(){
+    public void onLoad(){
     	
-    	shaderSky.init();
-    	shaderSimple.init();
-    	shaderWater.init();
-    	shaderUnderwater.init();
-    	shaderUnderground.init();
-    	shaderWaterWall.init();
+    	shaderSky.onLoad();
+    	shaderSimple.onLoad();
+    	shaderWater.onLoad();
+    	shaderUnderwater.onLoad();
+    	shaderUnderground.onLoad();
+    	shaderWaterWall.onLoad();
     	
 		for(Map.Entry<String, VRenderable> m:renderables.entrySet()){  
-			m.getValue().init();			   
+			m.getValue().onLoad();			   
 		}
 		
         VRenderable r = get("water");

@@ -121,16 +121,18 @@ public class VStageMain extends InputListener {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = VStaticAssets.Fonts.calibri18Font;
         
-        String[] buttonLabelsTexts = {      		
-        		"Volcano",
-        		"Hill",
-        		"Sea",
-        		"Beach",
-        		"Rocks",
-        		"Rain"        		        		
+        String[] buttonLabelsTexts = {      		 
+    	        "Magmatic",
+    	        "Pegmatite",
+    	        "Hydrothermal",
+    	        "Pneymatolitic",
+    	        "Metamorphic",
+    	        "Chemical",
+    	        "Organic",
+    	        "Sediment"	        		
         };
         
-        for(int i=1; i<=6; i++){
+        for(int i=1; i<=8; i++){
         	Group g = new Group();
             ImageButton imgb = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-generic-on"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-generic"));
             imgb.setSize(buttonIconSize, buttonIconSize);
@@ -155,7 +157,9 @@ public class VStageMain extends InputListener {
         viewButtonsMap.get("B_VIEW3").setPosition(100, 400);
         viewButtonsMap.get("B_VIEW4").setPosition(300, 400);
         viewButtonsMap.get("B_VIEW5").setPosition(340, 300);
-        viewButtonsMap.get("B_VIEW6").setPosition(300, 200);        
+        viewButtonsMap.get("B_VIEW6").setPosition(300, 200);
+        viewButtonsMap.get("B_VIEW7").setPosition(200, 430);
+        viewButtonsMap.get("B_VIEW8").setPosition(200, 170);
         
 		float sWidth = mainStage.getWidth();
 		float sHeight = mainStage.getHeight();	
@@ -167,6 +171,12 @@ public class VStageMain extends InputListener {
         //!!!!!!!!!!!!! DEBUG 
         //mainStage.setDebugUnderMouse(true);
         
+	}
+	
+	public void onLoad(){
+		for(Map.Entry<String, VStageInfoWindow> m:infoWindowMap.entrySet()){  
+			m.getValue().onLoad();
+		}
 	}
 	
     public void renderLoader(){
@@ -336,7 +346,17 @@ public class VStageMain extends InputListener {
         	volcano.camera.setCameraState(VCamera.States.STATIC_6);
         	transitionCloseNavigationTable();	
         	transitionToStaticView(0.8f);
-        }         
+        }  
+        if(a.getName().compareTo("B_VIEW7") == 0){
+        	volcano.camera.setCameraState(VCamera.States.STATIC_7);
+        	transitionCloseNavigationTable();	
+        	transitionToStaticView(0.8f);
+        }  
+        if(a.getName().compareTo("B_VIEW8") == 0){
+        	volcano.camera.setCameraState(VCamera.States.STATIC_8);
+        	transitionCloseNavigationTable();	
+        	transitionToStaticView(0.8f);
+        }
         if(a.getName().compareTo("BUTTON_NAVI") == 0){
         	transitionOpenNavigationTable();
         }        
@@ -413,7 +433,51 @@ public class VStageMain extends InputListener {
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.pegmatiteProcessTitle);
         inf.setText(VStaticAssets.Text.pegmatiteProcessText, 210);
+        inf.addImage("foto/01.jpg");
+        inf.addImage("foto/01.jpg");        
         infoWindowMap.put("info2", inf);
+        
+        inf = new VStageInfoWindow(this);
+        inf.setTitle(VStaticAssets.Text.hydrothermalProcessTitle);
+        inf.setText(VStaticAssets.Text.hydrothermalProcessText, 210);
+        inf.addImage("foto/01.jpg");
+        inf.addImage("foto/01.jpg");        
+        infoWindowMap.put("info3", inf); 
+        
+        inf = new VStageInfoWindow(this);
+        inf.setTitle(VStaticAssets.Text.pneymatholiticProcessTitle);
+        inf.setText(VStaticAssets.Text.pneymatholiticProcessText, 210);
+        inf.addImage("foto/01.jpg");
+        inf.addImage("foto/01.jpg");        
+        infoWindowMap.put("info4", inf);         
+
+        inf = new VStageInfoWindow(this);
+        inf.setTitle(VStaticAssets.Text.methamorphicProcessTitle);
+        inf.setText(VStaticAssets.Text.methamorphicProcessText, 210);
+        inf.addImage("foto/01.jpg");
+        inf.addImage("foto/01.jpg");        
+        infoWindowMap.put("info5", inf);                 
+
+        inf = new VStageInfoWindow(this);
+        inf.setTitle(VStaticAssets.Text.chemicalProcessTitle);
+        inf.setText(VStaticAssets.Text.chemicalProcessText, 210);
+        inf.addImage("foto/01.jpg");
+        inf.addImage("foto/01.jpg");        
+        infoWindowMap.put("info6", inf);           
+        
+        inf = new VStageInfoWindow(this);
+        inf.setTitle(VStaticAssets.Text.organicProcessTitle);
+        inf.setText(VStaticAssets.Text.organicProcessText, 210);
+        inf.addImage("foto/01.jpg");
+        inf.addImage("foto/01.jpg");        
+        infoWindowMap.put("info7", inf);          
+
+        inf = new VStageInfoWindow(this);
+        inf.setTitle(VStaticAssets.Text.sedimentationProcessTitle);
+        inf.setText(VStaticAssets.Text.sedimentationProcessText, 210);
+        inf.addImage("foto/01.jpg");
+        inf.addImage("foto/01.jpg");        
+        infoWindowMap.put("info8", inf);          
         
     }
     //Called from camera transition complete callback
