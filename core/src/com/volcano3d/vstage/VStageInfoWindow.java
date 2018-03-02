@@ -103,6 +103,7 @@ public class VStageInfoWindow extends Group{
         main.mainStage.addActor(this);
         
         this.setVisible(false);
+        this.setColor(1, 1, 1, 0);
 	}
 	
 	public void onLoad(){
