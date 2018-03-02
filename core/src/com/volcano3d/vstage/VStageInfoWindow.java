@@ -196,11 +196,13 @@ public class VStageInfoWindow extends Group{
 		isDragging = false;
 		dragOffset = 0;
 		recalculateResetImgPositions();
+		this.clearActions();
 		this.addAction(Actions.sequence(Actions.show(), Actions.fadeIn(0.8f)));
 	}
 	public void hide(){
 		isDragging = false;
-		dragOffset = 0;		
+		dragOffset = 0;
+		this.clearActions();
 		this.addAction(Actions.sequence(Actions.fadeOut(0.8f), Actions.hide()));
 	}
 	public void act(float delta){
