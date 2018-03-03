@@ -41,6 +41,36 @@ public class VStaticAssets {
 		public static final String intro5Text = "Endogēnie procesi gandrīz vienmēr notiek Zemes iekšienē lielākā vai mazākā dziļumā paaugstināta spiediena un augstas temperatūras apstākļos. Endogēnos procesus iedala vēl sīkāk: magmatiskie, pegmatītu, pneimatolītiskie, hidrotermālie un metamorfisma.";
 		public static final String intro6Text = "Eksogēnie minerālu veidošanās procesi notiek Zemes virspusē vai ļoti nelielā dziļumā zemas temperatūras un tāda spiediena apstākļos, kas ir tuvs atmosfēras spiedienam. Eksogēnos procesus vēl sīkāk iedala dēdēšanas, sedimentācijas un bioloģiskajos procesos.";
 		
+		public static final String chem1 = "Malahīts";
+		public static final String chem2 = "Kaolinīts";
+		public static final String chem3 = "Eritrins";
+		public static final String hidro1 = "Zelts";
+		public static final String hidro2 = "Galenīts";
+		public static final String hidro3 = "Realgars";
+		public static final String hidro4 = "";
+		public static final String magm1 = "Kvarcs";
+		public static final String magm2 = "Sodalīts";
+		public static final String magm3 = "Apatīts";
+		public static final String magm4 = "";
+		public static final String metam1 = "Kianīts";
+		public static final String metam2 = "Talks";
+		public static final String metam3 = "Tremolīts";
+		public static final String metam4 = "";
+		public static final String metam5 = "";
+		public static final String organ1 = "Organogenais kaļķakmens";
+		public static final String organ2 = "";
+		public static final String pegma1 = "Spodumens";
+		public static final String pegma2 = "Mikroklīns";
+		public static final String pegma3 = "Berils";
+		public static final String pneim1 = "Sērs";
+		public static final String pneim2 = "Opāls";
+		public static final String pneim3 = "Stilbits";
+		public static final String pneim4 = "";
+		public static final String pneim5 = "";
+		public static final String sedim1 = "Halīts";
+		public static final String sedim2 = "Silvīns";
+		public static final String sedim3 = "Ģipsis";
+		public static final String sedim4 = "";
 	}
 	public static class ActorActionsPaths{
 		public static final float[][] pathView1ButtonMoveIn = {

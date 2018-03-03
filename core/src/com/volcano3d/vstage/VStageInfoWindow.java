@@ -3,6 +3,7 @@ package com.volcano3d.vstage;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.volcano3d.vcore.VStaticAssets;
@@ -17,9 +19,13 @@ import com.volcano3d.vcore.VStaticAssets;
 public class VStageInfoWindow extends Group{
 	
 	public class ImageExpandable extends Image{
+		public ImageExpandable(){
+			super();
+		}		
 		public ImageExpandable(Texture t){
 			super(t);
 		}
+		public String fileName = "";
 		public float thumbnailWidth = 0;
 		public float thumbnailHeight = 0;
 		public float fullWidth = 0;
@@ -28,6 +34,7 @@ public class VStageInfoWindow extends Group{
 		public float thumbnailPositionX = 0;		
 		public float aspect = 0;	
 		public boolean imageOpen = false;
+		public String annotation = ""; 
 	};
 	
 	public VStageMain 	mainStage = null;
@@ -36,7 +43,8 @@ public class VStageInfoWindow extends Group{
     public Label		text = null;
     public Table		messageTable = null;
     public Table 		imageSliderTable = null;    
-    public Array<ImageExpandable>	images = new Array<ImageExpandable>();
+    public Array<ImageExpandable>	images = new Array<ImageExpandable>();	
+	public Label 		imageLabel = null;	//TODO Image label
     
     public float		dragLimit = 0;
     public float		dragPos = 0;    
@@ -56,6 +64,8 @@ public class VStageInfoWindow extends Group{
     public final float 		textMargin = 20;
     
     public Array<String>	imagesFileNames = new Array<String>();
+    
+    public Array<ImageExpandable>	imagesPreloader = new Array<ImageExpandable>();    
     
 	public VStageInfoWindow(VStageMain main){
 		
@@ -98,6 +108,16 @@ public class VStageInfoWindow extends Group{
         
         this.addActor(imageSliderTable);
         
+        imageLabel = new Label("Attēla komentārs", new Label.LabelStyle(VStaticAssets.Fonts.calibri25Font, Color.WHITE));
+        imageLabel.setWidth(contentWidth);
+        imageLabel.setHeight(25);
+        imageLabel.setAlignment(Align.top);
+        imageLabel.setPosition(0, sliderPositionY - 25 - 5);
+        imageLabel.setVisible(false);
+        imageLabel.setColor(1, 1, 1, 0);
+        
+        this.addActor(imageLabel);
+        
         labelColor.dispose();
                 
         main.mainStage.addActor(this);
@@ -107,8 +127,8 @@ public class VStageInfoWindow extends Group{
 	}
 	
 	public void onLoad(){
-		for(int i=0; i<imagesFileNames.size; i++){
-			initCreateImage(imagesFileNames.get(i));
+		for(int i=0; i<imagesPreloader.size; i++){
+			initImage(imagesPreloader.get(i));
 		}
 	}
 	
@@ -125,24 +145,25 @@ public class VStageInfoWindow extends Group{
 		top = top - titleMargin - messageTable.getHeight();
 		messageTable.setPosition(0, top);
 	}	
-	public void addImage(String imageFileName){
-		imagesFileNames.add(imageFileName);
-		mainStage.volcano.assetsManager.load(imageFileName, Texture.class);
+	public void addImage(String fileName, String annotation){
+		ImageExpandable img = new ImageExpandable();
+		img.fileName = fileName;
+		img.annotation = annotation;
+		mainStage.volcano.assetsManager.load(fileName, Texture.class);
+		imagesPreloader.add(img);
 	}
-	public void initCreateImage(String imageFileName){
-		
-		if(!mainStage.volcano.assetsManager.isLoaded(imageFileName)){
+	public void initImage(ImageExpandable image){
+		if(!mainStage.volcano.assetsManager.isLoaded(image.fileName)){
 			return;
 		}
-			
-		Texture texImage = mainStage.volcano.assetsManager.get(imageFileName, Texture.class);
-		
+		Texture texImage = mainStage.volcano.assetsManager.get(image.fileName, Texture.class);		
 		float aspect = (float)texImage.getWidth() / (float)texImage.getHeight();
+				
+		image.setDrawable(new TextureRegionDrawable(new TextureRegion(texImage)));
 		
-		ImageExpandable image = new ImageExpandable(texImage);
-        image.setName(imageFileName);
-        
         float maxHeight = imageSliderTable.getHeight() - (imageMarginTopBottom * 2);
+        
+        image.setName(image.fileName);
         
         image.thumbnailHeight = maxHeight;
         image.thumbnailWidth = (float)maxHeight * aspect;
@@ -176,6 +197,9 @@ public class VStageInfoWindow extends Group{
         	dragPos = 0;
         }
 	}
+	public void addImage(String imageFileName){
+		addImage(imageFileName, "");
+	}
 	public float recalculateResetImgPositions(){
 		float imgOffset = 0;
 		for(int i=0; i<images.size; i++){
@@ -205,6 +229,7 @@ public class VStageInfoWindow extends Group{
 		dragOffset = 0;
 		this.clearActions();
 		this.addAction(Actions.sequence(Actions.fadeOut(0.8f), Actions.hide()));
+		imageLabel.addAction(Actions.sequence(Actions.fadeOut(0.3f), Actions.hide()));
 	}
 	public void act(float delta){
 		super.act(delta);
@@ -236,7 +261,13 @@ public class VStageInfoWindow extends Group{
 			dragOffset = relx;
 			return;
 		}
-		dragPos += (relx - dragOffset);
+		float dragrel = (relx - dragOffset);
+		if(Math.abs(dragrel) < 6){
+			isDragging = false;
+			dragOffset = 0;
+			return;			
+		}
+		dragPos += dragrel;
 		if(dragPos > 0)dragPos=0;
 		if(dragPos < dragLimit)dragPos = dragLimit;
 		recalculateResetImgPositions();		
@@ -268,7 +299,9 @@ public class VStageInfoWindow extends Group{
 							)
 						);
 				imageSliderTable.addAction(Actions.sizeTo(imageSliderTable.getWidth(), sliderHeight, 0.3f));				
-
+				imageLabel.clearActions();
+				imageLabel.addAction(Actions.sequence(Actions.fadeOut(0.3f), Actions.hide()));
+				
 				return;
 			}
 			if(!isDragging){
@@ -277,7 +310,7 @@ public class VStageInfoWindow extends Group{
 					for(int i=0; i<images.size; i++){
 						ImageExpandable img = images.get(i);
 						im.imageOpen = false;
-						if(img == target)img.setZIndex(50);
+						if(img == target)img.setZIndex(50);	
 						else img.setZIndex(0);						
 					}
 					
@@ -287,6 +320,11 @@ public class VStageInfoWindow extends Group{
 					im.addAction(Actions.parallel(Actions.sizeTo(im.fullWidth, im.fullHeight, 0.3f),
 													Actions.moveTo(im.fullPositionX, imageMarginTopBottom, 0.3f)));
 					imageSliderTable.addAction(Actions.sizeTo(imageSliderTable.getWidth(), im.fullHeight + (imageMarginTopBottom * 2), 0.3f));
+
+					imageLabel.clearActions();
+					imageLabel.setText(im.annotation);
+					imageLabel.setColor(1,1,1,0);
+					imageLabel.addAction(Actions.sequence(Actions.delay(0.3f),Actions.show(), Actions.fadeIn(0.2f)));
 				}
 			}else{		
 				isDragging = false;
