@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -293,9 +294,11 @@ public class VStageInfoWindow extends Group{
 
 				im.addAction(
 						Actions.sequence(
+							Actions.touchable(Touchable.disabled),	
 							Actions.parallel(Actions.sizeTo(im.thumbnailWidth, im.thumbnailHeight, 0.3f),
 											Actions.moveTo(im.thumbnailPositionX, imageMarginTopBottom, 0.3f)),
-							Actions.run(new MyRun(im))
+							Actions.run(new MyRun(im)),
+							Actions.touchable(Touchable.enabled)
 							)
 						);
 				imageSliderTable.addAction(Actions.sizeTo(imageSliderTable.getWidth(), sliderHeight, 0.3f));				
@@ -317,8 +320,15 @@ public class VStageInfoWindow extends Group{
 					im.thumbnailPositionX = im.getX();
 					isImageOpen = true;
 					im.imageOpen = true;
-					im.addAction(Actions.parallel(Actions.sizeTo(im.fullWidth, im.fullHeight, 0.3f),
-													Actions.moveTo(im.fullPositionX, imageMarginTopBottom, 0.3f)));
+					im.addAction(Actions.sequence(
+							Actions.touchable(Touchable.disabled),
+							Actions.parallel(
+									Actions.sizeTo(im.fullWidth, im.fullHeight, 0.3f),
+									Actions.moveTo(im.fullPositionX, imageMarginTopBottom, 0.3f)
+									),
+							Actions.touchable(Touchable.enabled)
+							));
+					
 					imageSliderTable.addAction(Actions.sizeTo(imageSliderTable.getWidth(), im.fullHeight + (imageMarginTopBottom * 2), 0.3f));
 
 					imageLabel.clearActions();

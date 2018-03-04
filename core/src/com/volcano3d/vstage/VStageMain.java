@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.volcano3d.utility.VCommon;
 import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcamerapresets.VCameraPresetStatic;
@@ -45,14 +46,18 @@ public class VStageMain extends InputListener {
 	
 	public ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-	public VActionFollowPath pathAction1 = null;	
-	public VActionFollowPath pathAction2 = new VActionFollowPath();	
-	public VActionFollowPath pathAction3 = new VActionFollowPath();	
+//	public VActionFollowPath pathAction1 = null;	
+//	public VActionFollowPath pathAction2 = null;	
+//	public VActionFollowPath pathAction3 = null;	
+	
+	public Array<VActionFollowPath> pathActions = new Array<VActionFollowPath>();
 	
 	protected Map<String, Group> viewButtonsMap = new HashMap<String, Group>();
 	
 	public VStageMainIntro introStage;
     
+	public boolean isNavigationOpen = false;
+	
 	protected Map<String, VStageInfoWindow> infoWindowMap = new HashMap<String, VStageInfoWindow>();
 	
 	public VStageMain(VMain s){
@@ -164,8 +169,15 @@ public class VStageMain extends InputListener {
 		float sWidth = mainStage.getWidth();
 		float sHeight = mainStage.getHeight();	
 		
-		pathAction1 = new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView1ButtonMoveIn, sWidth, sHeight);
-        
+		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView1ButtonMoveIn, sWidth, sHeight));
+		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView2ButtonMoveIn, sWidth, sHeight));
+		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView3ButtonMoveIn, sWidth, sHeight));
+		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView4ButtonMoveIn, sWidth, sHeight));
+		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView5ButtonMoveIn, sWidth, sHeight));
+		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView6ButtonMoveIn, sWidth, sHeight));
+		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView7ButtonMoveIn, sWidth, sHeight));
+		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView8ButtonMoveIn, sWidth, sHeight));
+		
         transitionCloseNavigationTable();
         
         //!!!!!!!!!!!!! DEBUG 
@@ -190,12 +202,13 @@ public class VStageMain extends InputListener {
 		
 		VCommon.drawSystemStats();
 		
-		/*
+		
 		shapeRenderer.setProjectionMatrix(mainStage.getCamera().combined);
-		pathAction1.drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
-		pathAction2.drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
-		pathAction3.drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
-		*/
+
+		for(int i=0; i<pathActions.size; i++){
+		//	pathActions.get(i).drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
+		}
+		
 	}
 	
 	public void transitionToStaticView(float delay){
@@ -256,36 +269,52 @@ public class VStageMain extends InputListener {
 	}	
 	
 	public void transitionOpenNavigationTable(){
-		
+		/*
 		for(Map.Entry<String, Group> m:viewButtonsMap.entrySet()){  
 			   Group g = m.getValue();
 			   g.setVisible(true);
 			   g.addAction(Actions.sequence(Actions.fadeIn(0.5f), Actions.touchable(Touchable.enabled)));
-		} 
+		} /**/
 		buttonCloseNavi.setVisible(true);
 		buttonCloseNavi.addAction(Actions.fadeIn(0.5f));
 		
-		/*
-		mainNavigationTable.clearActions();
+		isNavigationOpen = true;
 		
-		mainNavigationTable.addAction(Actions.sequence(Actions.show(), 
-										Actions.moveTo(0, 0, 0.5f, Interpolation.circle)
-									));
-		
-		pathAction1.setDuration(0.8f);
-		pathAction1.setReverse(false);
-		pathAction1.setInterpolation(Interpolation.circleOut);
-		buttonCloseNavi.addAction(Actions.sequence(Actions.fadeIn(0.5f),
-													Actions.show(),
-													pathAction1,
-													Actions.touchable(Touchable.enabled)
-													));
-		
-		
-		*/
+		float durationPath = 1;
+		float startDelay = 0;
+		for(int i=0; i<pathActions.size; i++){
+			VActionFollowPath p = pathActions.get(i);
+			p.setDuration(durationPath);
+			durationPath = durationPath - 0.1f;
+			p.setReverse(false);
+			//p.setInterpolation(Interpolation.circleOut);	
+			Group g = this.viewButtonsMap.get("B_VIEW"+(i+1));
+			if(g != null){
+				g.setVisible(false);
+				g.setPosition(buttonCenterPos.x, buttonCenterPos.y);
+				g.setColor(1,1,1,0);
+				g.clearActions();
+				g.addAction(
+						Actions.sequence(
+							Actions.delay(startDelay),
+							Actions.show(),						
+							Actions.parallel(
+								Actions.fadeIn(0.5f),
+								p
+							),
+							Actions.touchable(Touchable.enabled)
+						));	
+			}
+			startDelay += 0.1f;
+		}		
+
+		/**/
+
 	}
 	
 	public void transitionCloseNavigationTable(){
+		
+		isNavigationOpen = false;
 		
 		for(Map.Entry<String, Group> m:viewButtonsMap.entrySet()){  
 			   Group g = m.getValue();   
@@ -358,10 +387,12 @@ public class VStageMain extends InputListener {
         	transitionCloseNavigationTable();	
         	transitionToStaticView(0.8f);
         }
-        if(a.getName().compareTo("BUTTON_NAVI") == 0){
+        if(a.getName().compareTo("BUTTON_NAVI") == 0 && !isNavigationOpen){
+        	volcano.camera.cameraPanEnabled = false;
         	transitionOpenNavigationTable();
-        }        
-        if(a.getName().compareTo("BUTTON_CLOSENAVI") == 0){
+        }else if(a.getName().compareTo("BUTTON_CLOSENAVI") == 0 
+        		|| (isNavigationOpen && a.getName().compareTo("BUTTON_NAVI") == 0)){
+        	volcano.camera.cameraPanEnabled = true;
         	transitionCloseNavigationTable();
         }
         if(a.getName().compareTo("BUTTON_INFO") == 0){
@@ -492,7 +523,7 @@ public class VStageMain extends InputListener {
         inf.setText(VStaticAssets.Text.organicProcessText, 50);
         inf.addImage("foto/organ1.jpg", VStaticAssets.Text.organ1);
         inf.addImage("foto/organ2.jpg", VStaticAssets.Text.organ2);        
-        infoWindowMap.put("info7", inf);          
+        infoWindowMap.put("info7", inf);
 
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.sedimentationProcessTitle);

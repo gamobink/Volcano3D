@@ -10,6 +10,7 @@ public class VStaticAssets {
 	public static void Init(){
 		Fonts.calibri25Font.getData().setLineHeight(25);
 		Fonts.calibriLightFont.getData().setLineHeight(45);
+		Fonts.futuraFont.getData().setLineHeight(25);
 		//TODO Button on/off state images
 		GUI.buttonsSkin.addRegions(new TextureAtlas("gui.txt"));
 	}
@@ -74,21 +75,85 @@ public class VStaticAssets {
 	}
 	public static class ActorActionsPaths{
 		public static final float[][] pathView1ButtonMoveIn = {
-		        {0.489796f, 0.012500f},
-		        {0.497959f, 0.226250f},
-		        {0.322449f, 0.215000f},
-		        {0.053061f, 0.261250f},
-		        {0.038775f, 0.427500f},
-		        {0.116326f, 0.700000f},
-		        {0.606122f, 0.758750f},
-		        {0.914286f, 0.506250f},
-		        {0.781633f, 0.350000f}
+				{0.424490f, 0.012500f},
+				{0.465306f, 0.197500f},
+				{0.251020f, 0.261250f},
+				{0.004082f, 0.221250f},
+				{-0.022449f, 0.428750f},
+				{-0.146939f, 0.710000f},
+				{0.736735f, 0.791250f},
+				{1.006122f, 0.525000f},
+				{0.855102f, 0.215000f},
+				{0.508163f, 0.133750f},
+				{0.214286f, 0.263750f},
 			};
+		public static final float[][] pathView2ButtonMoveIn = {
+				{0.424490f, 0.012500f},
+				{0.465306f, 0.197500f},
+				{0.251020f, 0.261250f},
+				{0.024490f, 0.231250f},
+				{-0.022449f, 0.428750f},
+				{-0.146939f, 0.710000f},
+				{0.789796f, 0.702500f},
+				{0.932653f, 0.513750f},
+				{0.765306f, 0.203750f},
+				{0.410204f, 0.213750f},
+		};
+		public static final float[][] pathView3ButtonMoveIn = {
+				{0.424490f, 0.012500f},
+				{0.465306f, 0.197500f},
+				{0.251020f, 0.261250f},
+				{0.106122f, 0.177500f},
+				{-0.022449f, 0.428750f},
+				{-0.146939f, 0.710000f},
+				{0.814286f, 0.691250f},
+				{0.855102f, 0.411250f},
+				{0.610204f, 0.250000f},
+		};
+		public static final float[][] pathView4ButtonMoveIn = {
+				{0.424490f, 0.012500f},
+				{0.461224f, 0.275000f},
+				{0.077551f, 0.183750f},
+				{-0.057143f, 0.385000f},
+				{0.020408f, 0.678750f},
+				{0.730612f, 0.631250f},
+				{0.700000f, 0.376250f},
+		};		
+		public static final float[][] pathView5ButtonMoveIn = {
+				{0.424490f, 0.012500f},
+				{0.481633f, 0.282500f},
+				{-0.038776f, 0.196250f},
+				{-0.108163f, 0.501250f},
+				{0.422449f, 0.648750f},
+				{0.606122f, 0.502500f},
+		};		
+		public static final float[][] pathView6ButtonMoveIn = {
+				{0.424490f, 0.012500f},
+				{0.475510f, 0.266250f},
+				{0.034694f, 0.182500f},
+				{0.008163f, 0.446250f},
+				{0.187755f, 0.543750f},
+				{0.410204f, 0.543750f},
+		};		
+		public static final float[][] pathView7ButtonMoveIn = {
+				{0.424490f, 0.012500f},
+				{0.471429f, 0.228750f},
+				{0.138775f, 0.205000f},
+				{0.038775f, 0.373750f},
+				{0.204082f, 0.500000f},
+		};		
+		public static final float[][] pathView8ButtonMoveIn = {
+				{0.424490f, 0.012500f},
+				{0.461224f, 0.211250f},
+				{0.163265f, 0.205000f},
+				{0.132653f, 0.373750f},
+		};				
 	}
 	public static class Fonts{
 		public static final BitmapFont calibriLightFont = new BitmapFont(Gdx.files.internal("fonts/calibri-light-50.fnt"));
 		public static final BitmapFont calibri25Font = new BitmapFont(Gdx.files.internal("fonts/calibri-25.fnt"));
-		public static final BitmapFont calibri18Font = new BitmapFont(Gdx.files.internal("fonts/calibri-18.fnt"));		
+		public static final BitmapFont calibri18Font = new BitmapFont(Gdx.files.internal("fonts/calibri-18.fnt"));
+		public static final BitmapFont futuraFont = new BitmapFont(Gdx.files.internal("fonts/futura-32.fnt"));
 	}
 	public static class GUI{
 		public static final Skin buttonsSkin = new Skin();

@@ -80,18 +80,29 @@ public class VMain{
         
         scene.create();
 
-        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-220, 140, -10), new Vector2(36,50))); 	//0 - Magmatic 
-        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-32, 82, 8), new Vector2(36,50)));		//1 - Pegmatite
-        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-330, 62, -80), new Vector2(36,50)));	//2 - hydrothermal
-        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-220, 170, -150), new Vector2(36,50)));	//3 - pneymatolitic
-        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-100, 32, -100), new Vector2(36,50)));	//4 - metamorphic        
-        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(80, 25, 8), new Vector2(36,50)));		//5 - chemical
-        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(146, 25, -216), new Vector2(36,50)));	//6 - organic
-        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(0, 25, -550), new Vector2(36,50)));		//7 - sediment        
-
+//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-220, 140, -10), new Vector2(36,50))); 	//0 - Magmatic 
+//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-32, 82, 8), new Vector2(36,50)));		//1 - Pegmatite
+//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-330, 62, -80), new Vector2(36,50)));	//2 - hydrothermal
+//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-220, 170, -150), new Vector2(36,50)));	//3 - pneymatolitic
+//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-100, 32, -100), new Vector2(36,50)));	//4 - metamorphic        
+//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(80, 25, 8), new Vector2(36,50)));		//5 - chemical
+//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(146, 25, -216), new Vector2(36,50)));	//6 - organic
+//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(0, 25, -550), new Vector2(36,50)));		//7 - sediment        
+        
+        Vector2 pinheadSize = new Vector2(26,25);
+        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(-220, 140, -10), pinheadSize)); 	//0 - Magmatic 
+        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(-32, 82, 8), pinheadSize));		//1 - Pegmatite
+        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(-330, 62, -80), pinheadSize));	//2 - hydrothermal
+        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(-220, 170, -150), pinheadSize));	//3 - pneymatolitic
+        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(-100, 32, -100), pinheadSize));	//4 - metamorphic        
+        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(80, 25, 8), pinheadSize));		//5 - chemical
+        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(146, 25, -216), pinheadSize));	//6 - organic
+        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(0, 25, -550), pinheadSize));		//7 - sediment        
+        
+        
         particleEffectSmoke = new VParticleEffect(this, "point.pfx");
 
-        pathEdit.setPath(stage2D.pathAction1, "pathAction1");
+        pathEdit.setPath(stage2D.pathActions.get(0), "pathAction1");
     }    
     //Call on loading complete
     void onLoad(){
@@ -210,25 +221,36 @@ public class VMain{
     public void onKeyDown(int keycode){
     	camera.onKeyDown(keycode);
     	
-//    	System.out.println(keycode);
-    	/*
+    	//System.out.println(keycode);
+    	
     	if(keycode == 51){	//'W'   
     		this.switchInputProc(true);
     	}
     	if(keycode == 8){	//'1'   
-    		pathEdit.setPath(stage2D.pathAction1, "pathAction1");
+    		pathEdit.setPath(stage2D.pathActions.get(0), "pathAction1");
     	}
     	if(keycode == 9){	//'2'    		
-    		pathEdit.setPath(stage2D.pathAction2, "pathAction2");
+    		pathEdit.setPath(stage2D.pathActions.get(1), "pathAction2");
     	}    	
     	if(keycode == 10){	//'3'    		
-    		pathEdit.setPath(stage2D.pathAction3, "pathAction3");
+    		pathEdit.setPath(stage2D.pathActions.get(2), "pathAction3");
     	} 
     	if(keycode == 11){	//'4'    		
-    	//	renderUndergroundPart1 = false;
-    	//	camera.setCameraMode(3);
+    		pathEdit.setPath(stage2D.pathActions.get(3), "pathAction4");
     	} 
-    	 	*/
+    	if(keycode == 12){   		
+    		pathEdit.setPath(stage2D.pathActions.get(4), "pathAction5");
+    	} 
+    	if(keycode == 13){    		
+    		pathEdit.setPath(stage2D.pathActions.get(5), "pathAction6");
+    	} 
+    	if(keycode == 14){   		
+    		pathEdit.setPath(stage2D.pathActions.get(6), "pathAction7");
+    	}  
+    	if(keycode == 15){   		
+    		pathEdit.setPath(stage2D.pathActions.get(7), "pathAction8");
+    	}      	
+    	 /**/
     }
     
     public void dispose(){
@@ -241,16 +263,17 @@ public class VMain{
     	stage2D.introStage.hideIntro();
     	
     	if(userActionActiveCountdown != null)userActionActiveCountdown.cancel();
-    	
+    	/*
     	userActionActiveCountdown = Timer.schedule(new Timer.Task() {
 	        @Override
 	        public void run(){
 	        	onUserActionLost();
-	        }}, userActionActiveDelay);
+	        }}, userActionActiveDelay);*/
     }
     public void onUserActionLost(){
     	userActionActiveCountdown = null;
     	userActionActive = false;
+    	stage2D.hideAllInfoWindows();
     	stage2D.introStage.showIntro();
     	camera.setCameraState(VCamera.States.MAIN);
     	stage2D.transitionToMainView();
@@ -262,23 +285,36 @@ public class VMain{
     		angleUnits += 360.0f;    		
     	}
     	
-    	float waterFade = 1.0f;
+    	float water1Fade = 1.0f;
+    	float water2Fade = 1.0f;    	
     	float groundPart1Fade = 1.0f;
     	float groundPart2Fade = 1.0f;
     	
     	if(camera.getState() != VCamera.States.MAIN){
-	    	if(angleUnits < 36 || (angleUnits > 177 && angleUnits < 360))waterFade = 0.0f;
+	    	if(angleUnits < 36 || (angleUnits > 270 && angleUnits < 360))water1Fade = 0.0f;
+
+	    	if(angleUnits < 226 && angleUnits > 170)water2Fade = 0.0f;	    	
+	    	
+	    	if(angleUnits < 322 && angleUnits > 226){
+	    		water1Fade = 0.0f;
+	    		water2Fade = 0.0f;	    		
+	    	}	    	
 	    	if(angleUnits < 48 || angleUnits > 280)groundPart1Fade = 0.0f;
 	    	if(angleUnits < 241 && angleUnits > 76)groundPart2Fade = 0.0f;
     	}
     	    	
-        scene.get("water").alphaFader.set("water", waterFade, 1f);    	
-        scene.get("ground").alphaFader.set("groundPart1", groundPart2Fade, 1f);
-        scene.get("ground").alphaFader.set("groundPart4", groundPart1Fade, 1f);
-        scene.get("ground").alphaFader.set("groundFar1", groundPart2Fade, 1f);
+        scene.get("water").alphaFader.set("water1", water1Fade, 5f, 1f);    	
+        scene.get("water").alphaFader.set("water2", water2Fade, 5f, 1f);    	        
+        scene.get("ground").alphaFader.set("groundPart1", groundPart2Fade, 3f, 0.7f);
+        scene.get("ground").alphaFader.set("groundPart4", groundPart1Fade, 3f, 0.7f);
+        scene.get("ground").alphaFader.set("groundFar1", groundPart2Fade, 3f, 0.7f);
 
         
-        float decalsFade = (camera.getState() == VCamera.States.MAIN && userActionActive) ? 1.0f : 0.0f;
+        float decalsFade = 0.0f;
+        
+        if(camera.getState() == VCamera.States.MAIN 
+        		&& userActionActive
+        		&& !stage2D.isNavigationOpen)decalsFade = 1.0f;
     	    	
         decalsTags.alphaFader.set("all", decalsFade, 1.0f);
     	

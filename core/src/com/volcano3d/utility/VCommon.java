@@ -20,11 +20,19 @@ public class VCommon {
         return diff;
 	} 
 	
+	public static void drawTextLine(String text, float x, float y){
+		spriteBatch.begin();	
+		VStaticAssets.Fonts.calibri18Font.draw(spriteBatch, text, x, y);
+		spriteBatch.end();
+	}
+	
 	public static void drawSystemStats(){		
+		/*
 		float fps = 1.0f/Gdx.graphics.getDeltaTime();		
 		spriteBatch.begin();	
 		VStaticAssets.Fonts.calibri18Font.draw(spriteBatch, "fps:"+fps, 10, 20);
 		spriteBatch.end();		
+		*/
 	}
 	
 	public static float lerp(float a, float b, float f){

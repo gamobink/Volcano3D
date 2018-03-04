@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.volcano3d.utility.VCommon;
 import com.volcano3d.vcore.VMain;
 
 public class VFollowPathEditor extends InputListener  {
@@ -65,7 +66,15 @@ public class VFollowPathEditor extends InputListener  {
 	public void render(){	
 
 		stage.draw();
-
+		
+		VCommon.drawTextLine("Path: "+varName, 5, 135);
+		VCommon.drawTextLine("Edit - w", 5, 115);
+		VCommon.drawTextLine("Select path - 1-8", 5, 95);		
+		VCommon.drawTextLine("Send data to console - space", 5, 75);	
+		VCommon.drawTextLine("Delete point - del", 5, 55);	
+		VCommon.drawTextLine("Add points - a", 5, 35);		
+		VCommon.drawTextLine("Exit editor - q", 5, 15);
+		
 		shapeRenderer.setProjectionMatrix(stage.getCamera().combined);
 		
 		path.drawDebug(shapeRenderer);
@@ -111,7 +120,8 @@ public class VFollowPathEditor extends InputListener  {
 				Vector2 p = path.controlPoints.get(i).cpy();
 				p.x = p.x / stage.getWidth();
 				p.y = p.y / stage.getHeight();				
-				System.out.format(varName+".addPoint(%ff"+suffixX+", %ff"+suffixY+");", p.x, p.y);System.out.println("");
+				//System.out.format(varName+".addPoint(%ff"+suffixX+", %ff"+suffixY+");", p.x, p.y);System.out.println("");
+				System.out.format("{%ff, %ff},", p.x, p.y);System.out.println("");				
 			}	
 		}
 		return true;

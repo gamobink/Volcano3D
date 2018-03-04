@@ -86,9 +86,13 @@ public class VScene {
 		
         VRenderable r = get("water");
         
-        r.setReflectionTexture("water", waterTexturesArray.get(0).get());
-        r.setAmbientTexture("water", waterTexturesArray.get(1).get());
-        r.setSpecularTexture("water", waterTexturesArray.get(2).get());
+        r.setReflectionTexture("water1", waterTexturesArray.get(0).get());
+        r.setAmbientTexture("water1", waterTexturesArray.get(1).get());
+        r.setSpecularTexture("water1", waterTexturesArray.get(2).get());
+        
+        r.setReflectionTexture("water2", waterTexturesArray.get(0).get());
+        r.setAmbientTexture("water2", waterTexturesArray.get(1).get());
+        r.setSpecularTexture("water2", waterTexturesArray.get(2).get());
         
         r.setReflectionTexture("waterCenter", waterTexturesArray.get(0).get());
         r.setAmbientTexture("waterCenter", waterTexturesArray.get(1).get());
@@ -103,7 +107,8 @@ public class VScene {
         waterMove = waterMove % 1;
         
         VRenderable r = get("water");
-        r.setShininess("water", waterMove);
+        r.setShininess("water1", waterMove);
+        r.setShininess("water2", waterMove);        
         r.setShininess("waterCenter", waterMove);  
 
         get("skybox").render(camera.get(), environment);
