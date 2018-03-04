@@ -47,6 +47,7 @@ public class VStageMain extends InputListener {
 	public ShapeRenderer shapeRenderer = new ShapeRenderer();
 	
 	public Array<VActionFollowPath> pathActionsButtonsIn = new Array<VActionFollowPath>();
+	public Array<VActionFollowPath> pathActionsButtonsOut = new Array<VActionFollowPath>();
 	
 	protected Map<String, Group> viewButtonsMap = new HashMap<String, Group>();
 	
@@ -173,10 +174,19 @@ public class VStageMain extends InputListener {
 		pathActionsButtonsIn.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView6ButtonMoveIn, sWidth, sHeight));
 		pathActionsButtonsIn.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView7ButtonMoveIn, sWidth, sHeight));
 		pathActionsButtonsIn.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView8ButtonMoveIn, sWidth, sHeight));
+
+		pathActionsButtonsOut.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView1ButtonMoveOut, sWidth, sHeight));
+		pathActionsButtonsOut.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView2ButtonMoveOut, sWidth, sHeight));
+		pathActionsButtonsOut.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView3ButtonMoveOut, sWidth, sHeight));
+		pathActionsButtonsOut.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView4ButtonMoveOut, sWidth, sHeight));
+		pathActionsButtonsOut.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView5ButtonMoveOut, sWidth, sHeight));
+		pathActionsButtonsOut.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView6ButtonMoveOut, sWidth, sHeight));
+		pathActionsButtonsOut.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView7ButtonMoveOut, sWidth, sHeight));
+		pathActionsButtonsOut.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView8ButtonMoveOut, sWidth, sHeight));		
 		
         transitionCloseNavigationTable();
         
-        //!!!!!!!!!!!!! DEBUG 
+        //!!!!!!!!!!!!! DEBUG
 //        mainStage.setDebugUnderMouse(true);
 //        mainStage.setDebugAll(true);
         
@@ -204,7 +214,9 @@ public class VStageMain extends InputListener {
 		for(int i=0; i<pathActionsButtonsIn.size; i++){
 		//	pathActionsButtonsIn.get(i).drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
 		}
-		
+		for(int i=0; i<pathActionsButtonsOut.size; i++){
+		//	pathActionsButtonsOut.get(i).drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
+		}		
 	}
 	
 	public void transitionToStaticView(float delay){
@@ -276,12 +288,20 @@ public class VStageMain extends InputListener {
 		
 		isNavigationOpen = true;
 		
-		float durationPath = 1;
+		final float durations[] = {
+				0.8f,	//1 
+				0.7f,	//2 
+				0.6f,	//3	
+				0.5f,	//4 
+				0.4f,	//5 
+				0.3f,	//6 
+				0.2f,	//7
+				0.1f,	//8		
+		};
 		float startDelay = 0;
 		for(int i=0; i<pathActionsButtonsIn.size; i++){
 			VActionFollowPath p = pathActionsButtonsIn.get(i);
-			p.setDuration(durationPath);
-			durationPath = durationPath - 0.1f;
+			p.setDuration(durations[i]);
 			p.setReverse(false);
 			//p.setInterpolation(Interpolation.circleOut);	
 			Group g = this.viewButtonsMap.get("B_VIEW"+(i+1));
@@ -295,7 +315,7 @@ public class VStageMain extends InputListener {
 							Actions.delay(startDelay),
 							Actions.show(),						
 							Actions.parallel(
-								Actions.fadeIn(0.5f),
+								Actions.fadeIn(durations[i]),
 								p
 							),
 							Actions.touchable(Touchable.enabled)
@@ -312,11 +332,11 @@ public class VStageMain extends InputListener {
 		
 		isNavigationOpen = false;
 		
-		for(Map.Entry<String, Group> m:viewButtonsMap.entrySet()){  
-			   Group g = m.getValue();   
-			   g.clearActions();
-			   g.addAction(Actions.sequence(Actions.touchable(Touchable.disabled), Actions.fadeOut(0.5f)));
-		} 
+//		for(Map.Entry<String, Group> m:viewButtonsMap.entrySet()){  
+//			   Group g = m.getValue();   
+//			   g.clearActions();
+//			   g.addAction(Actions.sequence(Actions.touchable(Touchable.disabled), Actions.fadeOut(0.5f)));
+//		} 
 		buttonCloseNavi.clearActions();
 		buttonCloseNavi.addAction(Actions.fadeOut(0.5f));
 		/*
@@ -336,6 +356,37 @@ public class VStageMain extends InputListener {
 													Actions.fadeOut(0.5f)
 													));
 													*/
+		final float durations[] = {
+				0.6f,	//1 [6]
+				0.7f,	//2 [7]
+				0.8f,	//3	[8]
+				0.1f,	//4 [1]
+				0.2f,	//5 [2]
+				0.3f,	//6 [3]
+				0.4f,	//7 [4]
+				0.5f,	//8	[5]			
+		};
+		
+		for(int i=0; i<pathActionsButtonsOut.size; i++){
+			VActionFollowPath p = pathActionsButtonsOut.get(i);
+			p.setDuration(durations[i]);
+			p.setReverse(true);
+			//p.setInterpolation(Interpolation.circleOut);	
+			Group g = this.viewButtonsMap.get("B_VIEW"+(i+1));
+			if(g != null){
+				//g.setColor(1,1,1,1);
+				g.clearActions();
+				g.addAction(
+						Actions.sequence(
+							Actions.touchable(Touchable.disabled),
+							Actions.parallel(
+								Actions.fadeOut(durations[i]),
+								p
+							),
+							Actions.hide()
+						));	
+			}
+		}		
 	}	
 	
     public void touchUp (InputEvent e, float x, float y, int pointer, int button) {
