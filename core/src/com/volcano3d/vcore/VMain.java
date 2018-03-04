@@ -79,15 +79,6 @@ public class VMain{
         environment.set(new ColorAttribute(ColorAttribute.Fog, 0.6f, 0.6f, 0.8f, 1f));
         
         scene.create();
-
-//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-220, 140, -10), new Vector2(36,50))); 	//0 - Magmatic 
-//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-32, 82, 8), new Vector2(36,50)));		//1 - Pegmatite
-//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-330, 62, -80), new Vector2(36,50)));	//2 - hydrothermal
-//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-220, 170, -150), new Vector2(36,50)));	//3 - pneymatolitic
-//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(-100, 32, -100), new Vector2(36,50)));	//4 - metamorphic        
-//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(80, 25, 8), new Vector2(36,50)));		//5 - chemical
-//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(146, 25, -216), new Vector2(36,50)));	//6 - organic
-//        decalsTags.addDecal(new VDecal("pinhead1.png", new Vector3(0, 25, -550), new Vector2(36,50)));		//7 - sediment        
         
         Vector2 pinheadSize = new Vector2(26,25);
         decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(-220, 140, -10), pinheadSize)); 	//0 - Magmatic 
@@ -99,10 +90,9 @@ public class VMain{
         decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(146, 25, -216), pinheadSize));	//6 - organic
         decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(0, 25, -550), pinheadSize));		//7 - sediment        
         
-        
         particleEffectSmoke = new VParticleEffect(this, "point.pfx");
 
-        pathEdit.setPath(stage2D.pathActions.get(0), "pathAction1");
+        pathEdit.setPath(stage2D.pathActionsButtonsIn.get(0), "pathAction1");
     }    
     //Call on loading complete
     void onLoad(){
@@ -227,28 +217,28 @@ public class VMain{
     		this.switchInputProc(true);
     	}
     	if(keycode == 8){	//'1'   
-    		pathEdit.setPath(stage2D.pathActions.get(0), "pathAction1");
+    		pathEdit.setPath(stage2D.pathActionsButtonsIn.get(0), "pathAction1");
     	}
     	if(keycode == 9){	//'2'    		
-    		pathEdit.setPath(stage2D.pathActions.get(1), "pathAction2");
+    		pathEdit.setPath(stage2D.pathActionsButtonsIn.get(1), "pathAction2");
     	}    	
     	if(keycode == 10){	//'3'    		
-    		pathEdit.setPath(stage2D.pathActions.get(2), "pathAction3");
+    		pathEdit.setPath(stage2D.pathActionsButtonsIn.get(2), "pathAction3");
     	} 
     	if(keycode == 11){	//'4'    		
-    		pathEdit.setPath(stage2D.pathActions.get(3), "pathAction4");
+    		pathEdit.setPath(stage2D.pathActionsButtonsIn.get(3), "pathAction4");
     	} 
     	if(keycode == 12){   		
-    		pathEdit.setPath(stage2D.pathActions.get(4), "pathAction5");
+    		pathEdit.setPath(stage2D.pathActionsButtonsIn.get(4), "pathAction5");
     	} 
     	if(keycode == 13){    		
-    		pathEdit.setPath(stage2D.pathActions.get(5), "pathAction6");
+    		pathEdit.setPath(stage2D.pathActionsButtonsIn.get(5), "pathAction6");
     	} 
     	if(keycode == 14){   		
-    		pathEdit.setPath(stage2D.pathActions.get(6), "pathAction7");
+    		pathEdit.setPath(stage2D.pathActionsButtonsIn.get(6), "pathAction7");
     	}  
     	if(keycode == 15){   		
-    		pathEdit.setPath(stage2D.pathActions.get(7), "pathAction8");
+    		pathEdit.setPath(stage2D.pathActionsButtonsIn.get(7), "pathAction8");
     	}      	
     	 /**/
     }

@@ -45,12 +45,8 @@ public class VStageMain extends InputListener {
 	private Vector2	buttonInfoLeftPos = new Vector2();	
 	
 	public ShapeRenderer shapeRenderer = new ShapeRenderer();
-
-//	public VActionFollowPath pathAction1 = null;	
-//	public VActionFollowPath pathAction2 = null;	
-//	public VActionFollowPath pathAction3 = null;	
 	
-	public Array<VActionFollowPath> pathActions = new Array<VActionFollowPath>();
+	public Array<VActionFollowPath> pathActionsButtonsIn = new Array<VActionFollowPath>();
 	
 	protected Map<String, Group> viewButtonsMap = new HashMap<String, Group>();
 	
@@ -169,14 +165,14 @@ public class VStageMain extends InputListener {
 		float sWidth = mainStage.getWidth();
 		float sHeight = mainStage.getHeight();	
 		
-		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView1ButtonMoveIn, sWidth, sHeight));
-		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView2ButtonMoveIn, sWidth, sHeight));
-		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView3ButtonMoveIn, sWidth, sHeight));
-		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView4ButtonMoveIn, sWidth, sHeight));
-		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView5ButtonMoveIn, sWidth, sHeight));
-		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView6ButtonMoveIn, sWidth, sHeight));
-		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView7ButtonMoveIn, sWidth, sHeight));
-		pathActions.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView8ButtonMoveIn, sWidth, sHeight));
+		pathActionsButtonsIn.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView1ButtonMoveIn, sWidth, sHeight));
+		pathActionsButtonsIn.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView2ButtonMoveIn, sWidth, sHeight));
+		pathActionsButtonsIn.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView3ButtonMoveIn, sWidth, sHeight));
+		pathActionsButtonsIn.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView4ButtonMoveIn, sWidth, sHeight));
+		pathActionsButtonsIn.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView5ButtonMoveIn, sWidth, sHeight));
+		pathActionsButtonsIn.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView6ButtonMoveIn, sWidth, sHeight));
+		pathActionsButtonsIn.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView7ButtonMoveIn, sWidth, sHeight));
+		pathActionsButtonsIn.add(new VActionFollowPath(VStaticAssets.ActorActionsPaths.pathView8ButtonMoveIn, sWidth, sHeight));
 		
         transitionCloseNavigationTable();
         
@@ -205,8 +201,8 @@ public class VStageMain extends InputListener {
 		
 		shapeRenderer.setProjectionMatrix(mainStage.getCamera().combined);
 
-		for(int i=0; i<pathActions.size; i++){
-		//	pathActions.get(i).drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
+		for(int i=0; i<pathActionsButtonsIn.size; i++){
+		//	pathActionsButtonsIn.get(i).drawDebug(shapeRenderer, 0.5f, 0.5f, 0.5f, 0.5f);
 		}
 		
 	}
@@ -282,8 +278,8 @@ public class VStageMain extends InputListener {
 		
 		float durationPath = 1;
 		float startDelay = 0;
-		for(int i=0; i<pathActions.size; i++){
-			VActionFollowPath p = pathActions.get(i);
+		for(int i=0; i<pathActionsButtonsIn.size; i++){
+			VActionFollowPath p = pathActionsButtonsIn.get(i);
 			p.setDuration(durationPath);
 			durationPath = durationPath - 0.1f;
 			p.setReverse(false);
@@ -318,8 +314,10 @@ public class VStageMain extends InputListener {
 		
 		for(Map.Entry<String, Group> m:viewButtonsMap.entrySet()){  
 			   Group g = m.getValue();   
+			   g.clearActions();
 			   g.addAction(Actions.sequence(Actions.touchable(Touchable.disabled), Actions.fadeOut(0.5f)));
 		} 
+		buttonCloseNavi.clearActions();
 		buttonCloseNavi.addAction(Actions.fadeOut(0.5f));
 		/*
 		mainNavigationTable.clearActions();
