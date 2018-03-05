@@ -74,7 +74,7 @@ public class VScene {
         waterTexturesArray.add(new VTextureRender(volcano));		//Reflected skybox stretched
         waterTexturesArray.add(new VTextureRender(volcano));		//Refraction       
         
-        particleEffectSmoke = new VParticleEffect(this.volcano, "point3.pfx");
+        particleEffectSmoke = new VParticleEffect(this.volcano, "point4.pfx");
     }     
     public void onLoad(){
     	

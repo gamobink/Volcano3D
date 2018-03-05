@@ -48,7 +48,7 @@ public class VParticleEffect {
 
         modelBatch = new ModelBatch();
         
-        String fname = "point3.pfx";
+        String fname = "point4.pfx";
         
         cam = new OrthographicCamera(18.0f, 18.0f);
         assets = new AssetManager();

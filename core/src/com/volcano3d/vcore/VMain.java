@@ -138,7 +138,7 @@ public class VMain{
 
              
         
-    	decalsTags.render();       
+    	//decalsTags.render();       
         stage2D.renderMainStage();
         
         //pathEdit.render();

@@ -1,12 +1,16 @@
 
 
-1) Dūmi, particle system
-2) Zemes tekstūra
-3) Zemūdens tekstūra
-4) Salas tekstūra
-5) Detalizācijas objekti virszemē
-6) Viļņi piekrastē
-7) Upes šeideris
-8) Pazemes materiāli
- 1) Lavas animācija
+1) DÅ«mi, particle system
+2) Zemes tekstÅ«ra
+3) ZemÅ«dens tekstÅ«ra
+4) Salas tekstÅ«ra
+5) DetalizÄ�cijas objekti virszemÄ“
+6) ViÄ¼Å†i piekrastÄ“
+7) Upes Å¡eideris
+8) Pazemes materiÄ�li
+ 1) Lavas animÄ�cija
  2) ... 
+
+ 
+ convert in.png -background black -alpha Remove in.png -compose Copy_Opacity -composite out.png
+ 
