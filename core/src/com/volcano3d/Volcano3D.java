@@ -19,7 +19,7 @@ import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
 import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VStaticAssets;
 
-
+/**
 public class Volcano3D extends ApplicationAdapter {
 
     public OrthographicCamera cam;
@@ -32,7 +32,7 @@ public class Volcano3D extends ApplicationAdapter {
 	public void create () {		
         modelBatch = new ModelBatch();
         
-        String fname = "point2.pfx";
+        String fname = "point3.pfx";
         
         cam = new OrthographicCamera(18.0f, 18.0f);
         assets = new AssetManager();
@@ -54,6 +54,7 @@ public class Volcano3D extends ApplicationAdapter {
         currentEffects = assets.get(fname,ParticleEffect.class).copy();
         currentEffects.init();
         particleSystem.add(currentEffects);
+
 	}
 	@Override
 	public void render () {
@@ -61,9 +62,13 @@ public class Volcano3D extends ApplicationAdapter {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
         Gdx.gl.glEnable(GL30.GL_TEXTURE_2D);
 
+
+        Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+        
         modelBatch.begin(cam);
         particleSystem.update();
         particleSystem.begin();
+       
         particleSystem.draw();
         particleSystem.end();
         modelBatch.render(particleSystem);
@@ -76,7 +81,7 @@ public class Volcano3D extends ApplicationAdapter {
 	}
 }
 
-/*
+/**/
 public class Volcano3D extends ApplicationAdapter {
 	protected VMain volcano = null;
 	@Override
@@ -114,4 +119,4 @@ public class Volcano3D extends ApplicationAdapter {
 		volcano.dispose();
 	}
 }
-*/
+/**/

@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.utils.Array;
 import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcamera.VCameraPresetCollection;
+import com.volcano3d.vparticles.VParticleEffect;
 import com.volcano3d.vshaders.VDefaultShaderProvider;
 import com.volcano3d.vshaders.VMinimalistShaderProvider;
 
@@ -28,6 +29,8 @@ public class VScene {
     protected Map<String, VRenderable> renderables = new HashMap<String, VRenderable>();
     
     public Array<VTextureRender> waterTexturesArray = new Array<VTextureRender>();
+    
+    public VParticleEffect	particleEffectSmoke = null;
     
     private float waterMove = 0;
     
@@ -69,7 +72,9 @@ public class VScene {
                 
         waterTexturesArray.add(new VTextureRender(volcano));		//Reflection
         waterTexturesArray.add(new VTextureRender(volcano));		//Reflected skybox stretched
-        waterTexturesArray.add(new VTextureRender(volcano));		//Refraction        
+        waterTexturesArray.add(new VTextureRender(volcano));		//Refraction       
+        
+        particleEffectSmoke = new VParticleEffect(this.volcano, "point3.pfx");
     }     
     public void onLoad(){
     	
@@ -100,6 +105,8 @@ public class VScene {
         
         r = get("waterWall");
         r.setSpecularTexture(null, waterTexturesArray.get(2).get());
+        
+        particleEffectSmoke.onLoad();
     }    
     public void render(VCamera camera, Environment environment){
         
@@ -123,6 +130,7 @@ public class VScene {
         get("ground").render(camera.get(), environment);
         get("island").render(camera.get(), environment);
         
+        particleEffectSmoke.render(camera.get());  
   	
         //TODO Render underground parts based on camera states
       //  if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
@@ -175,6 +183,8 @@ public class VScene {
 	            get("ground").render(c, environment);
 	            get("island").render(c, environment);
 	            
+	            particleEffectSmoke.render(c);  
+	            	            
 	        }else if(i==1){	//reflection stretched skybox
 	        	get("skybox").scale(1, 50, 1);
 	            get("skybox").render(c, environment);

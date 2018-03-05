@@ -44,7 +44,7 @@ public class VMain{
     protected boolean userActionActive = false;
     private Timer.Task userActionActiveCountdown = null;
 
-    public VParticleEffect	particleEffectSmoke = null;
+   //public VParticleEffect	particleEffectSmoke = null;
 
     public VFollowPathEditor pathEdit = new VFollowPathEditor(this);
         
@@ -90,7 +90,7 @@ public class VMain{
         decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(146, 25, -216), pinheadSize));	//6 - organic
         decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(0, 25, -550), pinheadSize));		//7 - sediment        
         
-        particleEffectSmoke = new VParticleEffect(this, "point.pfx");
+       // particleEffectSmoke = new VParticleEffect(this, "point3.pfx");
 
         pathEdit.setPath(stage2D.pathActionsButtonsIn.get(0), "pathAction1");
     }    
@@ -101,7 +101,7 @@ public class VMain{
     	
     	decalsTags.onLoad();
     	
-    	particleEffectSmoke.onLoad();
+    	//particleEffectSmoke.onLoad();
     	
     	stage2D.onLoad();
     	
@@ -132,11 +132,11 @@ public class VMain{
         Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1.0f);
         Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
         
-        particleEffectSmoke.render(camera.get());
-        
         scene.render(camera, environment);
 
         //VCommon.drawGrid(camera.get());
+
+             
         
     	decalsTags.render();       
         stage2D.renderMainStage();
