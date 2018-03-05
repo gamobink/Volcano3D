@@ -109,7 +109,7 @@ public class VStageInfoWindow extends Group{
         
         this.addActor(imageSliderTable);
         
-        imageLabel = new Label("Attēla komentārs", new Label.LabelStyle(VStaticAssets.Fonts.calibri25Font, Color.WHITE));
+        imageLabel = new Label("", new Label.LabelStyle(VStaticAssets.Fonts.calibri25Font, Color.WHITE));
         imageLabel.setWidth(contentWidth);
         imageLabel.setHeight(25);
         imageLabel.setAlignment(Align.top);
