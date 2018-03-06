@@ -42,8 +42,6 @@ public class VScene {
     public VParticleEffect	particleSmoke1 = null;  
     public VParticleEffect	particleSmoke2 = null;      
     
-    private ParticleSystem particleSystem;	
-    
     private float waterMove = 0;
     
     public VScene(VMain o){
@@ -86,16 +84,17 @@ public class VScene {
         waterTexturesArray.add(new VTextureRender(volcano));		//Reflected skybox stretched
         waterTexturesArray.add(new VTextureRender(volcano));		//Refraction       
         
-        particleSystem = new ParticleSystem();
-        
-        particleFireSmoke = new VParticleEffect(volcano, particleSystem, "volcanoFire.pfx");
+        particleFireSmoke = new VParticleEffect(volcano, "volcanoFire2.pfx");
         particleFireSmoke.setPosition(-220, 115, -10);
         
-//        particleSmokeCloud = new VParticleEffect(volcano, "volcanoFire.pfx");
-//        particleSmokeCloud.setPosition(-220, 115, -10);        
+        particleSmokeCloud = new VParticleEffect(volcano, "smokeCloud.pfx");
+        particleSmokeCloud.setPosition(-220, 115, -10);        
         
-        particleSmokeCloudIsland = new VParticleEffect(volcano, particleSystem, "volcanoFire.pfx");        
-        particleSmokeCloudIsland.setPosition(1400, 60, 20);
+        particleSmokeCloudIsland = new VParticleEffect(volcano, "smokeIsland.pfx");        
+        particleSmokeCloudIsland.setPosition(1400, 55, 20);
+        
+        particleSecondaryFire = new VParticleEffect(volcano, "fireSecondary.pfx");
+        particleSecondaryFire.setPosition(-270, 65, -25);
         
     }     
     public void onLoad(){
@@ -130,6 +129,8 @@ public class VScene {
         
         particleFireSmoke.onLoad();
         particleSmokeCloudIsland.onLoad();
+        particleSmokeCloud.onLoad();
+        particleSecondaryFire.onLoad();
     }    
     public void render(VCamera camera, Environment environment){
         
@@ -152,8 +153,10 @@ public class VScene {
         get("water").render(camera.get(), environment);        
         get("ground").render(camera.get(), environment);
         get("island").render(camera.get(), environment);
-        
+
+        particleSmokeCloud.render(camera.get());        
         particleFireSmoke.render(camera.get());  
+        particleSecondaryFire.render(camera.get());
         particleSmokeCloudIsland.render(camera.get());
   	
         //TODO Render underground parts based on camera states
@@ -208,7 +211,7 @@ public class VScene {
 	            get("island").render(c, environment);
 	            
 	            particleFireSmoke.render(c);  
-	            //particleSmokeCloudIsland.render(c);
+	            particleSmokeCloudIsland.render(c);
 	            	            
 	        }else if(i==1){	//reflection stretched skybox
 	        	get("skybox").scale(1, 50, 1);

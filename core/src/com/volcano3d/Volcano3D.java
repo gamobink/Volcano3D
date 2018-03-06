@@ -19,7 +19,7 @@ import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
 import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VStaticAssets;
 
-/**/
+/**
 public class Volcano3D extends ApplicationAdapter {
 	
 	public class ParticleSys{
@@ -39,9 +39,7 @@ public class Volcano3D extends ApplicationAdapter {
 	
 	        particleSystem = new ParticleSystem();//.get();
 	        PointSpriteParticleBatch pointSpriteBatch = new PointSpriteParticleBatch();
-	        pointSpriteBatch.setCamera(cam);
-	        particleSystem = ParticleSystem.get();
-	
+	        pointSpriteBatch.setCamera(cam);	
 	        particleSystem.add(pointSpriteBatch);
 	        ParticleEffectLoader.ParticleEffectLoadParameter loadParam = new ParticleEffectLoader.ParticleEffectLoadParameter(particleSystem.getBatches());
 
@@ -83,7 +81,7 @@ public class Volcano3D extends ApplicationAdapter {
 		psys2.create("smokeIsland.pfx", assets);
 		assets.finishLoading(); 
 		psys1.init("volcanoFire.pfx");
-		//psys2.init("smokeIsland.pfx");		
+		psys2.init("smokeIsland.pfx");		
 		
 		
 	}
@@ -97,7 +95,7 @@ public class Volcano3D extends ApplicationAdapter {
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         
         psys1.render();
-      //  psys2.render();
+        psys2.render();
         
 	}
 	@Override
@@ -106,7 +104,7 @@ public class Volcano3D extends ApplicationAdapter {
 	}
 }
 
-/**
+/**/
 public class Volcano3D extends ApplicationAdapter {
 	protected VMain volcano = null;
 	@Override
