@@ -4,9 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.Environment;
+import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
+import com.badlogic.gdx.graphics.g3d.particles.ParticleEffectLoader;
+import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.utils.Array;
 import com.volcano3d.vcamera.VCamera;
@@ -21,7 +25,7 @@ public class VScene {
 	
     public VDefaultShaderProvider shaderSky = null;    
     public VMinimalistShaderProvider shaderSimple = null;
-    public VDefaultShaderProvider shaderWater = null; 
+    public VDefaultShaderProvider shaderWater = null;
     public VDefaultShaderProvider shaderUnderwater = null; 
     public VDefaultShaderProvider shaderUnderground = null; 
     public VDefaultShaderProvider shaderWaterWall = null; 
@@ -30,7 +34,15 @@ public class VScene {
     
     public Array<VTextureRender> waterTexturesArray = new Array<VTextureRender>();
     
-    public VParticleEffect	particleEffectSmoke = null;
+    public VParticleEffect	particleFireSmoke = null;
+    //TODO Particle effects
+    public VParticleEffect	particleSmokeCloud = null;
+    public VParticleEffect	particleSmokeCloudIsland = null;
+    public VParticleEffect	particleSecondaryFire = null;  
+    public VParticleEffect	particleSmoke1 = null;  
+    public VParticleEffect	particleSmoke2 = null;      
+    
+    private ParticleSystem particleSystem;	
     
     private float waterMove = 0;
     
@@ -74,8 +86,17 @@ public class VScene {
         waterTexturesArray.add(new VTextureRender(volcano));		//Reflected skybox stretched
         waterTexturesArray.add(new VTextureRender(volcano));		//Refraction       
         
-        particleEffectSmoke = new VParticleEffect(volcano, "volcanoFire.pfx");
-        particleEffectSmoke.setPosition(-220, 115, -10);
+        particleSystem = new ParticleSystem();
+        
+        particleFireSmoke = new VParticleEffect(volcano, particleSystem, "volcanoFire.pfx");
+        particleFireSmoke.setPosition(-220, 115, -10);
+        
+//        particleSmokeCloud = new VParticleEffect(volcano, "volcanoFire.pfx");
+//        particleSmokeCloud.setPosition(-220, 115, -10);        
+        
+        particleSmokeCloudIsland = new VParticleEffect(volcano, particleSystem, "volcanoFire.pfx");        
+        particleSmokeCloudIsland.setPosition(1400, 60, 20);
+        
     }     
     public void onLoad(){
     	
@@ -107,7 +128,8 @@ public class VScene {
         r = get("waterWall");
         r.setSpecularTexture(null, waterTexturesArray.get(2).get());
         
-        particleEffectSmoke.onLoad();
+        particleFireSmoke.onLoad();
+        particleSmokeCloudIsland.onLoad();
     }    
     public void render(VCamera camera, Environment environment){
         
@@ -131,7 +153,8 @@ public class VScene {
         get("ground").render(camera.get(), environment);
         get("island").render(camera.get(), environment);
         
-        particleEffectSmoke.render(camera.get());  
+        particleFireSmoke.render(camera.get());  
+        particleSmokeCloudIsland.render(camera.get());
   	
         //TODO Render underground parts based on camera states
       //  if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
@@ -184,7 +207,8 @@ public class VScene {
 	            get("ground").render(c, environment);
 	            get("island").render(c, environment);
 	            
-	            particleEffectSmoke.render(c);  
+	            particleFireSmoke.render(c);  
+	            //particleSmokeCloudIsland.render(c);
 	            	            
 	        }else if(i==1){	//reflection stretched skybox
 	        	get("skybox").scale(1, 50, 1);

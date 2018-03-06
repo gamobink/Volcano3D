@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
+import com.badlogic.gdx.graphics.g3d.particles.ParticleEffectLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
@@ -57,6 +59,9 @@ public class VMain{
             }
         });
         
+        ParticleEffectLoader loader = new ParticleEffectLoader(new InternalFileHandleResolver());
+        assetsManager.setLoader(ParticleEffect.class, loader);        
+        
         VStaticAssets.Init();
         
         create();
@@ -89,8 +94,6 @@ public class VMain{
         decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(80, 25, 8), pinheadSize));		//5 - chemical
         decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(146, 25, -216), pinheadSize));	//6 - organic
         decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(0, 25, -550), pinheadSize));		//7 - sediment        
-        
-       // particleEffectSmoke = new VParticleEffect(this, "point3.pfx");
 
         pathEdit.setPath(stage2D.pathActionsButtonsIn.get(0), "pathAction1");
     }    
@@ -100,8 +103,6 @@ public class VMain{
     	scene.onLoad();
     	
     	decalsTags.onLoad();
-    	
-    	//particleEffectSmoke.onLoad();
     	
     	stage2D.onLoad();
     	

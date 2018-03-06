@@ -30,40 +30,56 @@ public class VParticleEffect {
 	 
     public Matrix4 transform = new Matrix4();
     
-    public VParticleEffect(VMain o, String filename){
+    public VParticleEffect(VMain o, ParticleSystem ps, String filename){
     	volcano = o;
     	effectName = filename;
-    	particleSystem = new ParticleSystem();	//ParticleSystem.get();
+    	particleSystem = ps;//new ParticleSystem();	//ParticleSystem.get();
 
+    	/**
     	ParticleShader.Config shaderConf = new  ParticleShader.Config();
     	shaderConf.type = ParticleType.Point;
 //    	shaderConf.vertexShader
 //    	shaderConf.fragmentShader
-    	
+           	
         pointSpriteBatch = new PointSpriteParticleBatch(100000);
         pointSpriteBatch.setCamera(new OrthographicCamera(18.0f, 18.0f));
         particleSystem.add(pointSpriteBatch);
         
-    	ParticleEffectLoader.ParticleEffectLoadParameter loadParam = new ParticleEffectLoader.ParticleEffectLoadParameter(particleSystem.getBatches());
+    	ParticleEffectLoader.ParticleEffectLoadParameter loadParam = new ParticleEffectLoader.ParticleEffectLoadParameter(particleSystem.getBatches());    	
+
+    	volcano.assetsManager.load(effectName, ParticleEffect.class, loadParam);
+    	/**/
     	
-        ParticleEffectLoader loader = new ParticleEffectLoader(new InternalFileHandleResolver());
-        volcano.assetsManager.setLoader(ParticleEffect.class, loader);
-        
-    	volcano.assetsManager.load(filename, ParticleEffect.class, loadParam);
     }
     public void onLoad(){        
 
         modelBatch = new ModelBatch();
-    	
+
+        pointSpriteBatch = new PointSpriteParticleBatch(100000);
+        pointSpriteBatch.setCamera(new OrthographicCamera(18.0f, 18.0f));        
+        
+        particleSystem.add(pointSpriteBatch);
+        ParticleEffectLoader.ParticleEffectLoadParameter loadParam = new ParticleEffectLoader.ParticleEffectLoadParameter(particleSystem.getBatches());
+
+        volcano.assetsManager.load(effectName, ParticleEffect.class, loadParam);
+        volcano.assetsManager.finishLoading(); 
+
+        currentEffects = volcano.assetsManager.get(effectName,ParticleEffect.class).copy();
+        currentEffects.init();
+        particleSystem.add(currentEffects);
+        
+        
+/*        
         if(volcano.assetsManager.isLoaded(effectName)) {
         	ParticleEffect effect = volcano.assetsManager.get(effectName, ParticleEffect.class);
         	currentEffects = effect.copy();
         	currentEffects.init();
         	particleSystem.add(currentEffects);
-        	pointSpriteBatch.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        	//pointSpriteBatch.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
         }else{
             System.out.println("Particle effect asset not loaded "+effectName);
         }
+/**/        
     }
     public void setPosition(float x, float y, float z){
     	transform.setToTranslation(x, y, z);
