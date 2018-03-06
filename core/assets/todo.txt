@@ -1,16 +1,22 @@
 
-
-1) DÅ«mi, particle system
-2) Zemes tekstÅ«ra
-3) ZemÅ«dens tekstÅ«ra
-4) Salas tekstÅ«ra
-5) DetalizÄ�cijas objekti virszemÄ“
-6) ViÄ¼Å†i piekrastÄ“
-7) Upes Å¡eideris
-8) Pazemes materiÄ�li
- 1) Lavas animÄ�cija
+1) PFX
+	v) Vulkaana pfx 
+	-) Vulkaana maakonis
+	-) Apgaismojuma sheideris
+	-) Saanu lavas pfx
+	-) Mazie duumu pfx
+2) Zemes tekstuura
+	-) Centraalaas daljas detalizaacija 
+	-) Maleejaas daljas
+	-) Apgaismojuma tekstuura
+	-) Miglas kraasas tekstuura
+3) Zemuudens tekstuura
+	-) Tekstuura
+4) Salas tekstuura
+5) Detalizaacijas objekti
+6) Vilnji piekrastee
+7) Upes sheideris
+8) Pazemes materiaali
+ 1) Lavas animaacija
  2) ... 
-
- 
- convert in.png -background black -alpha Remove in.png -compose Copy_Opacity -composite out.png
  

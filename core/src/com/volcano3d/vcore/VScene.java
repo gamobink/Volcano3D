@@ -74,7 +74,8 @@ public class VScene {
         waterTexturesArray.add(new VTextureRender(volcano));		//Reflected skybox stretched
         waterTexturesArray.add(new VTextureRender(volcano));		//Refraction       
         
-        particleEffectSmoke = new VParticleEffect(this.volcano, "point4.pfx");
+        particleEffectSmoke = new VParticleEffect(volcano, "volcanoFire.pfx");
+        particleEffectSmoke.setPosition(-220, 115, -10);
     }     
     public void onLoad(){
     	
@@ -115,8 +116,8 @@ public class VScene {
         
         VRenderable r = get("water");
         r.setShininess("water1", waterMove);
-        r.setShininess("water2", waterMove);        
-        r.setShininess("waterCenter", waterMove);  
+        r.setShininess("water2", waterMove);
+        r.setShininess("waterCenter", waterMove);
 
         get("skybox").render(camera.get(), environment);
         
