@@ -19,42 +19,73 @@ import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
 import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VStaticAssets;
 
-/**
+/**/
 public class Volcano3D extends ApplicationAdapter {
+	
+	public class ParticleSys{
+		
+	    public OrthographicCamera cam;
+	    public ModelBatch modelBatch;
+	    private ParticleEffect currentEffects;
+	    private ParticleSystem particleSystem;
 
-    public OrthographicCamera cam;
-    public ModelBatch modelBatch;
-    public AssetManager assets;
-    private ParticleEffect currentEffects;
-    private ParticleSystem particleSystem;
+		public void create (String fname, AssetManager assets) {		
+	        modelBatch = new ModelBatch();
+//	        
+//	        String fname = "volcanoFire.pfx";
+//	        String fname2 = "smokeIsland.pfx";
+	        
+	        cam = new OrthographicCamera(200.0f, 200.0f);
+	
+	        particleSystem = new ParticleSystem();//.get();
+	        PointSpriteParticleBatch pointSpriteBatch = new PointSpriteParticleBatch();
+	        pointSpriteBatch.setCamera(cam);
+	        particleSystem = ParticleSystem.get();
+	
+	        particleSystem.add(pointSpriteBatch);
+	        ParticleEffectLoader.ParticleEffectLoadParameter loadParam = new ParticleEffectLoader.ParticleEffectLoadParameter(particleSystem.getBatches());
 
+	        assets.load(fname, ParticleEffect.class, loadParam);
+	        // halt the main thread until assets are loaded.
+	        // this is bad for actual games, but okay for demonstration purposes.
+		}
+		public void init(String fname){
+	
+	        currentEffects = assets.get(fname,ParticleEffect.class).copy();
+	        currentEffects.init();
+	        particleSystem.add(currentEffects);
+	
+		}
+		public void render () {
+	        modelBatch.begin(cam);
+	        particleSystem.update();
+	        particleSystem.begin();
+	       
+	        particleSystem.draw();
+	        particleSystem.end();
+	        modelBatch.render(particleSystem);
+	        modelBatch.end();
+		}	
+	}
+	
+    public AssetManager assets = new AssetManager();
+	public ParticleSys psys1 = new ParticleSys();
+	public ParticleSys psys2 = new ParticleSys();
+
+	
 	@Override
 	public void create () {		
-        modelBatch = new ModelBatch();
-        
-        String fname = "point3.pfx";
-        
-        cam = new OrthographicCamera(18.0f, 18.0f);
-        assets = new AssetManager();
 
-        particleSystem = ParticleSystem.get();
-        PointSpriteParticleBatch pointSpriteBatch = new PointSpriteParticleBatch();
-        pointSpriteBatch.setCamera(cam);
-        particleSystem = ParticleSystem.get();
-
-        particleSystem.add(pointSpriteBatch);
-        ParticleEffectLoader.ParticleEffectLoadParameter loadParam = new ParticleEffectLoader.ParticleEffectLoadParameter(particleSystem.getBatches());
-        ParticleEffectLoader loader = new ParticleEffectLoader(new InternalFileHandleResolver());
+		ParticleEffectLoader loader = new ParticleEffectLoader(new InternalFileHandleResolver());
         assets.setLoader(ParticleEffect.class, loader);
-        assets.load(fname, ParticleEffect.class, loadParam);
-        // halt the main thread until assets are loaded.
-        // this is bad for actual games, but okay for demonstration purposes.
-        assets.finishLoading(); 
-
-        currentEffects = assets.get(fname,ParticleEffect.class).copy();
-        currentEffects.init();
-        particleSystem.add(currentEffects);
-
+		
+		psys1.create("volcanoFire.pfx", assets);
+		psys2.create("smokeIsland.pfx", assets);
+		assets.finishLoading(); 
+		psys1.init("volcanoFire.pfx");
+		//psys2.init("smokeIsland.pfx");		
+		
+		
 	}
 	@Override
 	public void render () {
@@ -65,23 +96,17 @@ public class Volcano3D extends ApplicationAdapter {
 
         Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         
-        modelBatch.begin(cam);
-        particleSystem.update();
-        particleSystem.begin();
-       
-        particleSystem.draw();
-        particleSystem.end();
-        modelBatch.render(particleSystem);
-        modelBatch.end();
-	}	
+        psys1.render();
+      //  psys2.render();
+        
+	}
 	@Override
 	public void dispose() {
-
-
+		
 	}
 }
 
-/**/
+/**
 public class Volcano3D extends ApplicationAdapter {
 	protected VMain volcano = null;
 	@Override
