@@ -1,10 +1,9 @@
 
 1) PFX
 	v) Vulkaana pfx 
-	-) Vulkaana maakonis
-	-) Apgaismojuma sheideris
-	-) Saanu lavas pfx
-	-) Mazie duumu pfx
+	v) Vulkaana maakonis
+	v) Saanu lavas pfx
+	v) Mazie duumu pfx
 2) Zemes tekstuura
 	-) Centraalaas daljas detalizaacija 
 	-) Maleejaas daljas
@@ -12,6 +11,7 @@
 	-) Miglas kraasas tekstuura
 3) Zemuudens tekstuura
 	-) Tekstuura
+	-) Gaismas bliki
 4) Salas tekstuura
 5) Detalizaacijas objekti
 6) Vilnji piekrastee

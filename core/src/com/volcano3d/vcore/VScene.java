@@ -40,7 +40,8 @@ public class VScene {
     public VParticleEffect	particleSmokeCloudIsland = null;
     public VParticleEffect	particleSecondaryFire = null;  
     public VParticleEffect	particleSmoke1 = null;  
-    public VParticleEffect	particleSmoke2 = null;      
+    public VParticleEffect	particleSmoke2 = null;  
+    public VParticleEffect	particleSmoke3 = null;  
     
     private float waterMove = 0;
     
@@ -95,7 +96,15 @@ public class VScene {
         
         particleSecondaryFire = new VParticleEffect(volcano, "fireSecondary.pfx");
         particleSecondaryFire.setPosition(-270, 65, -25);
+                
+        particleSmoke1 = new VParticleEffect(volcano, "smoke1.pfx");
+        particleSmoke1.setPosition(-180, 40, -40);
         
+        particleSmoke2 = new VParticleEffect(volcano, "smoke2.pfx");
+        particleSmoke2.setPosition(-270, 40, -50);  
+        
+        particleSmoke3 = new VParticleEffect(volcano, "smoke3.pfx");
+        particleSmoke3.setPosition(-200, 20, -90);          
     }     
     public void onLoad(){
     	
@@ -131,6 +140,9 @@ public class VScene {
         particleSmokeCloudIsland.onLoad();
         particleSmokeCloud.onLoad();
         particleSecondaryFire.onLoad();
+        particleSmoke1.onLoad();
+        particleSmoke2.onLoad();
+        particleSmoke3.onLoad();
     }    
     public void render(VCamera camera, Environment environment){
         
@@ -146,7 +158,7 @@ public class VScene {
         
         if(volcano.camera.getPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN
         	|| volcano.camera.getTargetPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN)
-        	get("undergroundComp").render(camera.get(), environment);       
+        	renderCrossectionParts(camera, environment);   
         
         get("waterWall").render(camera.get(), environment);
 
@@ -154,22 +166,22 @@ public class VScene {
         get("ground").render(camera.get(), environment);
         get("island").render(camera.get(), environment);
 
+        particleSmokeCloudIsland.render(camera.get());        
+        particleSmoke1.render(camera.get()); 
+        particleSmoke2.render(camera.get()); 
+        particleSmoke3.render(camera.get()); 
         particleSmokeCloud.render(camera.get());        
         particleFireSmoke.render(camera.get());  
         particleSecondaryFire.render(camera.get());
-        particleSmokeCloudIsland.render(camera.get());
-  	
+        
         //TODO Render underground parts based on camera states
       //  if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
         //	modelUnderground.render(camera.get(), environment);
       //  }
     	
     }
-    public void renderCrossectionParts(VCamera camera, Environment environment){
-    	
-    	//sectionWater
-    	//section
-    	
+    public void renderCrossectionParts(VCamera camera, Environment environment){   	
+    	get("undergroundComp").render(camera.get(), environment);   
     }
     public void renderToWaterTextures(VCamera camera, Environment environment){
     	
