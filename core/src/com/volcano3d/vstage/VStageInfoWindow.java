@@ -75,7 +75,7 @@ public class VStageInfoWindow extends Group{
         contentWidth = main.mainStage.getWidth();
         contentHeight = main.mainStage.getHeight();
 
-        title = new Label("", new Label.LabelStyle(VStaticAssets.Fonts.calibri25Font, Color.WHITE));	
+        title = new Label("", new Label.LabelStyle(VStaticAssets.Fonts.futuraFont, Color.WHITE));	
         title.setWrap(true);
         title.setWidth(contentWidth);
         title.setHeight(25);
@@ -84,7 +84,7 @@ public class VStageInfoWindow extends Group{
         
         this.addActor(title);
         
-        text = new Label("", new Label.LabelStyle(VStaticAssets.Fonts.calibri25Font, Color.WHITE));
+        text = new Label("", new Label.LabelStyle(VStaticAssets.Fonts.futuraFont, Color.WHITE));
         text.setWrap(true);
         text.setWidth(contentWidth - (textMargin * 2));
         text.setAlignment(Align.top);
@@ -109,7 +109,7 @@ public class VStageInfoWindow extends Group{
         
         this.addActor(imageSliderTable);
         
-        imageLabel = new Label("", new Label.LabelStyle(VStaticAssets.Fonts.calibri25Font, Color.WHITE));
+        imageLabel = new Label("", new Label.LabelStyle(VStaticAssets.Fonts.futuraFont, Color.WHITE));
         imageLabel.setWidth(contentWidth);
         imageLabel.setHeight(25);
         imageLabel.setAlignment(Align.top);
