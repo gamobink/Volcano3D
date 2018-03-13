@@ -26,7 +26,7 @@ public class VCommon {
 		spriteBatch.end();
 	}
 	
-	public static void drawSystemStats(){		
+	public static void drawSystemStats(){
 		/*
 		float fps = 1.0f/Gdx.graphics.getDeltaTime();		
 		spriteBatch.begin();	
