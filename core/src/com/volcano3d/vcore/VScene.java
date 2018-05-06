@@ -29,7 +29,9 @@ public class VScene {
     public VDefaultShaderProvider shaderUnderwater = null; 
     public VDefaultShaderProvider shaderUnderground = null; 
     public VDefaultShaderProvider shaderWaterWall = null; 
-	
+    public VDefaultShaderProvider shaderGround = null;  
+    public VDefaultShaderProvider shaderWaterFoam = null;  
+    
     protected Map<String, VRenderable> renderables = new HashMap<String, VRenderable>();
     
     public Array<VTextureRender> waterTexturesArray = new Array<VTextureRender>();
@@ -44,6 +46,7 @@ public class VScene {
     public VParticleEffect	particleSmoke3 = null;  
     
     private float waterMove = 0;
+    private float foamMove = 0;
     
     public VScene(VMain o){
     	volcano = o;
@@ -57,7 +60,9 @@ public class VScene {
         shaderWater = new VDefaultShaderProvider(volcano, "shaders/water.vertex.glsl", "shaders/water.fragment.glsl");
         shaderUnderwater = new VDefaultShaderProvider(volcano, "shaders/min.vertex.glsl", "shaders/underwater.fragment.glsl");
         shaderUnderground = new VDefaultShaderProvider(volcano, "shaders/under.vertex.glsl", "shaders/under.fragment.glsl");
-        shaderWaterWall = new VDefaultShaderProvider(volcano, "shaders/waterwall.vertex.glsl", "shaders/waterwall.fragment.glsl");
+        shaderWaterWall = new VDefaultShaderProvider(volcano, "shaders/waterwall.vertex.glsl", "shaders/waterwall.fragment.glsl");        
+        shaderGround = new VDefaultShaderProvider(volcano, "shaders/ground.vertex.glsl", "shaders/ground.fragment.glsl"); 
+        shaderWaterFoam = new VDefaultShaderProvider(volcano, "shaders/foam.vertex.glsl", "shaders/foam.fragment.glsl"); 
         
         add("skybox", shaderSky);
         add("underwater", shaderUnderwater);
@@ -68,7 +73,7 @@ public class VScene {
         add("waterWall", shaderWaterWall);
         add("undergroundComp", shaderUnderground);
         
-        VRenderable r = add("ground");
+        VRenderable r = add("ground", shaderGround);
         r.enableTween();
         r.alphaFader.set("groundPart1", 1.0f, 1.0f);
         r.alphaFader.set("groundPart2", 1.0f, 1.0f);
@@ -81,6 +86,12 @@ public class VScene {
         r.alphaFader.set("waterCenter", 1.0f, 1.0f);
         r.alphaFader.set("water", 1.0f, 1.0f);
                 
+        r = add("foam1", shaderWaterFoam);
+        r.enableTween();
+        r.alphaFader.set("Plane04", 1.0f, 1.0f);
+        //System.out.println(r);
+        
+        
         waterTexturesArray.add(new VTextureRender(volcano));		//Reflection
         waterTexturesArray.add(new VTextureRender(volcano));		//Reflected skybox stretched
         waterTexturesArray.add(new VTextureRender(volcano));		//Refraction       
@@ -114,6 +125,8 @@ public class VScene {
     	shaderUnderwater.onLoad();
     	shaderUnderground.onLoad();
     	shaderWaterWall.onLoad();
+    	shaderGround.onLoad();
+    	shaderWaterFoam.onLoad();
     	
 		for(Map.Entry<String, VRenderable> m:renderables.entrySet()){  
 			m.getValue().onLoad();			   
@@ -149,10 +162,16 @@ public class VScene {
     	waterMove += 0.1f * Gdx.graphics.getDeltaTime();
         waterMove = waterMove % 1;
         
+        foamMove += 0.2f * Gdx.graphics.getDeltaTime();
+        foamMove = foamMove % 1;
+        
         VRenderable r = get("water");
         r.setShininess("water1", waterMove);
         r.setShininess("water2", waterMove);
         r.setShininess("waterCenter", waterMove);
+        
+        r = get("foam1");
+        r.setShininess("Plane04", foamMove);
 
         get("skybox").render(camera.get(), environment);
         
@@ -166,6 +185,11 @@ public class VScene {
         get("ground").render(camera.get(), environment);
         get("island").render(camera.get(), environment);
 
+        Gdx.gl.glEnable(GL30.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);        
+        get("foam1").render(camera.get(), environment);
+        
+        /**/
         particleSmokeCloudIsland.render(camera.get());        
         particleSmoke1.render(camera.get()); 
         particleSmoke2.render(camera.get()); 
@@ -173,6 +197,7 @@ public class VScene {
         particleSmokeCloud.render(camera.get());        
         particleFireSmoke.render(camera.get());  
         particleSecondaryFire.render(camera.get());
+        /**/
         
         //TODO Render underground parts based on camera states
       //  if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){

@@ -3659,7 +3659,7 @@
 			"textures": [
 				{
 					"id": "Map #1", 
-					"filename": "islandTexture.png", 
+					"filename": "textures/islandTexture.png", 
 					"type": "DIFFUSE"
 				}
 			]
