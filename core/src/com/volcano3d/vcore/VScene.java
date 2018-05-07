@@ -4,13 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
-import com.badlogic.gdx.graphics.g3d.particles.ParticleEffectLoader;
-import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.utils.Array;
 import com.volcano3d.vcamera.VCamera;
@@ -40,7 +36,7 @@ public class VScene {
     //TODO Particle effects
     public VParticleEffect	particleSmokeCloud = null;
     public VParticleEffect	particleSmokeCloudIsland = null;
-    public VParticleEffect	particleSecondaryFire = null;  
+    public VParticleEffect	particleSecondaryFire = null;
     public VParticleEffect	particleSmoke1 = null;  
     public VParticleEffect	particleSmoke2 = null;  
     public VParticleEffect	particleSmoke3 = null;  
@@ -183,10 +179,7 @@ public class VScene {
 
         get("water").render(camera.get(), environment);        
         get("ground").render(camera.get(), environment);
-        get("island").render(camera.get(), environment);
-
-        Gdx.gl.glEnable(GL30.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);        
+        get("island").render(camera.get(), environment);     
         get("foam1").render(camera.get(), environment);
         
         /**/

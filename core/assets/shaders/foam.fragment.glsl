@@ -13,7 +13,7 @@ void main() {
 	
 	vec2 uv = v_diffuseUV;
 	
-	float offsety = (sin(((uv.x * 5) + u_shininess) * (M_PI*2)) * 0.04);
+	float offsety = (sin(((uv.x * 5) + u_shininess) * (M_PI*2)) * 0.04) - 0.08;
 	
 	uv.y = uv.y + offsety;
 	

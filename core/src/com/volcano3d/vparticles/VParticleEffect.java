@@ -1,7 +1,6 @@
 package com.volcano3d.vparticles;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -13,7 +12,6 @@ import com.badlogic.gdx.graphics.g3d.particles.ParticleShader.ParticleType;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
 import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector3;
 import com.volcano3d.vcore.VMain;
 
 public class VParticleEffect {

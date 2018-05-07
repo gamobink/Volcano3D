@@ -7,23 +7,24 @@ public class VCameraPresetMain extends VCameraPreset {
 	public VCameraPresetMain(VCameraPresetCollection.PresetsIdentifiers identifier){
 		super(identifier);
 		
-        addWayPoint(new WayPoint(0, 3));
-        addWayPoint(new WayPoint(10, 3));
-        addWayPoint(new WayPoint(25, 5));
-        addWayPoint(new WayPoint(40, 6));        
-        addWayPoint(new WayPoint(60, 7));
-        addWayPoint(new WayPoint(80, 5));
-        addWayPoint(new WayPoint(100, 8));        
+        addWayPoint(new WayPoint(0, 6));
+        addWayPoint(new WayPoint(10, 7));
+        addWayPoint(new WayPoint(25, 7));
+        addWayPoint(new WayPoint(40, 8));        
+        addWayPoint(new WayPoint(60, 9));
+        addWayPoint(new WayPoint(80, 11));
+        addWayPoint(new WayPoint(100, 10));        
         addWayPoint(new WayPoint(110, 10));
-        addWayPoint(new WayPoint(120, 9)); 
-        addWayPoint(new WayPoint(140, 10)); 
-        addWayPoint(new WayPoint(160, 9));
-        addWayPoint(new WayPoint(170, 8));
-        addWayPoint(new WayPoint(185, 5)); 
-        addWayPoint(new WayPoint(200, 6)); 
-        addWayPoint(new WayPoint(205, 3)); 
-        addWayPoint(new WayPoint(340, 3)); 
-        addWayPoint(new WayPoint(360, 3)); 
+        addWayPoint(new WayPoint(120, 11)); 
+        addWayPoint(new WayPoint(140, 11)); 
+        addWayPoint(new WayPoint(160, 12));
+        addWayPoint(new WayPoint(170, 13));
+        addWayPoint(new WayPoint(185, 11)); 
+        addWayPoint(new WayPoint(200, 10)); 
+        addWayPoint(new WayPoint(205, 9)); 
+        addWayPoint(new WayPoint(280, 2)); 
+        addWayPoint(new WayPoint(340, 6)); 
+        addWayPoint(new WayPoint(360, 6)); 
         
         wayPointsEnabled = true;
         

@@ -18,13 +18,10 @@ import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.utils.Timer;
 import com.volcano3d.utility.TextAsset;
 import com.volcano3d.utility.TextAssetLoader;
-import com.volcano3d.utility.VCommon;
 import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vdecal.VDecal;
 import com.volcano3d.vdecal.VDecalGroup;
-import com.volcano3d.vparticles.VParticleEffect;
-import com.volcano3d.vstage.VFollowPathEditor;
 import com.volcano3d.vstage.VStageMain;
 
 /**
@@ -48,7 +45,7 @@ public class VMain{
 
    //public VParticleEffect	particleEffectSmoke = null;
 
-    public VFollowPathEditor pathEdit = new VFollowPathEditor(this);
+   // public VFollowPathEditor pathEdit = new VFollowPathEditor(this);
         
     public VMain(){
         assetsManager.setLoader(TextAsset.class,new TextAssetLoader(new InternalFileHandleResolver()));
@@ -68,10 +65,13 @@ public class VMain{
 
         Gdx.input.setInputProcessor(new InputMultiplexer(stage2D.mainStage, inputProcessor.gestureDetector, inputProcessor));
     }
+    
+    /*
     public void switchInputProc(boolean i){
     	if(i)Gdx.input.setInputProcessor(new InputMultiplexer(pathEdit.stage)); 
     	else Gdx.input.setInputProcessor(new InputMultiplexer(stage2D.mainStage, inputProcessor.gestureDetector, inputProcessor));
-    }
+    }*/
+    
     public void create(){
     	
         stage2D = new VStageMain(this);
@@ -95,7 +95,7 @@ public class VMain{
         decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(146, 25, -216), pinheadSize));	//6 - organic
         decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(0, 25, -550), pinheadSize));		//7 - sediment        
 
-        pathEdit.setPath(stage2D.pathActionsButtonsIn.get(0), "pathAction1");
+    //    pathEdit.setPath(stage2D.pathActionsButtonsIn.get(0), "pathAction1");
     }    
     //Call on loading complete
     void onLoad(){
@@ -139,7 +139,7 @@ public class VMain{
 
              
         
-    	//decalsTags.render();       
+    	decalsTags.render();       
         stage2D.renderMainStage();
         
         //pathEdit.render();
@@ -213,7 +213,7 @@ public class VMain{
     	camera.onKeyDown(keycode);
     	
     	//System.out.println(keycode);
-    	
+    	/*
     	if(keycode == 51){	//'W'   
     		this.switchInputProc(true);
     	}
@@ -241,7 +241,7 @@ public class VMain{
     	if(keycode == 15){   		
     		pathEdit.setPath(stage2D.pathActionsButtonsIn.get(7), "pathAction8");
     	}      	
-    	 /**/
+    	/**/
     }
     
     public void dispose(){

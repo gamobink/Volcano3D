@@ -107,7 +107,7 @@ public class VFollowPathEditor extends InputListener  {
 	public boolean 	keyDown(InputEvent event, int keycode){
 		//System.out.println(keycode);
 		if(keycode == 45){	//'Q'
-			volcano.switchInputProc(false);			
+//			volcano.switchInputProc(false);			
 		}	
 		addPoints = false;
 		if(keycode == 112 && pathSelectedPoint >= 0){		//DEL
