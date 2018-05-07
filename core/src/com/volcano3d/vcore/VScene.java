@@ -15,12 +15,12 @@ import com.volcano3d.vparticles.VParticleEffect;
 import com.volcano3d.vshaders.VDefaultShaderProvider;
 import com.volcano3d.vshaders.VMinimalistShaderProvider;
 /*
- * 1) Underwater texture
- * 2) Water foam blending
- * 3) Water shoreline blending
+ * v) Underwater texture
+ * v) Water foam blending
+ * v) Water shoreline blending
  * 4) Lava material
  * 5) Thematic icons
- *     
+ *
  * */
 public class VScene {
 	
