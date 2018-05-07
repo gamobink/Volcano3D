@@ -205,7 +205,7 @@ void main() {
 	
 	//Displace reflection UVs
 	reflectionUV += dispalce1;
-	refractionUV += dispalce1;
+	//refractionUV += dispalce1;		//!!!!!!!
 	
 	//Clamp to edges	
 	reflectionUV.x = clamp(reflectionUV.x, 0.001, 0.999);
@@ -216,6 +216,8 @@ void main() {
 
 	//Depth variable blur	
 	vec4 rer = texture2D(u_specularTexture, refractionUV);
+	gl_FragColor = rer; gl_FragColor.w = 1.0; return;			//!!!!!!!
+	
 	float deptha1 = pow((1.0 - rer.a), 5.0);
 	vec4 refraction = dofBlur(u_specularTexture, refractionUV, 1,  deptha1 * 0.2);
 
