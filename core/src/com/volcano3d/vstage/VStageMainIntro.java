@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
+import com.volcano3d.vcore.VConfig;
 import com.volcano3d.vcore.VStaticAssets;
 
 public class VStageMainIntro {
@@ -16,13 +17,13 @@ public class VStageMainIntro {
 	protected Array<Label> textLabelsArray = new Array<Label>(); 
 	protected float stageWidth;
 	protected float labelOffset;
-	protected float[] labelShownInterval = {4,6,9,6,6,5};
+	protected float[] labelShownInterval = VConfig.get().introTextLabelShownInterval;
 	private Timer.Task labelShownTimerTask = null;
 	protected int currentLabelIndex = 0;
 	protected Label titleLabel = null;
 	protected float titleLabelYTop = 0;
 	protected float titleLabelYInitial = 0;
-	protected float titleLabelVisibleDelay = 8;
+	protected float titleLabelVisibleDelay = VConfig.get().introTextTitleLabelVisibleTime;
 	
 	protected float labelSwipeDuration = 0.8f;
 	protected float titleMoveYDuration = 4f;
@@ -134,7 +135,6 @@ public class VStageMainIntro {
 		}
 		introGroup.addAction(Actions.sequence(Actions.fadeOut(1)));	
 	}	
-	
 	private void transitionToNext(){
 
 		Label l = textLabelsArray.get(currentLabelIndex);

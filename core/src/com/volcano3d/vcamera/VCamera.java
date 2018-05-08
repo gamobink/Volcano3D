@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.volcano3d.vcamera.VCameraPresetCollection.PresetsIdentifiers;
+import com.volcano3d.vcore.VConfig;
 import com.volcano3d.vcore.VMain;
+import com.volcano3d.vcore.VStaticAssets;
 
 public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPresetCallback {
 
@@ -85,8 +87,7 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 	}
 	public void pan(Vector2 mouseDrag){
 		mouseDrag.x = -mouseDrag.x;
-		//if(cameraState == States.MAIN)addMomentum(mouseDrag);
-		if(cameraPanEnabled)addMomentum(mouseDrag);
+		if(cameraPanEnabled)addMomentum(mouseDrag, VConfig.get().touchDragForceMult);
 	}
 	//tmp: for testing
 	public void onKeyDown(int key){

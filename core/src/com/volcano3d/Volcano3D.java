@@ -16,6 +16,10 @@ import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffectLoader;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
 import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter.OutputType;
+import com.volcano3d.vcore.VConfig;
 import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VStaticAssets;
 
@@ -106,9 +110,28 @@ public class Volcano3D extends ApplicationAdapter {
 
 /**/
 public class Volcano3D extends ApplicationAdapter {
-	protected VMain volcano = null;
+	public VMain volcano = null;
 	@Override
-	public void create () {		
+	public void create () {	
+		
+		/**
+		class Cfg{
+			public final boolean developmentMode = true; 
+			public final Vector2 resolution = new Vector2(490f, 800f);
+			public final boolean fullScreen = false;
+			public final Vector2 touchDragForceMult = new Vector2(10f, 5f);	
+			public final float[] introTextLabelShownInterval = {4,6,9,6,6,5};
+			public final float 	introTextTitleLabelVisibleTime = 8;
+		}		
+		Cfg cfg = new Cfg();
+		
+		Json json = new Json();
+		//json.setOutputType(OutputType.minimal);
+		String text = json.toJson(cfg, Cfg.class);
+		
+		System.out.println(text);
+		
+		/**/
 		
 //		try{
 //			System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream("output.txt")), true));

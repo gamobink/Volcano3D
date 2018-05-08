@@ -20,8 +20,15 @@ import com.volcano3d.vshaders.VMinimalistShaderProvider;
  * v) Water shoreline blending
  * 4) Lava material
  * 5) Thematic icons
+ * 
+ * ----- Finetune
+ * 1) Dragging speed
+ * 2) Text positions
+ * 3) Image slider position and size
+ * 4) Intro timing  
  *
  * */
+
 public class VScene {
 	
 	protected VMain volcano;

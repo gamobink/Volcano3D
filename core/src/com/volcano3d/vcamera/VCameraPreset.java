@@ -224,6 +224,11 @@ public class VCameraPreset {
 		mv.scl(new Vector2(10,5));
 		_momentum.add(mv);
 	}
+	public void addMomentum(Vector2 v, Vector2 scale){
+		Vector2 mv = v.scl(Gdx.graphics.getDeltaTime());
+		mv.scl(scale);
+		_momentum.add(mv);
+	}	
 	public void setTransitionAngleX(float angleX){
 		angleX = Math.min(Math.max(angleX, 0), 360);
 		transitionAngleXEnabled = true;
