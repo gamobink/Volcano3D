@@ -30,7 +30,7 @@ public class VCameraPresetMain extends VCameraPreset {
         
 		switch(identifier){
 		case MAIN:
-			gravityEnabled = false;
+			gravityEnabled = true;
 			break;
 		default:
 			break;			

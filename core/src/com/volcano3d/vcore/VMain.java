@@ -106,8 +106,8 @@ public class VMain{
     	
     	stage2D.onLoad();
     	
-//    	stage2D.introStage.showIntro();
-    	stage2D.introStage.hideIntro();
+    	stage2D.introStage.showIntro();
+//    	stage2D.introStage.hideIntro();
     }	
     
     public void render() {
