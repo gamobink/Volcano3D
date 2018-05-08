@@ -295,7 +295,11 @@ public class VMain{
     	}
     	    	
         scene.get("water").alphaFader.set("water1", water1Fade, 5f, 1f);    	
-        scene.get("water").alphaFader.set("water2", water2Fade, 5f, 1f);    	        
+        scene.get("water").alphaFader.set("water2", water2Fade, 5f, 1f);
+        
+        scene.get("foam1").alphaFader.set("foamFar2", water1Fade, 5f, 1f);    	
+        scene.get("foam1").alphaFader.set("foamFar1", water2Fade, 5f, 1f);
+        
         scene.get("ground").alphaFader.set("groundPart1", groundPart2Fade, 3f, 0.7f);
         scene.get("ground").alphaFader.set("groundPart4", groundPart1Fade, 3f, 0.7f);
         scene.get("ground").alphaFader.set("groundFar1", groundPart2Fade, 3f, 0.7f);

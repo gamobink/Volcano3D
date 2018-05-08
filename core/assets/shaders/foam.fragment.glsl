@@ -19,6 +19,6 @@ void main() {
 	
 	vec4 diffuse = texture2D(u_diffuseTexture, uv);
 	
-	gl_FragColor = vec4(vec3(0.9, 0.9, 1), diffuse.a * 0.7);
+	gl_FragColor = vec4(vec3(0.7, 0.7, 0.8), diffuse.a * 0.7);
 	
 }

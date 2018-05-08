@@ -4,7 +4,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.volcano3d.Volcano3D;
 import com.volcano3d.vcore.VConfig;
-import com.volcano3d.vcore.VStaticAssets;
 
 public class Volcano3DDesktop {
 	public static void main (String[] arg) {

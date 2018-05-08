@@ -18,8 +18,9 @@ import com.volcano3d.vshaders.VMinimalistShaderProvider;
  * v) Underwater texture
  * v) Water foam blending
  * v) Water shoreline blending
- * 4) Lava material
- * 5) Thematic icons
+ * v) Lava material
+ * 4) Hydrotermal process
+ * 5) Icons / buttons / gui config
  * 
  * ----- Finetune
  * 1) Dragging speed
@@ -37,7 +38,7 @@ public class VScene {
     public VMinimalistShaderProvider shaderSimple = null;
     public VDefaultShaderProvider shaderWater = null;
     public VDefaultShaderProvider shaderUnderwater = null; 
-    public VDefaultShaderProvider shaderUnderground = null; 
+    public VDefaultShaderProvider shaderRiverFoam = null; 
     public VDefaultShaderProvider shaderWaterWall = null; 
     public VDefaultShaderProvider shaderGround = null;  
     public VDefaultShaderProvider shaderWaterFoam = null;  
@@ -47,7 +48,7 @@ public class VScene {
     public Array<VTextureRender> waterTexturesArray = new Array<VTextureRender>();
     
     public VParticleEffect	particleFireSmoke = null;
-    //TODO Particle effects
+
     public VParticleEffect	particleSmokeCloud = null;
     public VParticleEffect	particleSmokeCloudIsland = null;
     public VParticleEffect	particleSecondaryFire = null;
@@ -55,11 +56,14 @@ public class VScene {
     public VParticleEffect	particleSmoke2 = null;  
     public VParticleEffect	particleSmoke3 = null;  
     
+    VSceneCrossection		crossectionScene = null;
+    
     private float waterMove = 0;
     private float foamMove = 0;
     
     public VScene(VMain o){
     	volcano = o;
+    	crossectionScene = new VSceneCrossection(o); 
     }
     public void create(){
     	
@@ -69,19 +73,17 @@ public class VScene {
         shaderSimple = new  VMinimalistShaderProvider(volcano, "shaders/min.vertex.glsl", "shaders/min.fragment.glsl");
         shaderWater = new VDefaultShaderProvider(volcano, "shaders/water.vertex.glsl", "shaders/water.fragment.glsl");
         shaderUnderwater = new VDefaultShaderProvider(volcano, "shaders/min.vertex.glsl", "shaders/underwater.fragment.glsl");
-        shaderUnderground = new VDefaultShaderProvider(volcano, "shaders/under.vertex.glsl", "shaders/under.fragment.glsl");
         shaderWaterWall = new VDefaultShaderProvider(volcano, "shaders/waterwall.vertex.glsl", "shaders/waterwall.fragment.glsl");        
         shaderGround = new VDefaultShaderProvider(volcano, "shaders/ground.vertex.glsl", "shaders/ground.fragment.glsl"); 
         shaderWaterFoam = new VDefaultShaderProvider(volcano, "shaders/foam.vertex.glsl", "shaders/foam.fragment.glsl"); 
+        shaderRiverFoam = new VDefaultShaderProvider(volcano, "shaders/foam.vertex.glsl", "shaders/riverfoam.fragment.glsl"); 
         
         add("skybox", shaderSky);
         add("underwater", shaderUnderwater);
         add("underwaterCenter", shaderUnderwater);
         
         add("island", shaderSimple);
-        //add("underground");
         add("waterWall", shaderWaterWall);
-        add("undergroundComp", shaderUnderground);
         
         VRenderable r = add("ground", shaderGround);
         r.enableTween();
@@ -95,12 +97,15 @@ public class VScene {
         r.enableTween();
         r.alphaFader.set("waterCenter", 1.0f, 1.0f);
         r.alphaFader.set("water", 1.0f, 1.0f);
-                
+
+        r = add("riverFoam", shaderRiverFoam);
+        r.enableTween();
+        r.alphaFader.set("riverFoam", 1.0f, 1.0f);        
+        
         r = add("foam1", shaderWaterFoam);
         r.enableTween();
-        r.alphaFader.set("Plane04", 1.0f, 1.0f);
-        //System.out.println(r);
-        
+        r.alphaFader.set("foam", 1.0f, 1.0f);
+        r.alphaFader.set("foamShort", 1.0f, 1.0f);
         
         waterTexturesArray.add(new VTextureRender(volcano));		//Reflection
         waterTexturesArray.add(new VTextureRender(volcano));		//Reflected skybox stretched
@@ -125,7 +130,9 @@ public class VScene {
         particleSmoke2.setPosition(-270, 40, -50);  
         
         particleSmoke3 = new VParticleEffect(volcano, "smoke3.pfx");
-        particleSmoke3.setPosition(-200, 20, -90);          
+        particleSmoke3.setPosition(-200, 20, -90);
+        
+        crossectionScene.create();
     }     
     public void onLoad(){
     	
@@ -133,10 +140,11 @@ public class VScene {
     	shaderSimple.onLoad();
     	shaderWater.onLoad();
     	shaderUnderwater.onLoad();
-    	shaderUnderground.onLoad();
+    	//shaderUnderground.onLoad();
     	shaderWaterWall.onLoad();
     	shaderGround.onLoad();
     	shaderWaterFoam.onLoad();
+    	shaderRiverFoam.onLoad();
     	
 		for(Map.Entry<String, VRenderable> m:renderables.entrySet()){  
 			m.getValue().onLoad();			   
@@ -166,6 +174,8 @@ public class VScene {
         particleSmoke1.onLoad();
         particleSmoke2.onLoad();
         particleSmoke3.onLoad();
+        
+        crossectionScene.onLoad();
     }    
     public void render(VCamera camera, Environment environment){
         
@@ -181,20 +191,22 @@ public class VScene {
         r.setShininess("waterCenter", waterMove);
         
         r = get("foam1");
-        r.setShininess("Plane04", foamMove);
+        r.setShininess("foam", foamMove);
 
         get("skybox").render(camera.get(), environment);
         
         if(volcano.camera.getPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN
-        	|| volcano.camera.getTargetPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN)
-        	renderCrossectionParts(camera, environment);   
-        
-        get("waterWall").render(camera.get(), environment);
+        	|| volcano.camera.getTargetPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
+
+        	crossectionScene.render(camera, environment);        	
+            get("waterWall").render(camera.get(), environment);        	
+        }        
 
         get("water").render(camera.get(), environment);        
         get("ground").render(camera.get(), environment);
         get("island").render(camera.get(), environment);     
         get("foam1").render(camera.get(), environment);
+        get("riverFoam").render(camera.get(), environment);
         
         /**/
         particleSmokeCloudIsland.render(camera.get());        
@@ -212,9 +224,7 @@ public class VScene {
       //  }
     	
     }
-    public void renderCrossectionParts(VCamera camera, Environment environment){   	
-    	get("undergroundComp").render(camera.get(), environment);   
-    }
+
     public void renderToWaterTextures(VCamera camera, Environment environment){
     	
     	PerspectiveCamera co = camera.get();
