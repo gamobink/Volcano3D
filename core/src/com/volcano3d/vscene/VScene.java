@@ -56,20 +56,16 @@ public class VScene {
     public void render(VCamera camera){
         
     	groundScene.renderSky(camera);
-    	
-        if(volcano.camera.getPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN
-            	|| volcano.camera.getTargetPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
 
+    	if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN
+    		|| camera.getTargetPreset() == VCameraPresetCollection.PresetsIdentifiers.MAIN){
+    		
         	crossectionScene.render(camera);      
         	groundScene.waterWallModel.render(camera.get());        	
-        } 
+        }
+    	
     	groundScene.render(camera);
     	particleEffectsScene.render(camera);
-    	
-        //TODO Render underground parts based on camera states
-      //  if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
-        //	modelUnderground.render(camera.get(), environment);
-      //  }
     	
     }
 
