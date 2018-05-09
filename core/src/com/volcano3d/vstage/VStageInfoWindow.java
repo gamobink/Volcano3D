@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.volcano3d.vcore.VConfig;
 import com.volcano3d.vcore.VStaticAssets;
 
 public class VStageInfoWindow extends Group{
@@ -45,7 +46,7 @@ public class VStageInfoWindow extends Group{
     public Table		messageTable = null;
     public Table 		imageSliderTable = null;    
     public Array<ImageExpandable>	images = new Array<ImageExpandable>();	
-	public Label 		imageLabel = null;	//TODO Image label
+	public Label 		imageLabel = null;
     
     public float		dragLimit = 0;
     public float		dragPos = 0;    
@@ -56,13 +57,13 @@ public class VStageInfoWindow extends Group{
 	private float 		contentHeight = 0;
 
     //Slider dimensions
-    public final float		imageMarginRight = 15; 
-    public final float		imageMarginTopBottom = 5;     
-    public final Vector2 	imageMaxSize = new Vector2(400,400);
-    public final float 		sliderPositionY = 100;
-    public final float 		sliderHeight = 100;
-    public final float 		titleMargin = 10;
-    public final float 		textMargin = 20;
+    public float		imageMarginRight = 0.01875f;			//fraction - 15; 
+    public float		imageMarginTopBottom = 0.00625f;		//fraction	- 5;     
+    public Vector2 		imageMaxSize = new Vector2(0.5f, 0.5f);	//fraction
+    public float 		sliderPositionY = 0.125f;					//fraction
+    public float 		sliderHeight = 0.125f;					//fraction
+    public float 		titleMargin = 0.0125f;					//fraction - 10;
+    public float 		textMargin = 0.025f;					//fraction - 20;
     
     public Array<String>	imagesFileNames = new Array<String>();
     
@@ -74,7 +75,16 @@ public class VStageInfoWindow extends Group{
 		
         contentWidth = main.mainStage.getWidth();
         contentHeight = main.mainStage.getHeight();
-
+        
+        //Scale slider dimensions
+        imageMarginRight = contentHeight * imageMarginRight;
+        imageMarginTopBottom = contentHeight * imageMarginTopBottom;
+        sliderHeight = contentHeight * sliderHeight;
+        sliderPositionY = contentHeight * sliderPositionY;
+        imageMaxSize.scl(contentHeight);
+        titleMargin = contentHeight * titleMargin;
+        textMargin = contentHeight * textMargin;
+        
         title = new Label("", new Label.LabelStyle(VStaticAssets.Fonts.futuraFont, Color.WHITE));	
         title.setWrap(true);
         title.setWidth(contentWidth);
@@ -136,7 +146,8 @@ public class VStageInfoWindow extends Group{
 	public void setTitle(String titleStr){
 		title.setText(titleStr);
 	}
-	public void setText(String textStr, float topOffset){
+	public void setText(String textStr, float topOffset){		
+		topOffset = mainStage.mainStage.getHeight() * topOffset;		
 		text.setText(textStr);
 		text.setPosition((mainStage.mainStage.getWidth() - (contentWidth - (textMargin * 2))) / 2, text.getPrefHeight() + textMargin);	
 		messageTable.setHeight(text.getPrefHeight() + (textMargin * 2));

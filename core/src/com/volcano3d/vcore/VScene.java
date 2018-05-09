@@ -15,16 +15,15 @@ import com.volcano3d.vparticles.VParticleEffect;
 import com.volcano3d.vshaders.VDefaultShaderProvider;
 import com.volcano3d.vshaders.VMinimalistShaderProvider;
 /*
- * v) Underwater texture
- * v) Water foam blending
- * v) Water shoreline blending
- * v) Lava material
- * 4) Hydrotermal process
- * 5) Icons / buttons / gui config
+ * 2) Sky and clouds movement
+ * 3) Lava flow model on the outside
+ * 4) Graphical 3d information for magmatic process
+ * 5) Hydrotermal process graphics
+ * 6) Icons / buttons 
  * 
  * ----- Finetune
  * 1) Dragging speed
- * 2) Text positions
+ * 2) Text positions / size
  * 3) Image slider position and size
  * 4) Intro timing  
  *
