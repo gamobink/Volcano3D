@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.volcano3d.vcamera.VCameraPresetCollection.PresetsIdentifiers;
 import com.volcano3d.vcore.VConfig;
 import com.volcano3d.vcore.VMain;
-import com.volcano3d.vcore.VStaticAssets;
 
 public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPresetCallback {
 

@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.volcano3d.vcore.VConfig;
 import com.volcano3d.vcore.VStaticAssets;
 
 public class VStageInfoWindow extends Group{

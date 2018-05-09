@@ -1,8 +1,9 @@
-package com.volcano3d.vcore;
+package com.volcano3d.vscene;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g3d.Environment;
 import com.volcano3d.vcamera.VCamera;
+import com.volcano3d.vcore.VMain;
+import com.volcano3d.vcore.VRenderable;
 import com.volcano3d.vshaders.VDefaultShaderProvider;
 
 public class VSceneCrossection {
@@ -39,15 +40,15 @@ public class VSceneCrossection {
     	lava.onLoad();    	
     	
     }
-    public void render(VCamera camera, Environment environment){
+    public void render(VCamera camera){
     	
     	lavaMove += 0.1f * Gdx.graphics.getDeltaTime();
     	lavaMove = lavaMove % 1;
         
         lava.setShininess("underg19", lavaMove);
         
-    	undergroundComp.render(camera.get(), environment);  
-    	lava.render(camera.get(), environment); 
+    	undergroundComp.render(camera.get());  
+    	lava.render(camera.get()); 
     	
     }
     

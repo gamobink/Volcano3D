@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g3d.Attribute;
-import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
@@ -156,7 +155,7 @@ public class VRenderable {
     	if(id != null && id.length() > 0)return modelInstance.getNode(id, true);
     	else return modelInstance.nodes.get(0);
     }    
-    public void render(PerspectiveCamera cam, Environment env){
+    public void render(PerspectiveCamera cam){
     	if(alphaFader != null){
     		alphaFader.tween(Gdx.graphics.getDeltaTime());
     		for(int i = 0; i < alphaFader.values.size; i++){
@@ -167,7 +166,7 @@ public class VRenderable {
     	if(blendingAttribute.opacity > 0){
 	        modelBatch.begin(cam);
 	        if(modelInstance != null){
-	        	modelBatch.render(modelInstance, env);
+	        	modelBatch.render(modelInstance);
 	        }
 	        else System.out.println("Renderable:render instance not created "+modelName);
 	        modelBatch.end();       

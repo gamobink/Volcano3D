@@ -7,9 +7,6 @@ import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
 import com.badlogic.gdx.graphics.g3d.particles.ParticleEffectLoader;
 import com.badlogic.gdx.math.Vector2;
@@ -22,6 +19,7 @@ import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vdecal.VDecal;
 import com.volcano3d.vdecal.VDecalGroup;
+import com.volcano3d.vscene.VScene;
 import com.volcano3d.vstage.VStageMain;
 
 /**
@@ -32,7 +30,6 @@ import com.volcano3d.vstage.VStageMain;
 public class VMain{
 
     public AssetManager assetsManager = new AssetManager();
-    public Environment environment = new Environment();
     public VCamera camera = null;   
     public VInputProcessor inputProcessor = new VInputProcessor(this);
     public VStageMain stage2D = null;
@@ -78,11 +75,6 @@ public class VMain{
         camera = new VCamera(this);
         decalsTags = new VDecalGroup(this);
         		
-        environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.5f, 1f));
-        environment.add(new DirectionalLight().set(0.9f, 0.9f, 0.5f,  -1, -0.8f, 1));  
-        environment.add(new DirectionalLight().set(0.4f, 0.4f, 0.6f,  0f, -0.8f, 1));  
-        environment.set(new ColorAttribute(ColorAttribute.Fog, 0.6f, 0.6f, 0.8f, 1f));
-        
         scene.create();
         
         Vector2 pinheadSize = new Vector2(26,25);
@@ -126,14 +118,14 @@ public class VMain{
         
         updateModelFaders();
 
-        scene.renderToWaterTextures(camera, environment);
+        scene.renderToWaterTextures(camera);
         
     	Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
         Gdx.gl.glClearColor(0.5f,0.5f,0.5f,1.0f);
         Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
         
-        scene.render(camera, environment);
+        scene.render(camera);
 
         //VCommon.drawGrid(camera.get());
 
@@ -293,18 +285,15 @@ public class VMain{
 	    	if(angleUnits < 48 || angleUnits > 280)groundPart1Fade = 0.0f;
 	    	if(angleUnits < 241 && angleUnits > 76)groundPart2Fade = 0.0f;
     	}
-    	    	
-        scene.get("water").alphaFader.set("water1", water1Fade, 5f, 1f);    	
-        scene.get("water").alphaFader.set("water2", water2Fade, 5f, 1f);
-        
-        scene.get("foam1").alphaFader.set("foamFar2", water1Fade, 5f, 1f);    	
-        scene.get("foam1").alphaFader.set("foamFar1", water2Fade, 5f, 1f);
-        
-        scene.get("ground").alphaFader.set("groundPart1", groundPart2Fade, 3f, 0.7f);
-        scene.get("ground").alphaFader.set("groundPart4", groundPart1Fade, 3f, 0.7f);
-        scene.get("ground").alphaFader.set("groundFar1", groundPart2Fade, 3f, 0.7f);
-
-        
+    	
+        scene.groundScene.waterModel.alphaFader.set("water1", water1Fade, 5f, 1f);    	
+        scene.groundScene.waterModel.alphaFader.set("water2", water2Fade, 5f, 1f);        
+        scene.groundScene.waterFoamModel.alphaFader.set("foamFar2", water1Fade, 5f, 1f);    	
+        scene.groundScene.waterFoamModel.alphaFader.set("foamFar1", water2Fade, 5f, 1f);        
+        scene.groundScene.groundModel.alphaFader.set("groundPart1", groundPart2Fade, 3f, 0.7f);
+        scene.groundScene.groundModel.alphaFader.set("groundPart4", groundPart1Fade, 3f, 0.7f);
+        scene.groundScene.groundModel.alphaFader.set("groundFar1", groundPart2Fade, 3f, 0.7f);
+    	
         float decalsFade = 0.0f;
         
         if(camera.getState() == VCamera.States.MAIN 
