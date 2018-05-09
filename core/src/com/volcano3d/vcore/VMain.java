@@ -293,7 +293,9 @@ public class VMain{
         scene.groundScene.groundModel.alphaFader.set("groundPart1", groundPart2Fade, 3f, 0.7f);
         scene.groundScene.groundModel.alphaFader.set("groundPart4", groundPart1Fade, 3f, 0.7f);
         scene.groundScene.groundModel.alphaFader.set("groundFar1", groundPart2Fade, 3f, 0.7f);
-    	
+        scene.groundScene.lavaOuterModel.alphaFader.set("lavaFar", groundPart2Fade, 3f, 0.7f);
+        
+        
         float decalsFade = 0.0f;
         
         if(camera.getState() == VCamera.States.MAIN 

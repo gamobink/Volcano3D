@@ -19,7 +19,8 @@ public class VSceneGround {
     public VDefaultShaderProvider shaderWaterWall = null; 
     public VDefaultShaderProvider shaderGround = null;  
     public VDefaultShaderProvider shaderWaterFoam = null;  	
-	
+    public VDefaultShaderProvider shaderLava = null; 
+    
     public VRenderable 	skyboxModel = null;
     public VRenderable 	underwaterModel = null;
     public VRenderable 	underwaterCenterModel = null;
@@ -28,10 +29,12 @@ public class VSceneGround {
     public VRenderable 	groundModel = null;
     public VRenderable 	waterModel = null;   
     public VRenderable 	riverFoamModel = null;
-    public VRenderable 	waterFoamModel = null;    
+    public VRenderable 	waterFoamModel = null;  
+    public VRenderable 	lavaOuterModel = null;  
     
     private float waterMove = 0;
     private float foamMove = 0;    
+    private float lavaMove = 0;
     
     public VSceneGround(VMain o){
     	volcano = o;
@@ -48,7 +51,8 @@ public class VSceneGround {
         shaderGround = new VDefaultShaderProvider(volcano, "shaders/ground.vertex.glsl", "shaders/ground.fragment.glsl"); 
         shaderWaterFoam = new VDefaultShaderProvider(volcano, "shaders/foam.vertex.glsl", "shaders/foam.fragment.glsl"); 
         shaderRiverFoam = new VDefaultShaderProvider(volcano, "shaders/foam.vertex.glsl", "shaders/riverfoam.fragment.glsl");     	
-
+    	shaderLava = new VDefaultShaderProvider(volcano, "shaders/lava.vertex.glsl", "shaders/lava.fragment.glsl");
+    	
         skyboxModel = new VRenderable(volcano, "models/skybox", shaderSky);
         underwaterModel = new VRenderable(volcano, "models/underwater", shaderUnderwater);
         underwaterCenterModel = new VRenderable(volcano, "models/underwaterCenter", shaderUnderwater);
@@ -77,6 +81,9 @@ public class VSceneGround {
         waterFoamModel.alphaFader.set("foam", 1.0f, 1.0f);
         waterFoamModel.alphaFader.set("foamShort", 1.0f, 1.0f);        
         
+        lavaOuterModel = new VRenderable(volcano, "models/outerLava", shaderLava);
+        lavaOuterModel.enableTween();
+        lavaOuterModel.alphaFader.set("lavaFar", 1.0f, 1.0f);
     }
     public void onLoad(){
     	
@@ -88,6 +95,7 @@ public class VSceneGround {
     	shaderGround.onLoad();
     	shaderWaterFoam.onLoad();
     	shaderRiverFoam.onLoad();
+    	shaderLava.onLoad();
     	
     	skyboxModel.onLoad();
     	underwaterModel.onLoad();
@@ -98,7 +106,7 @@ public class VSceneGround {
     	waterModel.onLoad();
     	riverFoamModel.onLoad();
     	waterFoamModel.onLoad();    	
-    	
+    	lavaOuterModel.onLoad();
     	
     	
     }
@@ -115,14 +123,19 @@ public class VSceneGround {
         foamMove += 0.2f * Gdx.graphics.getDeltaTime();
         foamMove = foamMove % 1;
         
+    	lavaMove -= 0.5f * Gdx.graphics.getDeltaTime();
+    	if(lavaMove < 0)lavaMove = 1.0f;
+        
+    	lavaOuterModel.setShininess("lavaMain", lavaMove);        
         waterModel.setShininess("water1", waterMove);
         waterModel.setShininess("water2", waterMove);
         waterModel.setShininess("waterCenter", waterMove);        
         waterFoamModel.setShininess("foam", foamMove);    	
-
+        
     	waterModel.render(camera.get());        
     	groundModel.render(camera.get());
-    	islandModel.render(camera.get());      	    	
+    	islandModel.render(camera.get());      	  
+    	lavaOuterModel.render(camera.get());
     	waterFoamModel.render(camera.get());
         riverFoamModel.render(camera.get());    	
     }

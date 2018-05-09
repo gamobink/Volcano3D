@@ -22,7 +22,7 @@ public class VSceneParticleEffects {
 
     public void create(){
         particleFireSmoke = new VParticleEffect(volcano, "volcanoFire2.pfx");
-        particleFireSmoke.setPosition(-220, 115, -10);
+        particleFireSmoke.setPosition(-214, 115, -10);
         
         particleSmokeCloud = new VParticleEffect(volcano, "smokeCloud.pfx");
         particleSmokeCloud.setPosition(-220, 115, -10);        
@@ -31,7 +31,7 @@ public class VSceneParticleEffects {
         particleSmokeCloudIsland.setPosition(1400, 55, 20);
         
         particleSecondaryFire = new VParticleEffect(volcano, "fireSecondary.pfx");
-        particleSecondaryFire.setPosition(-270, 65, -25);
+        particleSecondaryFire.setPosition(-270, 65, -30);
                 
         particleSmoke1 = new VParticleEffect(volcano, "smoke1.pfx");
         particleSmoke1.setPosition(-180, 40, -40);
