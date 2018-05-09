@@ -1,10 +1,6 @@
 package com.volcano3d.vcore;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter.OutputType;
 
 public class VConfig {
 	
@@ -13,6 +9,7 @@ public class VConfig {
 	public boolean 	developmentMode = true; 
 	public Vector2 	resolution = new Vector2(490f, 800f);
 	public boolean 	fullScreen = false;
+	public String	modelFileExt = ".g3dj";						//Json model files
 	public Vector2 	touchDragForceMult = new Vector2(10f, 5f);	
 	public float[] 	introTextLabelShownInterval = {4,6,9,6,6,5};
 	public float 	introTextTitleLabelVisibleTime = 8;
@@ -22,6 +19,7 @@ public class VConfig {
 	public boolean 	developmentMode = false; 
 	public Vector2 	resolution = new Vector2(1080f, 1920f);
 	public boolean 	fullScreen = true;
+	public String	modelFileExt = ".g3db";						//Binary model files
 	public Vector2 	touchDragForceMult = new Vector2(1f, 0.5f);
 	public float[] 	introTextLabelShownInterval = {4,6,9,6,6,5};
 	public float 	introTextTitleLabelVisibleTime = 8;	

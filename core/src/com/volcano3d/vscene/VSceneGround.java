@@ -49,13 +49,13 @@ public class VSceneGround {
         shaderWaterFoam = new VDefaultShaderProvider(volcano, "shaders/foam.vertex.glsl", "shaders/foam.fragment.glsl"); 
         shaderRiverFoam = new VDefaultShaderProvider(volcano, "shaders/foam.vertex.glsl", "shaders/riverfoam.fragment.glsl");     	
 
-        skyboxModel = new VRenderable(volcano, "skybox.g3dj", shaderSky);
-        underwaterModel = new VRenderable(volcano, "underwater.g3dj", shaderUnderwater);
-        underwaterCenterModel = new VRenderable(volcano, "underwaterCenter.g3dj", shaderUnderwater);
-        islandModel = new VRenderable(volcano, "island.g3dj", shaderSimple);
-        waterWallModel = new VRenderable(volcano, "waterWall.g3dj", shaderWaterWall);
+        skyboxModel = new VRenderable(volcano, "models/skybox", shaderSky);
+        underwaterModel = new VRenderable(volcano, "models/underwater", shaderUnderwater);
+        underwaterCenterModel = new VRenderable(volcano, "models/underwaterCenter", shaderUnderwater);
+        islandModel = new VRenderable(volcano, "models/island", shaderSimple);
+        waterWallModel = new VRenderable(volcano, "models/waterWall", shaderWaterWall);
         
-        groundModel = new VRenderable(volcano, "ground.g3dj", shaderGround);
+        groundModel = new VRenderable(volcano, "models/ground", shaderGround);
         groundModel.enableTween();
         groundModel.alphaFader.set("groundPart1", 1.0f, 1.0f);
         groundModel.alphaFader.set("groundPart2", 1.0f, 1.0f);
@@ -63,16 +63,16 @@ public class VSceneGround {
         groundModel.alphaFader.set("groundFar1", 1.0f, 1.0f);
         groundModel.alphaFader.set("groundFar2", 1.0f, 1.0f);
 
-        waterModel = new VRenderable(volcano, "water.g3dj", shaderWater);
+        waterModel = new VRenderable(volcano, "models/water", shaderWater);
         waterModel.enableTween();
         waterModel.alphaFader.set("waterCenter", 1.0f, 1.0f);
         waterModel.alphaFader.set("water", 1.0f, 1.0f);        
         
-        riverFoamModel = new VRenderable(volcano, "riverFoam.g3dj", shaderRiverFoam);
+        riverFoamModel = new VRenderable(volcano, "models/riverFoam", shaderRiverFoam);
         riverFoamModel.enableTween();
         riverFoamModel.alphaFader.set("riverFoam", 1.0f, 1.0f);        
         
-        waterFoamModel = new VRenderable(volcano, "foam1.g3dj", shaderWaterFoam);
+        waterFoamModel = new VRenderable(volcano, "models/foam1", shaderWaterFoam);
         waterFoamModel.enableTween();
         waterFoamModel.alphaFader.set("foam", 1.0f, 1.0f);
         waterFoamModel.alphaFader.set("foamShort", 1.0f, 1.0f);        

@@ -2,6 +2,7 @@ package com.volcano3d.vscene;
 
 import com.badlogic.gdx.Gdx;
 import com.volcano3d.vcamera.VCamera;
+import com.volcano3d.vcore.VConfig;
 import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VRenderable;
 import com.volcano3d.vshaders.VDefaultShaderProvider;
@@ -27,8 +28,8 @@ public class VSceneCrossection {
     	shaderUnderground = new VDefaultShaderProvider(volcano, "shaders/under.vertex.glsl", "shaders/under.fragment.glsl");
     	shaderLava = new VDefaultShaderProvider(volcano, "shaders/lava.vertex.glsl", "shaders/lava.fragment.glsl");
     	
-    	undergroundComp = new VRenderable(volcano, "undergroundComp.g3dj", shaderUnderground);
-    	lava = new VRenderable(volcano, "lava.g3dj", shaderLava);
+    	undergroundComp = new VRenderable(volcano, "models/undergroundComp", shaderUnderground);
+    	lava = new VRenderable(volcano, "models/lava", shaderLava);
     	
     }
     public void onLoad(){

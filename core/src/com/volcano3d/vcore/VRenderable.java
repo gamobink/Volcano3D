@@ -47,7 +47,7 @@ public class VRenderable {
     }
     public VRenderable(VMain o, String filename, ShaderProvider shader){
     	volcano = o;
-        modelName = filename;
+        modelName = filename + VConfig.get().modelFileExt;
         
         ModelLoader.ModelParameters modelParameters = new ModelLoader.ModelParameters();
         modelParameters.textureParameter.genMipMaps = true;
