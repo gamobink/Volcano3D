@@ -8,7 +8,20 @@ import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VTextureRender;
-
+/*
+ * 2) Sky and clouds movement
+ * 3) Lava flow model on the outside
+ * 4) Graphical 3d information for magmatic process
+ * 5) Hydrotermal process graphics
+ * 6) Icons / buttons 
+ * 
+ * ----- Finetune
+ * 1) Dragging speed
+ * 2) Text positions / size
+ * 3) Image slider position and size
+ * 4) Intro timing  
+ *
+ * */
 public class VScene {
 	
 	protected VMain volcano;
