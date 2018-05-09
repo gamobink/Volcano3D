@@ -2,7 +2,6 @@ package com.volcano3d.vscene;
 
 import com.badlogic.gdx.Gdx;
 import com.volcano3d.vcamera.VCamera;
-import com.volcano3d.vcore.VConfig;
 import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VRenderable;
 import com.volcano3d.vshaders.VDefaultShaderProvider;
