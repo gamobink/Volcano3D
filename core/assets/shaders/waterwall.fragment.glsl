@@ -84,13 +84,16 @@ void main() {
 	dot = clamp(dot*3, 0,1);
 	
 	float depth = texture2D(u_specularTexture, refractionUV).a;
-	vec4 refraction = dofBlur(u_specularTexture, refractionUV, 1.42, depth / 15);
+	//vec4 refraction = dofBlur(u_specularTexture, refractionUV, 1.42, depth / 15);
+	vec4 refraction = texture2D(u_specularTexture, refractionUV);
 
 	float ed = v_edgeGradient;
 	ed = clamp((-ed * 0.02) + 0.4, 0,1);
 	
 	float depthFactor = clamp(pow(depth, 0.5), 0,1);
-
-	gl_FragColor = (refraction * depthFactor) * vec4(0.8 * ed, 0.8 * ed, 1, 1) + vec4(dot,dot,dot, 1);
+	
+	//Might be problem with opacity
+	
+	gl_FragColor = (refraction * depthFactor);		// * vec4(0.8 * ed, 0.8 * ed, 1, 1) + vec4(dot,dot,dot, 1);
 	gl_FragColor.w = 1.0f;
 }

@@ -8,7 +8,7 @@ import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VTextureRender;
-/*
+/* 1) Shader problem in waterwall.fragment 
  * 2) Sky and clouds movement
  * 3) Lava flow model on the outside
  * 4) Graphical 3d information for magmatic process
@@ -128,7 +128,7 @@ public class VScene {
 	        	groundScene.skyboxModel.scale(1, 50, 1);
 	        	groundScene.skyboxModel.render(c);	        	
 	        }else if(i == 2){	//under water part - refraction	  
-		        if(c.position.y < 0){    
+		        if(volcano.hideUndergroundPart){    
 		        	groundScene.skyboxModel.scale(1, 1, 1);
 		        	groundScene.skyboxModel.render(c);
 		        	groundScene.groundModel.render(c);
