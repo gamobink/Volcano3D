@@ -40,6 +40,8 @@ public class VMain{
     protected boolean userActionActive = false;
     private Timer.Task userActionActiveCountdown = null;
 
+    public boolean hideUndergroundPart = false;
+
    // public VFollowPathEditor pathEdit = new VFollowPathEditor(this);
         
     public VMain(){
@@ -292,6 +294,12 @@ public class VMain{
         scene.groundScene.groundModel.alphaFader.set("groundPart4", groundPart1Fade, 3f, 0.7f);
         scene.groundScene.groundModel.alphaFader.set("groundFar1", groundPart2Fade, 3f, 0.7f);
         scene.groundScene.lavaOuterModel.alphaFader.set("lavaFar", groundPart2Fade, 3f, 0.7f);
+        
+        if(water1Fade < 1.0f || water2Fade < 1.0f){
+        	hideUndergroundPart = true;
+        }else{
+        	hideUndergroundPart = false;
+        }
         
         
         float decalsFade = 0.0f;
