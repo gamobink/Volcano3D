@@ -338,17 +338,17 @@
 			"textures": [
 				{
 					"id": "Map #1", 
-					"filename": "../textures/water.tga",  
+					"filename": "textures/water.tga",  
 					"type": "DIFFUSE"
 				},
 				{
 					"id": "Map #2", 
-					"filename": "../textures/water_normal2_dudv.tga",  
+					"filename": "textures/water_normal2_dudv.tga",  
 					"type": "EMISSIVE"
 				},
 				{
 					"id": "Map #3", 
-					"filename": "../textures/water_normal2.tga",  
+					"filename": "textures/water_normal2.tga",  
 					"type": "NORMAL"
 				}
 			]
@@ -364,17 +364,17 @@
 			"textures": [
 				{
 					"id": "Map #1", 
-					"filename": "../textures/water.tga",  
+					"filename": "textures/water.tga",  
 					"type": "DIFFUSE"
 				},
 				{
 					"id": "Map #2", 
-					"filename": "../textures/water_normal2_dudv.tga",  
+					"filename": "textures/water_normal2_dudv.tga",  
 					"type": "EMISSIVE"
 				},
 				{
 					"id": "Map #3", 
-					"filename": "../textures/water_normal2.tga",  
+					"filename": "textures/water_normal2.tga",  
 					"type": "NORMAL"
 				}
 			]
@@ -390,17 +390,17 @@
 			"textures": [
 				{
 					"id": "Map #1", 
-					"filename": "../textures/water.tga",  
+					"filename": "textures/water.tga",  
 					"type": "DIFFUSE"
 				},
 				{
 					"id": "Map #2", 
-					"filename": "../textures/water_normal2_dudv.tga",  
+					"filename": "textures/water_normal2_dudv.tga",  
 					"type": "EMISSIVE"
 				},
 				{
 					"id": "Map #3", 
-					"filename": "../textures/water_normal2.tga",  
+					"filename": "textures/water_normal2.tga",  
 					"type": "NORMAL"
 				}
 			]

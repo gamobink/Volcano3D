@@ -33504,12 +33504,12 @@
 			"textures": [
 				{
 					"id": "Map #36", 
-					"filename": "../textures/groundFar1.tga", 
+					"filename": "textures/groundFar1.tga", 
 					"type": "DIFFUSE"
 				}, 
 				{
 					"id": "Map #37", 
-					"filename": "../textures/groundFar1Fog.tga", 
+					"filename": "textures/groundFar1Fog.tga", 
 					"type": "SPECULAR"
 				}
 			]
@@ -33525,12 +33525,12 @@
 			"textures": [
 				{
 					"id": "Map #38", 
-					"filename": "../textures/groundFar2.tga", 
+					"filename": "textures/groundFar2.tga", 
 					"type": "DIFFUSE"
 				}, 
 				{
 					"id": "Map #39", 
-					"filename": "../textures/groundFar2Fog.tga", 
+					"filename": "textures/groundFar2Fog.tga", 
 					"type": "SPECULAR"
 				}
 			]
@@ -33546,12 +33546,12 @@
 			"textures": [
 				{
 					"id": "Map #40", 
-					"filename": "../textures/groundPart4.tga", 
+					"filename": "textures/groundPart4.tga", 
 					"type": "DIFFUSE"
 				}, 
 				{
 					"id": "Map #41", 
-					"filename": "../textures/groundPart4Fog.tga", 
+					"filename": "textures/groundPart4Fog.tga", 
 					"type": "SPECULAR"
 				}
 			]
@@ -33567,12 +33567,12 @@
 			"textures": [
 				{
 					"id": "Map #42", 
-					"filename": "../textures/groundPart12.tga", 
+					"filename": "textures/groundPart12.tga", 
 					"type": "DIFFUSE"
 				}, 
 				{
 					"id": "Map #43", 
-					"filename": "../textures/groundPart12Fog.tga", 
+					"filename": "textures/groundPart12Fog.tga", 
 					"type": "SPECULAR"
 				}
 			]
@@ -33588,12 +33588,12 @@
 			"textures": [
 				{
 					"id": "Map #44", 
-					"filename": "../textures/groundStatic.tga", 
+					"filename": "textures/groundStatic.tga", 
 					"type": "DIFFUSE"
 				}, 
 				{
 					"id": "Map #45", 
-					"filename": "../textures/groundStaticFog.tga", 
+					"filename": "textures/groundStaticFog.tga", 
 					"type": "SPECULAR"
 				}
 			]
@@ -33609,12 +33609,12 @@
 			"textures": [
 				{
 					"id": "Map #19", 
-					"filename": "../textures/groundCenter.tga", 
+					"filename": "textures/groundCenter.tga", 
 					"type": "DIFFUSE"
 				}, 
 				{
 					"id": "Map #35", 
-					"filename": "../textures/groundCenterFog.tga", 
+					"filename": "textures/groundCenterFog.tga", 
 					"type": "SPECULAR"
 				}
 			]

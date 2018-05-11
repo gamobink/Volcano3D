@@ -13,16 +13,18 @@ public class VConfig {
 	public Vector2 	touchDragForceMult = new Vector2(10f, 5f);	
 	public float[] 	introTextLabelShownInterval = {4,6,9,6,6,5};
 	public float 	introTextTitleLabelVisibleTime = 8;
+	public float 	userActionActiveTimeout = 50;
 	
 	/******************** Configuration for production (HD, full screen) ********************
 	
 	public boolean 	developmentMode = false; 
 	public Vector2 	resolution = new Vector2(1080f, 1920f);
 	public boolean 	fullScreen = true;
-	public String	modelFileExt = ".g3db";						//Binary model files
+	public String	modelFileExt = ".g3dj";						//Binary model files
 	public Vector2 	touchDragForceMult = new Vector2(1f, 0.5f);
-	public float[] 	introTextLabelShownInterval = {4,6,9,6,6,5};
-	public float 	introTextTitleLabelVisibleTime = 8;	
+	public float[] 	introTextLabelShownInterval = {5,10,15,7,15,15};
+	public float 	introTextTitleLabelVisibleTime = 8;
+	public float 	userActionActiveTimeout = 50;	
 				
 	/****************************************************************************************/	
 	

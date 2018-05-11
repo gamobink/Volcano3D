@@ -2509,12 +2509,12 @@
 			"textures": [
 				{
 					"id": "Map #50", 
-					"filename": "../textures/underwater041.tga", 
+					"filename": "textures/underwater041.tga", 
 					"type": "DIFFUSE"
 				},
 				{
 					"id": "Map #22", 
-					"filename": "../textures/underwaterDepth.tga", 
+					"filename": "textures/underwaterDepth.tga", 
 					"type": "AMBIENT"
 				}
 			]

@@ -1193,7 +1193,7 @@
 			"textures": [
 				{
 					"id": "Map #48", 
-					"filename": "../textures/waterFoam.tga", 
+					"filename": "textures/waterFoam.tga", 
 					"type": "DIFFUSE"
 				}
 			]
@@ -1209,7 +1209,7 @@
 			"textures": [
 				{
 					"id": "Map #48", 
-					"filename": "../textures/waterFoamShort.tga", 
+					"filename": "textures/waterFoamShort.tga", 
 					"type": "DIFFUSE"
 				}
 			]

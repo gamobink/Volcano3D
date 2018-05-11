@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.Calendar;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -152,7 +153,20 @@ public class Volcano3D extends ApplicationAdapter {
 //			System.out.format("{%ff, %ff},", ppx, py);System.out.println("");	
 //		}
 		
-		
+		if(VConfig.get().developmentMode == false){
+			Calendar cal = Calendar.getInstance();
+			int year = cal.get(Calendar.YEAR);
+			int month = cal.get(Calendar.MONTH);
+			int day = cal.get(Calendar.DAY_OF_MONTH);
+			int hour = cal.get(Calendar.HOUR_OF_DAY);
+			int minute = cal.get(Calendar.MINUTE);
+			int second = cal.get(Calendar.SECOND);
+			String filename = "./logs/"+year+""+(month+1)+""+day+""+hour+""+minute+""+second+".log";			
+			try{
+				System.setOut(new PrintStream(new BufferedOutputStream(new FileOutputStream(filename, true)), true));
+			}catch(FileNotFoundException e){	}		   
+			System.out.printf("===========Volcano3D %4d/%02d/%02d %02d:%02d:%02d==========\n", year, month+1, day, hour, minute, second);
+		}
 		
 		volcano = new VMain();
 	}

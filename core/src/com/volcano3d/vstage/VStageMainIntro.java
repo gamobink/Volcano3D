@@ -47,22 +47,22 @@ public class VStageMainIntro {
 				VStaticAssets.Text.intro6Text
 		};
 		for(int i=0; i<6; i++){
-	        l = new Label(texts[i], new Label.LabelStyle(VStaticAssets.Fonts.calibri25Font, Color.WHITE));	
+	        l = new Label(texts[i], new Label.LabelStyle(VStaticAssets.Fonts.introText, Color.WHITE));	
 	        l.setWrap(true);
 	        l.setWidth(width);
 	        l.setHeight(main.mainStage.getHeight());
 	        l.setAlignment(Align.top);
-	        l.setPosition(0, -160);
+	        l.setPosition(0, -(main.mainStage.getHeight() * 0.1f));
 	        l.setVisible(false);
 	        introGroup.addActor(l);
 	        textLabelsArray.add(l);
 		}
 		
 		titleLabelYInitial = main.mainStage.getHeight() * 0.55f;
-		titleLabelYTop = main.mainStage.getHeight() - 100;		
+		titleLabelYTop = main.mainStage.getHeight() - (main.mainStage.getHeight() * 0.08f);		
 		
 		//TODO Title label as image
-		titleLabel = new Label(VStaticAssets.Text.titleText, new Label.LabelStyle(VStaticAssets.Fonts.calibriLightFont, Color.WHITE));
+		titleLabel = new Label(VStaticAssets.Text.titleText, new Label.LabelStyle(VStaticAssets.Fonts.introTitle, Color.WHITE));
 		titleLabel.setWrap(true);
         titleLabel.setWidth(stageWidth);
         titleLabel.setAlignment(Align.center);

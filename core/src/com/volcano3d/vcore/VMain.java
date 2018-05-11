@@ -36,11 +36,9 @@ public class VMain{
     public VDecalGroup decalsTags = null;
     public boolean  objectsLoaded = false;    
     public VScene scene = new VScene(this);
-    public float userActionActiveDelay = 50;
+    public float userActionActiveDelay = VConfig.get().userActionActiveTimeout;
     protected boolean userActionActive = false;
     private Timer.Task userActionActiveCountdown = null;
-
-   //public VParticleEffect	particleEffectSmoke = null;
 
    // public VFollowPathEditor pathEdit = new VFollowPathEditor(this);
         
@@ -246,12 +244,12 @@ public class VMain{
     	stage2D.introStage.hideIntro();
     	
     	if(userActionActiveCountdown != null)userActionActiveCountdown.cancel();
-    	/*
+    	
     	userActionActiveCountdown = Timer.schedule(new Timer.Task() {
 	        @Override
 	        public void run(){
 	        	onUserActionLost();
-	        }}, userActionActiveDelay);*/
+	        }}, userActionActiveDelay);
     }
     public void onUserActionLost(){
     	userActionActiveCountdown = null;

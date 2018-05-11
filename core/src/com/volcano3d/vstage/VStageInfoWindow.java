@@ -59,8 +59,8 @@ public class VStageInfoWindow extends Group{
     public float		imageMarginRight = 0.01875f;			//fraction - 15; 
     public float		imageMarginTopBottom = 0.00625f;		//fraction	- 5;     
     public Vector2 		imageMaxSize = new Vector2(0.5f, 0.5f);	//fraction
-    public float 		sliderPositionY = 0.125f;					//fraction
-    public float 		sliderHeight = 0.125f;					//fraction
+    public float 		sliderPositionY = 0.25f;//0.125f;				//fraction
+    public float 		sliderHeight = 0.2f;//0.125f;					//fraction
     public float 		titleMargin = 0.0125f;					//fraction - 10;
     public float 		textMargin = 0.025f;					//fraction - 20;
     
@@ -84,10 +84,10 @@ public class VStageInfoWindow extends Group{
         titleMargin = contentHeight * titleMargin;
         textMargin = contentHeight * textMargin;
         
-        title = new Label("", new Label.LabelStyle(VStaticAssets.Fonts.futuraFont, Color.WHITE));	
+        title = new Label("", new Label.LabelStyle(VStaticAssets.Fonts.introText, Color.WHITE));	
         title.setWrap(true);
         title.setWidth(contentWidth);
-        title.setHeight(25);
+        title.setHeight(40);
         title.setAlignment(Align.top);
         title.setPosition((main.mainStage.getWidth() - contentWidth) / 2, 0);
         

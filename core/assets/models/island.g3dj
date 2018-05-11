@@ -3659,7 +3659,7 @@
 			"textures": [
 				{
 					"id": "Map #1", 
-					"filename": "../textures/islandTexture.tga", 
+					"filename": "textures/islandTexture.tga", 
 					"type": "DIFFUSE"
 				}
 			]

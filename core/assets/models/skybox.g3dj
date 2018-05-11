@@ -505,7 +505,7 @@
 			"textures": [
 				{
 					"id": "Map #18", 
-					"filename": "../textures/skydome2.tga", 
+					"filename": "textures/skydome2.tga", 
 					"type": "DIFFUSE"
 				}
 			]

@@ -727,7 +727,7 @@
 			"textures": [
 				{
 					"id": "Map #46", 
-					"filename": "../textures/riverFoam.tga", 
+					"filename": "textures/riverFoam.tga", 
 					"type": "DIFFUSE"
 				}
 			]

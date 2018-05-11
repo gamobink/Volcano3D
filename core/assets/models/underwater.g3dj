@@ -8580,12 +8580,12 @@
 			"textures": [
 				{
 					"id": "Map #50", 
-					"filename": "../textures/underwater041.tga", 
+					"filename": "textures/underwater041.tga", 
 					"type": "DIFFUSE"
 				},
 				{
 					"id": "Map #22", 
-					"filename": "../textures/underwaterDepth.tga", 
+					"filename": "textures/underwaterDepth.tga", 
 					"type": "AMBIENT"
 				}
 			]
@@ -8601,12 +8601,12 @@
 			"textures": [
 				{
 					"id": "Map #23", 
-					"filename": "../textures/underwater12.tga", 
+					"filename": "textures/underwater12.tga", 
 					"type": "DIFFUSE"
 				},
 				{
 					"id": "Map #22", 
-					"filename": "../textures/underwaterDepth.tga", 
+					"filename": "textures/underwaterDepth.tga", 
 					"type": "AMBIENT"
 				}
 			]
@@ -8622,12 +8622,12 @@
 			"textures": [
 				{
 					"id": "Map #23", 
-					"filename": "../textures/underwater31.tga", 
+					"filename": "textures/underwater31.tga", 
 					"type": "DIFFUSE"
 				},
 				{
 					"id": "Map #22", 
-					"filename": "../textures/underwaterDepth.tga", 
+					"filename": "textures/underwaterDepth.tga", 
 					"type": "AMBIENT"
 				}
 			]

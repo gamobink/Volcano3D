@@ -13,10 +13,10 @@ public class VCameraPresetMain extends VCameraPreset {
         addWayPoint(new WayPoint(40, 8));        
         addWayPoint(new WayPoint(60, 9));
         addWayPoint(new WayPoint(80, 11));
-        addWayPoint(new WayPoint(100, 10));        
-        addWayPoint(new WayPoint(110, 10));
+        addWayPoint(new WayPoint(100, 14));        
+        addWayPoint(new WayPoint(110, 15));
         addWayPoint(new WayPoint(120, 11)); 
-        addWayPoint(new WayPoint(140, 11)); 
+        addWayPoint(new WayPoint(140, 15)); 
         addWayPoint(new WayPoint(160, 12));
         addWayPoint(new WayPoint(170, 13));
         addWayPoint(new WayPoint(185, 11)); 
@@ -30,6 +30,7 @@ public class VCameraPresetMain extends VCameraPreset {
         
 		switch(identifier){
 		case MAIN:
+			fov = 60f; //45.0f;
 			gravityEnabled = true;
 			break;
 		default:

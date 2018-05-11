@@ -91,6 +91,10 @@ void main() {
 	
 	float depthFactor = clamp(pow(depth, 0.5), 0,1);
 
-	gl_FragColor = (refraction * depthFactor) * vec4(0.8 * ed, 0.8 * ed, 1, 1) + vec4(dot,dot,dot, 1);
+	gl_FragColor = vec4(vec3(depth),1);//refraction;	//(refraction * depthFactor);// * vec4(0.8 * ed, 0.8 * ed, 1, 1);	// + vec4(dot,dot,dot, 1);
 	gl_FragColor.w = 1.0f;
 }
+
+
+
+

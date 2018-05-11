@@ -738,12 +738,12 @@
 			"textures": [
 				{
 					"id": "Map #46", 
-					"filename": "../textures/lava.tga", 
+					"filename": "textures/lava.tga", 
 					"type": "DIFFUSE"
 				}, 
 				{
 					"id": "Map #50", 
-					"filename": "../textures/lavaBrightness.tga", 
+					"filename": "textures/lavaBrightness.tga", 
 					"type": "SPECULAR"
 				}
 			]
