@@ -14,6 +14,7 @@ public class VConfig {
 	public float[] 	introTextLabelShownInterval = {4,6,9,6,6,5};
 	public float 	introTextTitleLabelVisibleTime = 8;
 	public float 	userActionActiveTimeout = 50;
+	public Vector2 	tagDecalsSize = new Vector2(30f, 30f);	
 	
 	/******************** Configuration for production (HD, full screen) ********************
 	
@@ -25,6 +26,7 @@ public class VConfig {
 	public float[] 	introTextLabelShownInterval = {5,10,15,7,15,15};
 	public float 	introTextTitleLabelVisibleTime = 8;
 	public float 	userActionActiveTimeout = 50;	
+	public Vector2 	tagDecalsSize = new Vector2(30f, 30f);	
 				
 	/****************************************************************************************/	
 	

@@ -29,7 +29,7 @@ void main() {
 	vec4 color = mix((diffuse1 * diffuse2), (diffuse1 + diffuse2), brightness.x);
 	color.w = 1;
 	
-	color.rgb = color.rgb + diff;
+	color.rgb = color.rgb + ((diff) * color.x);
 	
 	gl_FragColor = color;
 

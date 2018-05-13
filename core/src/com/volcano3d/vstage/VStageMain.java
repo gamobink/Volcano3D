@@ -75,15 +75,15 @@ public class VStageMain extends InputListener {
         
         createInfoWindows();       
         
-        buttonReturn = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-return-on"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-return"));
+        buttonReturn = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-return"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-return-on"));
         buttonReturn.setName("BUTTON_MAIN");
         buttonReturn.addListener(this);        
 		
-        buttonNavigation = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-main-on"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-main"));
+        buttonNavigation = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-main"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-main-on"));
         buttonNavigation.setName("BUTTON_NAVI");
         buttonNavigation.addListener(this); 
         
-        buttonInfo = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-info-on"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-info"));
+        buttonInfo = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-info"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-info-on"));
         buttonInfo.setName("BUTTON_INFO");
         buttonInfo.addListener(this);         
         
@@ -112,7 +112,7 @@ public class VStageMain extends InputListener {
         
         float buttonIconSize = swidth * 0.15f;
         
-        buttonCloseNavi = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-close-on"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-close"));
+        buttonCloseNavi = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-close"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-close-on"));
         buttonCloseNavi.setName("BUTTON_CLOSENAVI");
         buttonCloseNavi.setSize(buttonSize, buttonSize);
         buttonCloseNavi.addListener(this);
@@ -121,26 +121,27 @@ public class VStageMain extends InputListener {
         mainStage.addActor(buttonCloseNavi);
         
         Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = VStaticAssets.Fonts.calibri18Font;
+        labelStyle.font = VStaticAssets.Fonts.futuraFont;
         
-        String[] buttonLabelsTexts = {      		 
-    	        "Magmatic",
-    	        "Pegmatite",
-    	        "Hydrothermal",
-    	        "Pneymatolitic",
-    	        "Metamorphic",
-    	        "Chemical",
-    	        "Organic",
-    	        "Sediment"	        		
-        };
+        String[] buttonLabelsImages = {      		 
+    	        "magmatic",
+    	        "pegmatite",
+    	        "hydrothermal",
+    	        "pneymatolitic",
+    	        "metamorphic",
+    	        "chemical",
+    	        "organic",
+    	        "sediment"	        		
+        };        
         
         for(int i=1; i<=8; i++){
         	Group g = new Group();
-            ImageButton imgb = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-generic-on"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-generic"));
+            ImageButton imgb = new ImageButton(VStaticAssets.GUI.tagsSkin.getDrawable(buttonLabelsImages[i-1]), 
+            									VStaticAssets.GUI.tagsSkin.getDrawable(buttonLabelsImages[i-1]+"_on"));
             imgb.setSize(buttonIconSize, buttonIconSize);
         	g.setVisible(false);
         	
-        	Label l = new Label(buttonLabelsTexts[i-1], labelStyle);
+        	Label l = new Label(VStaticAssets.Text.buttonLabelsTexts[i-1], labelStyle);
         	l.setPosition(0, -10);
         	l.setAlignment(Align.center);
         	l.setWidth(buttonIconSize);

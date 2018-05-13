@@ -16,6 +16,7 @@ public class VStaticAssets {
 		Fonts.futuraFont.getData().padLeft = 0;
 		//TODO Button on/off state images
 		GUI.buttonsSkin.addRegions(new TextureAtlas("gui.txt"));
+		GUI.tagsSkin.addRegions(new TextureAtlas("tagImages.txt"));
 		
 		Fonts.introTitle.getData().setLineHeight(56);
 		Fonts.introText.getData().setLineHeight(43);
@@ -23,7 +24,17 @@ public class VStaticAssets {
 	//	Fonts.introText.getData().setScale(2.0f);
 	}
 	public static class Text{
-
+		
+		public static final String[] buttonLabelsTexts = {      		 
+    	        "MAGMATISKIE\nPROCESI",
+    	        "PEGMATĪTU VEIDOŠANĀS\nPROCESI",
+    	        "HIDROTERMĀLIE\nPROCESI",
+    	        "PNEIMATOLĪTISKIE\nPROCESI",
+    	        "METAMORFISMA\nPROCESI",
+    	        "DĒDĒŠANAS\nPROCESI",
+    	        "BIOLOĢISKIE\nPROCESI",
+    	        "SEDIMENTĀCIJAS\nPROCESI",
+        };
 		public static final String magmaticProcessTitle = "MAGMATISKIE PROCESI";	//"Magmatiskie procesi";
 		public static final String pegmatiteProcessTitle = "PEGMATĪTU VEIDOŠANĀS PROCESI";	//"Pegmatītu veidošanās procesi";
 		public static final String hydrothermalProcessTitle = "HIDROTERMĀLIE PROCESI";	//"Hidrotermālie procesi";
@@ -243,6 +254,7 @@ public class VStaticAssets {
 	}
 	public static class GUI{
 		public static final Skin buttonsSkin = new Skin();
+		public static final Skin tagsSkin = new Skin();
 	}
 	
 }

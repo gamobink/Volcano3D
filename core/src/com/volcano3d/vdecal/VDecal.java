@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
+import com.volcano3d.vcore.VStaticAssets;
 
 public class VDecal {
 	
@@ -33,12 +34,16 @@ public class VDecal {
         
  * */
     	
+    	TextureRegion texture = VStaticAssets.GUI.tagsSkin.getRegion(imageName);
     	
+    	/*
     	TextureRegion texture = new TextureRegion(new Texture(Gdx.files.internal(imageName)));
-    	
-    	texture.getTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);    	
+*/    	
+    	texture.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);    	
 
+    	
     	decal = Decal.newDecal(size.x, size.y, texture, true);
+    
     	decal.setPosition(position);
     }
     

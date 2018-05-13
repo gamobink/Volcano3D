@@ -77,15 +77,14 @@ public class VMain{
         		
         scene.create();
         
-        Vector2 pinheadSize = new Vector2(26,25);
-        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(-220, 140, -10), pinheadSize)); 	//0 - Magmatic 
-        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(-32, 82, 8), pinheadSize));		//1 - Pegmatite
-        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(-330, 62, -80), pinheadSize));	//2 - hydrothermal
-        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(-220, 170, -150), pinheadSize));	//3 - pneymatolitic
-        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(-100, 32, -100), pinheadSize));	//4 - metamorphic        
-        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(80, 25, 8), pinheadSize));		//5 - chemical
-        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(146, 25, -216), pinheadSize));	//6 - organic
-        decalsTags.addDecal(new VDecal("pinhead2.png", new Vector3(0, 25, -550), pinheadSize));		//7 - sediment        
+        decalsTags.addDecal(new VDecal("magmatic", new Vector3(-250, 70, 80), VConfig.get().tagDecalsSize)); 	//0 - Magmatic 
+        decalsTags.addDecal(new VDecal("pegmatite", new Vector3(-32, 82, 8), VConfig.get().tagDecalsSize));		//1 - Pegmatite
+        decalsTags.addDecal(new VDecal("hydrothermal", new Vector3(-330, 62, -80), VConfig.get().tagDecalsSize));	//2 - hydrothermal
+        decalsTags.addDecal(new VDecal("pneymatolitic", new Vector3(-200, 160, -10), VConfig.get().tagDecalsSize));	//3 - pneymatolitic
+        decalsTags.addDecal(new VDecal("metamorphic", new Vector3(-100, 32, 120), VConfig.get().tagDecalsSize));	//4 - metamorphic        
+        decalsTags.addDecal(new VDecal("chemical", new Vector3(80, 25, 8), VConfig.get().tagDecalsSize));		//5 - chemical
+        decalsTags.addDecal(new VDecal("organic", new Vector3(146, 25, -216), VConfig.get().tagDecalsSize));	//6 - organic
+        decalsTags.addDecal(new VDecal("sediment", new Vector3(0, 25, -550), VConfig.get().tagDecalsSize));		//7 - sediment        
 
     //    pathEdit.setPath(stage2D.pathActionsButtonsIn.get(0), "pathAction1");
     }    
@@ -127,6 +126,7 @@ public class VMain{
         
         scene.render(camera);
 
+        
         //VCommon.drawGrid(camera.get());
 
              

@@ -66,6 +66,8 @@ public class VSceneGround {
         groundModel.alphaFader.set("groundPart3", 1.0f, 1.0f);
         groundModel.alphaFader.set("groundFar1", 1.0f, 1.0f);
         groundModel.alphaFader.set("groundFar2", 1.0f, 1.0f);
+        groundModel.alphaFader.set("groundCenter", 1.0f, 1.0f);
+        groundModel.alphaFader.set("groundStatic", 1.0f, 1.0f);
 
         waterModel = new VRenderable(volcano, "models/water", shaderWater);
         waterModel.enableTween();
