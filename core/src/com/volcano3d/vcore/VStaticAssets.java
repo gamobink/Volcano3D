@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public class VStaticAssets {
 	//Called in VMain constructor before create()
 	public static void Init(){
-		Fonts.calibri25Font.getData().setLineHeight(25);
-		Fonts.calibriLightFont.getData().setLineHeight(45);
+		//Fonts.calibri25Font.getData().setLineHeight(25);
+		//Fonts.calibriLightFont.getData().setLineHeight(45);
 		Fonts.futuraFont.getData().setLineHeight(30);
 		System.out.println(Fonts.futuraFont.getData().padRight);
 		Fonts.futuraFont.getData().padRight = 0;
@@ -20,6 +20,8 @@ public class VStaticAssets {
 		
 		Fonts.introTitle.getData().setLineHeight(56);
 		Fonts.introText.getData().setLineHeight(43);
+		
+		Fonts.menuIconsLabel.getData().setLineHeight(25);
 		
 	//	Fonts.introText.getData().setScale(2.0f);
 	}
@@ -244,10 +246,12 @@ public class VStaticAssets {
 		};			
 	}
 	public static class Fonts{
-		public static final BitmapFont calibriLightFont = new BitmapFont(Gdx.files.internal("fonts/calibri-light-50.fnt"));
-		public static final BitmapFont calibri25Font = new BitmapFont(Gdx.files.internal("fonts/calibri-25.fnt"));
-		public static final BitmapFont calibri18Font = new BitmapFont(Gdx.files.internal("fonts/calibri-18.fnt"));
+		//public static final BitmapFont calibriLightFont = new BitmapFont(Gdx.files.internal("fonts/calibri-light-50.fnt"));
+		//public static final BitmapFont calibri25Font = new BitmapFont(Gdx.files.internal("fonts/calibri-25.fnt"));
+		//public static final BitmapFont calibri18Font = new BitmapFont(Gdx.files.internal("fonts/calibri-18.fnt"));
 		public static final BitmapFont futuraFont = new BitmapFont(Gdx.files.internal("fonts/futura-25.fnt"));
+		
+		public static final BitmapFont menuIconsLabel = new BitmapFont(Gdx.files.internal("fonts/futura-25.fnt"));
 		
 		public static final BitmapFont introTitle = new BitmapFont(Gdx.files.internal("fonts/futura56.fnt"));
 		public static final BitmapFont introText = new BitmapFont(Gdx.files.internal("fonts/futura40.fnt"));

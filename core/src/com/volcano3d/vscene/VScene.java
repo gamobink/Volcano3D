@@ -10,12 +10,10 @@ import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VTextureRender;
 
 /* 1) Order of pictures
-/* 1) Shader problem in waterwall.fragment 
  * 2) Sky and clouds movement
- * 3) Lava flow model on the outside
+ * 3) Bug with camera movement
  * 4) Graphical 3d information for magmatic process
  * 5) Hydrotermal process graphics
- * 6) Icons / buttons
  * 
  * 
  * */
@@ -125,11 +123,19 @@ public class VScene {
 	        	groundScene.skyboxModel.scale(1, 50, 1);
 	        	groundScene.skyboxModel.render(c);	        	
 	        }else if(i == 2){	//under water part - refraction	  
+	        	//System.out.println(volcano.hideUndergroundPart);
 		        if(volcano.hideUndergroundPart){    
-		        	groundScene.skyboxModel.scale(1, 1, 1);
-		        	groundScene.skyboxModel.render(c);
+		        	if(c.position.y < 0){
+			        	groundScene.skyboxModel.scale(1, 1, 1);
+			        	groundScene.skyboxModel.render(c);			        	
+		        	}
+		        	if(volcano.showUnderwaterCenterOnly || c.position.y < 0){
+		        		groundScene.underwaterCenterModel.render(c);
+		        	}else{
+		        		groundScene.underwaterModel.render(c);
+		        	}
 		        	groundScene.groundModel.render(c);
-		        	groundScene.underwaterCenterModel.render(c);
+		        	
 		        }else{
 		        	groundScene.underwaterModel.render(c);
 		        }

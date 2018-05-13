@@ -121,7 +121,7 @@ public class VStageMain extends InputListener {
         mainStage.addActor(buttonCloseNavi);
         
         Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = VStaticAssets.Fonts.futuraFont;
+        labelStyle.font = VStaticAssets.Fonts.menuIconsLabel;
         
         String[] buttonLabelsImages = {      		 
     	        "magmatic",

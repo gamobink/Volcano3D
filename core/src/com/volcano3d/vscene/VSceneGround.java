@@ -55,6 +55,7 @@ public class VSceneGround {
     	
         skyboxModel = new VRenderable(volcano, "models/skybox", shaderSky);
         underwaterModel = new VRenderable(volcano, "models/underwater", shaderUnderwater);
+        
         underwaterCenterModel = new VRenderable(volcano, "models/underwaterCenter", shaderUnderwater);
         islandModel = new VRenderable(volcano, "models/island", shaderSimple);
         waterWallModel = new VRenderable(volcano, "models/waterWall", shaderWaterWall);

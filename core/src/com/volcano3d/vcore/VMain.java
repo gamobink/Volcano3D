@@ -41,6 +41,7 @@ public class VMain{
     private Timer.Task userActionActiveCountdown = null;
 
     public boolean hideUndergroundPart = false;
+    public boolean showUnderwaterCenterOnly = false;
 
    // public VFollowPathEditor pathEdit = new VFollowPathEditor(this);
         
@@ -269,7 +270,7 @@ public class VMain{
     	}
     	
     	float water1Fade = 1.0f;
-    	float water2Fade = 1.0f;    	
+    	float water2Fade = 1.0f;  
     	float groundPart1Fade = 1.0f;
     	float groundPart2Fade = 1.0f;
     	
@@ -280,7 +281,7 @@ public class VMain{
 	    	
 	    	if(angleUnits < 322 && angleUnits > 226){
 	    		water1Fade = 0.0f;
-	    		water2Fade = 0.0f;	    		
+	    		water2Fade = 0.0f;
 	    	}	    	
 	    	if(angleUnits < 48 || angleUnits > 280)groundPart1Fade = 0.0f;
 	    	if(angleUnits < 241 && angleUnits > 76)groundPart2Fade = 0.0f;
@@ -294,6 +295,12 @@ public class VMain{
         scene.groundScene.groundModel.alphaFader.set("groundPart4", groundPart1Fade, 3f, 0.7f);
         scene.groundScene.groundModel.alphaFader.set("groundFar1", groundPart2Fade, 3f, 0.7f);
         scene.groundScene.lavaOuterModel.alphaFader.set("lavaFar", groundPart2Fade, 3f, 0.7f);
+
+        if(water2Fade < 1.0f){
+        	showUnderwaterCenterOnly = true;
+        }else{
+        	showUnderwaterCenterOnly = false;
+        }
         
         if(water1Fade < 1.0f || water2Fade < 1.0f){
         	hideUndergroundPart = true;

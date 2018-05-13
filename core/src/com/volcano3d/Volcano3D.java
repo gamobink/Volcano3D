@@ -7,22 +7,8 @@ import java.io.PrintStream;
 import java.util.Calendar;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.particles.ParticleEffect;
-import com.badlogic.gdx.graphics.g3d.particles.ParticleEffectLoader;
-import com.badlogic.gdx.graphics.g3d.particles.ParticleSystem;
-import com.badlogic.gdx.graphics.g3d.particles.batches.PointSpriteParticleBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.volcano3d.vcore.VConfig;
 import com.volcano3d.vcore.VMain;
-import com.volcano3d.vcore.VStaticAssets;
 
 /**
 public class Volcano3D extends ApplicationAdapter {

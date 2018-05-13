@@ -60,7 +60,7 @@ public class VStageInfoWindow extends Group{
     public float		imageMarginTopBottom = 0.00625f;		//fraction	- 5;     
     public Vector2 		imageMaxSize = new Vector2(0.5f, 0.5f);	//fraction
     public float 		sliderPositionY = 0.25f;//0.125f;				//fraction
-    public float 		sliderHeight = 0.2f;//0.125f;					//fraction
+    public float 		sliderHeight = 0.17f;//0.125f;					//fraction
     public float 		titleMargin = 0.0125f;					//fraction - 10;
     public float 		textMargin = 0.025f;					//fraction - 20;
     
