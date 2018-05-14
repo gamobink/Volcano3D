@@ -142,7 +142,13 @@ public class VRenderable {
     			}
     		}
     	}		
-    }    
+    } 
+    public void enableBlending(){
+    	BlendingAttribute b = new BlendingAttribute(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+    	for(int i=0; i<modelInstance.materials.size; i++){
+    		modelInstance.materials.get(i).set(b);
+    	}
+    }
     public void setNodeMaterialAttribute(String id, Attribute attr){
     	Node n = getNode(id);
     	if(n!=null){

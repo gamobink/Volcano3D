@@ -75,9 +75,7 @@ public class VSceneGround {
         waterModel.alphaFader.set("waterCenter", 1.0f, 1.0f);
         waterModel.alphaFader.set("water", 1.0f, 1.0f);        
         
-        riverFoamModel = new VRenderable(volcano, "models/riverFoam", shaderRiverFoam);
-        riverFoamModel.enableTween();
-        riverFoamModel.alphaFader.set("riverFoam", 1.0f, 1.0f);        
+        riverFoamModel = new VRenderable(volcano, "models/riverFoam", shaderRiverFoam);               
         
         waterFoamModel = new VRenderable(volcano, "models/foam1", shaderWaterFoam);
         waterFoamModel.enableTween();
@@ -111,7 +109,7 @@ public class VSceneGround {
     	waterFoamModel.onLoad();    	
     	lavaOuterModel.onLoad();
     	
-    	
+    	riverFoamModel.enableBlending(); 
     }
     
     public void renderSky(VCamera camera){
