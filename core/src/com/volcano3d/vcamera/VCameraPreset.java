@@ -181,7 +181,7 @@ public class VCameraPreset {
 		}
 		WayPoint wp = getInterpolatedWayPoint();
 		//Limit camera movement Y axis
-		if(wayPointsEnabled){
+		if(wayPointsEnabled && !transitionAngleYEnabled){
 			if(wp.minY > anglePos.y)_velocity.y = -(anglePos.y - wp.minY) * 10.0f;
 			if(wp.maxY < anglePos.y){
 				_velocity.y = -(anglePos.y - wp.maxY) * 10.0f;

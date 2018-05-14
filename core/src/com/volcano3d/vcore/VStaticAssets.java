@@ -8,13 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 public class VStaticAssets {
 	//Called in VMain constructor before create()
 	public static void Init(){
-		//Fonts.calibri25Font.getData().setLineHeight(25);
-		//Fonts.calibriLightFont.getData().setLineHeight(45);
 		Fonts.futuraFont.getData().setLineHeight(30);
 		System.out.println(Fonts.futuraFont.getData().padRight);
 		Fonts.futuraFont.getData().padRight = 0;
 		Fonts.futuraFont.getData().padLeft = 0;
-		//TODO Button on/off state images
+		
 		GUI.buttonsSkin.addRegions(new TextureAtlas("gui.txt"));
 		GUI.tagsSkin.addRegions(new TextureAtlas("tagImages.txt"));
 		
@@ -37,14 +35,14 @@ public class VStaticAssets {
     	        "BIOLOĢISKIE\nPROCESI",
     	        "SEDIMENTĀCIJAS\nPROCESI",
         };
-		public static final String magmaticProcessTitle = "MAGMATISKIE PROCESI";	//"Magmatiskie procesi";
-		public static final String pegmatiteProcessTitle = "PEGMATĪTU VEIDOŠANĀS PROCESI";	//"Pegmatītu veidošanās procesi";
-		public static final String hydrothermalProcessTitle = "HIDROTERMĀLIE PROCESI";	//"Hidrotermālie procesi";
-		public static final String pneymatholiticProcessTitle = "PNEIMATOLĪTISKIE PROCESI";			//"Pneimatolītiskie procesi";
-		public static final String methamorphicProcessTitle = "METAMORFISMA PROCESI";	//"Metamorfisma procesi";
-		public static final String chemicalProcessTitle = "DĒDĒŠANAS PROCESI";	//"Dēdēšanas procesi";
-		public static final String organicProcessTitle = "BIOLOĢISKIE (ORGANISKIE) PROCESI";		//"Bioloģiskie (organiskie) procesi";
-		public static final String sedimentationProcessTitle = "SEDIMENTĀCIJAS (NOGULSNĒŠANĀS) PROCESI";//"Sedimentācijas (nogulsnēšanās) procesi";
+		public static final String magmaticProcessTitle = "MAGMATISKIE PROCESI";
+		public static final String pegmatiteProcessTitle = "PEGMATĪTU VEIDOŠANĀS PROCESI";
+		public static final String hydrothermalProcessTitle = "HIDROTERMĀLIE PROCESI";
+		public static final String pneymatholiticProcessTitle = "PNEIMATOLĪTISKIE PROCESI";
+		public static final String methamorphicProcessTitle = "METAMORFISMA PROCESI";
+		public static final String chemicalProcessTitle = "DĒDĒŠANAS PROCESI";
+		public static final String organicProcessTitle = "BIOLOĢISKIE (ORGANISKIE) PROCESI";
+		public static final String sedimentationProcessTitle = "SEDIMENTĀCIJAS (NOGULSNĒŠANĀS) PROCESI";
 		
 		public static final String magmaticProcessText = "Minerāli rodas tieši no magmas, tai atdziestot, sacietējot un izveidojot kristāla graudus. Magmatiskie minerālu veidošanās procesi notiek ļoti augstas temperatūras un parasti - liela spiediena apstākļos.";
 		public static final String pegmatiteProcessText = "Minerāli rodas, kristalizējoties tā sauktajam magmatiskajam atlikumam, kas paliek pāri pēc tam, kad galvenā magma jau ir pārvērtusies minerālu graudos. Raksturīgi daudz lielāki minerālu graudu izmēri.";
@@ -55,7 +53,7 @@ public class VStaticAssets {
 		public static final String organicProcessText = "Minerāli visbiežāk rodas ezeros un jūrās, kur uzkrājas dzīvo organismu, galvenokārt mikroorganismu un planktona, minerālie skeleti un čaulas. Tādā veidā radies biogēnais kalcīts.";
 		public static final String sedimentationProcessText = "Notiek ūdens vidē, minerāliem izgulsnējoties no pārsātinātiem sāļu šķīdumiem. Kristāliskie minerālu graudi parasti veidojas izžūstošos ezeros vai izolētos lagūnu tipa baseinos sausā un karstā klimatā.";
 		
-		public static final String titleText = "MINERĀLU VEIDOŠANĀS PROCESI";	//"Minerālu veidošanās procesi";
+		public static final String titleText = "MINERĀLU VEIDOŠANĀS PROCESI";
 		public static final String intro1Text = "Gandrīz visi minerāli uz Zemes ir radušies dabiskos ģeoloģiskos procesos.";
 		public static final String intro2Text = "Iežu aprites ciklā jaunu minerālu veidošanās – to pārveidošanās, noārdīšanās un citu minerālu veidošanās – ir ģeoloģisko procesu secīga virkne.";		
 		public static final String intro3Text = "Lielākā daļa minerālu ir radušies no šķidrām vielām – dažāda sastāva kausējumiem un maisījumiem, kuri sastāv no sīki sasmalcinātām vielām. Pārējo minerālu izcelšanās ir saistīta ar gāzveida vielas kristalizāciju un ķīmiskajiem aizvietošanas un pārkristalizēšanās procesiem cietās vielās.";				
@@ -246,13 +244,8 @@ public class VStaticAssets {
 		};			
 	}
 	public static class Fonts{
-		//public static final BitmapFont calibriLightFont = new BitmapFont(Gdx.files.internal("fonts/calibri-light-50.fnt"));
-		//public static final BitmapFont calibri25Font = new BitmapFont(Gdx.files.internal("fonts/calibri-25.fnt"));
-		//public static final BitmapFont calibri18Font = new BitmapFont(Gdx.files.internal("fonts/calibri-18.fnt"));
 		public static final BitmapFont futuraFont = new BitmapFont(Gdx.files.internal("fonts/futura-25.fnt"));
-		
 		public static final BitmapFont menuIconsLabel = new BitmapFont(Gdx.files.internal("fonts/futura-25.fnt"));
-		
 		public static final BitmapFont introTitle = new BitmapFont(Gdx.files.internal("fonts/futura56.fnt"));
 		public static final BitmapFont introText = new BitmapFont(Gdx.files.internal("fonts/futura40.fnt"));
 	}

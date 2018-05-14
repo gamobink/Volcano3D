@@ -9,12 +9,13 @@ import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VTextureRender;
 
-/* 1) Order of pictures
- * 2) Sky and clouds movement
- * 3) Bug with camera movement
- * 4) Graphical 3d information for magmatic process
- * 5) Hydrotermal process graphics
+/* 
+ * -) Underground materials test
+ * -) Graphical 3d information for magmatic process
+ * -) Hydrotermal process graphics
+ * -) Organic process graphics
  * 
+ * -) Sky and clouds movement
  * 
  * */
 public class VScene {
