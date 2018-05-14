@@ -10,6 +10,13 @@ import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VTextureRender;
 
 /* 
+ * Muzejaa
+ * 1) Menuikonu korekcijas
+ * 2) Kaa izskataas tagi uz lielaa ekraana (vai vajag paartaisiit uz natiivo)
+ * 3) Kaa izskataas info teksti uz lielaa (izskjirtspeeja, kompene, feidings)
+ * 4) Kaa ir ar kameras novietojumu info skatos?
+ * 5) Kaa izskataas Modra ziimeejumi? (aliasings?)
+ * 
  * -) Underground materials test
  * -) Graphical 3d information for magmatic process
  * -) Hydrotermal process graphics
