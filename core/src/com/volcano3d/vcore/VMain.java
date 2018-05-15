@@ -290,10 +290,12 @@ public class VMain{
         scene.groundScene.waterModel.alphaFader.set("water1", water1Fade, 5f, 1f);    	
         scene.groundScene.waterModel.alphaFader.set("water2", water2Fade, 5f, 1f);        
         scene.groundScene.waterFoamModel.alphaFader.set("foamFar2", water1Fade, 5f, 1f);    	
-        scene.groundScene.waterFoamModel.alphaFader.set("foamFar1", water2Fade, 5f, 1f);        
+        scene.groundScene.waterFoamModel.alphaFader.set("foamFar1", water2Fade, 5f, 1f);   
+        
         scene.groundScene.groundModel.alphaFader.set("groundPart1", groundPart2Fade, 3f, 0.7f);
         scene.groundScene.groundModel.alphaFader.set("groundPart4", groundPart1Fade, 3f, 0.7f);
         scene.groundScene.groundModel.alphaFader.set("groundFar1", groundPart2Fade, 3f, 0.7f);
+        
         scene.groundScene.lavaOuterModel.alphaFader.set("lavaFar", groundPart2Fade, 3f, 0.7f);
 
         if(water2Fade < 1.0f){

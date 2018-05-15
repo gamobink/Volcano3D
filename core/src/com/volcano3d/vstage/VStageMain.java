@@ -543,11 +543,11 @@ public class VStageMain extends InputListener {
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.pneymatholiticProcessTitle);
         inf.setText(VStaticAssets.Text.pneymatholiticProcessText, 0.0625f);
+        inf.addImage("foto/pneim4.jpg", VStaticAssets.Text.pneim4);        
+        inf.addImage("foto/pneim5.jpg", VStaticAssets.Text.pneim5);        
         inf.addImage("foto/pneim1.jpg", VStaticAssets.Text.pneim1);
         inf.addImage("foto/pneim2.jpg", VStaticAssets.Text.pneim2);        
         inf.addImage("foto/pneim3.jpg", VStaticAssets.Text.pneim3);
-        inf.addImage("foto/pneim4.jpg", VStaticAssets.Text.pneim4);        
-        inf.addImage("foto/pneim5.jpg", VStaticAssets.Text.pneim5);
         infoWindowMap.put("info4", inf);         
 
         inf = new VStageInfoWindow(this);

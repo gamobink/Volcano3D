@@ -109,6 +109,7 @@ public class VSceneGround {
     	waterFoamModel.onLoad();    	
     	lavaOuterModel.onLoad();
     	
+    	//groundModel.enableBlending();    	
     	riverFoamModel.enableBlending(); 
     }
     

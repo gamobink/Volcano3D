@@ -9,9 +9,15 @@ import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VTextureRender;
 
-/* 
+/* Piezīmes
+ * -) Kameras raustiishanaas, un iegrimshana, salabot translaacijas limiteri
+ * -) Tagu iconas uz natiivo, nav kvalitaate!
+ * v) Manuikonas un teksti ir OK!
+ * -) Jaakorigjee info skatu kamera un slaideri
+ * -) Info tekstiem 1.5x izskjirtspeeja
+ * 
  * Muzejaa
- * 1) Menuikonu korekcijas
+ * 1) Menuikonu korekcijas (vajag)
  * 2) Kaa izskataas tagi uz lielaa ekraana (vai vajag paartaisiit uz natiivo)
  * 3) Kaa izskataas info teksti uz lielaa (izskjirtspeeja, kompene, feidings)
  * 4) Kaa ir ar kameras novietojumu info skatos?
