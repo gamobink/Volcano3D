@@ -537,10 +537,10 @@ public class VStageMain extends InputListener {
         inf.setTitle(VStaticAssets.Text.hydrothermalProcessTitle);
         inf.setText(VStaticAssets.Text.hydrothermalProcessText, 0.0625f);
         inf.setSliderPositionY(0.25f);
+        inf.addImage("foto/hidro4.jpg", VStaticAssets.Text.hidro4); 
         inf.addImage("foto/hidro1.jpg", VStaticAssets.Text.hidro1);
         inf.addImage("foto/hidro2.jpg", VStaticAssets.Text.hidro2);        
-        inf.addImage("foto/hidro3.jpg", VStaticAssets.Text.hidro3);
-        inf.addImage("foto/hidro4.jpg", VStaticAssets.Text.hidro4);                
+        inf.addImage("foto/hidro3.jpg", VStaticAssets.Text.hidro3);                       
         infoWindowMap.put("info3", inf); 
         
         inf = new VStageInfoWindow(this);
