@@ -517,6 +517,7 @@ public class VStageMain extends InputListener {
         VStageInfoWindow inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.magmaticProcessTitle);
         inf.setText(VStaticAssets.Text.methamorphicProcessText, 0.0625f);
+        inf.setSliderPositionY(0.25f);
         inf.addImage("foto/magm4.jpg", VStaticAssets.Text.magm4);
         inf.addImage("foto/magm1.jpg", VStaticAssets.Text.magm1);
         inf.addImage("foto/magm2.jpg", VStaticAssets.Text.magm2);
@@ -526,6 +527,7 @@ public class VStageMain extends InputListener {
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.pegmatiteProcessTitle);
         inf.setText(VStaticAssets.Text.pegmatiteProcessText, 0.0625f);
+        inf.setSliderPositionY(0.25f);
         inf.addImage("foto/pegma1.jpg", VStaticAssets.Text.pegma1);
         inf.addImage("foto/pegma2.jpg", VStaticAssets.Text.pegma2);        
         inf.addImage("foto/pegma3.jpg", VStaticAssets.Text.pegma3);                
@@ -534,6 +536,7 @@ public class VStageMain extends InputListener {
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.hydrothermalProcessTitle);
         inf.setText(VStaticAssets.Text.hydrothermalProcessText, 0.0625f);
+        inf.setSliderPositionY(0.25f);
         inf.addImage("foto/hidro1.jpg", VStaticAssets.Text.hidro1);
         inf.addImage("foto/hidro2.jpg", VStaticAssets.Text.hidro2);        
         inf.addImage("foto/hidro3.jpg", VStaticAssets.Text.hidro3);
@@ -543,6 +546,7 @@ public class VStageMain extends InputListener {
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.pneymatholiticProcessTitle);
         inf.setText(VStaticAssets.Text.pneymatholiticProcessText, 0.0625f);
+        inf.setSliderPositionY(0.25f);        
         inf.addImage("foto/pneim4.jpg", VStaticAssets.Text.pneim4);        
         inf.addImage("foto/pneim5.jpg", VStaticAssets.Text.pneim5);        
         inf.addImage("foto/pneim1.jpg", VStaticAssets.Text.pneim1);
@@ -553,6 +557,7 @@ public class VStageMain extends InputListener {
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.methamorphicProcessTitle);
         inf.setText(VStaticAssets.Text.methamorphicProcessText, 0.0625f);
+        inf.setSliderPositionY(0.25f);
         inf.addImage("foto/metam4.jpg", VStaticAssets.Text.metam4);        
         inf.addImage("foto/metam1.jpg", VStaticAssets.Text.metam1);
         inf.addImage("foto/metam2.jpg", VStaticAssets.Text.metam2);        
@@ -562,6 +567,7 @@ public class VStageMain extends InputListener {
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.chemicalProcessTitle);
         inf.setText(VStaticAssets.Text.chemicalProcessText, 0.0625f);
+        inf.setSliderPositionY(0.25f);
         inf.addImage("foto/chem4.jpg", ""); 
         inf.addImage("foto/chem1.jpg", VStaticAssets.Text.chem1);
         inf.addImage("foto/chem2.jpg", VStaticAssets.Text.chem2);        
@@ -571,6 +577,7 @@ public class VStageMain extends InputListener {
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.organicProcessTitle);
         inf.setText(VStaticAssets.Text.organicProcessText, 0.0625f);
+        inf.setSliderPositionY(0.25f);
         inf.addImage("foto/organ2.jpg", VStaticAssets.Text.organ2);
         inf.addImage("foto/organ1.jpg", VStaticAssets.Text.organ1);                
         infoWindowMap.put("info7", inf);
@@ -578,6 +585,7 @@ public class VStageMain extends InputListener {
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.sedimentationProcessTitle);
         inf.setText(VStaticAssets.Text.sedimentationProcessText, 0.0625f);
+        inf.setSliderPositionY(0.25f);
         inf.addImage("foto/sedim4.jpg", VStaticAssets.Text.sedim4);                
         inf.addImage("foto/sedim1.jpg", VStaticAssets.Text.sedim1);
         inf.addImage("foto/sedim2.jpg", VStaticAssets.Text.sedim2);        

@@ -19,6 +19,7 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 		STATIC_6,				//Rain
 		STATIC_7,				//Rain
 		STATIC_8,				//Rain
+		STATIC_EASTEREGG
 	}
 	
 	private VMain volcano = null;
@@ -69,7 +70,10 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 			break;							
 		case STATIC_8:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_8);
-			break;										
+			break;	
+		case STATIC_EASTEREGG:
+			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_EASTEREGG);
+			break;				
 		default:
 			break;			
 		};
