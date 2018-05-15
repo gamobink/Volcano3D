@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.utils.Timer;
 import com.volcano3d.utility.TextAsset;
 import com.volcano3d.utility.TextAssetLoader;
+import com.volcano3d.utility.VCommon;
 import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vdecal.VDecal;
@@ -85,7 +86,8 @@ public class VMain{
         decalsTags.addDecal(new VDecal("metamorphic", new Vector3(-100, 32, 120), VConfig.get().tagDecalsSize));	//4 - metamorphic        
         decalsTags.addDecal(new VDecal("chemical", new Vector3(80, 25, 8), VConfig.get().tagDecalsSize));		//5 - chemical
         decalsTags.addDecal(new VDecal("organic", new Vector3(146, 25, -216), VConfig.get().tagDecalsSize));	//6 - organic
-        decalsTags.addDecal(new VDecal("sediment", new Vector3(0, 25, -550), VConfig.get().tagDecalsSize));		//7 - sediment        
+        decalsTags.addDecal(new VDecal("sediment", new Vector3(0, 25, -550), VConfig.get().tagDecalsSize));		//7 - sediment 
+        //decalsTags.addDecal(new VDecal("sediment", new Vector3(1100, 50, -150), VConfig.get().tagDecalsSize));		//8 - EASTEREGG 
 
     //    pathEdit.setPath(stage2D.pathActionsButtonsIn.get(0), "pathAction1");
     }    
@@ -126,11 +128,8 @@ public class VMain{
         Gdx.gl.glEnable(GL30.GL_DEPTH_TEST);
         
         scene.render(camera);
-
         
         //VCommon.drawGrid(camera.get());
-
-             
         
     	decalsTags.render();       
         stage2D.renderMainStage();
@@ -195,7 +194,11 @@ public class VMain{
 			case 7:
 				camera.setCameraState(VCamera.States.STATIC_8);
 				this.stage2D.transitionToStaticView(0);
-				break;									
+				break;
+			case 8:
+				camera.setCameraState(VCamera.States.STATIC_EASTEREGG);
+				this.stage2D.transitionToStaticView(0);
+				break;				
 			};
     	}
     	
@@ -274,7 +277,7 @@ public class VMain{
     	float groundPart1Fade = 1.0f;
     	float groundPart2Fade = 1.0f;
     	
-    	if(camera.getState() != VCamera.States.MAIN){
+    	if(camera.getState() != VCamera.States.MAIN && camera.getState() != VCamera.States.STATIC_EASTEREGG){
 	    	if(angleUnits < 36 || (angleUnits > 270 && angleUnits < 360))water1Fade = 0.0f;
 
 	    	if(angleUnits < 226 && angleUnits > 170)water2Fade = 0.0f;	    	

@@ -142,6 +142,11 @@ public class VStageInfoWindow extends Group{
 		}
 	}
 	
+	public void setSliderPositionY(float fractions){
+		sliderPositionY = mainStage.mainStage.getHeight() * fractions;
+		imageSliderTable.setPosition(0, sliderPositionY);
+	}
+	
 	public void setTitle(String titleStr){
 		title.setText(titleStr);
 	}

@@ -14,7 +14,7 @@ import com.volcano3d.vcore.VTextureRender;
  * 1) Menuikonu korekcijas
  * 2) Kaa izskataas tagi uz lielaa ekraana (vai vajag paartaisiit uz natiivo)
  * 3) Kaa izskataas info teksti uz lielaa (izskjirtspeeja, kompene, feidings)
- * 4) Kaa ir ar kameras novietojumu info skatos?
+ * 4) Kaa ir ar kameras novietojumu info skatos un slaidera poziicija?
  * 5) Kaa izskataas Modra ziimeejumi? (aliasings?)
  * 
  * -) Underground materials test

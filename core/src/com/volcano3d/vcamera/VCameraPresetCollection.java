@@ -10,19 +10,16 @@ public class VCameraPresetCollection {
 	public enum PresetsIdentifiers{
 		//VCameraPresetMain
 		MAIN,						//Main interactive camera
-//		MAIN_OVER_STATIC_VIEW_1, 	//Main camera over Volcano view. Transition to STATIC_VIEW_1
-//		MAIN_OVER_STATIC_VIEW_2,	//Main camera over Hill view. Transition to STATIC_VIEW_2 
-//		MAIN_OVER_STATIC_VIEW_3,	//Main camera over Hill view. Transition to STATIC_VIEW_2 
-//		MAIN_OVER_STATIC_VIEW_4,	//Main camera over Hill view. Transition to STATIC_VIEW_2 
 		//VCameraPresetStatic
-		STATIC_VIEW_1, 				//Volcano
-		STATIC_VIEW_2,				//Hill	
-		STATIC_VIEW_3,				//Sea	
-		STATIC_VIEW_4,				//Beach
-		STATIC_VIEW_5,				//Rocks
-		STATIC_VIEW_6,				//Rain	
-		STATIC_VIEW_7,				//Rain	
-		STATIC_VIEW_8				//Rain	
+		STATIC_VIEW_1, 				
+		STATIC_VIEW_2,					
+		STATIC_VIEW_3,					
+		STATIC_VIEW_4,				
+		STATIC_VIEW_5,				
+		STATIC_VIEW_6,				
+		STATIC_VIEW_7,					
+		STATIC_VIEW_8,
+		STATIC_VIEW_EASTEREGG
 	}
 	
 	public VCameraPreset 		finalPreset = null;
@@ -32,10 +29,6 @@ public class VCameraPresetCollection {
 		finalPreset = cam;
 		
 		addPreset(new VCameraPresetMain(PresetsIdentifiers.MAIN));
-//		addPreset(new VCameraPresetMain(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_1));
-//		addPreset(new VCameraPresetMain(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_2));
-//		addPreset(new VCameraPresetMain(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_3));
-//		addPreset(new VCameraPresetMain(PresetsIdentifiers.MAIN_OVER_STATIC_VIEW_4));
 		addPreset(new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_1));
 		addPreset(new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_2));	
 		addPreset(new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_3));	
@@ -44,6 +37,7 @@ public class VCameraPresetCollection {
 		addPreset(new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_6));	
 		addPreset(new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_7));	
 		addPreset(new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_8));
+		addPreset(new VCameraPresetStatic(PresetsIdentifiers.STATIC_VIEW_EASTEREGG));
 		
 		transitionToPreset(PresetsIdentifiers.MAIN);
 	}

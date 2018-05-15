@@ -93,7 +93,13 @@ public class VCameraPresetStatic extends VCameraPreset {
 			//Sediment
 			this.anglePos.x = anglePositions[7][0];
 			this.anglePos.y = anglePositions[7][1];					
-			break;			
+			break;	
+		case STATIC_VIEW_EASTEREGG:
+			this.anglePos.x = 270;
+			this.anglePos.y = 4;	
+			pivotPosition.set(850, 0, -150);
+			fov = 45f;
+			break;
 		default:
 			break;						
 		}
