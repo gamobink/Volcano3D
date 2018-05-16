@@ -181,10 +181,14 @@ public class VCameraPreset {
 		}
 		WayPoint wp = getInterpolatedWayPoint();
 		//Limit camera movement Y axis
-		if(wayPointsEnabled && !transitionAngleYEnabled){
+		if(wayPointsEnabled){			// && !transitionAngleYEnabled
+			//System.out.println(wp.minY+","+wp.maxY+" a:"+anglePos.y+" t:"+targetAngleY);
 			if(wp.minY > anglePos.y)_velocity.y = -(anglePos.y - wp.minY) * 10.0f;
 			if(wp.maxY < anglePos.y){
-				_velocity.y = -(anglePos.y - wp.maxY) * 10.0f;
+				float adiffy = Math.min((anglePos.y - wp.maxY), 10.0f);
+				if(_velocity.y > 0 || Math.abs(_velocity.y) < adiffy){
+					_velocity.y -= adiffy;
+				}
 			}
 		}
 		

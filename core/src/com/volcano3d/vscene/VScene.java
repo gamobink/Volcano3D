@@ -1,34 +1,47 @@
 package com.volcano3d.vscene;
 
+import java.nio.FloatBuffer;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.BufferUtils;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VTextureRender;
 
-/* Piezīmes
- * -) Kameras raustiishanaas, un iegrimshana, salabot translaacijas limiteri
- * -) Tagu iconas uz natiivo, nav kvalitaate!
- * v) Manuikonas un teksti ir OK!
- * -) Jaakorigjee info skatu kamera un slaideri
- * -) Info tekstiem 1.5x izskjirtspeeja
+/*
+ * ?) Materiaalu nosaciijumi sheideros, pazemes materiaaliem difuuzaa tekstuura(visiem var nebuut)
+ * 	a) #if defined(diffuseTextureFlag)
+ * 
+ * -) Alfa feidings zemes slaanim, straadaa uz darba kompja, iespeejams nav citur. Jaaskataas uz lielaa
  * 
  * Muzejaa
- * 1) Menuikonu korekcijas (vajag)
  * 2) Kaa izskataas tagi uz lielaa ekraana (vai vajag paartaisiit uz natiivo)
+ * 	a) Vajag paarbaudiit uz natiivo, zema prioritaate	
+ * 
  * 3) Kaa izskataas info teksti uz lielaa (izskjirtspeeja, kompene, feidings)
+ * 	a) 	bultaam 1.5x lielaaku izskjirtspeeju. Tekstiem mazaaku fontu
+ * 
  * 4) Kaa ir ar kameras novietojumu info skatos un slaidera poziicija?
+ *  a) Jaapiekorigjee muzejaa uz vietas (piektdien)
+ * 
  * 5) Kaa izskataas Modra ziimeejumi? (aliasings?)
+ * 	a) Nav kaartiibaa pat peec paarziimeeshanas, jaapaarbauda ar atteelu sampliem
+ * 	!) Paartaisiit visu GUI uz FilteredTexture
  * 
- * -) Underground materials test
- * -) Graphical 3d information for magmatic process
- * -) Hydrotermal process graphics
- * -) Organic process graphics
- * 
- * -) Sky and clouds movement
+ * -) Shematiskais 3d Magmatiskajam
+ * -) Shematiskais 3d Hidrotermaal
+ * -) Shematiskais 3d Sediment
+ * -) Shematiskais 3d Org
+ * -) Shematiskais 3d Pegma
+ * -) Shem3d metamorf
+ * -) Pazemes tekstureeshana
+ * -) Maakonju kustiiba un debesis (zema prioritaate)
  * 
  * */
 public class VScene {
@@ -73,7 +86,11 @@ public class VScene {
         groundScene.waterModel.setAmbientTexture("waterCenter", waterTexturesArray.get(1).get());
         groundScene.waterModel.setSpecularTexture("waterCenter", waterTexturesArray.get(2).get());	        
         groundScene.waterWallModel.setSpecularTexture(null, waterTexturesArray.get(2).get());
-           
+          
+        FloatBuffer buffer = BufferUtils.newFloatBuffer(64);
+        Gdx.gl20.glGetFloatv(GL20.GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, buffer);
+        float maxAnisotropy = buffer.get(0);    
+        System.out.println("maxAnisotropy: "+maxAnisotropy);
     }    
     public void render(VCamera camera){
         

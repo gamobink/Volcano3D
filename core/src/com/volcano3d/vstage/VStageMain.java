@@ -518,6 +518,8 @@ public class VStageMain extends InputListener {
         inf.setTitle(VStaticAssets.Text.magmaticProcessTitle);
         inf.setText(VStaticAssets.Text.methamorphicProcessText, 0.0625f);
         inf.setSliderPositionY(0.25f);
+        inf.addImage("foto/test1.jpg", VStaticAssets.Text.magm4);
+        inf.addImage("foto/test2.jpg", VStaticAssets.Text.magm4);
         inf.addImage("foto/magm4.jpg", VStaticAssets.Text.magm4);
         inf.addImage("foto/magm1.jpg", VStaticAssets.Text.magm1);
         inf.addImage("foto/magm2.jpg", VStaticAssets.Text.magm2);

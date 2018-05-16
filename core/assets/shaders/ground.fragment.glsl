@@ -32,5 +32,7 @@ void main() {
 
 	gl_FragColor = diffuse;
 	gl_FragColor.rgb = mix(gl_FragColor.rgb, fog.rgb, v_fog);
-	gl_FragColor.w = u_opacity;
+	gl_FragColor.w = u_opacity;	
+	
+//	gl_FragColor = vec4(vec3(u_opacity), 1);	
 }
