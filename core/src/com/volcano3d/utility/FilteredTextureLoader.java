@@ -7,7 +7,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -36,7 +35,6 @@ public class FilteredTextureLoader extends AsynchronousAssetLoader<FilteredTextu
 	public void loadAsync (AssetManager manager, String fileName, FileHandle file, FilteredTextureParameter parameter) {
 		info.filename = fileName;
 		if (parameter == null || parameter.textureData == null) {
-			Pixmap pixmap = null;
 			Format format = null;
 			boolean genMipMaps = true;
 			info.texture = null;
@@ -70,6 +68,7 @@ public class FilteredTextureLoader extends AsynchronousAssetLoader<FilteredTextu
 		return texture;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public Array<AssetDescriptor> getDependencies (String fileName, FileHandle file, FilteredTextureParameter parameter) {
 		return null;
 	}

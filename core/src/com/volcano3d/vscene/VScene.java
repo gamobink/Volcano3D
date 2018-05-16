@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.BufferUtils;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vcore.VMain;

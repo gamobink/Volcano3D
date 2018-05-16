@@ -17,7 +17,6 @@ import com.volcano3d.utility.FilteredTexture;
 import com.volcano3d.utility.FilteredTextureLoader;
 import com.volcano3d.utility.TextAsset;
 import com.volcano3d.utility.TextAssetLoader;
-import com.volcano3d.utility.VCommon;
 import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vdecal.VDecal;
