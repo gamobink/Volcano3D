@@ -1,13 +1,12 @@
 package com.volcano3d.vdecal;
 
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.decals.Decal;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
-import com.volcano3d.vcore.VStaticAssets;
+import com.volcano3d.utility.VFilteredTexture;
 
 public class VDecal {
 	
@@ -32,12 +31,12 @@ public class VDecal {
         
  * */
     	
-    	TextureRegion texture = VStaticAssets.GUI.tagsSkin.getRegion(imageName);
+    //	TextureRegion texture = VStaticAssets.GUI.tagsSkin.getRegion(imageName);
     	
-    	/*
-    	TextureRegion texture = new TextureRegion(new Texture(Gdx.files.internal(imageName)));
-*/    	
-    	texture.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);    	
+    	
+    	TextureRegion texture = new TextureRegion(new VFilteredTexture(imageName));
+    	
+  //  	texture.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);    	
 
     	
     	decal = Decal.newDecal(size.x, size.y, texture, true);

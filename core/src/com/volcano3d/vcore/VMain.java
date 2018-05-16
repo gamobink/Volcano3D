@@ -13,8 +13,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.utils.Timer;
-import com.volcano3d.utility.FilteredTexture;
-import com.volcano3d.utility.FilteredTextureLoader;
+import com.volcano3d.utility.VFilteredTexture;
+import com.volcano3d.utility.VFilteredTextureLoader;
 import com.volcano3d.utility.TextAsset;
 import com.volcano3d.utility.TextAssetLoader;
 import com.volcano3d.vcamera.VCamera;
@@ -59,7 +59,7 @@ public class VMain{
         ParticleEffectLoader loader = new ParticleEffectLoader(new InternalFileHandleResolver());
         assetsManager.setLoader(ParticleEffect.class, loader);        
         
-        assetsManager.setLoader(FilteredTexture.class, new FilteredTextureLoader(new InternalFileHandleResolver()));
+        assetsManager.setLoader(VFilteredTexture.class, new VFilteredTextureLoader(new InternalFileHandleResolver()));
         
         VStaticAssets.Init();
         
@@ -82,15 +82,14 @@ public class VMain{
         		
         scene.create();
         
-        decalsTags.addDecal(new VDecal("magmatic", new Vector3(-250, 70, 80), VConfig.get().tagDecalsSize)); 	//0 - Magmatic 
-        decalsTags.addDecal(new VDecal("pegmatite", new Vector3(-32, 82, 8), VConfig.get().tagDecalsSize));		//1 - Pegmatite
-        decalsTags.addDecal(new VDecal("hydrothermal", new Vector3(-330, 62, -80), VConfig.get().tagDecalsSize));	//2 - hydrothermal
-        decalsTags.addDecal(new VDecal("pneymatolitic", new Vector3(-200, 160, -10), VConfig.get().tagDecalsSize));	//3 - pneymatolitic
-        decalsTags.addDecal(new VDecal("metamorphic", new Vector3(-100, 32, 120), VConfig.get().tagDecalsSize));	//4 - metamorphic        
-        decalsTags.addDecal(new VDecal("chemical", new Vector3(80, 25, 8), VConfig.get().tagDecalsSize));		//5 - chemical
-        decalsTags.addDecal(new VDecal("organic", new Vector3(146, 25, -216), VConfig.get().tagDecalsSize));	//6 - organic
-        decalsTags.addDecal(new VDecal("sediment", new Vector3(0, 25, -550), VConfig.get().tagDecalsSize));		//7 - sediment 
-        //decalsTags.addDecal(new VDecal("sediment", new Vector3(1100, 50, -150), VConfig.get().tagDecalsSize));		//8 - EASTEREGG 
+        decalsTags.addDecal(new VDecal("icons/magmatic.png", new Vector3(-250, 70, 80), VConfig.get().tagDecalsSize)); 	//0 - Magmatic 
+        decalsTags.addDecal(new VDecal("icons/pegmatite.png", new Vector3(-32, 82, 8), VConfig.get().tagDecalsSize));		//1 - Pegmatite
+        decalsTags.addDecal(new VDecal("icons/hydrothermal.png", new Vector3(-330, 62, -80), VConfig.get().tagDecalsSize));	//2 - hydrothermal
+        decalsTags.addDecal(new VDecal("icons/pneymatolitic.png", new Vector3(-200, 160, -10), VConfig.get().tagDecalsSize));	//3 - pneymatolitic
+        decalsTags.addDecal(new VDecal("icons/metamorphic.png", new Vector3(-100, 32, 120), VConfig.get().tagDecalsSize));	//4 - metamorphic        
+        decalsTags.addDecal(new VDecal("icons/chemical.png", new Vector3(80, 25, 8), VConfig.get().tagDecalsSize));		//5 - chemical
+        decalsTags.addDecal(new VDecal("icons/organic.png", new Vector3(146, 25, -216), VConfig.get().tagDecalsSize));	//6 - organic
+        decalsTags.addDecal(new VDecal("icons/sediment.png", new Vector3(0, 25, -550), VConfig.get().tagDecalsSize));		//7 - sediment 
 
     //    pathEdit.setPath(stage2D.pathActionsButtonsIn.get(0), "pathAction1");
     }    

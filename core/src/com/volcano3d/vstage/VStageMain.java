@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.volcano3d.utility.VFilteredTexture;
 import com.volcano3d.utility.VCommon;
 import com.volcano3d.vcamera.VCamera;
 import com.volcano3d.vcamerapresets.VCameraPresetStatic;
@@ -75,15 +76,18 @@ public class VStageMain extends InputListener {
         
         createInfoWindows();       
         
-        buttonReturn = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-return"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-return-on"));
+        buttonReturn = new ImageButton(new TextureRegionDrawable(new TextureRegion(new VFilteredTexture("icons/button-return.png"))), 
+				new TextureRegionDrawable(new TextureRegion(new VFilteredTexture("icons/button-return-on.png"))));        
         buttonReturn.setName("BUTTON_MAIN");
         buttonReturn.addListener(this);        
 		
-        buttonNavigation = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-main"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-main-on"));
+        buttonNavigation = new ImageButton(new TextureRegionDrawable(new TextureRegion(new VFilteredTexture("icons/button-main.png"))), 
+        									new TextureRegionDrawable(new TextureRegion(new VFilteredTexture("icons/button-main-on.png"))));
         buttonNavigation.setName("BUTTON_NAVI");
         buttonNavigation.addListener(this); 
         
-        buttonInfo = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-info"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-info-on"));
+        buttonInfo = new ImageButton(new TextureRegionDrawable(new TextureRegion(new VFilteredTexture("icons/button-info.png"))), 
+				new TextureRegionDrawable(new TextureRegion(new VFilteredTexture("icons/button-info-on.png"))));
         buttonInfo.setName("BUTTON_INFO");
         buttonInfo.addListener(this);         
         
@@ -112,7 +116,8 @@ public class VStageMain extends InputListener {
         
         float buttonIconSize = swidth * 0.15f;
         
-        buttonCloseNavi = new ImageButton(VStaticAssets.GUI.buttonsSkin.getDrawable("button-close"), VStaticAssets.GUI.buttonsSkin.getDrawable("button-close-on"));
+        buttonCloseNavi = new ImageButton(new TextureRegionDrawable(new TextureRegion(new VFilteredTexture("icons/button-close.png"))), 
+				new TextureRegionDrawable(new TextureRegion(new VFilteredTexture("icons/button-close-on.png"))));        
         buttonCloseNavi.setName("BUTTON_CLOSENAVI");
         buttonCloseNavi.setSize(buttonSize, buttonSize);
         buttonCloseNavi.addListener(this);
@@ -136,9 +141,11 @@ public class VStageMain extends InputListener {
         
         for(int i=1; i<=8; i++){
         	Group g = new Group();
-            ImageButton imgb = new ImageButton(VStaticAssets.GUI.tagsSkin.getDrawable(buttonLabelsImages[i-1]), 
-            									VStaticAssets.GUI.tagsSkin.getDrawable(buttonLabelsImages[i-1]+"_on"));
-            imgb.setSize(buttonIconSize, buttonIconSize);
+
+        	ImageButton imgb = new ImageButton(new TextureRegionDrawable(new TextureRegion(new VFilteredTexture("icons/"+buttonLabelsImages[i-1]+".png"))), 
+    									new TextureRegionDrawable(new TextureRegion(new VFilteredTexture("icons/"+buttonLabelsImages[i-1]+"_on.png"))));        
+
+        	imgb.setSize(buttonIconSize, buttonIconSize);
         	g.setVisible(false);
         	
         	Label l = new Label(VStaticAssets.Text.buttonLabelsTexts[i-1], labelStyle);

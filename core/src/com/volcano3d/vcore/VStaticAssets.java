@@ -9,22 +9,13 @@ public class VStaticAssets {
 	//Called in VMain constructor before create()
 	public static void Init(){
 		Fonts.futuraFont.getData().setLineHeight(30);
-		System.out.println(Fonts.futuraFont.getData().padRight);
 		Fonts.futuraFont.getData().padRight = 0;
 		Fonts.futuraFont.getData().padLeft = 0;
-		
-		GUI.buttonsSkin.addRegions(new TextureAtlas("gui.txt"));
-		GUI.tagsSkin.addRegions(new TextureAtlas("tagImages.txt"));
-		
 		Fonts.introTitle.getData().setLineHeight(56);
-		Fonts.introText.getData().setLineHeight(43);
-		
+		Fonts.introText.getData().setLineHeight(43);		
 		Fonts.menuIconsLabel.getData().setLineHeight(25);
-		
-	//	Fonts.introText.getData().setScale(2.0f);
 	}
-	public static class Text{
-		
+	public static class Text{		
 		public static final String[] buttonLabelsTexts = {      		 
     	        "MAGMATISKIE\nPROCESI",
     	        "PEGMATĪTU VEIDOŠANĀS\nPROCESI",
@@ -249,11 +240,6 @@ public class VStaticAssets {
 		public static final BitmapFont introTitle = new BitmapFont(Gdx.files.internal("fonts/futura56.fnt"));
 		public static final BitmapFont introText = new BitmapFont(Gdx.files.internal("fonts/futura40.fnt"));
 	}
-	public static class GUI{
-		public static final Skin buttonsSkin = new Skin();
-		public static final Skin tagsSkin = new Skin();
-	}
-	
 }
 
 

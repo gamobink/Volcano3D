@@ -7,14 +7,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 
 //Force texture mipmapping and filtering
-public class FilteredTexture extends Texture {
-	public FilteredTexture(String fileName) {
+public class VFilteredTexture extends Texture {
+	public VFilteredTexture(String fileName) {
 		super(Gdx.files.internal(fileName), null, true);
 	}	
-	public FilteredTexture(FileHandle file) {
+	public VFilteredTexture(FileHandle file) {
 		super(file, null, true);
 	}
-	public FilteredTexture(TextureData data) {
+	public VFilteredTexture(TextureData data) {
 		super(data);
 	}	
 	public void bind () {

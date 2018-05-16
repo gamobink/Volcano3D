@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.volcano3d.utility.FilteredTexture;
+import com.volcano3d.utility.VFilteredTexture;
 import com.volcano3d.vcore.VStaticAssets;
 
 public class VStageInfoWindow extends Group{
@@ -166,7 +166,7 @@ public class VStageInfoWindow extends Group{
 		ImageExpandable img = new ImageExpandable();
 		img.fileName = fileName;
 		img.annotation = annotation;
-		mainStage.volcano.assetsManager.load(fileName, FilteredTexture.class);
+		mainStage.volcano.assetsManager.load(fileName, VFilteredTexture.class);
 		imagesPreloader.add(img);
 	}
 	public void initImage(ImageExpandable image){
@@ -176,7 +176,7 @@ public class VStageInfoWindow extends Group{
 		
 		//FilteredTexture texImage = new FilteredTexture(Gdx.files.internal(image.fileName));
 		
-		FilteredTexture texImage = mainStage.volcano.assetsManager.get(image.fileName, FilteredTexture.class);	
+		VFilteredTexture texImage = mainStage.volcano.assetsManager.get(image.fileName, VFilteredTexture.class);	
 		
 		float aspect = (float)texImage.getWidth() / (float)texImage.getHeight();
 				

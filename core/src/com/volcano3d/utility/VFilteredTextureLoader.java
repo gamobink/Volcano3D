@@ -19,16 +19,16 @@ import com.badlogic.gdx.utils.Array;
  * {@link AssetManager#load(String, Class, AssetLoaderParameters)} allows one to specify parameters as can be passed to the
  * various Texture constructors, e.g. filtering, whether to generate mipmaps and so on.
  * @author mzechner */
-public class FilteredTextureLoader extends AsynchronousAssetLoader<FilteredTexture, FilteredTextureLoader.FilteredTextureParameter> {
+public class VFilteredTextureLoader extends AsynchronousAssetLoader<VFilteredTexture, VFilteredTextureLoader.FilteredTextureParameter> {
 	static public class TextureLoaderInfo {
 		String filename;
 		TextureData data;
-		FilteredTexture texture;
+		VFilteredTexture texture;
 	};
 
 	TextureLoaderInfo info = new TextureLoaderInfo();
 
-	public FilteredTextureLoader (FileHandleResolver resolver) {
+	public VFilteredTextureLoader (FileHandleResolver resolver) {
 		super(resolver);
 	}
 
@@ -53,13 +53,13 @@ public class FilteredTextureLoader extends AsynchronousAssetLoader<FilteredTextu
 		if (!info.data.isPrepared()) info.data.prepare();
 	}
 
-	public FilteredTexture loadSync (AssetManager manager, String fileName, FileHandle file, FilteredTextureParameter parameter) {
+	public VFilteredTexture loadSync (AssetManager manager, String fileName, FileHandle file, FilteredTextureParameter parameter) {
 		if (info == null) return null;
-		FilteredTexture texture = info.texture;
+		VFilteredTexture texture = info.texture;
 		if (texture != null) {
 			texture.load(info.data);
 		} else {
-			texture = new FilteredTexture(info.data);
+			texture = new VFilteredTexture(info.data);
 		}
 		if (parameter != null) {
 			texture.setFilter(parameter.minFilter, parameter.magFilter);
@@ -73,13 +73,13 @@ public class FilteredTextureLoader extends AsynchronousAssetLoader<FilteredTextu
 		return null;
 	}
 
-	static public class FilteredTextureParameter extends AssetLoaderParameters<FilteredTexture> {
+	static public class FilteredTextureParameter extends AssetLoaderParameters<VFilteredTexture> {
 		/** the format of the final Texture. Uses the source images format if null **/
 		public Format format = null;
 		/** whether to generate mipmaps **/
 		public boolean genMipMaps = true;
 		/** The texture to put the {@link TextureData} in, optional. **/
-		public FilteredTexture texture = null;
+		public VFilteredTexture texture = null;
 		/** TextureData for textures created on the fly, optional. When set, all format and genMipMaps are ignored */
 		public TextureData textureData = null;
 		public TextureFilter minFilter = TextureFilter.Nearest;
