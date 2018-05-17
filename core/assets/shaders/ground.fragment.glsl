@@ -25,8 +25,11 @@ void main() {
 	vec3 surfaceToCamera = normalize(v_viewDirection); 					//also a unit vector
 	float cosAngle = max(0.0, dot(surfaceToCamera, reflectionVector));
 
+	float gray = (diffuse.r + diffuse.g + diffuse.b) / 3.0;
+	vec3 colorShade = mix(vec3(0.3,0.3,1), vec3(1,1,0.5), gray+gray+gray);
+
 	float specularCoefficientHighlight = pow(cosAngle, shineDamper);
-	vec3 specHilight = lightColor * specularCoefficientHighlight * reflectivity;
+	vec3 specHilight = colorShade * specularCoefficientHighlight * reflectivity;
 
 	diffuse = diffuse + (vec4(specHilight, 1) * diffuse);
 
@@ -34,5 +37,5 @@ void main() {
 	gl_FragColor.rgb = mix(gl_FragColor.rgb, fog.rgb, v_fog);
 	gl_FragColor.w = u_opacity;	
 	
-//	gl_FragColor = vec4(vec3(u_opacity), 1);	
+	//gl_FragColor = vec4(vec3(colorShade), 1);	
 }
