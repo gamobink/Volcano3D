@@ -9,7 +9,7 @@ public class VCameraPresetStatic extends VCameraPreset {
     //1 - pegmatite
     //2 - hydrothermal
     //3 - pneymatolitic
-    //4 - metamorphic        
+    //4 - metamorphic
     //5 - chemical
     //6 - organic
     //7 - sediment		
@@ -17,7 +17,7 @@ public class VCameraPresetStatic extends VCameraPreset {
 			{170, -11},	//0 
 			{192, 2},	//1   	                                             
 			{138, -16},	//2
-			{130, 22},	//3
+			{150, 20},	//3
 			{203, -20},	//4
 			{227, 14},	//5   	                                             
 			{276, 8},	//6

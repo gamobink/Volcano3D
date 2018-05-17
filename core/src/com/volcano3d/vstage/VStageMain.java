@@ -121,7 +121,7 @@ public class VStageMain extends InputListener {
         buttonCloseNavi.setName("BUTTON_CLOSENAVI");
         buttonCloseNavi.setSize(buttonSize, buttonSize);
         buttonCloseNavi.addListener(this);
-        buttonCloseNavi.setPosition(200, 300); 
+        buttonCloseNavi.setPosition((swidth * 0.5f) - (buttonIconSize * 0.5f), swidth * 0.65f); 
         
         mainStage.addActor(buttonCloseNavi);
         
@@ -149,7 +149,7 @@ public class VStageMain extends InputListener {
         	g.setVisible(false);
         	
         	Label l = new Label(VStaticAssets.Text.buttonLabelsTexts[i-1], labelStyle);
-        	l.setPosition(0, -10);
+        	l.setPosition(0, -45);
         	l.setAlignment(Align.center);
         	l.setWidth(buttonIconSize);
 
