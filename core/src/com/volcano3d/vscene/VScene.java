@@ -20,7 +20,10 @@ import com.volcano3d.vcore.VTextureRender;
  * ?) Materiaalu nosaciijumi sheideros, pazemes materiaaliem difuuzaa tekstuura(visiem var nebuut)
  * 	a) #if defined(diffuseTextureFlag)
  * 
- * Muzejaa 
+ * -) Alfa feidings zemes slaanim, straadaa uz darba kompja, iespeejams nav citur. Jaaskataas uz lielaa
+ * 
+ * Muzejaa
+ * 
  * 3) Kaa izskataas info teksti uz lielaa (izskjirtspeeja, kompene, feidings)
  * 	a) 	bultaam 1.5x lielaaku izskjirtspeeju. Tekstiem mazaaku fontu
  * 
