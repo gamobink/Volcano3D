@@ -14,14 +14,14 @@ public class VCameraPresetStatic extends VCameraPreset {
     //6 - organic
     //7 - sediment		
 	public static final float anglePositions[][] = {
-			{168, -16},	//0 
-			{195, -10},	//1   	                                             
-			{133, -6},	//2
-			{136, 20},	//3
+			{170, -11},	//0 
+			{192, 2},	//1   	                                             
+			{138, -16},	//2
+			{130, 22},	//3
 			{203, -20},	//4
-			{224, 4},	//5   	                                             
-			{279, -4},	//6
-			{336, 0},	//7			
+			{227, 14},	//5   	                                             
+			{276, 8},	//6
+			{334, 0},	//7			
 	};
 	
 	public VCameraPresetStatic(VCameraPresetCollection.PresetsIdentifiers identifier){

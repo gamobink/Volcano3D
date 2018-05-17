@@ -14,24 +14,18 @@ import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VTextureRender;
 
 /*
+ * 1) Slaidera bildeem paskaidrojuma novietojums
+ * 2) Kameras rauxstiishanaas izejot no hidroterm skata
+ * 
  * ?) Materiaalu nosaciijumi sheideros, pazemes materiaaliem difuuzaa tekstuura(visiem var nebuut)
  * 	a) #if defined(diffuseTextureFlag)
  * 
- * -) Alfa feidings zemes slaanim, straadaa uz darba kompja, iespeejams nav citur. Jaaskataas uz lielaa
- * 
- * Muzejaa
- * 2) Kaa izskataas tagi uz lielaa ekraana (vai vajag paartaisiit uz natiivo)
- * 	a) Vajag paarbaudiit uz natiivo, zema prioritaate	
- * 
+ * Muzejaa 
  * 3) Kaa izskataas info teksti uz lielaa (izskjirtspeeja, kompene, feidings)
  * 	a) 	bultaam 1.5x lielaaku izskjirtspeeju. Tekstiem mazaaku fontu
  * 
  * 4) Kaa ir ar kameras novietojumu info skatos un slaidera poziicija?
- *  a) Jaapiekorigjee muzejaa uz vietas (piektdien)
- * 
- * 5) Kaa izskataas Modra ziimeejumi? (aliasings?)
- * 	a) Nav kaartiibaa pat peec paarziimeeshanas, jaapaarbauda ar atteelu sampliem
- * 	!) Paartaisiit visu GUI uz FilteredTexture
+ *  a) Jaapiekorigjee muzejaa uz vietas
  * 
  * -) Shematiskais 3d Magmatiskajam
  * -) Shematiskais 3d Hidrotermaal
