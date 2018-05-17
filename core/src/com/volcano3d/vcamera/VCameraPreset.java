@@ -60,7 +60,7 @@ public class VCameraPreset {
 	
 	//Target goal 	
 	public float	transitionAngleXGoal = 8.0f;	//4.0f;
-	public float	transitionAngleYGoal = 8.0f;	//4.0f
+	public float	transitionAngleYGoal = 1.0f;	//4.0f
 	public float 	transitionFovGoal = 8.0f;		//2.0f
 	public float 	transitionDistanceGoal = 8.0f;	//2.0f
 	public float 	transitionPivotGoal = 8.0f;		//2.0f

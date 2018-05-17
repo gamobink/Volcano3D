@@ -90,18 +90,24 @@ public class VScene {
     }    
     public void render(VCamera camera){
         
-    	groundScene.renderSky(camera);
+    	boolean renderSchematic = false;
 
     	if(camera.getCurrentPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN
-    		|| camera.getTargetPreset() == VCameraPresetCollection.PresetsIdentifiers.MAIN){
-    		
-        	crossectionScene.render(camera);      
-        	groundScene.waterWallModel.render(camera.get());        	
-        }
+        		|| camera.getTargetPreset() == VCameraPresetCollection.PresetsIdentifiers.MAIN){
+    		renderSchematic = true;     	
+        }    	
     	
+    	groundScene.renderSky(camera);
+
+    	if(renderSchematic){    		
+        	crossectionScene.render(camera);
+        	groundScene.waterWallModel.render(camera.get());        	
+        }    	
     	groundScene.render(camera);
     	particleEffectsScene.render(camera);
-    	
+    	if(renderSchematic){
+        	crossectionScene.renderSchematicOverlay(camera);      
+    	}
     }
 
     public void renderToWaterTextures(VCamera camera){

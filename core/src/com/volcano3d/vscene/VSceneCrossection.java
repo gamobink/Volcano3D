@@ -59,8 +59,12 @@ public class VSceneCrossection {
         
     	undergroundComp.render(camera.get());  
     	lava.render(camera.get()); 
+
+    }
+    
+    public void renderSchematicOverlay(VCamera camera){
     	schemaL1Model.render(camera.get());
-    	schemaL2Model.render(camera.get());
+    //	schemaL2Model.render(camera.get());
     }
     
 }
