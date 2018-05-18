@@ -278,8 +278,12 @@ public class VMain{
     	float water2Fade = 1.0f;  
     	float groundPart1Fade = 1.0f;
     	float groundPart2Fade = 1.0f;
+    	float schematicFade = 0.0f;
     	
     	if(camera.getState() != VCamera.States.MAIN && camera.getState() != VCamera.States.STATIC_EASTEREGG){
+    		
+    		schematicFade = 1.0f;
+    		
 	    	if(angleUnits < 36 || (angleUnits > 270 && angleUnits < 360))water1Fade = 0.0f;
 
 	    	if(angleUnits < 226 && angleUnits > 170)water2Fade = 0.0f;	    	
@@ -292,17 +296,21 @@ public class VMain{
 	    	if(angleUnits < 241 && angleUnits > 76)groundPart2Fade = 0.0f;
     	}
     	
-        scene.groundScene.waterModel.alphaFader.set("water1", water1Fade, 5f, 1f);    	
-        scene.groundScene.waterModel.alphaFader.set("water2", water2Fade, 5f, 1f);        
-        scene.groundScene.waterFoamModel.alphaFader.set("foamFar2", water1Fade, 5f, 1f);    	
-        scene.groundScene.waterFoamModel.alphaFader.set("foamFar1", water2Fade, 5f, 1f);   
+        scene.groundScene.waterModel.alphaFader.set("water1", water1Fade, 5f, 1f);
+        scene.groundScene.waterModel.alphaFader.set("water2", water2Fade, 5f, 1f);
+        scene.groundScene.waterFoamModel.alphaFader.set("foamFar2", water1Fade, 5f, 1f);
+        scene.groundScene.waterFoamModel.alphaFader.set("foamFar1", water2Fade, 5f, 1f);
         
         scene.groundScene.groundModel.alphaFader.set("groundPart1", groundPart2Fade, 3f, 0.7f);
         scene.groundScene.groundModel.alphaFader.set("groundPart4", groundPart1Fade, 3f, 0.7f);
         scene.groundScene.groundModel.alphaFader.set("groundFar1", groundPart2Fade, 3f, 0.7f);
         
         scene.groundScene.lavaOuterModel.alphaFader.set("lavaFar", groundPart2Fade, 3f, 0.7f);
+        
+        scene.crossectionScene.schemaL1Model.alphaFader.set("Plane04", schematicFade, 3f, 0.7f);
 
+        //System.out.println(schematicFade);
+        
         if(water2Fade < 1.0f){
         	showUnderwaterCenterOnly = true;
         }else{

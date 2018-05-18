@@ -14,8 +14,13 @@ import com.volcano3d.vcore.VMain;
 import com.volcano3d.vcore.VTextureRender;
 
 /*
- * 1) Slaidera bildeem paskaidrojuma novietojums
- * 2) Kameras rauxstiishanaas izejot no hidroterm skata
+ * Todo saturs
+ * 1) Hidrotermaalajiem bultinjas no lavas puses
+ * 2) Pegmatiitiem tekstuura un nosaukums
+ * 3) Sedimentam mazaaku fontu (0.7x) 
+ * 5) Metamorfisms - dziljumaa: spīdīgi dimanti, bultas: spiediens un karstums
+ * 
+ * ???) Kameras raustiishanaas izejot no pazemes skata
  * 
  * ?) Materiaalu nosaciijumi sheideros, pazemes materiaaliem difuuzaa tekstuura(visiem var nebuut)
  * 	a) #if defined(diffuseTextureFlag)

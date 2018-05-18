@@ -49,6 +49,9 @@ public class VSceneCrossection {
     	
     	schemaL1Model.enableBlending();
     	schemaL2Model.enableBlending(); 
+    	
+    	schemaL1Model.enableTween();
+    	schemaL1Model.alphaFader.set("Plane04", 1.0f, 1.0f);    	
     }
     public void render(VCamera camera){
     	

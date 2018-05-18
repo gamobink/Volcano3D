@@ -20,7 +20,7 @@ public class VCameraPresetStatic extends VCameraPreset {
 			{150, 20},	//3
 			{203, -20},	//4
 			{227, 14},	//5   	                                             
-			{269, 8},	//6
+			{269, 5},	//6
 			{334, 0},	//7			
 	};
 	
