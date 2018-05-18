@@ -17,7 +17,7 @@ import com.volcano3d.vcore.VTextureRender;
  * Todo saturs
  * 1) Hidrotermaalajiem bultinjas no lavas puses
  * 2) Pegmatiitiem tekstuura un nosaukums
- * 3) Sedimentam mazaaku fontu (0.7x) 
+ * 3) Sedimentam mazaaku fontu (0.7x)
  * 5) Metamorfisms - dziljumaa: spīdīgi dimanti, bultas: spiediens un karstums
  * 
  * ???) Kameras raustiishanaas izejot no pazemes skata
@@ -25,24 +25,7 @@ import com.volcano3d.vcore.VTextureRender;
  * ?) Materiaalu nosaciijumi sheideros, pazemes materiaaliem difuuzaa tekstuura(visiem var nebuut)
  * 	a) #if defined(diffuseTextureFlag)
  * 
- * -) Alfa feidings zemes slaanim, straadaa uz darba kompja, iespeejams nav citur. Jaaskataas uz lielaa
  * 
- * Muzejaa
- * 
- * 3) Kaa izskataas info teksti uz lielaa (izskjirtspeeja, kompene, feidings)
- * 	a) 	bultaam 1.5x lielaaku izskjirtspeeju. Tekstiem mazaaku fontu
- * 
- * 4) Kaa ir ar kameras novietojumu info skatos un slaidera poziicija?
- *  a) Jaapiekorigjee muzejaa uz vietas
- * 
- * -) Shematiskais 3d Magmatiskajam
- * -) Shematiskais 3d Hidrotermaal
- * -) Shematiskais 3d Sediment
- * -) Shematiskais 3d Org
- * -) Shematiskais 3d Pegma
- * -) Shem3d metamorf
- * -) Pazemes tekstureeshana
- * -) Maakonju kustiiba un debesis (zema prioritaate)
  * 
  * */
 public class VScene {
