@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class VConfig {
 	
-	/********************** Configuration for development ***********************************/
+	/********************** Configuration for development ***********************************
 	
 	public boolean 	developmentMode = true; 
 	public Vector2 	resolution = new Vector2(490f, 800f);
@@ -16,7 +16,7 @@ public class VConfig {
 	public float 	userActionActiveTimeout = 50;
 	public Vector2 	tagDecalsSize = new Vector2(30f, 30f);	
 	
-	/******************** Configuration for production (HD, full screen) ********************
+	/******************** Configuration for production (HD, full screen) ********************/
 	
 	public boolean 	developmentMode = false; 
 	public Vector2 	resolution = new Vector2(1080f, 1920f);
