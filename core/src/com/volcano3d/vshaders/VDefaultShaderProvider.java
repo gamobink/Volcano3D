@@ -49,7 +49,6 @@ public class VDefaultShaderProvider extends DefaultShaderProvider{
         }        
         DefaultShader defaultShader = new DefaultShader(renderable, shaderConfig, shaderProgram);
         defaultShader.init();
-		
         return defaultShader;
 	}	
 }

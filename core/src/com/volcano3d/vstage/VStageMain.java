@@ -564,7 +564,7 @@ public class VStageMain extends InputListener {
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.methamorphicProcessTitle);
         inf.setText(VStaticAssets.Text.methamorphicProcessText, 0.0625f);
-        inf.setSliderPositionY(0.25f);
+        inf.setSliderPositionY(0.35f);
         inf.addImage("foto/metam4.jpg", VStaticAssets.Text.metam4);        
         inf.addImage("foto/metam1.jpg", VStaticAssets.Text.metam1);
         inf.addImage("foto/metam2.jpg", VStaticAssets.Text.metam2);        

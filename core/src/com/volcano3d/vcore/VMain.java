@@ -307,7 +307,7 @@ public class VMain{
         
         scene.groundScene.lavaOuterModel.alphaFader.set("lavaFar", groundPart2Fade, 3f, 0.7f);
         
-        scene.crossectionScene.schemaL1Model.alphaFader.set("Plane04", schematicFade, 3f, 0.7f);
+        scene.crossectionScene.schemaL1Model.alphaFader.set("sediment", schematicFade, 3f, 0.7f);
 
         //System.out.println(schematicFade);
         
