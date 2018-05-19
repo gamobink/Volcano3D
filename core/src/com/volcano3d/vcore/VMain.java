@@ -22,6 +22,7 @@ import com.volcano3d.vcamera.VCameraPresetCollection;
 import com.volcano3d.vdecal.VDecal;
 import com.volcano3d.vdecal.VDecalGroup;
 import com.volcano3d.vscene.VScene;
+import com.volcano3d.vstage.VStageConsoleOutput;
 import com.volcano3d.vstage.VStageMain;
 
 /**
@@ -42,6 +43,8 @@ public class VMain{
     protected boolean userActionActive = false;
     private Timer.Task userActionActiveCountdown = null;
 
+    private VStageConsoleOutput consoleOutputStage = null;
+    
     public boolean hideUndergroundPart = false;
     public boolean showUnderwaterCenterOnly = false;
 
@@ -76,6 +79,8 @@ public class VMain{
     
     public void create(){
     	
+    	if(VConfig.get().onscreenConsole)consoleOutputStage = new VStageConsoleOutput(this);
+    	
         stage2D = new VStageMain(this);
         camera = new VCamera(this);
         decalsTags = new VDecalGroup(this);
@@ -107,7 +112,7 @@ public class VMain{
     }	
     
     public void render() {
-        
+    	
     	if (!assetsManager.update()) {
             stage2D.renderLoader();
             return;
@@ -135,6 +140,8 @@ public class VMain{
         
     	decalsTags.render();       
         stage2D.renderMainStage();
+                
+    	if(consoleOutputStage!=null)consoleOutputStage.render();
         
         //pathEdit.render();
         

@@ -131,6 +131,8 @@ public class VCameraPreset {
 		
 		anglePos.add(_velocity.cpy().scl(dt));
 		
+		//System.out.println("Angle: "+anglePos.x);
+		
 		_velocity.x = _velocity.x * (float)Math.pow(friction.x, dt);
 		_velocity.y = _velocity.y * (float)Math.pow(friction.y, dt);
 		

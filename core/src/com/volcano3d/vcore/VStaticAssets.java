@@ -12,6 +12,9 @@ public class VStaticAssets {
 		Fonts.introTitle.getData().setLineHeight(56);
 		Fonts.introText.getData().setLineHeight(43);		
 		Fonts.menuIconsLabel.getData().setLineHeight(25);
+		
+		Fonts.consoleFont.getData().setScale(0.6f);
+		Fonts.consoleFont.getData().setLineHeight(20);		
 	}
 	public static class Text{		
 		public static final String[] buttonLabelsTexts = {      		 
@@ -237,6 +240,7 @@ public class VStaticAssets {
 		public static final BitmapFont menuIconsLabel = new BitmapFont(Gdx.files.internal("fonts/futura-25.fnt"));
 		public static final BitmapFont introTitle = new BitmapFont(Gdx.files.internal("fonts/futura56.fnt"));
 		public static final BitmapFont introText = new BitmapFont(Gdx.files.internal("fonts/futura40.fnt"));
+		public static final BitmapFont consoleFont = new BitmapFont(Gdx.files.internal("fonts/futura-25.fnt"));
 	}
 }
 

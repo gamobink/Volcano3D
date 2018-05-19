@@ -216,10 +216,14 @@ void main() {
 
 	//Depth variable blur	
 	vec4 rer = texture2D(u_specularTexture, refractionUV);
-	//gl_FragColor = rer; gl_FragColor.w = 1.0; return;			//!!!!!!!
+	//gl_FragColor = vec4(vec3(rer.a), 1); gl_FragColor.w = 1.0; return;			//!!!!!!!
 	
-	float deptha1 = pow((1.0 - rer.a), 5.0);
-	vec4 refraction = dofBlur(u_specularTexture, refractionUV, 1,  deptha1 * 0.2);
+	float deptha1 = pow((1.0 - rer.a), 10.0);
+	vec4 refraction = dofBlur(u_specularTexture, refractionUV, 1,  deptha1 * 0.3);
+
+	//gl_FragColor = refraction;
+	//gl_FragColor = vec4(vec3(deptha1 * 0.2), 1);
+	//return;
 
 	vec4 ref1 = blur13(u_reflectionTexture, reflectionUV, vec2(0,1));
 	vec4 ref2 = blur13(u_reflectionTexture, reflectionUV, vec2(0,2));	

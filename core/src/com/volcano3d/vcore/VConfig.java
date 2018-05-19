@@ -6,7 +6,8 @@ public class VConfig {
 	
 	/********************** Configuration for development ***********************************/
 	
-	public boolean 	developmentMode = true; 
+	public boolean 	developmentMode = true;
+	public boolean 	onscreenConsole = true;
 	public Vector2 	resolution = new Vector2(490f, 800f);
 	public boolean 	fullScreen = false;
 	public String	modelFileExt = ".g3dj";						//Json model files
@@ -19,6 +20,7 @@ public class VConfig {
 	/******************** Configuration for production (HD, full screen) ********************
 	
 	public boolean 	developmentMode = false; 
+	public boolean 	onscreenConsole = false;	
 	public Vector2 	resolution = new Vector2(1080f, 1920f);
 	public boolean 	fullScreen = true;
 	public String	modelFileExt = ".g3dj";						//Binary model files
