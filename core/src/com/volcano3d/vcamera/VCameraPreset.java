@@ -133,9 +133,6 @@ public class VCameraPreset {
 		
 		//System.out.println("Angle: "+anglePos.x);
 		
-		_velocity.x = _velocity.x * (float)Math.pow(friction.x, dt);
-		_velocity.y = _velocity.y * (float)Math.pow(friction.y, dt);
-		
 		if(transitionAngleXEnabled){			
 			float diffX = targetAngleX - anglePos.x;
 	        while (diffX < -180) diffX += 360;
@@ -200,11 +197,18 @@ public class VCameraPreset {
 			if(anglePos.y > (wp.minY + offsetY)){
 				_velocity.y += ((wp.minY + offsetY) - anglePos.y) * 0.3f * dt;
 			}
-			_velocity.x += 2 * dt;
+			if(!transitionAngleXEnabled && Math.abs(_velocity.x) < 2.0f)_velocity.x += 2 * dt;
+		//	System.out.println(_velocity.x);
 		}
 		//Clamp to maximum velocity
 		_velocity.x = Math.min(Math.max(_velocity.x, -velocityMax.x), velocityMax.x);
 		_velocity.y = Math.min(Math.max(_velocity.y, -velocityMax.y), velocityMax.y);		
+		
+		//Add friction
+		_velocity.x = _velocity.x * (float)Math.pow(friction.x, dt);
+		_velocity.y = _velocity.y * (float)Math.pow(friction.y, dt);
+		
+		//System.out.println(_velocity.x);
 		
 		if(anglePos.x > 360 || anglePos.x < -360)anglePos.x = 0;
 		if(anglePos.y > 360 || anglePos.y < -360)anglePos.y = 0;		

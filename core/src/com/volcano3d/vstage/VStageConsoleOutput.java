@@ -20,6 +20,7 @@ public class VStageConsoleOutput {
 	
 	public VStageConsoleOutput(VMain s){
 		volcano = s;
+		/*
 		mainStage = new Stage();
 		
 		l = new Label("", new Label.LabelStyle(VStaticAssets.Fonts.consoleFont, Color.WHITE));	
@@ -32,12 +33,12 @@ public class VStageConsoleOutput {
 
         baos = new VByteArrayRingBuffer(1000);//ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
-        System.setOut(ps);
+        System.setOut(ps);*/
 	}
 	
     public void render(){
-    	l.setText(baos.toString());    	
-    	mainStage.draw();
+    //	l.setText(baos.toString());    	
+    //	mainStage.draw();
     }	
 	
 }

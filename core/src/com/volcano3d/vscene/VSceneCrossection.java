@@ -17,7 +17,7 @@ public class VSceneCrossection {
 	public VRenderable 	lava;
 	public VRenderable 	undergroundComp;
 	public VRenderable 	schemaL1Model;
-	public VRenderable 	schemaL2Model;
+	//public VRenderable 	schemaL2Model;
 	
 	private float lavaMove = 0;
 	
@@ -34,7 +34,7 @@ public class VSceneCrossection {
     	undergroundComp = new VRenderable(volcano, "models/undergroundComp", shaderUnderground);
     	lava = new VRenderable(volcano, "models/lava", shaderLava);    	
     	schemaL1Model = new VRenderable(volcano, "models/schemaLayer1", shaderSchema);
-    	schemaL2Model = new VRenderable(volcano, "models/schemaLayer2", shaderSchema);    	  	
+    	//schemaL2Model = new VRenderable(volcano, "models/schemaLayer2", shaderSchema);    	  	
     }
     public void onLoad(){
     	
@@ -45,13 +45,16 @@ public class VSceneCrossection {
     	undergroundComp.onLoad();
     	lava.onLoad();   
     	schemaL1Model.onLoad();
-    	schemaL2Model.onLoad();  
+    	//schemaL2Model.onLoad();  
     	
     	schemaL1Model.enableBlending();
-    	schemaL2Model.enableBlending(); 
+    	//schemaL2Model.enableBlending(); 
     	
     	schemaL1Model.enableTween();
-    	schemaL1Model.alphaFader.set("sediment", 1.0f, 1.0f);    	
+    	schemaL1Model.alphaFader.set("sediment", 1.0f, 1.0f); 
+    	schemaL1Model.alphaFader.set("hydro", 1.0f, 1.0f); 
+    	schemaL1Model.alphaFader.set("organic", 1.0f, 1.0f); 
+    	schemaL1Model.alphaFader.set("pegmatite", 1.0f, 1.0f); 
     }
     public void render(VCamera camera){
     	

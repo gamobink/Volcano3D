@@ -141,7 +141,7 @@ public class VMain{
     	decalsTags.render();       
         stage2D.renderMainStage();
                 
-    	if(consoleOutputStage!=null)consoleOutputStage.render();
+    	//if(consoleOutputStage!=null)consoleOutputStage.render();
         
         //pathEdit.render();
         
@@ -286,10 +286,17 @@ public class VMain{
     	float groundPart1Fade = 1.0f;
     	float groundPart2Fade = 1.0f;
     	float schematicFade = 0.0f;
+
+    	//System.out.println(camera.getTargetPreset()+", "+camera.getPreset());
     	
-    	if(camera.getState() != VCamera.States.MAIN && camera.getState() != VCamera.States.STATIC_EASTEREGG){
+//    	if(camera.getPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN 
+//    			|| camera.getTargetPreset() != VCameraPresetCollection.PresetsIdentifiers.MAIN){
+//    		schematicFade = 1.0f; 
+//    	}
+    	
+    	if(camera.getState() != VCamera.States.MAIN){
     		
-    		schematicFade = 1.0f;
+    		schematicFade = 1.0f; 
     		
 	    	if(angleUnits < 36 || (angleUnits > 270 && angleUnits < 360))water1Fade = 0.0f;
 
@@ -314,7 +321,10 @@ public class VMain{
         
         scene.groundScene.lavaOuterModel.alphaFader.set("lavaFar", groundPart2Fade, 3f, 0.7f);
         
-        scene.crossectionScene.schemaL1Model.alphaFader.set("sediment", schematicFade, 3f, 0.7f);
+        scene.crossectionScene.schemaL1Model.alphaFader.set("sediment", schematicFade, 0.7f, 0.7f);
+        scene.crossectionScene.schemaL1Model.alphaFader.set("hydro", schematicFade, 0.7f, 0.7f);
+        scene.crossectionScene.schemaL1Model.alphaFader.set("organic", schematicFade, 0.7f, 0.7f);
+        scene.crossectionScene.schemaL1Model.alphaFader.set("pegmatite", schematicFade, 0.7f, 0.7f);
 
         //System.out.println(schematicFade);
         
