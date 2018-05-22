@@ -59,11 +59,11 @@ public class VCameraPreset {
 //	public Vector2	cameraPanAngleYLimit = new Vector2();	
 	
 	//Target goal 	
-	public float	transitionAngleXGoal = 8.0f;	//4.0f;
+	public float	transitionAngleXGoal = 4.0f;	//4.0f;
 	public float	transitionAngleYGoal = 1.0f;	//4.0f
 	public float 	transitionFovGoal = 8.0f;		//2.0f
-	public float 	transitionDistanceGoal = 8.0f;	//2.0f
-	public float 	transitionPivotGoal = 8.0f;		//2.0f
+	public float 	transitionDistanceGoal = 4.0f;	//2.0f
+	public float 	transitionPivotGoal = 4.0f;		//2.0f
 	
 	public class WayPoint{
 		public WayPoint(float a, float my){
@@ -164,25 +164,55 @@ public class VCameraPreset {
 		if(transitionDistanceEnabled){
 			float diffF = targetDistance - distance;			
 			distance += Math.max(-distanceChangeMax, Math.min(diffF, distanceChangeMax)) * dt;
+			//distance += diffF * dt;
 			if(Math.abs(diffF) < transitionDistanceGoal){
 				transitionDistanceEnabled = false;
 				if(callback != null)callback.onTransitionDistanceComplete(identifier, targetIdentifierTransition);
 			}else transitionInProgress = true;
-		}	
+		}
+		/*
 		if(transitionPivotEnabled){
 			Vector3 diff = targetPivot.cpy().sub(pivotPosition);
-			if(diff.len2() < transitionPivotGoal){
+			if(diff.len() < transitionPivotGoal){
 				transitionPivotEnabled = false;	
 				if(callback != null)callback.onTransitionPivotComplete(identifier, targetIdentifierTransition);
 			}else transitionInProgress = true;
 			diff.clamp(-pivotVelocityMax, pivotVelocityMax);
 			pivotPosition.add(diff.scl(dt));
+		}/**/
+		if(transitionPivotEnabled){
+			Vector3 diff = targetPivot.cpy().sub(pivotPosition);
+			float len = diff.len();
+			if(len < transitionPivotGoal){				
+				transitionPivotEnabled = false;	
+				if(callback != null)callback.onTransitionPivotComplete(identifier, targetIdentifierTransition);
+			}else transitionInProgress = true;
+			
+			diff.nor();	
+			pivotPosition.add(diff.scl(Math.min(len, pivotVelocityMax) * dt));
+			
 		}
+		/**/
+		
 		WayPoint wp = getInterpolatedWayPoint();
+		
+		//Add small gravity to camera
+		if(gravityEnabled){
+			float offsetY = 3.0f;
+			if(anglePos.y > (wp.minY + offsetY) && transitionAngleYEnabled){
+				_velocity.y += ((wp.minY + offsetY) - anglePos.y) * 0.3f * dt;
+			}
+			if(!transitionAngleXEnabled && Math.abs(_velocity.x) < 2.0f)_velocity.x += 2 * dt;
+		//	System.out.println(_velocity.x);
+		}		
 		//Limit camera movement Y axis
 		if(wayPointsEnabled){			// && !transitionAngleYEnabled
 			//System.out.println(wp.minY+","+wp.maxY+" a:"+anglePos.y+" t:"+targetAngleY);
-			if(wp.minY > anglePos.y)_velocity.y = -(anglePos.y - wp.minY) * 10.0f;
+			if(wp.minY > anglePos.y){		
+				float vely = wp.minY - anglePos.y;
+				float velyUnit = Math.min(vely, 1.0f);									
+				_velocity.y = ((vely) * (velyUnit * 10.0f));
+			}
 			if(wp.maxY < anglePos.y){
 				float adiffy = Math.min((anglePos.y - wp.maxY), 10.0f);
 				if(_velocity.y > 0 || Math.abs(_velocity.y) < adiffy){
@@ -191,15 +221,6 @@ public class VCameraPreset {
 			}
 		}
 		
-		//Add small gravity to camera
-		if(gravityEnabled){
-			float offsetY = 3.0f;
-			if(anglePos.y > (wp.minY + offsetY)){
-				_velocity.y += ((wp.minY + offsetY) - anglePos.y) * 0.3f * dt;
-			}
-			if(!transitionAngleXEnabled && Math.abs(_velocity.x) < 2.0f)_velocity.x += 2 * dt;
-		//	System.out.println(_velocity.x);
-		}
 		//Clamp to maximum velocity
 		_velocity.x = Math.min(Math.max(_velocity.x, -velocityMax.x), velocityMax.x);
 		_velocity.y = Math.min(Math.max(_velocity.y, -velocityMax.y), velocityMax.y);		

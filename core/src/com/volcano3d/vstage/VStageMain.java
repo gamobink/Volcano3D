@@ -564,7 +564,7 @@ public class VStageMain extends InputListener {
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.methamorphicProcessTitle);
         inf.setText(VStaticAssets.Text.methamorphicProcessText, 0.0625f);
-        inf.setSliderPositionY(0.35f);
+        inf.setSliderPositionY(0.4f);
         inf.addImage("foto/metam4.jpg", VStaticAssets.Text.metam4);        
         inf.addImage("foto/metam1.jpg", VStaticAssets.Text.metam1);
         inf.addImage("foto/metam2.jpg", VStaticAssets.Text.metam2);        
@@ -583,8 +583,8 @@ public class VStageMain extends InputListener {
         
         inf = new VStageInfoWindow(this);
         inf.setTitle(VStaticAssets.Text.organicProcessTitle);
-        inf.setText(VStaticAssets.Text.organicProcessText, 0.0625f);
-        inf.setSliderPositionY(0.4f);
+        inf.setText(VStaticAssets.Text.organicProcessText, 0.02f);
+        inf.setSliderPositionY(0.44f);
         inf.addImage("foto/organ2.jpg", VStaticAssets.Text.organ2);
         inf.addImage("foto/organ1.jpg", VStaticAssets.Text.organ1);                
         infoWindowMap.put("info7", inf);

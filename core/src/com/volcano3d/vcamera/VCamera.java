@@ -49,27 +49,35 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 			break;
 		case STATIC_1:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_1);
+			volcano.stage2D.showInfoWindow("info1");
 			break;
 		case STATIC_2:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_2);
+			volcano.stage2D.showInfoWindow("info2");
 			break;
 		case STATIC_3:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_3);
+			volcano.stage2D.showInfoWindow("info3");
 			break;			
 		case STATIC_4:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_4);
+			volcano.stage2D.showInfoWindow("info4");
 			break;			
 		case STATIC_5:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_5);
+			volcano.stage2D.showInfoWindow("info5");			
 			break;						
 		case STATIC_6:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_6);
+			volcano.stage2D.showInfoWindow("info6");
 			break;							
 		case STATIC_7:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_7);
+			volcano.stage2D.showInfoWindow("info7");			
 			break;							
 		case STATIC_8:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_8);
+			volcano.stage2D.showInfoWindow("info8");
 			break;	
 		case STATIC_EASTEREGG:
 			this.cameraPresetsCollection.transitionToPreset(PresetsIdentifiers.STATIC_VIEW_EASTEREGG);
@@ -114,7 +122,8 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 	public void onPresetTransitionComplete(VCameraPresetCollection.PresetsIdentifiers sourceIdentifier, 
 			VCameraPresetCollection.PresetsIdentifiers targetIdentifier){
 		//System.out.println("complete: "+sourceIdentifier+" -> "+targetIdentifier);
-		if(cameraState != null){			
+		if(cameraState != null){
+			/*
 			switch(cameraState){
 				case STATIC_1:				
 					volcano.stage2D.showInfoWindow("info1");
@@ -145,7 +154,7 @@ public class VCamera extends VCameraPreset implements VCameraPreset.VCameraPrese
 					break;
 			default:
 				break;		
-			}
+			}*/
 		}
 	}
 	public void onTransitionAngleXComplete(VCameraPresetCollection.PresetsIdentifiers sourceIdentifier, VCameraPresetCollection.PresetsIdentifiers targetIdentifier){
